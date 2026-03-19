@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+import time
 from typing import List, Union, Optional
 from datetime import datetime, timedelta, timezone
 
@@ -899,3 +900,45 @@ def try_acquire_conversation_goal_lock(uid: str, conversation_id: str, ttl: int 
     """Idempotency lock: one goal extraction per conversation. Returns True if acquired."""
     result = r.set(f'users:{uid}:conv_goal_lock:{conversation_id}', '1', ex=ttl, nx=True)
     return result is not None
+
+
+# ******************************************************
+# ************** API RATE LIMITING *********************
+# ******************************************************
+
+
+def check_api_rate_limit(key: str, endpoint: str, max_requests: int, window_seconds: int) -> tuple:
+    """Check rate limit using Redis fixed-window counter.
+
+    Args:
+        key: Identity key (UID, API key hash, etc.)
+        endpoint: Endpoint identifier for namespacing
+        max_requests: Maximum requests allowed in the window
+        window_seconds: Window duration in seconds
+
+    Returns:
+        (allowed, remaining, reset_seconds) tuple.
+        allowed: True if request is within limit.
+        remaining: How many requests are left in the window.
+        reset_seconds: Seconds until the window resets.
+    """
+    now = int(time.time())
+    window_start = now - (now % window_seconds)
+    redis_key = f"rate_limit:{endpoint}:{key}:{window_start}"
+
+    current = r.get(redis_key)
+    if current is None:
+        pipe = r.pipeline()
+        pipe.setex(redis_key, window_seconds, 1)
+        pipe.execute()
+        return True, max_requests - 1, window_seconds - (now % window_seconds)
+
+    current = int(current)
+    if current >= max_requests:
+        reset = window_seconds - (now % window_seconds)
+        return False, 0, reset
+
+    r.incr(redis_key)
+    remaining = max_requests - current - 1
+    reset = window_seconds - (now % window_seconds)
+    return True, remaining, reset

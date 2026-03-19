@@ -4,11 +4,12 @@ import time
 
 from fastapi import Header, HTTPException, WebSocketException
 from fastapi import Request
+from fastapi.responses import JSONResponse
 from firebase_admin import auth
 from firebase_admin.auth import InvalidIdTokenError
 import logging
 
-from database.redis_db import try_acquire_listen_lock
+from database.redis_db import check_api_rate_limit, try_acquire_listen_lock
 
 logger = logging.getLogger(__name__)
 
@@ -147,48 +148,76 @@ def get_current_user_uid_from_ws_message(message: dict) -> str:
     return verify_token(token)
 
 
-cached = {}
-
-
 def rate_limit_custom(endpoint: str, request: Request, requests_per_window: int, window_seconds: int):
+    """Rate limit by client IP using Redis. Fail-open on Redis errors."""
     ip = request.client.host
-    key = f"rate_limit:{endpoint}:{ip}"
+    try:
+        allowed, remaining, reset = check_api_rate_limit(ip, endpoint, requests_per_window, window_seconds)
+    except Exception as e:
+        logger.error(f"Rate limit Redis error (allowing request): {e}")
+        return True
 
-    # Check if the IP is already rate-limited
-    current = cached.get(key)
-    if current:
-        current = json.loads(current)
-        remaining = current["remaining"]
-        timestamp = current["timestamp"]
-        current_time = int(time.time())
-
-        # Check if the time window has expired
-        if current_time - timestamp >= window_seconds:
-            remaining = requests_per_window - 1  # Reset the counter for the new window
-            timestamp = current_time
-        elif remaining == 0:
-            raise HTTPException(status_code=429, detail="Too Many Requests")
-
-        remaining -= 1
-
-    else:
-        # If no previous data found, start a new time window
-        remaining = requests_per_window - 1
-        timestamp = int(time.time())
-
-    # Update the rate limit info in Redis
-    current = {"timestamp": timestamp, "remaining": remaining}
-    cached[key] = json.dumps(current)
-
+    if not allowed:
+        raise HTTPException(
+            status_code=429,
+            detail="Too Many Requests",
+            headers={
+                "X-RateLimit-Limit": str(requests_per_window),
+                "X-RateLimit-Remaining": "0",
+                "X-RateLimit-Reset": str(reset),
+                "Retry-After": str(reset),
+            },
+        )
     return True
 
 
-# Dependency to enforce custom rate limiting for specific endpoints
 def rate_limit_dependency(endpoint: str = "", requests_per_window: int = 60, window_seconds: int = 60):
+    """Rate limit dependency for IP-based limiting (signin, phone_verify, etc.)."""
+
     def rate_limit(request: Request):
         return rate_limit_custom(endpoint, request, requests_per_window, window_seconds)
 
     return rate_limit
+
+
+def with_rate_limit(auth_dependency, endpoint: str, limits: list):
+    """Wrap an auth dependency with per-UID rate limiting.
+
+    Chains with an existing auth dependency that returns a UID. After auth
+    succeeds, checks all rate limits against that UID. Fail-open on Redis errors.
+
+    Args:
+        auth_dependency: A FastAPI dependency that returns a UID string.
+        endpoint: Endpoint name for Redis key namespacing.
+        limits: List of (max_requests, window_seconds) tuples.
+                e.g. [(10, 60), (100, 3600)] for 10/min and 100/hr.
+    """
+    from fastapi import Depends
+
+    async def dependency(uid: str = Depends(auth_dependency)):
+        try:
+            for max_requests, window_seconds in limits:
+                allowed, remaining, reset = check_api_rate_limit(
+                    uid, f"{endpoint}:{window_seconds}s", max_requests, window_seconds
+                )
+                if not allowed:
+                    raise HTTPException(
+                        status_code=429,
+                        detail=f"Rate limit exceeded. Maximum {max_requests} requests per {window_seconds}s.",
+                        headers={
+                            "X-RateLimit-Limit": str(max_requests),
+                            "X-RateLimit-Remaining": "0",
+                            "X-RateLimit-Reset": str(reset),
+                            "Retry-After": str(reset),
+                        },
+                    )
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error(f"Rate limit check failed (allowing request): {e}")
+        return uid
+
+    return dependency
 
 
 def timeit(func):
