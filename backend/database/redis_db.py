@@ -907,8 +907,28 @@ def try_acquire_conversation_goal_lock(uid: str, conversation_id: str, ttl: int 
 # ******************************************************
 
 
+_RATE_LIMIT_LUA = """
+local key = KEYS[1]
+local max_requests = tonumber(ARGV[1])
+local window_seconds = tonumber(ARGV[2])
+
+local current = redis.call('INCR', key)
+if current == 1 then
+    redis.call('EXPIRE', key, window_seconds)
+end
+
+if current > max_requests then
+    return {0, 0, redis.call('TTL', key)}
+end
+
+return {1, max_requests - current, redis.call('TTL', key)}
+"""
+
+_rate_limit_script = None
+
+
 def check_api_rate_limit(key: str, endpoint: str, max_requests: int, window_seconds: int) -> tuple:
-    """Check rate limit using Redis fixed-window counter.
+    """Check rate limit using atomic Redis Lua script (INCR + EXPIRE in one round-trip).
 
     Args:
         key: Identity key (UID, API key hash, etc.)
@@ -922,23 +942,17 @@ def check_api_rate_limit(key: str, endpoint: str, max_requests: int, window_seco
         remaining: How many requests are left in the window.
         reset_seconds: Seconds until the window resets.
     """
+    global _rate_limit_script
+    if _rate_limit_script is None:
+        _rate_limit_script = r.register_script(_RATE_LIMIT_LUA)
+
     now = int(time.time())
     window_start = now - (now % window_seconds)
     redis_key = f"rate_limit:{endpoint}:{key}:{window_start}"
 
-    current = r.get(redis_key)
-    if current is None:
-        pipe = r.pipeline()
-        pipe.setex(redis_key, window_seconds, 1)
-        pipe.execute()
-        return True, max_requests - 1, window_seconds - (now % window_seconds)
+    result = _rate_limit_script(keys=[redis_key], args=[max_requests, window_seconds])
+    allowed = bool(result[0])
+    remaining = int(result[1])
+    reset = int(result[2]) if result[2] > 0 else window_seconds - (now % window_seconds)
 
-    current = int(current)
-    if current >= max_requests:
-        reset = window_seconds - (now % window_seconds)
-        return False, 0, reset
-
-    r.incr(redis_key)
-    remaining = max_requests - current - 1
-    reset = window_seconds - (now % window_seconds)
-    return True, remaining, reset
+    return allowed, remaining, reset

@@ -2,12 +2,12 @@ import json
 import os
 import time
 
-from fastapi import Header, HTTPException, WebSocketException
+from fastapi import Depends, Header, HTTPException, WebSocketException
 from fastapi import Request
-from fastapi.responses import JSONResponse
 from firebase_admin import auth
 from firebase_admin.auth import InvalidIdTokenError
 import logging
+import redis as redis_pkg
 
 from database.redis_db import check_api_rate_limit, try_acquire_listen_lock
 
@@ -149,11 +149,11 @@ def get_current_user_uid_from_ws_message(message: dict) -> str:
 
 
 def rate_limit_custom(endpoint: str, request: Request, requests_per_window: int, window_seconds: int):
-    """Rate limit by client IP using Redis. Fail-open on Redis errors."""
+    """Rate limit by client IP using Redis. Fail-open on Redis connection errors only."""
     ip = request.client.host
     try:
         allowed, remaining, reset = check_api_rate_limit(ip, endpoint, requests_per_window, window_seconds)
-    except Exception as e:
+    except redis_pkg.exceptions.RedisError as e:
         logger.error(f"Rate limit Redis error (allowing request): {e}")
         return True
 
@@ -184,7 +184,8 @@ def with_rate_limit(auth_dependency, endpoint: str, limits: list):
     """Wrap an auth dependency with per-UID rate limiting.
 
     Chains with an existing auth dependency that returns a UID. After auth
-    succeeds, checks all rate limits against that UID. Fail-open on Redis errors.
+    succeeds, checks all rate limits against that UID. Fail-open on Redis
+    connection errors only — programming errors still raise.
 
     Args:
         auth_dependency: A FastAPI dependency that returns a UID string.
@@ -192,7 +193,6 @@ def with_rate_limit(auth_dependency, endpoint: str, limits: list):
         limits: List of (max_requests, window_seconds) tuples.
                 e.g. [(10, 60), (100, 3600)] for 10/min and 100/hr.
     """
-    from fastapi import Depends
 
     async def dependency(uid: str = Depends(auth_dependency)):
         try:
@@ -213,7 +213,7 @@ def with_rate_limit(auth_dependency, endpoint: str, limits: list):
                     )
         except HTTPException:
             raise
-        except Exception as e:
+        except redis_pkg.exceptions.RedisError as e:
             logger.error(f"Rate limit check failed (allowing request): {e}")
         return uid
 
