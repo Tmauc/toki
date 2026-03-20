@@ -375,6 +375,28 @@ class TestCheckRateLimitInline(unittest.TestCase):
         key = mock_lua_script.call_args[1]["keys"][0]
         self.assertIn("app123:user456", key)
 
+    def test_429_has_all_required_headers(self):
+        """Inline limiter 429 must include standard rate limit headers."""
+        from fastapi import HTTPException
+
+        mock_lua_script.return_value = [0, 0, 45]
+        with self.assertRaises(HTTPException) as ctx:
+            check_rate_limit_inline("user1", "mcp_sse")
+        headers = ctx.exception.headers
+        for h in ["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset", "Retry-After"]:
+            self.assertIn(h, headers, f"Missing header: {h}")
+
+    def test_first_deny_short_circuits_multi_window(self):
+        """When first window denies, remaining windows should NOT be checked."""
+        # mcp_sse has 2 windows: (5, 60), (40, 3600)
+        mock_lua_script.return_value = [0, 0, 45]
+        from fastapi import HTTPException
+
+        with self.assertRaises(HTTPException):
+            check_rate_limit_inline("user1", "mcp_sse")
+        # Only 1 call to Lua script, not 2
+        self.assertEqual(mock_lua_script.call_count, 1)
+
 
 class TestRateLimitCustom(unittest.TestCase):
     """Test the IP-based rate_limit_custom function."""
@@ -489,6 +511,7 @@ class TestSharedBucket(unittest.TestCase):
             segments_match.group(1),
             "Both endpoints must share the same rate limit bucket",
         )
+        self.assertEqual(conversations_match.group(1), "dev_conversations", "Shared bucket must be 'dev_conversations'")
 
 
 class TestCostEndpointsCovered(unittest.TestCase):
@@ -513,20 +536,25 @@ class TestCostEndpointsCovered(unittest.TestCase):
             "/v2/initial-message": "chat_initial",
             "/v2/voice-messages": "voice_messages",
             "/v2/voice-message/transcribe": "voice_transcribe",
+            "/v1/initial-message": "chat_initial",
         }
         for route, policy in routes.items():
             self._assert_route_has_policy(source, route, policy, "chat.py")
 
     def test_conversation_cost_endpoints_rate_limited(self):
         source = self._read_source("routers/conversations.py")
-        for endpoint in ["/reprocess", "/test-prompt", "/merge", "/search"]:
-            pattern = re.escape(endpoint) + r'.*?with_rate_limit'
-            self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Missing rate limit on {endpoint}")
-        self.assertRegex(
-            source,
-            re.compile(r'/v1/conversations".*?with_rate_limit', re.DOTALL),
-            "Missing rate limit on POST /v1/conversations",
-        )
+        routes = {
+            "/v1/conversations\"": "app_conversations",
+            "/reprocess": "reprocess",
+            "/search": "conversation_search",
+            "/test-prompt": "test_prompt",
+            "/merge": "merge_conversations",
+        }
+        for route, policy in routes.items():
+            pattern = re.escape(route) + r'.*?with_rate_limit\([^,]+,\s*"' + re.escape(policy) + r'"'
+            self.assertRegex(
+                source, re.compile(pattern, re.DOTALL), f"Route {route} must use policy {policy}"
+            )
 
     def test_developer_memory_endpoints_rate_limited(self):
         source = self._read_source("routers/developer.py")
@@ -598,11 +626,8 @@ class TestCostEndpointsCovered(unittest.TestCase):
 
     def test_file_upload_rate_limited(self):
         source = self._read_source("routers/chat.py")
-        self.assertRegex(
-            source,
-            re.compile(r'with_rate_limit\([^,]+,\s*"file_upload"'),
-            "Missing file_upload policy",
-        )
+        for route in ["/v2/files", "/v1/files"]:
+            self._assert_route_has_policy(source, route, "file_upload", "chat.py file upload")
 
 
 class TestWebSocketSessionCap(unittest.TestCase):
