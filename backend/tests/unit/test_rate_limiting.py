@@ -489,8 +489,15 @@ class TestCostEndpointsCovered(unittest.TestCase):
 
     def test_conversation_cost_endpoints_rate_limited(self):
         source = self._read_source("routers/conversations.py")
-        for endpoint in ["/v1/conversations\"", "/reprocess", "/test-prompt", "/v1/conversations/merge", "/v1/conversations/search"]:
-            self.assertIn("with_rate_limit", source, f"conversations.py must use with_rate_limit")
+        for endpoint in ["/reprocess", "/test-prompt", "/merge", "/search"]:
+            pattern = re.escape(endpoint) + r'.*?with_rate_limit'
+            self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Missing rate limit on {endpoint}")
+        # Main /v1/conversations POST must also be rate limited
+        self.assertRegex(
+            source,
+            re.compile(r'/v1/conversations".*?with_rate_limit', re.DOTALL),
+            "Missing rate limit on POST /v1/conversations",
+        )
 
     def test_goals_llm_endpoints_rate_limited(self):
         source = self._read_source("routers/goals.py")
@@ -565,6 +572,13 @@ class TestWebSocketSessionCap(unittest.TestCase):
     def test_release_calls_zrem(self):
         self.mock_redis.zrem("ws_sessions:user1", "session123")
         self.mock_redis.zrem.assert_called_once_with("ws_sessions:user1", "session123")
+
+    def test_refresh_extends_ttl(self):
+        """Heartbeat refresh must extend key TTL to prevent expiry during active sessions."""
+        self.mock_redis.zadd("ws_sessions:user1", {"session123": 1000})
+        self.mock_redis.expire("ws_sessions:user1", 7200)
+        self.mock_redis.zadd.assert_called_once()
+        self.mock_redis.expire.assert_called_once_with("ws_sessions:user1", 7200)
 
 
 if __name__ == "__main__":

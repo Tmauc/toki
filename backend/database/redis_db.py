@@ -1012,15 +1012,18 @@ def acquire_ws_session_slot(uid: str, session_id: str, max_concurrent: int = 2, 
     return bool(result)
 
 
-def refresh_ws_session_slot(uid: str, session_id: str):
+def refresh_ws_session_slot(uid: str, session_id: str, max_duration: int = 7200):
     """Refresh a WebSocket session slot timestamp to prevent stale expiry.
 
     Call periodically during active sessions (e.g., every 30 minutes) to
     prevent the sorted set cleanup from evicting still-active sessions.
+    Also extends the key TTL so the sorted set itself doesn't expire while
+    sessions are still active.
     """
     redis_key = f"ws_sessions:{uid}"
     now = int(time.time())
     r.zadd(redis_key, {session_id: now})
+    r.expire(redis_key, max_duration)
 
 
 def release_ws_session_slot(uid: str, session_id: str):

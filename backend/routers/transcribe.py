@@ -36,6 +36,7 @@ import database.conversations as conversations_db
 import database.calendar_meetings as calendar_db
 import database.users as user_db
 from database.users import get_user_transcription_preferences
+import redis as redis_pkg
 from database import redis_db
 from database.redis_db import (
     acquire_ws_session_slot,
@@ -2801,7 +2802,7 @@ async def _listen(
             logger.warning(f"WS concurrent session cap reached uid={uid}")
             await websocket.close(code=1008, reason="Too many concurrent sessions")
             return
-    except Exception as e:
+    except redis_pkg.exceptions.RedisError as e:
         logger.error(f"WS session cap check failed (allowing connection): {e}")
 
     # Background heartbeat to prevent stale session expiry during long connections
@@ -2810,7 +2811,7 @@ async def _listen(
             await asyncio.sleep(1800)  # Refresh every 30 minutes
             try:
                 refresh_ws_session_slot(uid, session_id)
-            except Exception as e:
+            except redis_pkg.exceptions.RedisError as e:
                 logger.error(f"WS session heartbeat failed: {e}")
 
     heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
@@ -2947,7 +2948,7 @@ async def web_listen_handler(
             logger.warning(f"WS concurrent session cap reached uid={uid}")
             await websocket.close(code=1008, reason="Too many concurrent sessions")
             return
-    except Exception as e:
+    except redis_pkg.exceptions.RedisError as e:
         logger.error(f"WS session cap check failed (allowing connection): {e}")
 
     # Send success response
@@ -2964,7 +2965,7 @@ async def web_listen_handler(
             await asyncio.sleep(1800)
             try:
                 refresh_ws_session_slot(uid, session_id)
-            except Exception as e:
+            except redis_pkg.exceptions.RedisError as e:
                 logger.error(f"WS session heartbeat failed: {e}")
 
     heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
