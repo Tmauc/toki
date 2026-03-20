@@ -953,7 +953,9 @@ def check_api_rate_limit(key: str, endpoint: str, max_requests: int, window_seco
     result = _rate_limit_script(keys=[redis_key], args=[max_requests, window_seconds])
     allowed = bool(result[0])
     remaining = int(result[1])
-    reset = int(result[2]) if result[2] > 0 else window_seconds - (now % window_seconds)
+    # Compute reset from window boundary, not Redis TTL (TTL can overstate
+    # when first hit is late in a window, causing unnecessary client backoff)
+    reset = window_seconds - (now % window_seconds)
 
     return allowed, remaining, reset
 
