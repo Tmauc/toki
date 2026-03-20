@@ -1,14 +1,14 @@
 """Tests for API rate limiting (issue #5835).
 
 Covers:
-1. check_api_rate_limit: atomic Lua script behavior (allow, deny, key isolation)
+1. check_api_rate_limit: real function with patched Redis (Lua script invocation)
 2. with_rate_limit dependency: config-driven policy, fail-open, fail-closed
 3. check_rate_limit_inline: inline rate limiting for custom auth patterns
 4. rate_limit_custom (IP-based): allow, deny, fail-open on RedisError only
 5. 429 response headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After
 6. Shared bucket: both conversation POST endpoints share same rate limit bucket
 7. Config registry: all policies valid, all cost endpoints covered
-8. WebSocket concurrent session cap: acquire, release, capacity check
+8. WebSocket concurrent session cap: real functions with patched Redis
 """
 
 import importlib.util
@@ -18,18 +18,20 @@ import sys
 import time
 import types
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import redis as redis_pkg
 
 # ============================================================
-# Setup: mock Redis, load endpoints.py via importlib
+# Setup: mock Redis, load real functions via importlib
 # ============================================================
 
 BACKEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 
-# Mock the function that endpoints.py imports from database.redis_db
-mock_check_rate_limit = MagicMock()
+# Mock Redis instance that will be injected into redis_db.py
+mock_redis_instance = MagicMock()
+mock_lua_script = MagicMock()
+mock_redis_instance.register_script.return_value = mock_lua_script
 
 
 def _stub(name):
@@ -39,18 +41,14 @@ def _stub(name):
     return sys.modules[name]
 
 
-# Minimal stubs
-_stub("database")
-sys.modules["database"].__path__ = []
-redis_stub = _stub("database.redis_db")
-redis_stub.check_api_rate_limit = mock_check_rate_limit
-redis_stub.try_acquire_listen_lock = MagicMock(return_value=True)
-
+# Minimal stubs for firebase
 _stub("firebase_admin")
 _stub("firebase_admin.auth")
 sys.modules["firebase_admin.auth"].InvalidIdTokenError = type("InvalidIdTokenError", (Exception,), {})
 
-# Register parent packages for endpoints.py import
+# Register parent packages
+_stub("database")
+sys.modules["database"].__path__ = []
 _stub("utils")
 sys.modules["utils"].__path__ = [os.path.join(BACKEND_DIR, "utils")]
 _stub("utils.other")
@@ -66,7 +64,30 @@ config_spec.loader.exec_module(config_mod)
 
 RATE_POLICIES = config_mod.RATE_POLICIES
 
-# Load endpoints.py via importlib (must be after rate_limit_config is registered)
+# Load redis_db.py with mock Redis connection
+# Patch redis.Redis to return our mock instance
+_original_redis_cls = redis_pkg.Redis
+redis_pkg.Redis = MagicMock(return_value=mock_redis_instance)
+try:
+    redis_db_spec = importlib.util.spec_from_file_location(
+        "database.redis_db", os.path.join(BACKEND_DIR, "database/redis_db.py")
+    )
+    redis_db_mod = importlib.util.module_from_spec(redis_db_spec)
+    sys.modules["database.redis_db"] = redis_db_mod
+    redis_db_spec.loader.exec_module(redis_db_mod)
+finally:
+    redis_pkg.Redis = _original_redis_cls
+
+# Real functions from redis_db.py
+check_api_rate_limit = redis_db_mod.check_api_rate_limit
+acquire_ws_session_slot = redis_db_mod.acquire_ws_session_slot
+refresh_ws_session_slot = redis_db_mod.refresh_ws_session_slot
+release_ws_session_slot = redis_db_mod.release_ws_session_slot
+
+# Also re-export check_api_rate_limit on the stub for endpoints.py
+redis_db_mod.try_acquire_listen_lock = MagicMock(return_value=True)
+
+# Load endpoints.py (must be after redis_db and rate_limit_config are registered)
 endpoints_spec = importlib.util.spec_from_file_location(
     "utils.other.endpoints", os.path.join(BACKEND_DIR, "utils/other/endpoints.py")
 )
@@ -78,51 +99,8 @@ with_rate_limit = endpoints_mod.with_rate_limit
 check_rate_limit_inline = endpoints_mod.check_rate_limit_inline
 rate_limit_custom = endpoints_mod.rate_limit_custom
 
-# ============================================================
-# Also test the actual Lua-based check_api_rate_limit from redis_db
-# ============================================================
-
-mock_redis = MagicMock()
-mock_lua_script = MagicMock()
-mock_redis.register_script.return_value = mock_lua_script
-
-# Manually define check_api_rate_limit matching production code
-# to verify the Lua script interaction logic
-_rate_limit_script_cache = [None]
-
-_RATE_LIMIT_LUA = """
-local key = KEYS[1]
-local max_requests = tonumber(ARGV[1])
-local window_seconds = tonumber(ARGV[2])
-
-local current = redis.call('INCR', key)
-if current == 1 then
-    redis.call('EXPIRE', key, window_seconds)
-end
-
-if current > max_requests then
-    return {0, 0, redis.call('TTL', key)}
-end
-
-return {1, max_requests - current, redis.call('TTL', key)}
-"""
-
-
-def _check_api_rate_limit_real(key, endpoint, max_requests, window_seconds):
-    """Production check_api_rate_limit with mock Redis — tests Lua script invocation."""
-    if _rate_limit_script_cache[0] is None:
-        _rate_limit_script_cache[0] = mock_redis.register_script(_RATE_LIMIT_LUA)
-
-    now = int(time.time())
-    window_start = now - (now % window_seconds)
-    redis_key = f"rate_limit:{endpoint}:{key}:{window_start}"
-
-    result = _rate_limit_script_cache[0](keys=[redis_key], args=[max_requests, window_seconds])
-    allowed = bool(result[0])
-    remaining = int(result[1])
-    reset = int(result[2]) if result[2] > 0 else window_seconds - (now % window_seconds)
-
-    return allowed, remaining, reset
+# Reference to the mock check_api_rate_limit used by endpoints.py
+mock_check_rate_limit = redis_db_mod.check_api_rate_limit
 
 
 # ============================================================
@@ -131,41 +109,40 @@ def _check_api_rate_limit_real(key, endpoint, max_requests, window_seconds):
 
 
 class TestCheckApiRateLimit(unittest.TestCase):
-    """Test the Lua script invocation logic in check_api_rate_limit."""
+    """Test the REAL check_api_rate_limit function with patched Redis."""
 
     def setUp(self):
-        mock_redis.reset_mock()
+        mock_redis_instance.reset_mock()
         mock_lua_script.reset_mock()
         mock_lua_script.side_effect = None
-        _rate_limit_script_cache[0] = None
-        mock_redis.register_script.return_value = mock_lua_script
+        # Reset the cached script so register_script is called fresh
+        redis_db_mod._rate_limit_script = None
+        mock_redis_instance.register_script.return_value = mock_lua_script
 
     def test_first_request_allowed(self):
         mock_lua_script.return_value = [1, 9, 55]
-        allowed, remaining, reset = _check_api_rate_limit_real("user1", "test", 10, 60)
+        allowed, remaining, reset = check_api_rate_limit("user1", "test", 10, 60)
         self.assertTrue(allowed)
         self.assertEqual(remaining, 9)
-        self.assertEqual(reset, 55)
 
     def test_within_limit_allowed(self):
         mock_lua_script.return_value = [1, 4, 30]
-        allowed, remaining, _ = _check_api_rate_limit_real("user1", "test", 10, 60)
+        allowed, remaining, _ = check_api_rate_limit("user1", "test", 10, 60)
         self.assertTrue(allowed)
         self.assertEqual(remaining, 4)
 
     def test_at_limit_denied(self):
         mock_lua_script.return_value = [0, 0, 45]
-        allowed, remaining, reset = _check_api_rate_limit_real("user1", "test", 10, 60)
+        allowed, remaining, _ = check_api_rate_limit("user1", "test", 10, 60)
         self.assertFalse(allowed)
         self.assertEqual(remaining, 0)
-        self.assertEqual(reset, 45)
 
     def test_different_keys_get_different_redis_keys(self):
         mock_lua_script.return_value = [1, 9, 55]
-        _check_api_rate_limit_real("user1", "test", 10, 60)
+        check_api_rate_limit("user1", "test", 10, 60)
         call1_key = mock_lua_script.call_args[1]["keys"][0]
 
-        _check_api_rate_limit_real("user2", "test", 10, 60)
+        check_api_rate_limit("user2", "test", 10, 60)
         call2_key = mock_lua_script.call_args[1]["keys"][0]
 
         self.assertIn("user1", call1_key)
@@ -174,46 +151,70 @@ class TestCheckApiRateLimit(unittest.TestCase):
 
     def test_different_endpoints_get_different_redis_keys(self):
         mock_lua_script.return_value = [1, 9, 55]
-        _check_api_rate_limit_real("user1", "endpoint_a", 10, 60)
+        check_api_rate_limit("user1", "endpoint_a", 10, 60)
         call1_key = mock_lua_script.call_args[1]["keys"][0]
 
-        _check_api_rate_limit_real("user1", "endpoint_b", 10, 60)
+        check_api_rate_limit("user1", "endpoint_b", 10, 60)
         call2_key = mock_lua_script.call_args[1]["keys"][0]
 
         self.assertNotEqual(call1_key, call2_key)
 
     def test_lua_receives_correct_args(self):
         mock_lua_script.return_value = [1, 9, 55]
-        _check_api_rate_limit_real("user1", "test", 10, 60)
+        check_api_rate_limit("user1", "test", 10, 60)
         args = mock_lua_script.call_args[1]["args"]
         self.assertEqual(args, [10, 60])
 
     def test_last_request_shows_zero_remaining(self):
         mock_lua_script.return_value = [1, 0, 10]
-        allowed, remaining, _ = _check_api_rate_limit_real("user1", "test", 10, 60)
+        allowed, remaining, _ = check_api_rate_limit("user1", "test", 10, 60)
         self.assertTrue(allowed)
         self.assertEqual(remaining, 0)
-
-    def test_reset_fallback_when_ttl_zero(self):
-        mock_lua_script.return_value = [0, 0, 0]
-        _, _, reset = _check_api_rate_limit_real("user1", "test", 10, 60)
-        self.assertGreater(reset, 0)
-        self.assertLessEqual(reset, 60)
 
     def test_script_registered_once(self):
         """Lua script should be registered only once (cached)."""
         mock_lua_script.return_value = [1, 9, 55]
-        _check_api_rate_limit_real("user1", "test", 10, 60)
-        _check_api_rate_limit_real("user2", "test", 10, 60)
-        mock_redis.register_script.assert_called_once()
+        check_api_rate_limit("user1", "test", 10, 60)
+        check_api_rate_limit("user2", "test", 10, 60)
+        mock_redis_instance.register_script.assert_called_once()
+
+    def test_reset_uses_window_boundary_not_ttl(self):
+        """Reset must be computed from window boundary, not Redis TTL."""
+        mock_lua_script.return_value = [0, 0, 999]  # TTL=999 from Lua (ignored)
+        with patch("database.redis_db.time") as mock_time:
+            # 1000045 % 60 = 25, so 35s remain in window (not 999 from TTL)
+            mock_time.time.return_value = 1000045.0
+            _, _, reset = check_api_rate_limit("user1", "test", 10, 60)
+            self.assertEqual(reset, 35)
+
+    def test_reset_at_window_boundary(self):
+        """At exact window boundary (now % window == 0), reset should equal window_seconds."""
+        mock_lua_script.return_value = [1, 5, 60]
+        with patch("database.redis_db.time") as mock_time:
+            mock_time.time.return_value = 1000020.0  # 1000020 % 60 == 0
+            _, _, reset = check_api_rate_limit("user1", "test", 10, 60)
+            self.assertEqual(reset, 60)
+
+    def test_key_includes_window_start(self):
+        """Redis key must include window_start for fixed-window bucketing."""
+        mock_lua_script.return_value = [1, 9, 55]
+        with patch("database.redis_db.time") as mock_time:
+            mock_time.time.return_value = 1000045.0
+            check_api_rate_limit("user1", "test", 10, 60)
+            key = mock_lua_script.call_args[1]["keys"][0]
+            # window_start = 1000045 - (1000045 % 60) = 1000020
+            self.assertIn("1000020", key)
 
 
 class TestWithRateLimit(unittest.TestCase):
     """Test the config-driven with_rate_limit dependency factory."""
 
     def setUp(self):
-        mock_check_rate_limit.reset_mock()
-        mock_check_rate_limit.side_effect = None
+        mock_redis_instance.reset_mock()
+        mock_lua_script.reset_mock()
+        mock_lua_script.side_effect = None
+        redis_db_mod._rate_limit_script = None
+        mock_redis_instance.register_script.return_value = mock_lua_script
 
     def _run(self, coro):
         import asyncio
@@ -225,7 +226,7 @@ class TestWithRateLimit(unittest.TestCase):
             loop.close()
 
     def test_allows_within_limit(self):
-        mock_check_rate_limit.return_value = (True, 9, 55)
+        mock_lua_script.return_value = [1, 9, 55]
         dep = with_rate_limit(lambda: None, "chat_messages")
         result = self._run(dep(uid="test_uid"))
         self.assertEqual(result, "test_uid")
@@ -233,7 +234,7 @@ class TestWithRateLimit(unittest.TestCase):
     def test_denies_over_limit(self):
         from fastapi import HTTPException
 
-        mock_check_rate_limit.return_value = (False, 0, 45)
+        mock_lua_script.return_value = [0, 0, 45]
         dep = with_rate_limit(lambda: None, "chat_messages")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
@@ -244,7 +245,7 @@ class TestWithRateLimit(unittest.TestCase):
         """First window (minute) denies — should raise 429."""
         from fastapi import HTTPException
 
-        mock_check_rate_limit.return_value = (False, 0, 45)
+        mock_lua_script.return_value = [0, 0, 45]
         dep = with_rate_limit(lambda: None, "dev_conversations")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
@@ -256,13 +257,13 @@ class TestWithRateLimit(unittest.TestCase):
 
         call_count = [0]
 
-        def side_effect(*args, **kwargs):
+        def side_effect(**kwargs):
             call_count[0] += 1
             if call_count[0] == 1:
-                return (True, 1, 45)  # minute OK
-            return (False, 0, 3500)  # hour exceeded
+                return [1, 1, 45]  # minute OK
+            return [0, 0, 3500]  # hour exceeded
 
-        mock_check_rate_limit.side_effect = side_effect
+        mock_lua_script.side_effect = side_effect
         dep = with_rate_limit(lambda: None, "dev_conversations")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
@@ -274,21 +275,32 @@ class TestWithRateLimit(unittest.TestCase):
 
         call_count = [0]
 
-        def side_effect(*args, **kwargs):
+        def side_effect(**kwargs):
             call_count[0] += 1
             if call_count[0] <= 2:
-                return (True, 1, 45)  # minute and hour OK
-            return (False, 0, 80000)  # daily exceeded
+                return [1, 1, 45]  # minute and hour OK
+            return [0, 0, 80000]  # daily exceeded
 
-        mock_check_rate_limit.side_effect = side_effect
+        mock_lua_script.side_effect = side_effect
         dep = with_rate_limit(lambda: None, "dev_conversations")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
         self.assertEqual(ctx.exception.status_code, 429)
 
+    def test_first_deny_short_circuits(self):
+        """When first window denies, remaining windows should NOT be checked."""
+        mock_lua_script.return_value = [0, 0, 45]
+        dep = with_rate_limit(lambda: None, "dev_conversations")  # 3 windows
+        from fastapi import HTTPException
+
+        with self.assertRaises(HTTPException):
+            self._run(dep(uid="test_uid"))
+        # Only 1 call to Lua script, not 3
+        self.assertEqual(mock_lua_script.call_count, 1)
+
     def test_fail_open_on_redis_error(self):
         """Non-fail_closed policy: allow on Redis error."""
-        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
         dep = with_rate_limit(lambda: None, "chat_messages")  # fail_closed=False
         result = self._run(dep(uid="test_uid"))
         self.assertEqual(result, "test_uid")
@@ -297,7 +309,7 @@ class TestWithRateLimit(unittest.TestCase):
         """fail_closed=True policy: return 503 on Redis error."""
         from fastapi import HTTPException
 
-        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
         dep = with_rate_limit(lambda: None, "dev_conversations")  # fail_closed=True
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
@@ -305,7 +317,7 @@ class TestWithRateLimit(unittest.TestCase):
         self.assertIn("Retry-After", ctx.exception.headers)
 
     def test_non_redis_error_propagates_regardless_of_fail_mode(self):
-        mock_check_rate_limit.side_effect = ValueError("programming bug")
+        mock_lua_script.side_effect = ValueError("programming bug")
         dep = with_rate_limit(lambda: None, "dev_conversations")  # fail_closed=True
         with self.assertRaises(ValueError):
             self._run(dep(uid="test_uid"))
@@ -313,7 +325,7 @@ class TestWithRateLimit(unittest.TestCase):
     def test_429_has_all_required_headers(self):
         from fastapi import HTTPException
 
-        mock_check_rate_limit.return_value = (False, 0, 45)
+        mock_lua_script.return_value = [0, 0, 45]
         dep = with_rate_limit(lambda: None, "chat_messages")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
@@ -327,17 +339,20 @@ class TestCheckRateLimitInline(unittest.TestCase):
     """Test inline rate limiting for custom auth patterns (MCP, integration)."""
 
     def setUp(self):
-        mock_check_rate_limit.reset_mock()
-        mock_check_rate_limit.side_effect = None
+        mock_redis_instance.reset_mock()
+        mock_lua_script.reset_mock()
+        mock_lua_script.side_effect = None
+        redis_db_mod._rate_limit_script = None
+        mock_redis_instance.register_script.return_value = mock_lua_script
 
     def test_allows_within_limit(self):
-        mock_check_rate_limit.return_value = (True, 9, 55)
+        mock_lua_script.return_value = [1, 9, 55]
         check_rate_limit_inline("user1", "mcp_sse")  # Should not raise
 
     def test_denies_over_limit(self):
         from fastapi import HTTPException
 
-        mock_check_rate_limit.return_value = (False, 0, 45)
+        mock_lua_script.return_value = [0, 0, 45]
         with self.assertRaises(HTTPException) as ctx:
             check_rate_limit_inline("user1", "mcp_sse")
         self.assertEqual(ctx.exception.status_code, 429)
@@ -345,31 +360,34 @@ class TestCheckRateLimitInline(unittest.TestCase):
     def test_fail_closed_returns_503(self):
         from fastapi import HTTPException
 
-        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
         with self.assertRaises(HTTPException) as ctx:
             check_rate_limit_inline("user1", "mcp_sse")  # fail_closed=True
         self.assertEqual(ctx.exception.status_code, 503)
 
     def test_fail_open_allows(self):
-        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
         check_rate_limit_inline("user1", "chat_messages")  # fail_closed=False, should not raise
 
     def test_composite_key_for_integration(self):
-        mock_check_rate_limit.return_value = (True, 9, 55)
+        mock_lua_script.return_value = [1, 9, 55]
         check_rate_limit_inline("app123:user456", "integration_conversations")
-        call_args = mock_check_rate_limit.call_args
-        self.assertIn("app123:user456", call_args[0][0])
+        key = mock_lua_script.call_args[1]["keys"][0]
+        self.assertIn("app123:user456", key)
 
 
 class TestRateLimitCustom(unittest.TestCase):
     """Test the IP-based rate_limit_custom function."""
 
     def setUp(self):
-        mock_check_rate_limit.reset_mock()
-        mock_check_rate_limit.side_effect = None
+        mock_redis_instance.reset_mock()
+        mock_lua_script.reset_mock()
+        mock_lua_script.side_effect = None
+        redis_db_mod._rate_limit_script = None
+        mock_redis_instance.register_script.return_value = mock_lua_script
 
     def test_ip_based_allows(self):
-        mock_check_rate_limit.return_value = (True, 4, 55)
+        mock_lua_script.return_value = [1, 4, 55]
         request = MagicMock()
         request.client.host = "1.2.3.4"
         result = rate_limit_custom("signin", request, 5, 60)
@@ -378,7 +396,7 @@ class TestRateLimitCustom(unittest.TestCase):
     def test_ip_based_denies(self):
         from fastapi import HTTPException
 
-        mock_check_rate_limit.return_value = (False, 0, 45)
+        mock_lua_script.return_value = [0, 0, 45]
         request = MagicMock()
         request.client.host = "1.2.3.4"
         with self.assertRaises(HTTPException) as ctx:
@@ -386,14 +404,14 @@ class TestRateLimitCustom(unittest.TestCase):
         self.assertEqual(ctx.exception.status_code, 429)
 
     def test_ip_based_fail_open_on_redis_error(self):
-        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
         request = MagicMock()
         request.client.host = "1.2.3.4"
         result = rate_limit_custom("signin", request, 5, 60)
         self.assertTrue(result)
 
     def test_ip_based_non_redis_error_propagates(self):
-        mock_check_rate_limit.side_effect = ValueError("bug")
+        mock_lua_script.side_effect = ValueError("bug")
         request = MagicMock()
         request.client.host = "1.2.3.4"
         with self.assertRaises(ValueError):
@@ -481,60 +499,91 @@ class TestCostEndpointsCovered(unittest.TestCase):
         with open(path) as f:
             return f.read()
 
+    def _assert_route_has_policy(self, source, route_pattern, policy_name, description):
+        """Assert a specific route uses a specific rate limit policy."""
+        pattern = re.escape(route_pattern) + r'.*?with_rate_limit\([^,]+,\s*"' + re.escape(policy_name) + r'"'
+        self.assertRegex(
+            source, re.compile(pattern, re.DOTALL), f"{description}: route {route_pattern} must use policy {policy_name}"
+        )
+
     def test_chat_endpoints_rate_limited(self):
         source = self._read_source("routers/chat.py")
-        for endpoint in ["/v2/messages", "/v2/initial-message", "/v2/voice-messages", "/v2/voice-message/transcribe"]:
-            pattern = re.escape(endpoint) + r'.*?with_rate_limit'
-            self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Missing rate limit on {endpoint}")
+        routes = {
+            "/v2/messages": "chat_messages",
+            "/v2/initial-message": "chat_initial",
+            "/v2/voice-messages": "voice_messages",
+            "/v2/voice-message/transcribe": "voice_transcribe",
+        }
+        for route, policy in routes.items():
+            self._assert_route_has_policy(source, route, policy, "chat.py")
 
     def test_conversation_cost_endpoints_rate_limited(self):
         source = self._read_source("routers/conversations.py")
         for endpoint in ["/reprocess", "/test-prompt", "/merge", "/search"]:
             pattern = re.escape(endpoint) + r'.*?with_rate_limit'
             self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Missing rate limit on {endpoint}")
-        # Main /v1/conversations POST must also be rate limited
         self.assertRegex(
             source,
             re.compile(r'/v1/conversations".*?with_rate_limit', re.DOTALL),
             "Missing rate limit on POST /v1/conversations",
         )
 
+    def test_developer_memory_endpoints_rate_limited(self):
+        source = self._read_source("routers/developer.py")
+        self._assert_route_has_policy(source, "/v1/dev/user/memories\"", "dev_memories", "developer.py single memory")
+        self._assert_route_has_policy(source, "/v1/dev/user/memories/batch", "dev_memories_batch", "developer.py batch")
+
     def test_goals_llm_endpoints_rate_limited(self):
         source = self._read_source("routers/goals.py")
-        self.assertIn("with_rate_limit", source)
         for policy in ["goals_suggest", "goals_advice", "goals_extract"]:
-            self.assertIn(policy, source, f"Missing policy {policy} in goals.py")
+            self.assertRegex(
+                source,
+                re.compile(r'with_rate_limit\([^,]+,\s*"' + re.escape(policy) + r'"'),
+                f"Missing policy {policy} in goals.py",
+            )
 
     def test_knowledge_graph_rebuild_rate_limited(self):
         source = self._read_source("routers/knowledge_graph.py")
-        self.assertIn("knowledge_graph_rebuild", source)
+        self.assertRegex(
+            source,
+            re.compile(r'with_rate_limit\([^,]+,\s*"knowledge_graph_rebuild"'),
+            "Missing knowledge_graph_rebuild policy",
+        )
 
     def test_wrapped_generate_rate_limited(self):
         source = self._read_source("routers/wrapped.py")
-        self.assertIn("wrapped_generate", source)
+        self.assertRegex(
+            source,
+            re.compile(r'with_rate_limit\([^,]+,\s*"wrapped_generate"'),
+            "Missing wrapped_generate policy",
+        )
 
     def test_agent_execute_tool_rate_limited(self):
         source = self._read_source("routers/agent_tools.py")
-        self.assertIn("agent_execute_tool", source)
+        self.assertRegex(
+            source,
+            re.compile(r'with_rate_limit\([^,]+,\s*"agent_execute_tool"'),
+            "Missing agent_execute_tool policy",
+        )
 
     def test_mcp_sse_rate_limited(self):
         source = self._read_source("routers/mcp_sse.py")
         self.assertIn("check_rate_limit_inline", source)
-        self.assertIn("mcp_sse", source)
+        self.assertIn('"mcp_sse"', source)
 
     def test_mcp_batch_rate_limited_per_message(self):
         """MCP must rate limit per-message, not per-request, to prevent batch bypass."""
         source = self._read_source("routers/mcp_sse.py")
-        # check_rate_limit_inline must be called inside a for loop over messages
         self.assertRegex(source, r'for .+ in messages:\s+check_rate_limit_inline')
 
     def test_integration_conversations_rate_limited(self):
         source = self._read_source("routers/integration.py")
-        self.assertIn("integration_conversations", source)
+        self.assertIn('"integration_conversations"', source)
+        self.assertIn("check_rate_limit_inline", source)
 
     def test_integration_memories_rate_limited(self):
         source = self._read_source("routers/integration.py")
-        self.assertIn("integration_memories", source)
+        self.assertIn('"integration_memories"', source)
 
     def test_websocket_concurrent_cap_present(self):
         source = self._read_source("routers/transcribe.py")
@@ -549,36 +598,73 @@ class TestCostEndpointsCovered(unittest.TestCase):
 
     def test_file_upload_rate_limited(self):
         source = self._read_source("routers/chat.py")
-        self.assertIn("file_upload", source)
+        self.assertRegex(
+            source,
+            re.compile(r'with_rate_limit\([^,]+,\s*"file_upload"'),
+            "Missing file_upload policy",
+        )
 
 
 class TestWebSocketSessionCap(unittest.TestCase):
-    """Test WebSocket concurrent session cap Lua script logic."""
+    """Test REAL WebSocket session cap functions with patched Redis."""
 
     def setUp(self):
-        self.mock_redis = MagicMock()
-        self.mock_script = MagicMock()
-        self.mock_redis.register_script.return_value = self.mock_script
+        mock_redis_instance.reset_mock()
+        # Reset cached scripts
+        redis_db_mod._ws_session_acquire_script = None
 
-    def test_acquire_allowed_when_under_cap(self):
-        self.mock_script.return_value = 1  # allowed
-        # Simulate the Lua logic: ZCARD < max_concurrent
-        self.assertTrue(bool(self.mock_script.return_value))
+    def test_acquire_registers_script_and_calls_it(self):
+        """acquire_ws_session_slot must register Lua script and call it."""
+        mock_script = MagicMock(return_value=1)
+        mock_redis_instance.register_script.return_value = mock_script
+        result = acquire_ws_session_slot("user1", "sess1")
+        self.assertTrue(result)
+        mock_redis_instance.register_script.assert_called_once()
+        mock_script.assert_called_once()
+        # Verify key contains uid
+        call_kwargs = mock_script.call_args[1]
+        self.assertEqual(call_kwargs["keys"], ["ws_sessions:user1"])
 
     def test_acquire_denied_when_at_cap(self):
-        self.mock_script.return_value = 0  # denied
-        self.assertFalse(bool(self.mock_script.return_value))
+        mock_script = MagicMock(return_value=0)
+        mock_redis_instance.register_script.return_value = mock_script
+        result = acquire_ws_session_slot("user1", "sess1")
+        self.assertFalse(result)
+
+    def test_acquire_passes_correct_args(self):
+        mock_script = MagicMock(return_value=1)
+        mock_redis_instance.register_script.return_value = mock_script
+        acquire_ws_session_slot("user1", "sess1", max_concurrent=3, max_duration=9000)
+        args = mock_script.call_args[1]["args"]
+        self.assertEqual(args[0], "sess1")  # session_id
+        self.assertEqual(args[2], 3)  # max_concurrent
+        self.assertEqual(args[3], 9000)  # max_duration
 
     def test_release_calls_zrem(self):
-        self.mock_redis.zrem("ws_sessions:user1", "session123")
-        self.mock_redis.zrem.assert_called_once_with("ws_sessions:user1", "session123")
+        release_ws_session_slot("user1", "session123")
+        mock_redis_instance.zrem.assert_called_once_with("ws_sessions:user1", "session123")
 
-    def test_refresh_extends_ttl(self):
-        """Heartbeat refresh must extend key TTL to prevent expiry during active sessions."""
-        self.mock_redis.zadd("ws_sessions:user1", {"session123": 1000})
-        self.mock_redis.expire("ws_sessions:user1", 7200)
-        self.mock_redis.zadd.assert_called_once()
-        self.mock_redis.expire.assert_called_once_with("ws_sessions:user1", 7200)
+    def test_refresh_calls_zadd_and_expire(self):
+        """Heartbeat refresh must update score AND extend key TTL."""
+        refresh_ws_session_slot("user1", "session123")
+        mock_redis_instance.zadd.assert_called_once()
+        # Verify zadd key and session
+        zadd_args = mock_redis_instance.zadd.call_args
+        self.assertEqual(zadd_args[0][0], "ws_sessions:user1")
+        # Verify expire is called with max_duration
+        mock_redis_instance.expire.assert_called_once_with("ws_sessions:user1", 7200)
+
+    def test_refresh_custom_duration(self):
+        refresh_ws_session_slot("user1", "session123", max_duration=14400)
+        mock_redis_instance.expire.assert_called_once_with("ws_sessions:user1", 14400)
+
+    def test_acquire_script_cached(self):
+        """Script registration should happen only once."""
+        mock_script = MagicMock(return_value=1)
+        mock_redis_instance.register_script.return_value = mock_script
+        acquire_ws_session_slot("user1", "sess1")
+        acquire_ws_session_slot("user2", "sess2")
+        mock_redis_instance.register_script.assert_called_once()
 
 
 if __name__ == "__main__":
