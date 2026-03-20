@@ -38,9 +38,12 @@ import database.users as user_db
 from database.users import get_user_transcription_preferences
 from database import redis_db
 from database.redis_db import (
+    acquire_ws_session_slot,
     check_credits_invalidation,
     get_cached_user_geolocation,
+    release_ws_session_slot,
 )
+from utils.rate_limit_config import WS_MAX_CONCURRENT_SESSIONS, WS_SESSION_MAX_DURATION
 from models.conversation import (
     Conversation,
     ConversationPhoto,
@@ -2786,31 +2789,49 @@ async def _listen(
 ):
     """
     WebSocket handler for app clients. Accepts the websocket connection and delegates to _stream_handler.
+    Enforces per-UID concurrent session cap before accepting.
     """
     logger.info(f"_listen {uid}")
-    try:
-        await websocket.accept()
-    except RuntimeError as e:
-        logger.error(f"_listen: accept error {e} {uid}")
-        return
 
-    await _stream_handler(
-        websocket,
-        uid,
-        language,
-        sample_rate,
-        codec,
-        channels,
-        include_speech_profile,
-        stt_service,
-        conversation_timeout=conversation_timeout,
-        source=source,
-        custom_stt_mode=custom_stt_mode,
-        onboarding_mode=onboarding_mode,
-        speaker_auto_assign_enabled=speaker_auto_assign_enabled,
-        vad_gate_override=vad_gate_override,
-        call_id=call_id,
-    )
+    # Concurrent session cap — fail-open on Redis errors to avoid breaking reconnects
+    session_id = str(uuid.uuid4())
+    try:
+        if not acquire_ws_session_slot(uid, session_id, WS_MAX_CONCURRENT_SESSIONS, WS_SESSION_MAX_DURATION):
+            logger.warning(f"WS concurrent session cap reached uid={uid}")
+            await websocket.close(code=1008, reason="Too many concurrent sessions")
+            return
+    except Exception as e:
+        logger.error(f"WS session cap check failed (allowing connection): {e}")
+
+    try:
+        try:
+            await websocket.accept()
+        except RuntimeError as e:
+            logger.error(f"_listen: accept error {e} {uid}")
+            return
+
+        await _stream_handler(
+            websocket,
+            uid,
+            language,
+            sample_rate,
+            codec,
+            channels,
+            include_speech_profile,
+            stt_service,
+            conversation_timeout=conversation_timeout,
+            source=source,
+            custom_stt_mode=custom_stt_mode,
+            onboarding_mode=onboarding_mode,
+            speaker_auto_assign_enabled=speaker_auto_assign_enabled,
+            vad_gate_override=vad_gate_override,
+            call_id=call_id,
+        )
+    finally:
+        try:
+            release_ws_session_slot(uid, session_id)
+        except Exception as e:
+            logger.error(f"WS session slot release failed: {e}")
     logger.info(f"_listen ended {uid}")
 
 
@@ -2907,6 +2928,16 @@ async def web_listen_handler(
         await websocket.close(code=1008, reason="Auth error")
         return
 
+    # Concurrent session cap (shared with /v4/listen) — fail-open on Redis errors
+    session_id = str(uuid.uuid4())
+    try:
+        if not acquire_ws_session_slot(uid, session_id, WS_MAX_CONCURRENT_SESSIONS, WS_SESSION_MAX_DURATION):
+            logger.warning(f"WS concurrent session cap reached uid={uid}")
+            await websocket.close(code=1008, reason="Too many concurrent sessions")
+            return
+    except Exception as e:
+        logger.error(f"WS session cap check failed (allowing connection): {e}")
+
     # Send success response
     await websocket.send_json({"type": "auth_response", "success": True})
     logger.info(f"web_listen_handler authenticated {uid}")
@@ -2915,19 +2946,25 @@ async def web_listen_handler(
     custom_stt_mode = CustomSttMode.enabled if custom_stt == 'enabled' else CustomSttMode.disabled
     onboarding_mode = onboarding == 'enabled'
 
-    await _stream_handler(
-        websocket,
-        uid,
-        language,
-        sample_rate,
-        codec,
-        channels,
-        include_speech_profile,
-        None,
-        conversation_timeout=conversation_timeout,
-        source=source,
-        custom_stt_mode=custom_stt_mode,
-        onboarding_mode=onboarding_mode,
-        call_id=call_id,
-    )
+    try:
+        await _stream_handler(
+            websocket,
+            uid,
+            language,
+            sample_rate,
+            codec,
+            channels,
+            include_speech_profile,
+            None,
+            conversation_timeout=conversation_timeout,
+            source=source,
+            custom_stt_mode=custom_stt_mode,
+            onboarding_mode=onboarding_mode,
+            call_id=call_id,
+        )
+    finally:
+        try:
+            release_ws_session_slot(uid, session_id)
+        except Exception as e:
+            logger.error(f"WS session slot release failed: {e}")
     logger.info(f"web_listen_handler ended {uid}")

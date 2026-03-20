@@ -14,6 +14,7 @@ from pydantic import BaseModel
 import database.wrapped as wrapped_db
 from database.wrapped import WrappedStatus
 from utils.other import endpoints as auth
+from utils.other.endpoints import with_rate_limit
 import logging
 
 logger = logging.getLogger(__name__)
@@ -80,7 +81,7 @@ def get_wrapped_status(year: int, uid: str = Depends(auth.get_current_user_uid))
 
 
 @router.post('/v1/wrapped/{year}/generate', response_model=GenerateWrappedResponse, tags=['wrapped'])
-def generate_wrapped(year: int, uid: str = Depends(auth.get_current_user_uid)):
+def generate_wrapped(year: int, uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "wrapped_generate"))):
     """
     Start wrapped generation for a given year.
 

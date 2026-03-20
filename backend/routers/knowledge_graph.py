@@ -7,6 +7,7 @@ from database import memories as memories_db
 from database.auth import get_user_name
 from utils.llm.knowledge_graph import extract_knowledge_from_memory, rebuild_knowledge_graph
 from utils.other import endpoints as auth
+from utils.other.endpoints import with_rate_limit
 
 router = APIRouter()
 
@@ -50,7 +51,7 @@ def _rebuild_graph_task(uid: str, user_name: str):
 
 
 @router.post('/v1/knowledge-graph/rebuild', tags=['knowledge_graph'], response_model=RebuildResponse)
-def rebuild_graph(background_tasks: BackgroundTasks, uid: str = Depends(auth.get_current_user_uid)):
+def rebuild_graph(background_tasks: BackgroundTasks, uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "knowledge_graph_rebuild"))):
     user_name = get_user_name(uid)
 
     kg_db.delete_knowledge_graph(uid)

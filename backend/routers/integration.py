@@ -6,6 +6,7 @@ from fastapi import APIRouter, Header, HTTPException, Query
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
+from utils.other.endpoints import check_rate_limit_inline
 import database.apps as apps_db
 import database.conversations as conversations_db
 import utils.apps as apps_utils
@@ -101,6 +102,9 @@ async def create_conversation_via_integration(
     if not apps_utils.app_can_create_conversation(app):
         raise HTTPException(status_code=403, detail="App does not have the capability to create conversations")
 
+    # Rate limit (per app+user)
+    check_rate_limit_inline(f"{app_id}:{uid}", "integration_conversations")
+
     # Time
     started_at = (
         create_conversation.started_at if create_conversation.started_at is not None else datetime.now(timezone.utc)
@@ -175,6 +179,9 @@ async def create_memories_via_integration(
     # Check if the app has the capability external_integration > action > create_memories / create_facts
     if not apps_utils.app_can_create_memories(app):
         raise HTTPException(status_code=403, detail="App does not have the capability to create memories")
+
+    # Rate limit (per app+user)
+    check_rate_limit_inline(f"{app_id}:{uid}", "integration_memories")
 
     # Validate that text is provided or explicit facts are provided
     if (not fact_data.text or len(fact_data.text.strip()) == 0) and (

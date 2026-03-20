@@ -179,7 +179,7 @@ def get_memories(
 @router.post("/v1/dev/user/memories", response_model=MemoryResponse, tags=["developer"])
 def create_memory(
     request: CreateMemoryRequest,
-    uid: str = Depends(with_rate_limit(get_uid_with_memories_write, "dev_memories", [(30, 60)])),
+    uid: str = Depends(with_rate_limit(get_uid_with_memories_write, "dev_memories")),
 ):
     """
     Create a new memory for the authenticated user.
@@ -229,7 +229,7 @@ def create_memory(
 @router.post("/v1/dev/user/memories/batch", response_model=BatchMemoriesResponse, tags=["developer"])
 def create_memories_batch(
     request: BatchMemoriesRequest,
-    uid: str = Depends(with_rate_limit(get_uid_with_memories_write, "dev_memories_batch", [(5, 60)])),
+    uid: str = Depends(with_rate_limit(get_uid_with_memories_write, "dev_memories_batch")),
 ):
     """
     Create multiple memories in a batch.
@@ -776,7 +776,7 @@ def get_conversations(
 @router.post("/v1/dev/user/conversations", response_model=ConversationResponse, tags=["developer"])
 def create_conversation(
     request: CreateConversationRequest,
-    uid: str = Depends(with_rate_limit(get_uid_with_conversations_write, "dev_conversations", [(10, 60), (100, 3600)])),
+    uid: str = Depends(with_rate_limit(get_uid_with_conversations_write, "dev_conversations")),
 ):
     """
     Create a new conversation from text for the authenticated user.
@@ -883,7 +883,7 @@ def get_conversation_endpoint(
 @router.post("/v1/dev/user/conversations/from-segments", response_model=ConversationResponse, tags=["developer"])
 def create_conversation_from_segments(
     request: CreateConversationFromTranscriptRequest,
-    uid: str = Depends(with_rate_limit(get_uid_with_conversations_write, "dev_conversations", [(10, 60), (100, 3600)])),
+    uid: str = Depends(with_rate_limit(get_uid_with_conversations_write, "dev_conversations")),
 ):
     """
     Create a new conversation from structured transcript segments.

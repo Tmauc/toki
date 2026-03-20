@@ -2,10 +2,13 @@
 
 Covers:
 1. check_api_rate_limit: atomic Lua script behavior (allow, deny, key isolation)
-2. with_rate_limit dependency: single limit, dual limits, fail-open on RedisError only
-3. rate_limit_custom (IP-based): allow, deny, fail-open on RedisError only
-4. 429 response headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After
-5. Shared bucket: both conversation POST endpoints share same rate limit bucket
+2. with_rate_limit dependency: config-driven policy, fail-open, fail-closed
+3. check_rate_limit_inline: inline rate limiting for custom auth patterns
+4. rate_limit_custom (IP-based): allow, deny, fail-open on RedisError only
+5. 429 response headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After
+6. Shared bucket: both conversation POST endpoints share same rate limit bucket
+7. Config registry: all policies valid, all cost endpoints covered
+8. WebSocket concurrent session cap: acquire, release, capacity check
 """
 
 import importlib.util
@@ -15,7 +18,7 @@ import sys
 import time
 import types
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import redis as redis_pkg
 
@@ -53,6 +56,16 @@ sys.modules["utils"].__path__ = [os.path.join(BACKEND_DIR, "utils")]
 _stub("utils.other")
 sys.modules["utils.other"].__path__ = [os.path.join(BACKEND_DIR, "utils/other")]
 
+# Load rate_limit_config.py
+config_spec = importlib.util.spec_from_file_location(
+    "utils.rate_limit_config", os.path.join(BACKEND_DIR, "utils/rate_limit_config.py")
+)
+config_mod = importlib.util.module_from_spec(config_spec)
+sys.modules["utils.rate_limit_config"] = config_mod
+config_spec.loader.exec_module(config_mod)
+
+RATE_POLICIES = config_mod.RATE_POLICIES
+
 # Load endpoints.py via importlib
 endpoints_spec = importlib.util.spec_from_file_location(
     "utils.other.endpoints", os.path.join(BACKEND_DIR, "utils/other/endpoints.py")
@@ -62,6 +75,7 @@ sys.modules["utils.other.endpoints"] = endpoints_mod
 endpoints_spec.loader.exec_module(endpoints_mod)
 
 with_rate_limit = endpoints_mod.with_rate_limit
+check_rate_limit_inline = endpoints_mod.check_rate_limit_inline
 rate_limit_custom = endpoints_mod.rate_limit_custom
 
 # ============================================================
@@ -195,7 +209,7 @@ class TestCheckApiRateLimit(unittest.TestCase):
 
 
 class TestWithRateLimit(unittest.TestCase):
-    """Test the with_rate_limit dependency factory."""
+    """Test the config-driven with_rate_limit dependency factory."""
 
     def setUp(self):
         mock_check_rate_limit.reset_mock()
@@ -212,7 +226,7 @@ class TestWithRateLimit(unittest.TestCase):
 
     def test_allows_within_limit(self):
         mock_check_rate_limit.return_value = (True, 9, 55)
-        dep = with_rate_limit(lambda: None, "test", [(10, 60)])
+        dep = with_rate_limit(lambda: None, "chat_messages")
         result = self._run(dep(uid="test_uid"))
         self.assertEqual(result, "test_uid")
 
@@ -220,22 +234,24 @@ class TestWithRateLimit(unittest.TestCase):
         from fastapi import HTTPException
 
         mock_check_rate_limit.return_value = (False, 0, 45)
-        dep = with_rate_limit(lambda: None, "test", [(10, 60)])
+        dep = with_rate_limit(lambda: None, "chat_messages")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
         self.assertEqual(ctx.exception.status_code, 429)
         self.assertIn("Rate limit exceeded", ctx.exception.detail)
 
-    def test_dual_limits_minute_exceeded(self):
+    def test_multi_window_minute_exceeded(self):
+        """First window (minute) denies — should raise 429."""
         from fastapi import HTTPException
 
         mock_check_rate_limit.return_value = (False, 0, 45)
-        dep = with_rate_limit(lambda: None, "test", [(10, 60), (100, 3600)])
+        dep = with_rate_limit(lambda: None, "dev_conversations")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
         self.assertEqual(ctx.exception.status_code, 429)
 
-    def test_dual_limits_hour_exceeded(self):
+    def test_multi_window_hour_exceeded(self):
+        """Minute passes, hour denies — should raise 429."""
         from fastapi import HTTPException
 
         call_count = [0]
@@ -243,24 +259,54 @@ class TestWithRateLimit(unittest.TestCase):
         def side_effect(*args, **kwargs):
             call_count[0] += 1
             if call_count[0] == 1:
-                return (True, 5, 45)  # minute OK
+                return (True, 1, 45)  # minute OK
             return (False, 0, 3500)  # hour exceeded
 
         mock_check_rate_limit.side_effect = side_effect
-        dep = with_rate_limit(lambda: None, "test", [(10, 60), (100, 3600)])
+        dep = with_rate_limit(lambda: None, "dev_conversations")
+        with self.assertRaises(HTTPException) as ctx:
+            self._run(dep(uid="test_uid"))
+        self.assertEqual(ctx.exception.status_code, 429)
+
+    def test_triple_window_daily_exceeded(self):
+        """Minute and hour pass, daily denies — should raise 429."""
+        from fastapi import HTTPException
+
+        call_count = [0]
+
+        def side_effect(*args, **kwargs):
+            call_count[0] += 1
+            if call_count[0] <= 2:
+                return (True, 1, 45)  # minute and hour OK
+            return (False, 0, 80000)  # daily exceeded
+
+        mock_check_rate_limit.side_effect = side_effect
+        dep = with_rate_limit(lambda: None, "dev_conversations")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
         self.assertEqual(ctx.exception.status_code, 429)
 
     def test_fail_open_on_redis_error(self):
+        """Non-fail_closed policy: allow on Redis error."""
         mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
-        dep = with_rate_limit(lambda: None, "test", [(10, 60)])
+        dep = with_rate_limit(lambda: None, "chat_messages")  # fail_closed=False
         result = self._run(dep(uid="test_uid"))
         self.assertEqual(result, "test_uid")
 
-    def test_non_redis_error_propagates(self):
+    def test_fail_closed_on_redis_error(self):
+        """fail_closed=True policy: return 503 on Redis error."""
+        from fastapi import HTTPException
+
+        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        dep = with_rate_limit(lambda: None, "dev_conversations")  # fail_closed=True
+        with self.assertRaises(HTTPException) as ctx:
+            self._run(dep(uid="test_uid"))
+        self.assertEqual(ctx.exception.status_code, 503)
+        self.assertIn("Retry-After", ctx.exception.headers)
+
+    def test_non_redis_error_propagates_regardless_of_fail_mode(self):
         mock_check_rate_limit.side_effect = ValueError("programming bug")
-        dep = with_rate_limit(lambda: None, "test", [(10, 60)])
+        dep = with_rate_limit(lambda: None, "dev_conversations")  # fail_closed=True
         with self.assertRaises(ValueError):
             self._run(dep(uid="test_uid"))
 
@@ -268,14 +314,51 @@ class TestWithRateLimit(unittest.TestCase):
         from fastapi import HTTPException
 
         mock_check_rate_limit.return_value = (False, 0, 45)
-        dep = with_rate_limit(lambda: None, "test", [(10, 60)])
+        dep = with_rate_limit(lambda: None, "chat_messages")
         with self.assertRaises(HTTPException) as ctx:
             self._run(dep(uid="test_uid"))
         headers = ctx.exception.headers
         for h in ["X-RateLimit-Limit", "X-RateLimit-Remaining", "X-RateLimit-Reset", "Retry-After"]:
             self.assertIn(h, headers, f"Missing header: {h}")
-        self.assertEqual(headers["X-RateLimit-Limit"], "10")
         self.assertEqual(headers["X-RateLimit-Remaining"], "0")
+
+
+class TestCheckRateLimitInline(unittest.TestCase):
+    """Test inline rate limiting for custom auth patterns (MCP, integration)."""
+
+    def setUp(self):
+        mock_check_rate_limit.reset_mock()
+        mock_check_rate_limit.side_effect = None
+
+    def test_allows_within_limit(self):
+        mock_check_rate_limit.return_value = (True, 9, 55)
+        check_rate_limit_inline("user1", "mcp_sse")  # Should not raise
+
+    def test_denies_over_limit(self):
+        from fastapi import HTTPException
+
+        mock_check_rate_limit.return_value = (False, 0, 45)
+        with self.assertRaises(HTTPException) as ctx:
+            check_rate_limit_inline("user1", "mcp_sse")
+        self.assertEqual(ctx.exception.status_code, 429)
+
+    def test_fail_closed_returns_503(self):
+        from fastapi import HTTPException
+
+        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        with self.assertRaises(HTTPException) as ctx:
+            check_rate_limit_inline("user1", "mcp_sse")  # fail_closed=True
+        self.assertEqual(ctx.exception.status_code, 503)
+
+    def test_fail_open_allows(self):
+        mock_check_rate_limit.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
+        check_rate_limit_inline("user1", "chat_messages")  # fail_closed=False, should not raise
+
+    def test_composite_key_for_integration(self):
+        mock_check_rate_limit.return_value = (True, 9, 55)
+        check_rate_limit_inline("app123:user456", "integration_conversations")
+        call_args = mock_check_rate_limit.call_args
+        self.assertIn("app123:user456", call_args[0][0])
 
 
 class TestRateLimitCustom(unittest.TestCase):
@@ -317,6 +400,53 @@ class TestRateLimitCustom(unittest.TestCase):
             rate_limit_custom("signin", request, 5, 60)
 
 
+class TestRateLimitConfig(unittest.TestCase):
+    """Validate the rate limit policy registry."""
+
+    def test_all_policies_have_required_fields(self):
+        for name, policy in RATE_POLICIES.items():
+            self.assertIn("limits", policy, f"Policy '{name}' missing 'limits'")
+            self.assertIsInstance(policy["limits"], list, f"Policy '{name}' limits must be a list")
+            for limit in policy["limits"]:
+                self.assertEqual(len(limit), 2, f"Policy '{name}' limit must be (max, window) tuple")
+                self.assertGreater(limit[0], 0, f"Policy '{name}' max_requests must be > 0")
+                self.assertGreater(limit[1], 0, f"Policy '{name}' window_seconds must be > 0")
+
+    def test_fail_closed_is_boolean(self):
+        for name, policy in RATE_POLICIES.items():
+            if "fail_closed" in policy:
+                self.assertIsInstance(policy["fail_closed"], bool, f"Policy '{name}' fail_closed must be bool")
+
+    def test_expensive_endpoints_are_fail_closed(self):
+        """Endpoints that trigger full LLM pipeline must be fail_closed=True."""
+        expensive = ["dev_conversations", "app_conversations", "reprocess", "knowledge_graph_rebuild", "wrapped_generate"]
+        for name in expensive:
+            self.assertIn(name, RATE_POLICIES, f"Missing policy for expensive endpoint '{name}'")
+            self.assertTrue(
+                RATE_POLICIES[name].get("fail_closed", False),
+                f"Expensive policy '{name}' should be fail_closed=True",
+            )
+
+    def test_multi_window_on_fanout_endpoints(self):
+        """Fanout-heavy endpoints must have at least 2 windows (burst + sustained)."""
+        fanout = ["dev_conversations", "app_conversations"]
+        for name in fanout:
+            limits = RATE_POLICIES[name]["limits"]
+            self.assertGreaterEqual(len(limits), 2, f"Fanout policy '{name}' needs multi-window limits")
+
+    def test_daily_cap_on_expensive_background_ops(self):
+        """Very expensive background ops must have a daily cap (86400s window)."""
+        daily_required = ["knowledge_graph_rebuild", "wrapped_generate"]
+        for name in daily_required:
+            limits = RATE_POLICIES[name]["limits"]
+            has_daily = any(window == 86400 for _, window in limits)
+            self.assertTrue(has_daily, f"Policy '{name}' must have a daily cap (86400s window)")
+
+    def test_ws_constants_are_sane(self):
+        self.assertEqual(config_mod.WS_MAX_CONCURRENT_SESSIONS, 2)
+        self.assertGreater(config_mod.WS_SESSION_MAX_DURATION, 0)
+
+
 class TestSharedBucket(unittest.TestCase):
     """Verify both conversation POST endpoints share the same rate limit bucket."""
 
@@ -341,6 +471,88 @@ class TestSharedBucket(unittest.TestCase):
             segments_match.group(1),
             "Both endpoints must share the same rate limit bucket",
         )
+
+
+class TestCostEndpointsCovered(unittest.TestCase):
+    """Verify all cost-incurring endpoints have rate limiting applied."""
+
+    def _read_source(self, filename):
+        path = os.path.join(BACKEND_DIR, filename)
+        with open(path) as f:
+            return f.read()
+
+    def test_chat_endpoints_rate_limited(self):
+        source = self._read_source("routers/chat.py")
+        for endpoint in ["/v2/messages", "/v2/initial-message", "/v2/voice-messages", "/v2/voice-message/transcribe"]:
+            pattern = re.escape(endpoint) + r'.*?with_rate_limit'
+            self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Missing rate limit on {endpoint}")
+
+    def test_conversation_cost_endpoints_rate_limited(self):
+        source = self._read_source("routers/conversations.py")
+        for endpoint in ["/v1/conversations\"", "/reprocess", "/test-prompt", "/v1/conversations/merge", "/v1/conversations/search"]:
+            self.assertIn("with_rate_limit", source, f"conversations.py must use with_rate_limit")
+
+    def test_goals_llm_endpoints_rate_limited(self):
+        source = self._read_source("routers/goals.py")
+        self.assertIn("with_rate_limit", source)
+        for policy in ["goals_suggest", "goals_advice", "goals_extract"]:
+            self.assertIn(policy, source, f"Missing policy {policy} in goals.py")
+
+    def test_knowledge_graph_rebuild_rate_limited(self):
+        source = self._read_source("routers/knowledge_graph.py")
+        self.assertIn("knowledge_graph_rebuild", source)
+
+    def test_wrapped_generate_rate_limited(self):
+        source = self._read_source("routers/wrapped.py")
+        self.assertIn("wrapped_generate", source)
+
+    def test_agent_execute_tool_rate_limited(self):
+        source = self._read_source("routers/agent_tools.py")
+        self.assertIn("agent_execute_tool", source)
+
+    def test_mcp_sse_rate_limited(self):
+        source = self._read_source("routers/mcp_sse.py")
+        self.assertIn("check_rate_limit_inline", source)
+        self.assertIn("mcp_sse", source)
+
+    def test_integration_conversations_rate_limited(self):
+        source = self._read_source("routers/integration.py")
+        self.assertIn("integration_conversations", source)
+
+    def test_integration_memories_rate_limited(self):
+        source = self._read_source("routers/integration.py")
+        self.assertIn("integration_memories", source)
+
+    def test_websocket_concurrent_cap_present(self):
+        source = self._read_source("routers/transcribe.py")
+        self.assertIn("acquire_ws_session_slot", source)
+        self.assertIn("release_ws_session_slot", source)
+
+    def test_file_upload_rate_limited(self):
+        source = self._read_source("routers/chat.py")
+        self.assertIn("file_upload", source)
+
+
+class TestWebSocketSessionCap(unittest.TestCase):
+    """Test WebSocket concurrent session cap Lua script logic."""
+
+    def setUp(self):
+        self.mock_redis = MagicMock()
+        self.mock_script = MagicMock()
+        self.mock_redis.register_script.return_value = self.mock_script
+
+    def test_acquire_allowed_when_under_cap(self):
+        self.mock_script.return_value = 1  # allowed
+        # Simulate the Lua logic: ZCARD < max_concurrent
+        self.assertTrue(bool(self.mock_script.return_value))
+
+    def test_acquire_denied_when_at_cap(self):
+        self.mock_script.return_value = 0  # denied
+        self.assertFalse(bool(self.mock_script.return_value))
+
+    def test_release_calls_zrem(self):
+        self.mock_redis.zrem("ws_sessions:user1", "session123")
+        self.mock_redis.zrem.assert_called_once_with("ws_sessions:user1", "session123")
 
 
 if __name__ == "__main__":

@@ -180,25 +180,32 @@ def rate_limit_dependency(endpoint: str = "", requests_per_window: int = 60, win
     return rate_limit
 
 
-def with_rate_limit(auth_dependency, endpoint: str, limits: list):
-    """Wrap an auth dependency with per-UID rate limiting.
+def with_rate_limit(auth_dependency, policy_name: str):
+    """Wrap an auth dependency with per-UID rate limiting (config-driven).
 
-    Chains with an existing auth dependency that returns a UID. After auth
-    succeeds, checks all rate limits against that UID. Fail-open on Redis
-    connection errors only — programming errors still raise.
+    Looks up rate limit policy from RATE_POLICIES by name. Chains with an
+    existing auth dependency that returns a UID. After auth succeeds, checks
+    all rate limits against that UID.
+
+    Fail mode is per-policy:
+        fail_closed=False (default): allow request on Redis error (reads, low-cost)
+        fail_closed=True: return 503 on Redis error (expensive endpoints)
 
     Args:
         auth_dependency: A FastAPI dependency that returns a UID string.
-        endpoint: Endpoint name for Redis key namespacing.
-        limits: List of (max_requests, window_seconds) tuples.
-                e.g. [(10, 60), (100, 3600)] for 10/min and 100/hr.
+        policy_name: Key in RATE_POLICIES dict (utils/rate_limit_config.py).
     """
+    from utils.rate_limit_config import RATE_POLICIES
+
+    policy = RATE_POLICIES[policy_name]
+    limits = policy["limits"]
+    fail_closed = policy.get("fail_closed", False)
 
     async def dependency(uid: str = Depends(auth_dependency)):
         try:
             for max_requests, window_seconds in limits:
                 allowed, remaining, reset = check_api_rate_limit(
-                    uid, f"{endpoint}:{window_seconds}s", max_requests, window_seconds
+                    uid, f"{policy_name}:{window_seconds}s", max_requests, window_seconds
                 )
                 if not allowed:
                     raise HTTPException(
@@ -214,10 +221,60 @@ def with_rate_limit(auth_dependency, endpoint: str, limits: list):
         except HTTPException:
             raise
         except redis_pkg.exceptions.RedisError as e:
+            if fail_closed:
+                raise HTTPException(
+                    status_code=503,
+                    detail="Service temporarily unavailable",
+                    headers={"Retry-After": "30"},
+                )
             logger.error(f"Rate limit check failed (allowing request): {e}")
         return uid
 
     return dependency
+
+
+def check_rate_limit_inline(key: str, policy_name: str):
+    """Check rate limit inline (for endpoints with custom auth patterns).
+
+    Use when auth is not a standard Depends() pattern (e.g., MCP, integration).
+    Returns normally if allowed. Raises HTTPException(429) or HTTPException(503).
+
+    Args:
+        key: Rate limit key (uid, app_id:uid, etc.)
+        policy_name: Key in RATE_POLICIES dict.
+    """
+    from utils.rate_limit_config import RATE_POLICIES
+
+    policy = RATE_POLICIES[policy_name]
+    limits = policy["limits"]
+    fail_closed = policy.get("fail_closed", False)
+
+    try:
+        for max_requests, window_seconds in limits:
+            allowed, remaining, reset = check_api_rate_limit(
+                key, f"{policy_name}:{window_seconds}s", max_requests, window_seconds
+            )
+            if not allowed:
+                raise HTTPException(
+                    status_code=429,
+                    detail=f"Rate limit exceeded. Maximum {max_requests} requests per {window_seconds}s.",
+                    headers={
+                        "X-RateLimit-Limit": str(max_requests),
+                        "X-RateLimit-Remaining": "0",
+                        "X-RateLimit-Reset": str(reset),
+                        "Retry-After": str(reset),
+                    },
+                )
+    except HTTPException:
+        raise
+    except redis_pkg.exceptions.RedisError as e:
+        if fail_closed:
+            raise HTTPException(
+                status_code=503,
+                detail="Service temporarily unavailable",
+                headers={"Retry-After": "30"},
+            )
+        logger.error(f"Rate limit check failed (allowing request): {e}")
 
 
 def timeit(func):

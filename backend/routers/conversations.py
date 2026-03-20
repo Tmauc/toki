@@ -37,6 +37,7 @@ from utils.conversations.search import search_conversations
 from utils.llm.conversation_processing import generate_summary_with_prompt
 from utils.speaker_identification import extract_speaker_samples
 from utils.other import endpoints as auth
+from utils.other.endpoints import with_rate_limit
 from utils.other.storage import get_conversation_recording_if_exists
 from utils.app_integrations import trigger_external_integrations
 from utils.conversations.location import get_google_maps_location
@@ -64,7 +65,8 @@ class ProcessConversationRequest(BaseModel):
 
 @router.post("/v1/conversations", response_model=CreateConversationResponse, tags=['conversations'])
 def process_in_progress_conversation(
-    request: ProcessConversationRequest = None, uid: str = Depends(auth.get_current_user_uid)
+    request: ProcessConversationRequest = None,
+    uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "app_conversations")),
 ):
     conversation = retrieve_in_progress_conversation(uid)
     if not conversation:
@@ -97,7 +99,7 @@ def reprocess_conversation(
     conversation_id: str,
     language_code: Optional[str] = None,
     app_id: Optional[str] = None,
-    uid: str = Depends(auth.get_current_user_uid),
+    uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "reprocess")),
 ):
     """
     Whenever a user wants to reprocess a conversation, or wants to force process a discarded one
@@ -639,7 +641,7 @@ def get_public_conversations(offset: int = 0, limit: int = 1000):
 
 
 @router.post("/v1/conversations/search", response_model=dict, tags=['conversations'])
-def search_conversations_endpoint(search_request: SearchRequest, uid: str = Depends(auth.get_current_user_uid)):
+def search_conversations_endpoint(search_request: SearchRequest, uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "conversation_search"))):
     # Convert ISO datetime strings to Unix timestamps if provided
     start_timestamp = None
     end_timestamp = None
@@ -696,7 +698,7 @@ def get_conversation_suggested_apps(conversation_id: str, uid: str = Depends(aut
 
 
 @router.post("/v1/conversations/{conversation_id}/test-prompt", response_model=dict, tags=['conversations'])
-def test_prompt(conversation_id: str, request: TestPromptRequest, uid: str = Depends(auth.get_current_user_uid)):
+def test_prompt(conversation_id: str, request: TestPromptRequest, uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "test_prompt"))):
     conversation_data = _get_valid_conversation_by_id(uid, conversation_id)
     conversation = Conversation(**conversation_data)
 
@@ -720,7 +722,7 @@ def test_prompt(conversation_id: str, request: TestPromptRequest, uid: str = Dep
 async def merge_conversations(
     request: MergeConversationsRequest,
     background_tasks: BackgroundTasks,
-    uid: str = Depends(auth.get_current_user_uid),
+    uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "merge_conversations")),
 ):
     """
     Merge multiple conversations into a new conversation (async).

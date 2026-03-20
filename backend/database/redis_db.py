@@ -956,3 +956,63 @@ def check_api_rate_limit(key: str, endpoint: str, max_requests: int, window_seco
     reset = int(result[2]) if result[2] > 0 else window_seconds - (now % window_seconds)
 
     return allowed, remaining, reset
+
+
+# ******************************************************
+# ********** WEBSOCKET CONCURRENT SESSION CAP **********
+# ******************************************************
+
+_WS_SESSION_ACQUIRE_LUA = """
+local key = KEYS[1]
+local session_id = ARGV[1]
+local now = tonumber(ARGV[2])
+local max_concurrent = tonumber(ARGV[3])
+local max_duration = tonumber(ARGV[4])
+
+-- Remove expired sessions
+redis.call('ZREMRANGEBYSCORE', key, '-inf', now - max_duration)
+
+-- Check current count
+local count = redis.call('ZCARD', key)
+if count >= max_concurrent then
+    return 0
+end
+
+-- Add this session
+redis.call('ZADD', key, now, session_id)
+redis.call('EXPIRE', key, max_duration)
+return 1
+"""
+
+_ws_session_acquire_script = None
+
+
+def acquire_ws_session_slot(uid: str, session_id: str, max_concurrent: int = 2, max_duration: int = 7200) -> bool:
+    """Try to acquire a WebSocket session slot for a UID.
+
+    Uses a Redis sorted set to track active sessions per UID with automatic
+    expiry of stale sessions.
+
+    Args:
+        uid: User ID.
+        session_id: Unique session identifier.
+        max_concurrent: Maximum concurrent sessions allowed.
+        max_duration: Maximum session duration in seconds (stale cleanup).
+
+    Returns:
+        True if slot acquired, False if at capacity.
+    """
+    global _ws_session_acquire_script
+    if _ws_session_acquire_script is None:
+        _ws_session_acquire_script = r.register_script(_WS_SESSION_ACQUIRE_LUA)
+
+    redis_key = f"ws_sessions:{uid}"
+    now = int(time.time())
+    result = _ws_session_acquire_script(keys=[redis_key], args=[session_id, now, max_concurrent, max_duration])
+    return bool(result)
+
+
+def release_ws_session_slot(uid: str, session_id: str):
+    """Release a WebSocket session slot when connection closes."""
+    redis_key = f"ws_sessions:{uid}"
+    r.zrem(redis_key, session_id)
