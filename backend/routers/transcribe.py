@@ -2805,17 +2805,19 @@ async def _listen(
     except redis_pkg.exceptions.RedisError as e:
         logger.error(f"WS session cap check failed (allowing connection): {e}")
 
-    # Background heartbeat to prevent stale session expiry during long connections
-    async def _ws_session_heartbeat():
-        while True:
-            await asyncio.sleep(1800)  # Refresh every 30 minutes
-            try:
-                refresh_ws_session_slot(uid, session_id)
-            except redis_pkg.exceptions.RedisError as e:
-                logger.error(f"WS session heartbeat failed: {e}")
-
-    heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
+    # Everything after acquire must release the slot on any exit path
+    heartbeat_task = None
     try:
+        # Background heartbeat to prevent stale session expiry during long connections
+        async def _ws_session_heartbeat():
+            while True:
+                await asyncio.sleep(1800)  # Refresh every 30 minutes
+                try:
+                    refresh_ws_session_slot(uid, session_id)
+                except redis_pkg.exceptions.RedisError as e:
+                    logger.error(f"WS session heartbeat failed: {e}")
+
+        heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
         try:
             await websocket.accept()
         except RuntimeError as e:
@@ -2840,7 +2842,8 @@ async def _listen(
             call_id=call_id,
         )
     finally:
-        heartbeat_task.cancel()
+        if heartbeat_task is not None:
+            heartbeat_task.cancel()
         try:
             release_ws_session_slot(uid, session_id)
         except Exception as e:
@@ -2951,25 +2954,27 @@ async def web_listen_handler(
     except redis_pkg.exceptions.RedisError as e:
         logger.error(f"WS session cap check failed (allowing connection): {e}")
 
-    # Send success response
-    await websocket.send_json({"type": "auth_response", "success": True})
-    logger.info(f"web_listen_handler authenticated {uid}")
-
-    # Proceed with streaming (websocket already accepted, uid already validated)
-    custom_stt_mode = CustomSttMode.enabled if custom_stt == 'enabled' else CustomSttMode.disabled
-    onboarding_mode = onboarding == 'enabled'
-
-    # Background heartbeat to prevent stale session expiry
-    async def _ws_session_heartbeat():
-        while True:
-            await asyncio.sleep(1800)
-            try:
-                refresh_ws_session_slot(uid, session_id)
-            except redis_pkg.exceptions.RedisError as e:
-                logger.error(f"WS session heartbeat failed: {e}")
-
-    heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
+    # Everything after acquire must release the slot on any exit path
+    heartbeat_task = None
     try:
+        # Send success response
+        await websocket.send_json({"type": "auth_response", "success": True})
+        logger.info(f"web_listen_handler authenticated {uid}")
+
+        # Proceed with streaming (websocket already accepted, uid already validated)
+        custom_stt_mode = CustomSttMode.enabled if custom_stt == 'enabled' else CustomSttMode.disabled
+        onboarding_mode = onboarding == 'enabled'
+
+        # Background heartbeat to prevent stale session expiry
+        async def _ws_session_heartbeat():
+            while True:
+                await asyncio.sleep(1800)
+                try:
+                    refresh_ws_session_slot(uid, session_id)
+                except redis_pkg.exceptions.RedisError as e:
+                    logger.error(f"WS session heartbeat failed: {e}")
+
+        heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
         await _stream_handler(
             websocket,
             uid,
@@ -2986,7 +2991,8 @@ async def web_listen_handler(
             call_id=call_id,
         )
     finally:
-        heartbeat_task.cancel()
+        if heartbeat_task is not None:
+            heartbeat_task.cancel()
         try:
             release_ws_session_slot(uid, session_id)
         except Exception as e:
