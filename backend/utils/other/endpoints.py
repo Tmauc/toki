@@ -10,6 +10,7 @@ import logging
 import redis as redis_pkg
 
 from database.redis_db import check_api_rate_limit, try_acquire_listen_lock
+from utils.rate_limit_config import RATE_POLICIES
 
 logger = logging.getLogger(__name__)
 
@@ -195,8 +196,6 @@ def with_rate_limit(auth_dependency, policy_name: str):
         auth_dependency: A FastAPI dependency that returns a UID string.
         policy_name: Key in RATE_POLICIES dict (utils/rate_limit_config.py).
     """
-    from utils.rate_limit_config import RATE_POLICIES
-
     policy = RATE_POLICIES[policy_name]
     limits = policy["limits"]
     fail_closed = policy.get("fail_closed", False)
@@ -243,8 +242,6 @@ def check_rate_limit_inline(key: str, policy_name: str):
         key: Rate limit key (uid, app_id:uid, etc.)
         policy_name: Key in RATE_POLICIES dict.
     """
-    from utils.rate_limit_config import RATE_POLICIES
-
     policy = RATE_POLICIES[policy_name]
     limits = policy["limits"]
     fail_closed = policy.get("fail_closed", False)

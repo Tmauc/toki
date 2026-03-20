@@ -434,14 +434,18 @@ async def mcp_streamable_http(
     if not user_id:
         raise HTTPException(status_code=401, detail="Invalid or missing API key. Provide via Authorization header.")
 
-    # Rate limit
-    check_rate_limit_inline(user_id, "mcp_sse")
-
     # Parse request body
     try:
         body = await request.json()
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid JSON body")
+
+    # Handle batch requests (array of messages)
+    messages = body if isinstance(body, list) else [body]
+
+    # Rate limit per-message (not per-request) to prevent batch bypass
+    for _ in messages:
+        check_rate_limit_inline(user_id, "mcp_sse")
 
     # Get session if provided
     session = None
@@ -450,9 +454,6 @@ async def mcp_streamable_http(
         # Verify session belongs to this user
         if session.user_id != user_id:
             raise HTTPException(status_code=403, detail="Session does not belong to this user")
-
-    # Handle batch requests (array of messages)
-    messages = body if isinstance(body, list) else [body]
 
     # Check if all messages are notifications/responses (no id)
     all_notifications = all(msg.get("id") is None for msg in messages)

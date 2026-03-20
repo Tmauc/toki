@@ -41,6 +41,7 @@ from database.redis_db import (
     acquire_ws_session_slot,
     check_credits_invalidation,
     get_cached_user_geolocation,
+    refresh_ws_session_slot,
     release_ws_session_slot,
 )
 from utils.rate_limit_config import WS_MAX_CONCURRENT_SESSIONS, WS_SESSION_MAX_DURATION
@@ -2803,6 +2804,16 @@ async def _listen(
     except Exception as e:
         logger.error(f"WS session cap check failed (allowing connection): {e}")
 
+    # Background heartbeat to prevent stale session expiry during long connections
+    async def _ws_session_heartbeat():
+        while True:
+            await asyncio.sleep(1800)  # Refresh every 30 minutes
+            try:
+                refresh_ws_session_slot(uid, session_id)
+            except Exception as e:
+                logger.error(f"WS session heartbeat failed: {e}")
+
+    heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
     try:
         try:
             await websocket.accept()
@@ -2828,6 +2839,7 @@ async def _listen(
             call_id=call_id,
         )
     finally:
+        heartbeat_task.cancel()
         try:
             release_ws_session_slot(uid, session_id)
         except Exception as e:
@@ -2946,6 +2958,16 @@ async def web_listen_handler(
     custom_stt_mode = CustomSttMode.enabled if custom_stt == 'enabled' else CustomSttMode.disabled
     onboarding_mode = onboarding == 'enabled'
 
+    # Background heartbeat to prevent stale session expiry
+    async def _ws_session_heartbeat():
+        while True:
+            await asyncio.sleep(1800)
+            try:
+                refresh_ws_session_slot(uid, session_id)
+            except Exception as e:
+                logger.error(f"WS session heartbeat failed: {e}")
+
+    heartbeat_task = asyncio.create_task(_ws_session_heartbeat())
     try:
         await _stream_handler(
             websocket,
@@ -2963,6 +2985,7 @@ async def web_listen_handler(
             call_id=call_id,
         )
     finally:
+        heartbeat_task.cancel()
         try:
             release_ws_session_slot(uid, session_id)
         except Exception as e:

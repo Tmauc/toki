@@ -66,7 +66,7 @@ config_spec.loader.exec_module(config_mod)
 
 RATE_POLICIES = config_mod.RATE_POLICIES
 
-# Load endpoints.py via importlib
+# Load endpoints.py via importlib (must be after rate_limit_config is registered)
 endpoints_spec = importlib.util.spec_from_file_location(
     "utils.other.endpoints", os.path.join(BACKEND_DIR, "utils/other/endpoints.py")
 )
@@ -515,6 +515,12 @@ class TestCostEndpointsCovered(unittest.TestCase):
         self.assertIn("check_rate_limit_inline", source)
         self.assertIn("mcp_sse", source)
 
+    def test_mcp_batch_rate_limited_per_message(self):
+        """MCP must rate limit per-message, not per-request, to prevent batch bypass."""
+        source = self._read_source("routers/mcp_sse.py")
+        # check_rate_limit_inline must be called inside a for loop over messages
+        self.assertRegex(source, r'for .+ in messages:\s+check_rate_limit_inline')
+
     def test_integration_conversations_rate_limited(self):
         source = self._read_source("routers/integration.py")
         self.assertIn("integration_conversations", source)
@@ -527,6 +533,12 @@ class TestCostEndpointsCovered(unittest.TestCase):
         source = self._read_source("routers/transcribe.py")
         self.assertIn("acquire_ws_session_slot", source)
         self.assertIn("release_ws_session_slot", source)
+
+    def test_websocket_heartbeat_present(self):
+        """WS sessions must have a heartbeat to prevent stale eviction."""
+        source = self._read_source("routers/transcribe.py")
+        self.assertIn("refresh_ws_session_slot", source)
+        self.assertIn("_ws_session_heartbeat", source)
 
     def test_file_upload_rate_limited(self):
         source = self._read_source("routers/chat.py")
