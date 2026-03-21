@@ -15,7 +15,7 @@ import database.phone_calls as phone_calls_db
 import database.users as users_db
 from utils.subscription import is_paid_plan
 from utils.other import endpoints as auth
-from utils.other.endpoints import rate_limit_dependency
+from utils.other.endpoints import with_rate_limit
 from utils.twilio_service import (
     generate_access_token,
     start_caller_id_verification,
@@ -91,8 +91,7 @@ class TokenResponse(BaseModel):
 @router.post("/v1/phone/numbers/verify", response_model=VerifyPhoneNumberResponse, tags=['phone-calls'])
 def verify_phone_number(
     request: VerifyPhoneNumberRequest,
-    uid: str = Depends(auth.get_current_user_uid),
-    _: None = Depends(rate_limit_dependency(endpoint="phone_verify", requests_per_window=5, window_seconds=3600)),
+    uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "phone_verify")),
 ):
     """Initiate phone number verification via Twilio caller ID validation."""
     _require_unlimited_plan(uid)
@@ -136,10 +135,7 @@ def verify_phone_number(
 @router.post("/v1/phone/numbers/verify/check", response_model=CheckVerificationResponse, tags=['phone-calls'])
 def check_phone_verification(
     request: CheckVerificationRequest,
-    uid: str = Depends(auth.get_current_user_uid),
-    _rate_limit=Depends(
-        rate_limit_dependency(endpoint="phone_verify_check", requests_per_window=30, window_seconds=60)
-    ),
+    uid: str = Depends(with_rate_limit(auth.get_current_user_uid, "phone_verify_check")),
 ):
     """Check if a phone number has been verified. Poll this endpoint every 2s (60s timeout)."""
     _require_unlimited_plan(uid)

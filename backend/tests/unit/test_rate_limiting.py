@@ -301,7 +301,7 @@ class TestWithRateLimit(unittest.TestCase):
     def test_fail_open_on_redis_error(self):
         """Non-fail_closed policy: allow on Redis error."""
         mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
-        dep = with_rate_limit(lambda: None, "chat_messages")  # fail_closed=False
+        dep = with_rate_limit(lambda: None, "conversation_search")  # fail_closed=False
         result = self._run(dep(uid="test_uid"))
         self.assertEqual(result, "test_uid")
 
@@ -367,7 +367,7 @@ class TestCheckRateLimitInline(unittest.TestCase):
 
     def test_fail_open_allows(self):
         mock_lua_script.side_effect = redis_pkg.exceptions.ConnectionError("Redis down")
-        check_rate_limit_inline("user1", "chat_messages")  # fail_closed=False, should not raise
+        check_rate_limit_inline("user1", "conversation_search")  # fail_closed=False, should not raise
 
     def test_composite_key_for_integration(self):
         mock_lua_script.return_value = [1, 9, 55]
@@ -452,19 +452,35 @@ class TestRateLimitConfig(unittest.TestCase):
                 self.assertGreater(limit[0], 0, f"Policy '{name}' max_requests must be > 0")
                 self.assertGreater(limit[1], 0, f"Policy '{name}' window_seconds must be > 0")
 
+    def test_all_policies_have_classification(self):
+        """Every policy must be classified as service_health or user_budgeting."""
+        valid_classes = {"service_health", "user_budgeting"}
+        for name, policy in RATE_POLICIES.items():
+            self.assertIn("class", policy, f"Policy '{name}' missing 'class' classification")
+            self.assertIn(policy["class"], valid_classes, f"Policy '{name}' has invalid class '{policy.get('class')}'")
+
     def test_fail_closed_is_boolean(self):
         for name, policy in RATE_POLICIES.items():
             if "fail_closed" in policy:
                 self.assertIsInstance(policy["fail_closed"], bool, f"Policy '{name}' fail_closed must be bool")
 
-    def test_expensive_endpoints_are_fail_closed(self):
-        """Endpoints that trigger full LLM pipeline must be fail_closed=True."""
-        expensive = ["dev_conversations", "app_conversations", "reprocess", "knowledge_graph_rebuild", "wrapped_generate"]
-        for name in expensive:
-            self.assertIn(name, RATE_POLICIES, f"Missing policy for expensive endpoint '{name}'")
+    def test_user_budgeting_policies_have_daily_cap(self):
+        """All user_budgeting policies must have a daily cap (86400s window)."""
+        for name, policy in RATE_POLICIES.items():
+            if policy.get("class") != "user_budgeting":
+                continue
+            limits = policy["limits"]
+            has_daily = any(window == 86400 for _, window in limits)
+            self.assertTrue(has_daily, f"User budgeting policy '{name}' must have a daily cap (86400s window)")
+
+    def test_user_budgeting_policies_are_fail_closed(self):
+        """User budgeting policies must be fail_closed=True (cost must not bypass budget)."""
+        for name, policy in RATE_POLICIES.items():
+            if policy.get("class") != "user_budgeting":
+                continue
             self.assertTrue(
-                RATE_POLICIES[name].get("fail_closed", False),
-                f"Expensive policy '{name}' should be fail_closed=True",
+                policy.get("fail_closed", False),
+                f"User budgeting policy '{name}' should be fail_closed=True",
             )
 
     def test_multi_window_on_fanout_endpoints(self):
@@ -473,14 +489,6 @@ class TestRateLimitConfig(unittest.TestCase):
         for name in fanout:
             limits = RATE_POLICIES[name]["limits"]
             self.assertGreaterEqual(len(limits), 2, f"Fanout policy '{name}' needs multi-window limits")
-
-    def test_daily_cap_on_expensive_background_ops(self):
-        """Very expensive background ops must have a daily cap (86400s window)."""
-        daily_required = ["knowledge_graph_rebuild", "wrapped_generate"]
-        for name in daily_required:
-            limits = RATE_POLICIES[name]["limits"]
-            has_daily = any(window == 86400 for _, window in limits)
-            self.assertTrue(has_daily, f"Policy '{name}' must have a daily cap (86400s window)")
 
     def test_ws_constants_are_sane(self):
         self.assertEqual(config_mod.WS_MAX_CONCURRENT_SESSIONS, 2)
@@ -526,7 +534,9 @@ class TestCostEndpointsCovered(unittest.TestCase):
         """Assert a specific route uses a specific rate limit policy."""
         pattern = re.escape(route_pattern) + r'.*?with_rate_limit\([^,]+,\s*"' + re.escape(policy_name) + r'"'
         self.assertRegex(
-            source, re.compile(pattern, re.DOTALL), f"{description}: route {route_pattern} must use policy {policy_name}"
+            source,
+            re.compile(pattern, re.DOTALL),
+            f"{description}: route {route_pattern} must use policy {policy_name}",
         )
 
     def test_chat_endpoints_rate_limited(self):
@@ -552,9 +562,7 @@ class TestCostEndpointsCovered(unittest.TestCase):
         }
         for route, policy in routes.items():
             pattern = re.escape(route) + r'.*?with_rate_limit\([^,]+,\s*"' + re.escape(policy) + r'"'
-            self.assertRegex(
-                source, re.compile(pattern, re.DOTALL), f"Route {route} must use policy {policy}"
-            )
+            self.assertRegex(source, re.compile(pattern, re.DOTALL), f"Route {route} must use policy {policy}")
 
     def test_developer_memory_endpoints_rate_limited(self):
         source = self._read_source("routers/developer.py")
@@ -628,6 +636,16 @@ class TestCostEndpointsCovered(unittest.TestCase):
         source = self._read_source("routers/chat.py")
         for route in ["/v2/files", "/v1/files"]:
             self._assert_route_has_policy(source, route, "file_upload", "chat.py file upload")
+
+    def test_phone_verify_user_based(self):
+        """Phone verify must use per-UID rate limiting, not IP-based."""
+        source = self._read_source("routers/phone_calls.py")
+        self._assert_route_has_policy(source, "/v1/phone/numbers/verify\"", "phone_verify", "phone_calls.py verify")
+        self._assert_route_has_policy(
+            source, "/v1/phone/numbers/verify/check", "phone_verify_check", "phone_calls.py check"
+        )
+        # Must NOT use IP-based rate_limit_dependency for authenticated endpoints
+        self.assertNotIn("rate_limit_dependency", source, "phone_calls.py must use per-UID limiting, not IP-based")
 
 
 class TestWebSocketSessionCap(unittest.TestCase):
