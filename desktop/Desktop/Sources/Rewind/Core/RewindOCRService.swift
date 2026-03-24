@@ -163,13 +163,23 @@ actor RewindOCRService {
         }
 
         return try await withCheckedThrowingContinuation { continuation in
+            // Guard against double-resume: perform([request]) may throw AND call the handler.
+            var resumed = false
+
             let request = VNRecognizeTextRequest { request, error in
+                guard !resumed else { return }
+                resumed = true
+
                 if let error = error {
                     continuation.resume(throwing: RewindError.ocrFailed(error.localizedDescription))
                     return
                 }
 
-                guard let observations = request.results as? [VNRecognizedTextObservation] else {
+                // Copy the backing array immediately before casting to avoid a race where
+                // Vision deallocates the NSArray while we iterate — the root cause of the
+                // EXC_BREAKPOINT in __SwiftNativeNSArrayWithContiguousStorage._objectAt.
+                let rawResults = Array(request.results ?? [])
+                guard let observations = rawResults as? [VNRecognizedTextObservation] else {
                     continuation.resume(returning: OCRResult(fullText: "", blocks: [], processedAt: Date()))
                     return
                 }
@@ -177,20 +187,32 @@ actor RewindOCRService {
                 var blocks: [OCRTextBlock] = []
                 var fullTextLines: [String] = []
 
-                for observation in observations {
-                    guard let candidate = observation.topCandidates(1).first else { continue }
+                do {
+                    for observation in observations {
+                        guard let candidate = observation.topCandidates(1).first else { continue }
 
-                    let boundingBox = observation.boundingBox
-                    let block = OCRTextBlock(
-                        text: candidate.string,
-                        x: Double((boundingBox.origin.x * 1000).rounded()) / 1000,
-                        y: Double((boundingBox.origin.y * 1000).rounded()) / 1000,
-                        width: Double((boundingBox.width * 1000).rounded()) / 1000,
-                        height: Double((boundingBox.height * 1000).rounded()) / 1000,
-                        confidence: (Double(candidate.confidence) * 1000).rounded() / 1000
+                        let boundingBox = observation.boundingBox
+                        let block = OCRTextBlock(
+                            text: candidate.string,
+                            x: Double((boundingBox.origin.x * 1000).rounded()) / 1000,
+                            y: Double((boundingBox.origin.y * 1000).rounded()) / 1000,
+                            width: Double((boundingBox.width * 1000).rounded()) / 1000,
+                            height: Double((boundingBox.height * 1000).rounded()) / 1000,
+                            confidence: (Double(candidate.confidence) * 1000).rounded() / 1000
+                        )
+                        blocks.append(block)
+                        fullTextLines.append(candidate.string)
+                    }
+                } catch {
+                    // Unexpected array-bounds or ObjC exception during iteration — return
+                    // whatever was collected so far rather than crashing.
+                    let partial = OCRResult(
+                        fullText: fullTextLines.joined(separator: "\n"),
+                        blocks: blocks,
+                        processedAt: Date()
                     )
-                    blocks.append(block)
-                    fullTextLines.append(candidate.string)
+                    continuation.resume(returning: partial)
+                    return
                 }
 
                 let result = OCRResult(
@@ -210,6 +232,8 @@ actor RewindOCRService {
             do {
                 try handler.perform([request])
             } catch {
+                guard !resumed else { return }
+                resumed = true
                 continuation.resume(throwing: RewindError.ocrFailed(error.localizedDescription))
             }
         }
