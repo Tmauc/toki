@@ -179,7 +179,7 @@ actor RewindOCRService {
                 // Vision deallocates the NSArray while we iterate — the root cause of the
                 // EXC_BREAKPOINT in __SwiftNativeNSArrayWithContiguousStorage._objectAt.
                 let rawResults = Array(request.results ?? [])
-                guard let observations = rawResults as? [VNRecognizedTextObservation] else {
+                guard !rawResults.isEmpty, let observations = rawResults as? [VNRecognizedTextObservation] else {
                     continuation.resume(returning: OCRResult(fullText: "", blocks: [], processedAt: Date()))
                     return
                 }
