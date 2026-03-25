@@ -62,31 +62,37 @@ git merge --continue
 
 ---
 
-## 🏗️ Structure du projet (héritée d'Omi)
+## 🏗️ Structure du projet
 
 ```
 /
 ├── app/                  # App Flutter (iOS + Android)
 ├── backend/              # Backend FastAPI (Python)
+│   └── utils/llm/toki.py # Prompts & fonctions LLM custom Toki
+├── deploy/               # Scripts VM Proxmox (docker-compose, .env.template, setup.sh)
 ├── firmware/             # Firmware du device (C/C++, nRF/ESP32)
+├── docs/toki/            # Documentation Toki-spécifique
+│   └── voice-personas/   # Feature: clustering vocal style Apple Photos
+│       ├── ROADMAP.md    # Plan de conception complet
+│       └── design.png    # Schéma architecture
 ├── plugins/              # Intégrations tierces
-├── docs/                 # Documentation
-└── TOKI.md               # Ce fichier — spécifique à Toki
+└── TOKI.md               # Ce fichier
 ```
 
 ---
 
 ## ✨ Features custom Toki (vs Omi de base)
 
-> Cette section sera mise à jour au fur et à mesure du développement.
-
-| Feature | Statut | Description |
-|---|---|---|
-| Reconnaissance vocale des proches | 🔜 Planifié | Identifier automatiquement qui parle |
-| Analytics relationnels | 🔜 Planifié | Graphe de tes interactions sociales |
-| Rappels automatiques intelligents | 🔜 Planifié | Extraction et création auto de tâches |
-| Mémoire longue durée | 🔜 Planifié | Résumés et recherche sur plusieurs mois |
-| Mode full local | 🔜 Planifié | Aucune donnée en cloud, tout en local |
+| Feature | Statut | Doc | Description |
+|---|---|---|---|
+| **Voice Personas** | 🔜 Phase A | [ROADMAP](docs/toki/voice-personas/ROADMAP.md) | Clustering voix inconnues style Apple Photos |
+| **Smart Reminders** | ✅ Prompts écrits | — | Détection engagements implicites + due dates |
+| **Daily Digest** | ✅ Prompts écrits | — | Résumé structuré de journée (cron soir) |
+| **Relational Memory** | ✅ Prompts écrits | — | Qui a dit quoi + faits sur les proches |
+| **Mood Tracking** | ✅ Prompts écrits | — | Sentiment et énergie par conversation |
+| **Personal Memory** | ✅ Prompts écrits | — | Mémoire vie perso (vs pro-oriented Omi) |
+| Analytics relationnels | 🔜 Planifié | — | Graphe social, stats par personne |
+| Mode full local | 🔜 Planifié | — | Aucune donnée en cloud |
 
 ---
 
