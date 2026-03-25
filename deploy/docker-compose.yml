@@ -1,0 +1,133 @@
+version: "3.9"
+
+# ============================================================
+# TOKI — Stack complète self-hosted
+# Usage: docker compose --env-file .env up -d
+#
+# Services:
+#   backend   — FastAPI principal (port 8080)
+#   pusher    — WebSocket relay App <-> Backend (port 8081)
+#   diarizer  — Speaker diarization / embeddings (port 8082)
+#               NOTE: nécessite GPU NVIDIA + drivers CUDA
+#               Commenter ce service si pas de GPU disponible
+#   redis     — Cache et sessions (port 6379)
+# ============================================================
+
+services:
+
+  # ──────────────────────────────────────────
+  # REDIS — Cache et state management
+  # ──────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: toki-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: >
+      redis-server
+      ${REDIS_DB_PASSWORD:+--requirepass ${REDIS_DB_PASSWORD}}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────
+  # PUSHER RELAY — WebSocket bridge
+  # ──────────────────────────────────────────
+  pusher:
+    build:
+      context: ..
+      dockerfile: backend/pusher/Dockerfile
+    container_name: toki-pusher
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    env_file:
+      - .env
+    environment:
+      - REDIS_DB_HOST=redis
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ──────────────────────────────────────────
+  # DIARIZER — Speaker ID + embeddings
+  # Nécessite GPU NVIDIA. Commenter si absent.
+  # ──────────────────────────────────────────
+  diarizer:
+    build:
+      context: ..
+      dockerfile: backend/diarizer/Dockerfile
+    container_name: toki-diarizer
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    env_file:
+      - .env
+    environment:
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ──────────────────────────────────────────
+  # BACKEND — FastAPI principal
+  # ──────────────────────────────────────────
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: toki-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    env_file:
+      - .env
+    environment:
+      - REDIS_DB_HOST=redis
+      - REDIS_DB_PORT=6379
+      - HOSTED_PUSHER_API_URL=http://pusher:8080
+      - HOSTED_SPEAKER_EMBEDDING_API_URL=http://diarizer:8080/embedding
+      - HOSTED_SPEECH_PROFILE_API_URL=http://diarizer:8080/speech-profile
+      - HOSTED_VAD_API_URL=http://diarizer:8080/vad
+    volumes:
+      # Monter le service-account Firebase si fichier JSON utilisé
+      - ./service-account.json:/app/service-account.json:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+      pusher:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  redis_data:
+  hf_cache:
+
+networks:
+  default:
+    name: toki-network
