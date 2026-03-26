@@ -35,14 +35,6 @@ class UsageProvider with ChangeNotifier {
   String? _error;
   String? get error => _error;
 
-  bool get isOutOfCredits => false;
-
-  Future<void> fetchSubscription() async {}
-
-  Future<void> refreshSubscription() async {}
-
-  Future<void> markAsOutOfCreditsAndRefresh() async {}
-
   Future<void> fetchUsageStats({required String period}) async {
     if (_isLoading) return;
 
