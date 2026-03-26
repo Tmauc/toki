@@ -1,10 +1,6 @@
 {
   "@@locale": "en",
   "@@last_modified": "2024-12-26",
-  "appTitle": "Toki",
-  "@appTitle": {
-    "description": "The app title displayed in various places"
-  },
   "conversationTab": "Conversation",
   "@conversationTab": {
     "description": "Tab label for conversation summary"
@@ -133,16 +129,6 @@
   "@loadingDuration": {
     "description": "Loading duration indicator"
   },
-  "secondsCount": "{count} seconds",
-  "@secondsCount": {
-    "description": "Duration in seconds",
-    "placeholders": {
-      "count": {
-        "type": "int",
-        "example": "30"
-      }
-    }
-  },
   "people": "People",
   "@people": {
     "description": "People section title"
@@ -189,14 +175,6 @@
   "@deleting": {
     "description": "Deleting in progress indicator"
   },
-  "pleaseCompleteAuthentication": "Please complete authentication in your browser. Once done, return to the app.",
-  "@pleaseCompleteAuthentication": {
-    "description": "Message shown during OAuth flow"
-  },
-  "failedToStartAuthentication": "Failed to start authentication",
-  "@failedToStartAuthentication": {
-    "description": "Error when OAuth fails to start"
-  },
   "importStarted": "Import started! You'll be notified when it's complete.",
   "@importStarted": {
     "description": "Success message when import begins"
@@ -229,18 +207,6 @@
   "@connectDevice": {
     "description": "Button to connect a device"
   },
-  "monthlyLimitReached": "You've reached your monthly limit.",
-  "@monthlyLimitReached": {
-    "description": "Message when usage limit is reached"
-  },
-  "syncingRecordings": "Syncing recordings",
-  "@syncingRecordings": {
-    "description": "Title when sync is in progress"
-  },
-  "recordingsToSync": "Recordings to sync",
-  "@recordingsToSync": {
-    "description": "Title when there are recordings to sync"
-  },
   "allCaughtUp": "All caught up",
   "@allCaughtUp": {
     "description": "Title when everything is synced"
@@ -248,42 +214,6 @@
   "sync": "Sync",
   "@sync": {
     "description": "Sync button label"
-  },
-  "pendantUpToDate": "Pendant is up to date",
-  "@pendantUpToDate": {
-    "description": "Status when pendant is synced"
-  },
-  "allRecordingsSynced": "All recordings are synced",
-  "@allRecordingsSynced": {
-    "description": "Status text when sync is complete"
-  },
-  "syncingInProgress": "Syncing in progress",
-  "@syncingInProgress": {
-    "description": "Status when sync is happening"
-  },
-  "readyToSync": "Ready to sync",
-  "@readyToSync": {
-    "description": "Status when ready to sync"
-  },
-  "tapSyncToStart": "Tap Sync to start",
-  "@tapSyncToStart": {
-    "description": "Hint to start sync"
-  },
-  "pendantNotConnected": "Pendant not connected. Connect to sync.",
-  "@pendantNotConnected": {
-    "description": "Warning when pendant is not connected"
-  },
-  "everythingSynced": "Everything is already synced.",
-  "@everythingSynced": {
-    "description": "Message when all is synced"
-  },
-  "recordingsNotSynced": "You have recordings that aren't synced yet.",
-  "@recordingsNotSynced": {
-    "description": "Message when there are unsynced recordings"
-  },
-  "syncingBackground": "We'll keep syncing your recordings in the background.",
-  "@syncingBackground": {
-    "description": "Message during background sync"
   },
   "noConversationsYet": "No conversations yet",
   "@noConversationsYet": {
@@ -351,26 +281,6 @@
   "@messageCopied": {
     "description": "Snackbar message for copied text"
   },
-  "cannotReportOwnMessage": "You cannot report your own messages.",
-  "@cannotReportOwnMessage": {
-    "description": "Error when trying to report own message"
-  },
-  "reportMessage": "Report Message",
-  "@reportMessage": {
-    "description": "Report dialog title"
-  },
-  "reportMessageConfirm": "Are you sure you want to report this message?",
-  "@reportMessageConfirm": {
-    "description": "Report message confirmation"
-  },
-  "messageReported": "Message reported successfully.",
-  "@messageReported": {
-    "description": "Confirmation after reporting message"
-  },
-  "thankYouFeedback": "Thank you for your feedback!",
-  "@thankYouFeedback": {
-    "description": "After thumbs up/down feedback"
-  },
   "clearChat": "Clear Chat",
   "@clearChat": {
     "description": "Button/menu item to clear chat"
@@ -383,41 +293,9 @@
   "@maxFilesLimit": {
     "description": "Max files upload warning"
   },
-  "chatWithOmi": "Chat with Toki",
-  "@chatWithOmi": {
-    "description": "Chat share subject"
-  },
   "apps": "Apps",
   "@apps": {
     "description": "Navigation label for apps page"
-  },
-  "noAppsFound": "No apps found",
-  "@noAppsFound": {
-    "description": "Empty state title when no apps match search"
-  },
-  "tryAdjustingSearch": "Try adjusting your search or filters",
-  "@tryAdjustingSearch": {
-    "description": "Hint when no apps found"
-  },
-  "buildAndShareApp": "Build and share your custom app",
-  "@buildAndShareApp": {
-    "description": "Create app button subtitle"
-  },
-  "searchApps": "Search apps...",
-  "@searchApps": {
-    "description": "Placeholder text for search input"
-  },
-  "myApps": "My Apps",
-  "@myApps": {
-    "description": "Filter button for user's own apps"
-  },
-  "installedApps": "Installed Apps",
-  "@installedApps": {
-    "description": "Filter button for installed apps"
-  },
-  "unableToFetchApps": "Unable to fetch apps :(\n\nPlease check your internet connection and try again.",
-  "@unableToFetchApps": {
-    "description": "Error when apps fail to load"
   },
   "aboutOmi": "About Toki",
   "@aboutOmi": {
@@ -511,10 +389,6 @@
   "@identifyingOthers": {
     "description": "People identification setting"
   },
-  "paymentMethods": "Payment Methods",
-  "@paymentMethods": {
-    "description": "Payment methods setting"
-  },
   "conversationDisplay": "Conversation Display",
   "@conversationDisplay": {
     "description": "Conversation display setting"
@@ -551,14 +425,6 @@
   "@integrations": {
     "description": "Integrations menu item"
   },
-  "feedbackBug": "Feedback / Bug",
-  "@feedbackBug": {
-    "description": "Feedback menu item"
-  },
-  "helpCenter": "Help Center",
-  "@helpCenter": {
-    "description": "Help center menu item"
-  },
   "developerSettings": "Developer Settings",
   "@developerSettings": {
     "description": "Title for developer settings page"
@@ -582,10 +448,6 @@
   "privacyIntro": "At Toki, we are committed to protecting your privacy. This page allows you to control how your data is stored and used.",
   "@privacyIntro": {
     "description": "Data privacy page introduction"
-  },
-  "learnMore": "Learn more...",
-  "@learnMore": {
-    "description": "Learn more link"
   },
   "dataProtectionLevel": "Data Protection Level",
   "@dataProtectionLevel": {
@@ -638,10 +500,6 @@
   "disconnect": "Disconnect",
   "@disconnect": {
     "description": "Disconnect device button"
-  },
-  "forgetDevice": "Forget Device",
-  "@forgetDevice": {
-    "description": "Forget device button"
   },
   "chargingIssues": "Charging Issues",
   "@chargingIssues": {
@@ -791,17 +649,9 @@
   "@micGainDescMax": {
     "description": "Mic gain description: Max"
   },
-  "developerSettingsTitle": "Developer Settings",
-  "@developerSettingsTitle": {
-    "description": "Developer settings page title"
-  },
   "saving": "Saving...",
   "@saving": {
     "description": "Text shown while saving settings"
-  },
-  "personaConfig": "Configure your AI persona",
-  "@personaConfig": {
-    "description": "Persona configuration subtitle"
   },
   "beta": "BETA",
   "@beta": {
@@ -811,29 +661,13 @@
   "@transcription": {
     "description": "Transcription feature name"
   },
-  "transcriptionConfig": "Configure STT provider",
-  "@transcriptionConfig": {
-    "description": "Transcription configuration subtitle"
-  },
   "conversationTimeout": "Conversation Timeout",
   "@conversationTimeout": {
     "description": "Conversation timeout feature name"
   },
-  "conversationTimeoutConfig": "Set when conversations auto-end",
-  "@conversationTimeoutConfig": {
-    "description": "Conversation timeout configuration subtitle"
-  },
   "importData": "Import Data",
   "@importData": {
     "description": "Import data feature name"
-  },
-  "importDataConfig": "Import data from other sources",
-  "@importDataConfig": {
-    "description": "Import data details subtitle"
-  },
-  "debugDiagnostics": "Debug & Diagnostics",
-  "@debugDiagnostics": {
-    "description": "Debug & Diagnostics section header"
   },
   "endpointUrl": "Endpoint URL",
   "@endpointUrl": {
@@ -843,10 +677,6 @@
   "@noApiKeys": {
     "description": "No API keys message"
   },
-  "createKeyToStart": "Create a key to get started",
-  "@createKeyToStart": {
-    "description": "Create key instruction"
-  },
   "createKey": "Create Key",
   "@createKey": {
     "description": "Button text to create API key"
@@ -854,10 +684,6 @@
   "docs": "Docs",
   "@docs": {
     "description": "Documentation button text"
-  },
-  "yourOmiInsights": "Your Toki Insights",
-  "@yourOmiInsights": {
-    "description": "Usage page title"
   },
   "today": "Today",
   "@today": {
@@ -874,10 +700,6 @@
   "allTime": "All Time",
   "@allTime": {
     "description": "Time period: All Time"
-  },
-  "noActivityYet": "No Activity Yet",
-  "@noActivityYet": {
-    "description": "Empty state title"
   },
   "startConversationToSeeInsights": "Start a conversation with Toki\nto see your usage insights here.",
   "@startConversationToSeeInsights": {
@@ -915,162 +737,26 @@
   "@rememberingSubtitle": {
     "description": "Remembering stat subtitle"
   },
-  "managePlan": "Manage Plan",
-  "@managePlan": {
-    "description": "Manage plan button"
-  },
-  "cancelAtPeriodEnd": "Your plan will cancel on {date}.",
-  "@cancelAtPeriodEnd": {
-    "description": "Cancellation message",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "Jan 1, 2026"
-      }
-    }
-  },
-  "renewsOn": "Your plan renews on {date}.",
-  "@renewsOn": {
-    "description": "Renewal message",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "Jan 1, 2026"
-      }
-    }
-  },
-  "basicPlan": "Free Plan",
-  "@basicPlan": {
-    "description": "Basic plan name"
-  },
-  "usageLimitMessage": "{used} of {limit} mins used",
-  "@usageLimitMessage": {
-    "description": "Usage limit message",
-    "placeholders": {
-      "used": {
-        "type": "String",
-        "example": "100"
-      },
-      "limit": {
-        "type": "int",
-        "example": "60"
-      }
-    }
-  },
-  "basicPlanDesc": "Your plan includes {limit} free minutes per month. Upgrade to go unlimited.",
-  "@basicPlanDesc": {
-    "description": "Basic plan description",
-    "placeholders": {
-      "limit": {
-        "type": "int",
-        "example": "60"
-      }
-    }
-  },
-  "shareStatsMessage": "Sharing my Toki stats! (omi.me - your always-on AI assistant)",
-  "@shareStatsMessage": {
-    "description": "Share stats base message"
-  },
-  "sharePeriodToday": "Today, omi has:",
-  "@sharePeriodToday": {
-    "description": "Share stats period: Today"
-  },
-  "sharePeriodMonth": "This month, omi has:",
-  "@sharePeriodMonth": {
-    "description": "Share stats period: Month"
-  },
-  "sharePeriodYear": "This year, omi has:",
-  "@sharePeriodYear": {
-    "description": "Share stats period: Year"
-  },
-  "sharePeriodAllTime": "So far, omi has:",
-  "@sharePeriodAllTime": {
-    "description": "Share stats period: All Time"
-  },
-  "shareStatsListened": "🎧 Listened for {minutes} minutes",
-  "@shareStatsListened": {
-    "description": "Share stats: listened",
-    "placeholders": {
-      "minutes": {
-        "type": "String",
-        "example": "120"
-      }
-    }
-  },
-  "shareStatsWords": "🧠 Understood {words} words",
-  "@shareStatsWords": {
-    "description": "Share stats: words",
-    "placeholders": {
-      "words": {
-        "type": "String",
-        "example": "5000"
-      }
-    }
-  },
-  "shareStatsInsights": "✨ Provided {count} insights",
-  "@shareStatsInsights": {
-    "description": "Share stats: insights",
-    "placeholders": {
-      "count": {
-        "type": "String",
-        "example": "10"
-      }
-    }
-  },
-  "shareStatsMemories": "📚 Remembered {count} memories",
-  "@shareStatsMemories": {
-    "description": "Share stats: memories",
-    "placeholders": {
-      "count": {
-        "type": "String",
-        "example": "5"
-      }
-    }
-  },
   "debugLogs": "Debug Logs",
-  "debugLogsAutoDelete": "Auto-deletes after 3 days.",
-  "debugLogsDesc": "Helps diagnose issues",
   "noLogFilesFound": "No log files found.",
-  "omiDebugLog": "Toki debug log",
-  "logShared": "Log shared",
   "selectLogFile": "Select Log File",
   "shareLogs": "Share Logs",
   "debugLogCleared": "Debug log cleared",
   "exportStarted": "Export started. This may take a few seconds...",
   "exportAllData": "Export All Data",
-  "exportDataDesc": "Export conversations to a JSON file",
-  "exportedConversations": "Exported Conversations from Toki",
-  "exportShared": "Export shared",
-  "deleteKnowledgeGraphTitle": "Delete Knowledge Graph?",
-  "deleteKnowledgeGraphMessage": "This will delete all derived knowledge graph data (nodes and connections). Your original memories will remain safe. The graph will be rebuilt over time or upon next request.",
   "knowledgeGraphDeleted": "Knowledge Graph deleted",
-  "deleteGraphFailed": "Failed to delete graph: {error}",
-  "@deleteGraphFailed": {
-    "description": "Error message when deleting graph fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
   "deleteKnowledgeGraph": "Delete Knowledge Graph",
-  "deleteKnowledgeGraphDesc": "Clear all nodes and connections",
   "mcp": "MCP",
   "mcpServer": "MCP Server",
-  "mcpServerDesc": "Connect AI assistants to your data",
   "serverUrl": "Server URL",
   "urlCopied": "URL copied",
   "apiKeyAuth": "API Key Auth",
   "header": "Header",
-  "authorizationBearer": "Authorization: Bearer <key>",
-  "oauth": "OAuth",
   "clientId": "Client ID",
   "clientSecret": "Client Secret",
-  "useMcpApiKey": "Use your MCP API key",
   "webhooks": "Webhooks",
   "conversationEvents": "Conversation Events",
   "newConversationCreated": "New conversation created",
-  "realtimeTranscript": "Real-time Transcript",
   "transcriptReceived": "Transcript received",
   "audioBytes": "Audio Bytes",
   "audioDataReceived": "Audio data received",
@@ -1078,57 +764,12 @@
   "daySummary": "Day Summary",
   "summaryGenerated": "Summary generated",
   "claudeDesktop": "Claude Desktop",
-  "addToClaudeConfig": "Add to claude_desktop_config.json",
   "copyConfig": "Copy Config",
   "configCopied": "Config copied to clipboard",
   "listeningMins": "Listening (mins)",
   "understandingWords": "Understanding (words)",
   "insights": "Insights",
   "memories": "Memories",
-  "minsUsedThisMonth": "{used} of {limit} min used this month",
-  "@minsUsedThisMonth": {
-    "placeholders": {
-      "used": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "int"
-      }
-    }
-  },
-  "wordsUsedThisMonth": "{used} of {limit} words used this month",
-  "@wordsUsedThisMonth": {
-    "placeholders": {
-      "used": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      }
-    }
-  },
-  "insightsUsedThisMonth": "{used} of {limit} insights gained this month",
-  "@insightsUsedThisMonth": {
-    "placeholders": {
-      "used": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      }
-    }
-  },
-  "memoriesUsedThisMonth": "{used} of {limit} memories created this month",
-  "@memoriesUsedThisMonth": {
-    "placeholders": {
-      "used": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      }
-    }
-  },
   "visibility": "Visibility",
   "visibilitySubtitle": "Control which conversations appear in your list",
   "showShortConversations": "Show Short Conversations",
@@ -1348,56 +989,8 @@
   "defaultList": "Default List",
   "tasksAddedToList": "Tasks will be added to this list",
   "noListsInSpace": "No lists found in this space",
-  "failedToLoadRepos": "Failed to load repositories: {error}",
-  "@failedToLoadRepos": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "defaultRepoSaved": "Default repository saved",
-  "failedToSaveDefaultRepo": "Failed to save default repository",
-  "defaultRepository": "Default Repository",
-  "selectDefaultRepoDesc": "Select a default repository for creating issues. You can still specify a different repository when creating issues.",
-  "noReposFound": "No repositories found",
   "private": "Private",
-  "updatedDate": "Updated {date}",
-  "@updatedDate": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
   "yesterday": "Yesterday",
-  "daysAgo": "{count} days ago",
-  "@daysAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "oneWeekAgo": "1 week ago",
-  "weeksAgo": "{count} weeks ago",
-  "@weeksAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "oneMonthAgo": "1 month ago",
-  "monthsAgo": "{count} months ago",
-  "@monthsAgo": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "issuesCreatedInRepo": "Issues will be created in your default repository",
   "taskIntegrations": "Task Integrations",
   "configureSettings": "Configure Settings",
   "completeAuthBrowser": "Please complete authentication in your browser. Once done, return to the app.",
@@ -1446,9 +1039,7 @@
   "tasksExportedOneApp": "Tasks can be exported to one app at a time.",
   "importConfiguration": "Import Configuration",
   "exportConfiguration": "Export configuration",
-  "bringYourOwn": "Bring your own",
   "payYourSttProvider": "Freely use omi. You only pay your STT provider directly.",
-  "freeMinutesMonth": "1,200 free minutes/month included. Unlimited with ",
   "hostRequired": "Host is required",
   "validPortRequired": "Valid port is required",
   "validWebsocketUrlRequired": "Valid WebSocket URL is required (wss://)",
@@ -1519,43 +1110,14 @@
     }
   },
   "omiTranscription": "Toki Transcription",
-  "bestInClassTranscription": "Best in class transcription with zero setup",
-  "instantSpeakerLabels": "Instant speaker labels",
-  "languageTranslation": "100+ language translation",
-  "optimizedForConversation": "Optimized for conversation",
-  "autoLanguageDetection": "Auto language detection",
-  "highAccuracy": "High accuracy",
-  "privacyFirst": "Privacy first",
-  "saveChanges": "Save Changes",
-  "resetToDefault": "Reset to default",
-  "viewTemplate": "View Template",
-  "trySomethingLike": "Try something like...",
-  "tryIt": "Try it",
-  "creatingPlan": "Creating plan",
-  "developingLogic": "Developing logic",
-  "designingApp": "Designing app",
-  "generatingIconStep": "Generating icon",
-  "finalTouches": "Final touches",
   "processing": "Processing...",
-  "features": "Features",
   "creatingYourApp": "Creating your app...",
-  "generatingIcon": "Generating icon...",
-  "whatShouldWeMake": "What should we make?",
   "appName": "App Name",
   "description": "Description",
-  "publicLabel": "Public",
-  "privateLabel": "Private",
   "free": "Free",
-  "perMonth": "/ Month",
-  "tailoredConversationSummaries": "Tailored Conversation Summaries",
-  "customChatbotPersonality": "Custom Chatbot Personality",
   "makePublic": "Make Public",
   "anyoneCanDiscover": "Anyone can discover your app",
   "onlyYouCanUse": "Only you can use this app",
-  "paidApp": "Paid app",
-  "usersPayToUse": "Users pay to use your app",
-  "freeForEveryone": "Free for everyone",
-  "perMonthLabel": "/ month",
   "creating": "Creating...",
   "@creating": {
     "description": "Loading state text when app generation is in progress"
@@ -1646,18 +1208,6 @@
   "locationServiceDisabledDesc": "Location Service is Disabled. Please go to Settings > Privacy & Security > Location Services and enable it",
   "@locationServiceDisabledDesc": {
     "description": "Instructions to enable location services"
-  },
-  "backgroundLocationDenied": "Background Location Access Denied",
-  "@backgroundLocationDenied": {
-    "description": "Title for dialog when background location is denied"
-  },
-  "backgroundLocationDeniedDesc": "Please go to device settings and set location permission to \"Always Allow\"",
-  "@backgroundLocationDeniedDesc": {
-    "description": "Instructions to grant background location permission"
-  },
-  "lovingOmi": "Loving Toki?",
-  "@lovingOmi": {
-    "description": "Title for the app review prompt"
   },
   "leaveReviewIos": "Help us reach more people by leaving a review in the App Store. Your feedback means the world to us!",
   "@leaveReviewIos": {
@@ -1889,140 +1439,9 @@
   "@personalGrowthJourney": {
     "description": "Subtitle describing Toki on auth screen"
   },
-  "actionItemsTitle": "To-Do's",
-  "@actionItemsTitle": {
-    "description": "Title for the Action Items page"
-  },
-  "actionItemsDescription": "Tap to edit • Long press to select • Swipe for actions",
-  "@actionItemsDescription": {
-    "description": "Instruction text for Action Items interactions"
-  },
-  "tabToDo": "To Do",
-  "@tabToDo": {
-    "description": "Label for To Do tab"
-  },
-  "tabDone": "Done",
-  "@tabDone": {
-    "description": "Label for Done tab"
-  },
-  "tabOld": "Old",
-  "@tabOld": {
-    "description": "Label for Old tab"
-  },
-  "emptyTodoMessage": "🎉 All caught up!\nNo pending action items",
-  "@emptyTodoMessage": {
-    "description": "Message when To Do list is empty"
-  },
-  "emptyDoneMessage": "No completed items yet",
-  "@emptyDoneMessage": {
-    "description": "Message when Done list is empty"
-  },
-  "emptyOldMessage": "✅ No old tasks",
-  "@emptyOldMessage": {
-    "description": "Message when Old list is empty"
-  },
-  "noItems": "No items",
-  "@noItems": {
-    "description": "Generic no items message"
-  },
-  "actionItemMarkedIncomplete": "Action item marked as incomplete",
-  "@actionItemMarkedIncomplete": {
-    "description": "Snackbar message when item marked incomplete"
-  },
-  "actionItemCompleted": "Action item completed",
-  "@actionItemCompleted": {
-    "description": "Snackbar message when item completed"
-  },
-  "deleteActionItemTitle": "Delete Action Item",
-  "@deleteActionItemTitle": {
-    "description": "Dialog title for delete confirmation"
-  },
-  "deleteActionItemMessage": "Are you sure you want to delete this action item?",
-  "@deleteActionItemMessage": {
-    "description": "Dialog message for delete confirmation"
-  },
-  "deleteSelectedItemsTitle": "Delete Selected Items",
-  "@deleteSelectedItemsTitle": {
-    "description": "Title for bulk delete dialog"
-  },
-  "deleteSelectedItemsMessage": "Are you sure you want to delete {count} selected action item{s}?",
-  "@deleteSelectedItemsMessage": {
-    "description": "Confirmation message for bulk delete",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "s": {
-        "type": "String",
-        "description": "Plural suffix (s) if needed, handled by logic or just append 's' for simplicity if count > 1"
-      }
-    }
-  },
-  "actionItemDeletedResult": "Action item \"{description}\" deleted",
-  "@actionItemDeletedResult": {
-    "description": "Snackbar message after deleting single item",
-    "placeholders": {
-      "description": {
-        "type": "String"
-      }
-    }
-  },
-  "itemsDeletedResult": "{count} action item{s} deleted",
-  "@itemsDeletedResult": {
-    "description": "Snackbar message after bulk delete",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      },
-      "s": {
-        "type": "String"
-      }
-    }
-  },
-  "failedToDeleteItem": "Failed to delete action item",
-  "@failedToDeleteItem": {
-    "description": "Error message when deletion fails"
-  },
-  "failedToDeleteItems": "Failed to delete items",
-  "@failedToDeleteItems": {
-    "description": "Error message when bulk deletion fails"
-  },
-  "failedToDeleteSomeItems": "Failed to delete some items",
-  "@failedToDeleteSomeItems": {
-    "description": "Error message when partial deletion failure"
-  },
-  "welcomeActionItemsTitle": "Ready for Action Items",
-  "@welcomeActionItemsTitle": {
-    "description": "Heading for empty state welcome"
-  },
-  "welcomeActionItemsDescription": "Your AI will automatically extract tasks and to-dos from your conversations. They'll appear here when created.",
-  "@welcomeActionItemsDescription": {
-    "description": "Description for empty state welcome"
-  },
-  "autoExtractionFeature": "Automatically extracted from conversations",
-  "@autoExtractionFeature": {
-    "description": "Feature point description"
-  },
-  "editSwipeFeature": "Tap to edit, swipe to complete or delete",
-  "@editSwipeFeature": {
-    "description": "Feature point description"
-  },
-  "itemsSelected": "{count} selected",
-  "@itemsSelected": {
-    "description": "Selection count in app bar",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "selectAll": "Select all",
   "@selectAll": {
     "description": "Tooltip for select all"
-  },
-  "deleteSelected": "Delete selected",
-  "@deleteSelected": {
-    "description": "Tooltip for delete selected"
   },
   "searchMemories": "Search memories...",
   "@searchMemories": {
@@ -2039,10 +1458,6 @@
   "noMemoriesYet": "🧠 No memories yet",
   "@noMemoriesYet": {
     "description": "Empty state title when no memories"
-  },
-  "noAutoMemories": "No auto-extracted memories yet",
-  "@noAutoMemories": {
-    "description": "Empty state text for auto category"
   },
   "noManualMemories": "No manual memories yet",
   "@noManualMemories": {
@@ -2083,10 +1498,6 @@
   "createMemoryTooltip": "Create new memory",
   "@createMemoryTooltip": {
     "description": "Tooltip for create memory FAB"
-  },
-  "createActionItemTooltip": "Create new action item",
-  "@createActionItemTooltip": {
-    "description": "Tooltip for create action item FAB"
   },
   "memoryManagement": "Memory Management",
   "@memoryManagement": {
@@ -2161,10 +1572,6 @@
   "@createActionItem": {
     "description": "Dialog title for creating action item"
   },
-  "editActionItem": "Edit Action Item",
-  "@editActionItem": {
-    "description": "Dialog title for editing action item"
-  },
   "actionItemDescriptionHint": "What needs to be done?",
   "@actionItemDescriptionHint": {
     "description": "Input hint"
@@ -2188,10 +1595,6 @@
   "failedToCreateActionItem": "Failed to create action item",
   "@failedToCreateActionItem": {
     "description": "Error message when creating action item fails"
-  },
-  "dueDate": "Due Date",
-  "@dueDate": {
-    "description": "Label for due date field"
   },
   "time": "Time",
   "@time": {
@@ -2337,30 +1740,6 @@
   "transcriptCopiedToClipboard": "Transcript copied to clipboard",
   "@transcriptCopiedToClipboard": {
     "description": "Success message when transcript is copied"
-  },
-  "summaryCopiedToClipboard": "Summary copied to clipboard",
-  "@summaryCopiedToClipboard": {
-    "description": "Success message when summary is copied"
-  },
-  "conversationUrlCouldNotBeShared": "Conversation URL could not be shared.",
-  "@conversationUrlCouldNotBeShared": {
-    "description": "Error when sharing URL fails"
-  },
-  "urlCopiedToClipboard": "URL Copied to Clipboard",
-  "@urlCopiedToClipboard": {
-    "description": "Success message when URL is copied"
-  },
-  "exportTranscript": "Export Transcript",
-  "@exportTranscript": {
-    "description": "Button/section label for exporting transcript"
-  },
-  "exportSummary": "Export Summary",
-  "@exportSummary": {
-    "description": "Button/section label for exporting summary"
-  },
-  "exportButton": "Export",
-  "@exportButton": {
-    "description": "Export button text"
   },
   "actionItemsCopiedToClipboard": "Action items copied to clipboard",
   "@actionItemsCopiedToClipboard": {
@@ -2517,10 +1896,6 @@
   "@privacyPolicyTitle": {
     "description": "Title for privacy policy page"
   },
-  "omiSttProvider": "Toki",
-  "@omiSttProvider": {
-    "description": "Label for default Toki STT provider"
-  },
   "labelCopied": "{label} copied",
   "@labelCopied": {
     "description": "Message shown when a value is copied",
@@ -2542,10 +1917,6 @@
   "@persona": {
     "description": "Persona feature name"
   },
-  "configureYourAiPersona": "Configure your AI persona",
-  "@configureYourAiPersona": {
-    "description": "Description for persona settings"
-  },
   "configureSttProvider": "Configure STT provider",
   "@configureSttProvider": {
     "description": "Description for transcription settings"
@@ -2565,10 +1936,6 @@
   "@debugLogs": {
     "description": "Debug logs feature name"
   },
-  "autoDeletesAfter3Days": "Auto-deletes after 3 days.",
-  "@autoDeletesAfter3Days": {
-    "description": "Description for debug logs auto-delete"
-  },
   "helpsDiagnoseIssues": "Helps diagnose issues",
   "@helpsDiagnoseIssues": {
     "description": "Description for debug logs purpose"
@@ -2585,22 +1952,12 @@
   "@debugLogCleared": {
     "description": "Confirmation message after clearing debug logs"
   },
-  "exportStartedMessage": "Export started. This may take a few seconds...",
-  "@exportStartedMessage": {
-    "description": "Snackbar message when export starts"
-  },
   "@exportAllData": {
     "description": "Export all data feature name"
   },
   "exportConversationsToJson": "Export conversations to a JSON file",
   "@exportConversationsToJson": {
     "description": "Description for export feature"
-  },
-  "@deleteKnowledgeGraphTitle": {
-    "description": "Dialog title for delete knowledge graph confirmation"
-  },
-  "@deleteKnowledgeGraphMessage": {
-    "description": "Dialog message explaining delete knowledge graph action"
   },
   "knowledgeGraphDeletedSuccess": "Knowledge Graph deleted successfully",
   "@knowledgeGraphDeletedSuccess": {
@@ -2641,10 +1998,6 @@
   "@mcpServer": {
     "description": "MCP Server section header"
   },
-  "connectAiAssistantsToData": "Connect AI assistants to your data",
-  "@connectAiAssistantsToData": {
-    "description": "Description for MCP Server feature"
-  },
   "@serverUrl": {
     "description": "Server URL label"
   },
@@ -2656,9 +2009,6 @@
   },
   "@header": {
     "description": "HTTP header label"
-  },
-  "@oauth": {
-    "description": "Label for OAuth section"
   },
   "@clientId": {
     "description": "OAuth client ID label"
@@ -2733,25 +2083,9 @@
   "@goalTracker": {
     "description": "Experimental feature name"
   },
-  "trackPersonalGoalsOnHomepage": "Track your personal goals on homepage",
-  "@trackPersonalGoalsOnHomepage": {
-    "description": "Description for goal tracker"
-  },
   "dailyReflection": "Daily Reflection",
   "@dailyReflection": {
     "description": "Section header for daily reflection settings"
-  },
-  "get9PmReminderToReflect": "Get a 9 PM reminder to reflect on your day",
-  "@get9PmReminderToReflect": {
-    "description": "Description for daily reflection"
-  },
-  "actionItemDescriptionCannotBeEmpty": "Action item description cannot be empty",
-  "@actionItemDescriptionCannotBeEmpty": {
-    "description": "Error message when action item description is empty"
-  },
-  "saved": "Saved",
-  "@saved": {
-    "description": "Message shown when changes are saved"
   },
   "overdue": "Overdue",
   "@overdue": {
@@ -2762,58 +2096,6 @@
   },
   "@yesterday": {
     "description": "Label for yesterday date"
-  },
-  "failedToUpdateDueDate": "Failed to update due date",
-  "@failedToUpdateDueDate": {
-    "description": "Error message when due date update fails"
-  },
-  "markIncomplete": "Mark Incomplete",
-  "@markIncomplete": {
-    "description": "Menu item to mark action item as incomplete"
-  },
-  "editDueDate": "Edit Due Date",
-  "@editDueDate": {
-    "description": "Menu item to edit due date"
-  },
-  "setDueDate": "Set Due Date",
-  "@setDueDate": {
-    "description": "Title for date picker sheet"
-  },
-  "clearDueDate": "Clear Due Date",
-  "@clearDueDate": {
-    "description": "Menu item to clear due date"
-  },
-  "failedToClearDueDate": "Failed to clear due date",
-  "@failedToClearDueDate": {
-    "description": "Error message when clearing due date fails"
-  },
-  "mondayAbbr": "Mon",
-  "@mondayAbbr": {
-    "description": "Abbreviation for Monday"
-  },
-  "tuesdayAbbr": "Tue",
-  "@tuesdayAbbr": {
-    "description": "Abbreviation for Tuesday"
-  },
-  "wednesdayAbbr": "Wed",
-  "@wednesdayAbbr": {
-    "description": "Abbreviation for Wednesday"
-  },
-  "thursdayAbbr": "Thu",
-  "@thursdayAbbr": {
-    "description": "Abbreviation for Thursday"
-  },
-  "fridayAbbr": "Fri",
-  "@fridayAbbr": {
-    "description": "Abbreviation for Friday"
-  },
-  "saturdayAbbr": "Sat",
-  "@saturdayAbbr": {
-    "description": "Abbreviation for Saturday"
-  },
-  "sundayAbbr": "Sun",
-  "@sundayAbbr": {
-    "description": "Abbreviation for Sunday"
   },
   "howDoesItWork": "How does it work?",
   "@howDoesItWork": {
@@ -2839,40 +2121,9 @@
   "@youreAllSet": {
     "description": "Completion message when onboarding is finished"
   },
-  "welcomeToOmiDescription": "Welcome to Toki! Your AI companion is ready to assist you with conversations, tasks, and more.",
-  "@welcomeToOmiDescription": {
-    "description": "Welcome message on completion screen"
-  },
-  "startUsingOmi": "Start Using Toki",
-  "@startUsingOmi": {
-    "description": "Button to complete onboarding and start using the app"
-  },
   "back": "Back",
   "@back": {
     "description": "Back button label"
-  },
-  "keyboardShortcuts": "Keyboard Shortcuts",
-  "@keyboardShortcuts": {
-    "description": "Keyboard shortcuts section"
-  },
-  "toggleControlBar": "Toggle Control Bar",
-  "@toggleControlBar": {
-    "description": "Shortcut to toggle control bar visibility"
-  },
-  "@resetToDefault": {
-    "description": "Reset keyboard shortcut to default value"
-  },
-  "pressKeys": "Press keys...",
-  "@pressKeys": {
-    "description": "Placeholder text when recording keyboard shortcut"
-  },
-  "cmdRequired": "⌘ required",
-  "@cmdRequired": {
-    "description": "Error message when command key is not pressed"
-  },
-  "invalidKey": "Invalid key",
-  "@invalidKey": {
-    "description": "Error message when invalid key is pressed for shortcut"
   },
   "space": "Space",
   "@space": {
@@ -2881,23 +2132,6 @@
   "search": "Search",
   "@search": {
     "description": "Search button and label"
-  },
-  "searchPlaceholder": "Search...",
-  "@searchPlaceholder": {
-    "description": "Search input placeholder text"
-  },
-  "untitledConversation": "Untitled Conversation",
-  "@untitledConversation": {
-    "description": "Title for a conversation without a title"
-  },
-  "countRemaining": "{count} remaining",
-  "@countRemaining": {
-    "description": "Shows number of remaining items",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
   },
   "addGoal": "Add Goal",
   "@addGoal": {
@@ -2923,54 +2157,9 @@
   "@target": {
     "description": "Label for target value field"
   },
-  "saveGoal": "Save",
-  "@saveGoal": {
-    "description": "Save button for goal"
-  },
   "goals": "Goals",
   "@goals": {
     "description": "Header for goals section"
-  },
-  "tapToAddGoal": "Tap to add a goal",
-  "@tapToAddGoal": {
-    "description": "Empty state text for goals widget"
-  },
-  "welcomeBack": "Welcome back, {name}",
-  "@welcomeBack": {
-    "description": "Welcome message with user name",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "yourConversations": "Your Conversations",
-  "@yourConversations": {
-    "description": "Title for the conversations page"
-  },
-  "reviewAndManageConversations": "Review and manage your captured conversations",
-  "@reviewAndManageConversations": {
-    "description": "Subtitle explaining what users can do on conversations page"
-  },
-  "startCapturingConversations": "Start capturing conversations with your Toki device to see them here.",
-  "@startCapturingConversations": {
-    "description": "Message explaining how to get started with conversations"
-  },
-  "useMobileAppToCapture": "Use your mobile app to capture audio",
-  "@useMobileAppToCapture": {
-    "description": "Tip about using mobile app for audio capture"
-  },
-  "conversationsProcessedAutomatically": "Conversations are processed automatically",
-  "@conversationsProcessedAutomatically": {
-    "description": "Tip about automatic conversation processing"
-  },
-  "getInsightsInstantly": "Get insights and summaries instantly",
-  "@getInsightsInstantly": {
-    "description": "Tip about instant insights feature"
-  },
-  "showAll": "Show All",
-  "@showAll": {
-    "description": "Button text to show all items"
   },
   "noTasksForToday": "No tasks for today.\nAsk Toki for more tasks or create manually.",
   "@noTasksForToday": {
@@ -2984,21 +2173,9 @@
   "@dailyScoreDescription": {
     "description": "Description text for daily score widget"
   },
-  "searchResults": "Search results",
-  "@searchResults": {
-    "description": "Badge label for search results section"
-  },
   "actionItems": "Action Items",
   "@actionItems": {
     "description": "Section header for action items"
-  },
-  "tasksToday": "Today",
-  "@tasksToday": {
-    "description": "Category label for tasks due today"
-  },
-  "tasksTomorrow": "Tomorrow",
-  "@tasksTomorrow": {
-    "description": "Category label for tasks due tomorrow"
   },
   "tasksNoDeadline": "No Deadline",
   "@tasksNoDeadline": {
@@ -3008,17 +2185,9 @@
   "@tasksLater": {
     "description": "Category label for tasks due later"
   },
-  "loadingTasks": "Loading tasks...",
-  "@loadingTasks": {
-    "description": "Message shown while tasks are being loaded"
-  },
   "tasks": "Tasks",
   "@tasks": {
     "description": "Title for the tasks page"
-  },
-  "swipeTasksToIndent": "Swipe tasks to indent, drag between categories",
-  "@swipeTasksToIndent": {
-    "description": "Instructions for task management gestures"
   },
   "create": "Create",
   "@create": {
@@ -3027,10 +2196,6 @@
   "noTasksYet": "No Tasks Yet",
   "@noTasksYet": {
     "description": "Empty state title when there are no tasks"
-  },
-  "tasksFromConversationsWillAppear": "Tasks from your conversations will appear here.\nClick Create to add one manually.",
-  "@tasksFromConversationsWillAppear": {
-    "description": "Empty state description for tasks page"
   },
   "monthJan": "Jan",
   "@monthJan": {
@@ -3088,48 +2253,12 @@
   "@timeAM": {
     "description": "AM time indicator"
   },
-  "actionItemUpdatedSuccessfully": "Action item updated successfully",
-  "@actionItemUpdatedSuccessfully": {
-    "description": "Success message when action item is updated"
-  },
-  "actionItemCreatedSuccessfully": "Action item created successfully",
-  "@actionItemCreatedSuccessfully": {
-    "description": "Success message when action item is created"
-  },
-  "actionItemDeletedSuccessfully": "Action item deleted successfully",
-  "@actionItemDeletedSuccessfully": {
-    "description": "Success message when action item is deleted"
-  },
   "deleteActionItem": "Delete Action Item",
   "@deleteActionItem": {
     "description": "Dialog title for delete confirmation"
   },
-  "deleteActionItemConfirmation": "Are you sure you want to delete this action item? This action cannot be undone.",
-  "@deleteActionItemConfirmation": {
-    "description": "Confirmation message for deleting action item"
-  },
   "@description": {
     "description": "Label for description field"
-  },
-  "enterActionItemDescription": "Enter action item description...",
-  "@enterActionItemDescription": {
-    "description": "Placeholder text for action item description field"
-  },
-  "markAsCompleted": "Mark as completed",
-  "@markAsCompleted": {
-    "description": "Label for completion checkbox"
-  },
-  "setDueDateAndTime": "Set due date and time",
-  "@setDueDateAndTime": {
-    "description": "Placeholder for due date picker button"
-  },
-  "reloadingApps": "Reloading apps...",
-  "@reloadingApps": {
-    "description": "Loading message shown when reloading apps list"
-  },
-  "loadingApps": "Loading apps...",
-  "@loadingApps": {
-    "description": "Loading message shown when apps are being loaded"
   },
   "all": "All",
   "@all": {
@@ -3143,387 +2272,53 @@
   "@install": {
     "description": "Button label to install an app"
   },
-  "noAppsAvailable": "No apps available",
-  "@noAppsAvailable": {
-    "description": "Empty state title when no apps are available"
-  },
-  "unableToLoadApps": "Unable to load apps",
-  "@unableToLoadApps": {
-    "description": "Empty state title when apps cannot be loaded due to connectivity"
-  },
-  "tryAdjustingSearchTermsOrFilters": "Try adjusting your search terms or filters",
-  "@tryAdjustingSearchTermsOrFilters": {
-    "description": "Empty state message suggesting to adjust search or filters"
-  },
-  "checkBackLaterForNewApps": "Check back later for new apps",
-  "@checkBackLaterForNewApps": {
-    "description": "Empty state message when no apps are available"
-  },
   "pleaseCheckInternetConnectionAndTryAgain": "Please check your internet connection and try again",
   "@pleaseCheckInternetConnectionAndTryAgain": {
     "description": "Empty state message for connectivity issues"
-  },
-  "createNewApp": "Create New App",
-  "@createNewApp": {
-    "description": "Title for the create new app page"
-  },
-  "submittingYourApp": "Submitting your app...",
-  "@submittingYourApp": {
-    "description": "Loading message shown while app is being submitted"
-  },
-  "preparingFormForYou": "Preparing the form for you...",
-  "@preparingFormForYou": {
-    "description": "Loading message shown while form is being prepared"
-  },
-  "paymentDetails": "Payment Details",
-  "@paymentDetails": {
-    "description": "Section title for payment information for paid apps"
-  },
-  "previewAndScreenshots": "Preview and Screenshots",
-  "@previewAndScreenshots": {
-    "description": "Section title for app preview images"
-  },
-  "aiPrompts": "AI Prompts",
-  "@aiPrompts": {
-    "description": "Section title for AI prompt configuration"
   },
   "chatPrompt": "Chat Prompt",
   "@chatPrompt": {
     "description": "Label for chat prompt text field"
   },
-  "chatPromptPlaceholder": "You are an awesome app, your job is to respond to the user queries and make them feel good...",
-  "@chatPromptPlaceholder": {
-    "description": "Placeholder text for chat prompt field"
-  },
   "conversationPrompt": "Conversation Prompt",
   "@conversationPrompt": {
     "description": "Section title for conversation prompt"
-  },
-  "conversationPromptPlaceholder": "You are an awesome app, you will be given transcript and summary of a conversation...",
-  "@conversationPromptPlaceholder": {
-    "description": "Placeholder text for conversation prompt field"
   },
   "notificationScopes": "Notification Scopes",
   "@notificationScopes": {
     "description": "Section title for notification scope configuration"
   },
-  "appPrivacyAndTerms": "App Privacy & Terms",
-  "@appPrivacyAndTerms": {
-    "description": "Section title for privacy and terms agreement"
-  },
-  "makeMyAppPublic": "Make my app public",
-  "@makeMyAppPublic": {
-    "description": "Checkbox label for making app publicly available"
-  },
-  "needHelpGettingStarted": "Need help getting started?",
-  "@needHelpGettingStarted": {
-    "description": "Help banner title"
-  },
-  "clickHereForAppBuildingGuides": "Click here for app building guides and documentation",
-  "@clickHereForAppBuildingGuides": {
-    "description": "Help banner description with link to documentation"
-  },
-  "startEarning": "Start Earning! 💰",
-  "@startEarning": {
-    "description": "Payment setup modal title"
-  },
-  "connectStripeOrPayPal": "Connect Stripe or PayPal to receive payments for your app.",
-  "@connectStripeOrPayPal": {
-    "description": "Payment setup modal description"
-  },
   "connectNow": "Connect Now",
   "@connectNow": {
     "description": "Button text to connect payment method"
-  },
-  "installsCount": "Installs",
-  "@installsCount": {
-    "description": "Label for number of app installs"
   },
   "subscribe": "Subscribe",
   "@subscribe": {
     "description": "Button label to subscribe to a paid app"
   },
-  "dataAccessNotice": "Data Access Notice",
-  "@dataAccessNotice": {
-    "description": "Dialog title warning about app data access"
-  },
-  "dataAccessWarning": "This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app",
-  "@dataAccessWarning": {
-    "description": "Warning message about app data access in confirmation dialog"
-  },
-  "betaTesterNotice": "You are a beta tester for this app. It is not public yet. It will be public once approved.",
-  "@betaTesterNotice": {
-    "description": "Notice shown to beta testers of private apps"
-  },
-  "appUnderReviewOwner": "Your app is under review and visible only to you. It will be public once approved.",
-  "@appUnderReviewOwner": {
-    "description": "Notice shown to app owner when app is under review"
-  },
-  "appRejectedNotice": "Your app has been rejected. Please update the app details and resubmit for review.",
-  "@appRejectedNotice": {
-    "description": "Notice shown when app submission is rejected"
-  },
-  "setupSteps": "Setup Steps",
-  "@setupSteps": {
-    "description": "Section title for integration setup steps"
-  },
   "setupInstructions": "Setup Instructions",
   "@setupInstructions": {
     "description": "Title for setup instructions page"
-  },
-  "integrationInstructions": "Integration Instructions",
-  "@integrationInstructions": {
-    "description": "Link label for integration instructions"
-  },
-  "preview": "Preview",
-  "@preview": {
-    "description": "Section title for app preview images"
-  },
-  "aboutTheApp": "About the App",
-  "@aboutTheApp": {
-    "description": "Section title for app description"
-  },
-  "aboutThePersona": "About the Persona",
-  "@aboutThePersona": {
-    "description": "Section title for persona description"
-  },
-  "chatPersonality": "Chat Personality",
-  "@chatPersonality": {
-    "description": "Title for chat personality section"
-  },
-  "ratingsAndReviews": "Ratings & Reviews",
-  "@ratingsAndReviews": {
-    "description": "Section title for ratings and reviews"
-  },
-  "noRatings": "no ratings",
-  "@noRatings": {
-    "description": "Text shown when app has no ratings"
-  },
-  "ratingsCount": "{count}+ ratings",
-  "@ratingsCount": {
-    "description": "Number of ratings for an app",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
   },
   "errorActivatingApp": "Error activating the app",
   "@errorActivatingApp": {
     "description": "Dialog title when app activation fails"
   },
-  "integrationSetupRequired": "If this is an integration app, make sure the setup is completed.",
-  "@integrationSetupRequired": {
-    "description": "Error message explaining integration setup requirement"
-  },
-  "installed": "Installed",
-  "@installed": {
-    "description": "Shortened version for installed apps filter"
-  },
-  "appIdLabel": "App ID",
-  "@appIdLabel": {
-    "description": "Label for the app ID field"
-  },
-  "appNameLabel": "App Name",
-  "@appNameLabel": {
-    "description": "Label for the app name field"
-  },
-  "appNamePlaceholder": "My Awesome App",
-  "@appNamePlaceholder": {
-    "description": "Placeholder text for app name input"
-  },
   "pleaseEnterAppName": "Please enter app name",
   "@pleaseEnterAppName": {
     "description": "Validation error when app name is empty"
-  },
-  "categoryLabel": "Category",
-  "@categoryLabel": {
-    "description": "Label for the category field"
-  },
-  "selectCategory": "Select Category",
-  "@selectCategory": {
-    "description": "Placeholder text for category dropdown"
-  },
-  "descriptionLabel": "Description",
-  "@descriptionLabel": {
-    "description": "Label for the description field"
-  },
-  "appDescriptionPlaceholder": "My Awesome App is a great app that does amazing things. It is the best app ever!",
-  "@appDescriptionPlaceholder": {
-    "description": "Placeholder text for app description input"
-  },
-  "pleaseProvideValidDescription": "Please provide a valid description",
-  "@pleaseProvideValidDescription": {
-    "description": "Validation error when description is empty"
-  },
-  "appPricingLabel": "App Pricing",
-  "@appPricingLabel": {
-    "description": "Label for the app pricing field"
-  },
-  "noneSelected": "None Selected",
-  "@noneSelected": {
-    "description": "Placeholder text when no pricing option is selected"
-  },
-  "appIdCopiedToClipboard": "App ID copied to clipboard",
-  "@appIdCopiedToClipboard": {
-    "description": "Success message when app ID is copied"
-  },
-  "pricingFree": "Free",
-  "@pricingFree": {
-    "description": "Free pricing option"
-  },
-  "pricingPaid": "Paid",
-  "@pricingPaid": {
-    "description": "Paid pricing option"
-  },
-  "loadingCapabilities": "Loading capabilities...",
-  "@loadingCapabilities": {
-    "description": "Loading state message while fetching app capabilities"
-  },
-  "filterInstalled": "Installed",
-  "@filterInstalled": {
-    "description": "Filter option for installed apps"
-  },
-  "filterMyApps": "My Apps",
-  "@filterMyApps": {
-    "description": "Filter option for user's own apps"
-  },
-  "clearSelection": "Clear selection",
-  "@clearSelection": {
-    "description": "Option to clear the current filter selection"
-  },
-  "filterCategory": "Category",
-  "@filterCategory": {
-    "description": "Category filter dropdown label"
-  },
-  "rating4PlusStars": "4+ Stars",
-  "@rating4PlusStars": {
-    "description": "Filter for apps with 4 or more stars"
-  },
-  "rating3PlusStars": "3+ Stars",
-  "@rating3PlusStars": {
-    "description": "Filter for apps with 3 or more stars"
-  },
-  "rating2PlusStars": "2+ Stars",
-  "@rating2PlusStars": {
-    "description": "Filter for apps with 2 or more stars"
-  },
-  "rating1PlusStars": "1+ Stars",
-  "@rating1PlusStars": {
-    "description": "Filter for apps with 1 or more stars"
-  },
-  "filterRating": "Rating",
-  "@filterRating": {
-    "description": "Rating filter dropdown label"
-  },
-  "filterCapabilities": "Capabilities",
-  "@filterCapabilities": {
-    "description": "Capabilities filter dropdown label"
-  },
-  "noNotificationScopesAvailable": "No notification scopes available",
-  "@noNotificationScopesAvailable": {
-    "description": "Message shown when no notification scopes are available"
-  },
-  "popularApps": "Popular Apps",
-  "@popularApps": {
-    "description": "Section title for popular apps"
-  },
-  "pleaseProvidePrompt": "Please provide a prompt",
-  "@pleaseProvidePrompt": {
-    "description": "Validation error when prompt text field is empty"
-  },
-  "chatWithAppName": "Chat with {appName}",
-  "@chatWithAppName": {
-    "description": "Chat subtitle with app name",
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
-  "defaultAiAssistant": "Default AI Assistant",
-  "@defaultAiAssistant": {
-    "description": "Label for default AI assistant"
-  },
-  "readyToChat": "✨ Ready to chat!",
-  "@readyToChat": {
-    "description": "Empty state title when connected"
-  },
-  "connectionNeeded": "🌐 Connection needed",
-  "@connectionNeeded": {
-    "description": "Empty state title when not connected"
   },
   "startConversation": "Start a conversation and let the magic begin",
   "@startConversation": {
     "description": "Empty state subtitle when connected"
   },
-  "checkInternetConnection": "Please check your internet connection",
-  "@checkInternetConnection": {
-    "description": "Empty state subtitle when not connected"
-  },
-  "wasThisHelpful": "Was this helpful?",
-  "@wasThisHelpful": {
-    "description": "NPS feedback prompt"
-  },
-  "thankYouForFeedback": "Thank you for your feedback!",
-  "@thankYouForFeedback": {
-    "description": "Feedback confirmation message"
-  },
-  "maxFilesUploadError": "You can only upload 4 files at a time",
-  "@maxFilesUploadError": {
-    "description": "Error message for file upload limit"
-  },
-  "attachedFiles": "📎 Attached Files",
-  "@attachedFiles": {
-    "description": "Label for attached files section"
-  },
   "takePhoto": "Take Photo",
   "@takePhoto": {
     "description": "Action sheet option to take a photo"
   },
-  "captureWithCamera": "Capture with camera",
-  "@captureWithCamera": {
-    "description": "File option: capture with camera subtitle"
-  },
-  "selectImages": "Select Images",
-  "@selectImages": {
-    "description": "File option: select images"
-  },
-  "chooseFromGallery": "Choose from gallery",
-  "@chooseFromGallery": {
-    "description": "File option: choose from gallery subtitle"
-  },
   "selectFile": "Select a File",
   "@selectFile": {
     "description": "File option: select file"
-  },
-  "chooseAnyFileType": "Choose any file type",
-  "@chooseAnyFileType": {
-    "description": "File option: choose any file type subtitle"
-  },
-  "cannotReportOwnMessages": "You cannot report your own messages",
-  "@cannotReportOwnMessages": {
-    "description": "Error when trying to report own message"
-  },
-  "messageReportedSuccessfully": "✅ Message reported successfully",
-  "@messageReportedSuccessfully": {
-    "description": "Success message for reported message"
-  },
-  "confirmReportMessage": "Are you sure you want to report this message?",
-  "@confirmReportMessage": {
-    "description": "Report dialog confirmation text"
-  },
-  "selectChatAssistant": "Select Chat Assistant",
-  "@selectChatAssistant": {
-    "description": "App selection modal title"
-  },
-  "enableMoreApps": "Enable More Apps",
-  "@enableMoreApps": {
-    "description": "Link to enable more apps"
-  },
-  "chatCleared": "Chat cleared",
-  "@chatCleared": {
-    "description": "Snackbar message for cleared chat"
   },
   "clearChatTitle": "Clear Chat?",
   "@clearChatTitle": {
@@ -3545,34 +2340,9 @@
   "@report": {
     "description": "Button to report message"
   },
-  "microphonePermissionRequired": "Microphone permission is required to make calls",
-  "@microphonePermissionRequired": {
-    "description": "Error message when microphone permission is not granted"
-  },
-  "microphonePermissionDenied": "Microphone permission denied. Please grant permission in System Preferences > Privacy & Security > Microphone.",
-  "@microphonePermissionDenied": {
-    "description": "Error message when microphone permission is denied"
-  },
-  "failedToCheckMicrophonePermission": "Failed to check Microphone permission: {error}",
-  "@failedToCheckMicrophonePermission": {
-    "description": "Error message when permission check fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "failedToTranscribeAudio": "Failed to transcribe audio",
-  "@failedToTranscribeAudio": {
-    "description": "Error message when audio transcription fails"
-  },
   "transcribing": "Transcribing...",
   "@transcribing": {
     "description": "Loading message while transcribing audio"
-  },
-  "transcriptionFailed": "Transcription failed",
-  "@transcriptionFailed": {
-    "description": "Error message when transcription fails"
   },
   "discardedConversation": "Discarded Conversation",
   "@discardedConversation": {
@@ -3590,58 +2360,9 @@
   "@copied": {
     "description": "Button label after copying link"
   },
-  "copyLink": "Copy link",
-  "@copyLink": {
-    "description": "Button label to copy conversation link"
-  },
-  "hideTranscript": "Hide Transcript",
-  "@hideTranscript": {
-    "description": "Button label to hide transcript"
-  },
-  "viewTranscript": "View Transcript",
-  "@viewTranscript": {
-    "description": "Button label to view transcript"
-  },
-  "conversationDetails": "Conversation Details",
-  "@conversationDetails": {
-    "description": "Section header for conversation details"
-  },
   "transcript": "Transcript",
   "@transcript": {
     "description": "Transcript panel title"
-  },
-  "segmentsCount": "{count} segments",
-  "@segmentsCount": {
-    "description": "Badge showing number of transcript segments",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "noTranscriptAvailable": "No Transcript Available",
-  "@noTranscriptAvailable": {
-    "description": "Empty state title when no transcript"
-  },
-  "noTranscriptMessage": "This conversation doesn't have a transcript.",
-  "@noTranscriptMessage": {
-    "description": "Empty state message when no transcript"
-  },
-  "conversationUrlCouldNotBeGenerated": "Conversation URL could not be generated.",
-  "@conversationUrlCouldNotBeGenerated": {
-    "description": "Error when URL generation fails"
-  },
-  "failedToGenerateConversationLink": "Failed to generate conversation link",
-  "@failedToGenerateConversationLink": {
-    "description": "Error when link generation fails"
-  },
-  "failedToGenerateShareLink": "Failed to generate share link",
-  "@failedToGenerateShareLink": {
-    "description": "Error when share link generation fails"
-  },
-  "reloadingConversations": "Reloading conversations...",
-  "@reloadingConversations": {
-    "description": "Loading message when refreshing conversations"
   },
   "user": "User",
   "@user": {
@@ -3654,31 +2375,6 @@
   "date": "Date",
   "@date": {
     "description": "Label for date filter button"
-  },
-  "noResultsFound": "No results found",
-  "@noResultsFound": {
-    "description": "Empty state title when search has no results"
-  },
-  "tryAdjustingSearchTerms": "Try adjusting your search terms",
-  "@tryAdjustingSearchTerms": {
-    "description": "Empty state message for search with no results"
-  },
-  "starConversationsToFindQuickly": "Star conversations to find them quickly here",
-  "@starConversationsToFindQuickly": {
-    "description": "Empty state message for starred filter"
-  },
-  "noConversationsOnDate": "No conversations on {date}",
-  "@noConversationsOnDate": {
-    "description": "Empty state title when no conversations on selected date",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "trySelectingDifferentDate": "Try selecting a different date",
-  "@trySelectingDifferentDate": {
-    "description": "Empty state message for date filter"
   },
   "conversations": "Conversations",
   "@conversations": {
@@ -3695,14 +2391,6 @@
   "@actions": {
     "description": "Navigation label for actions page"
   },
-  "syncAvailable": "Sync Available",
-  "@syncAvailable": {
-    "description": "Label for sync notification"
-  },
-  "referAFriend": "Refer a Friend",
-  "@referAFriend": {
-    "description": "Bottom navigation label for referral program"
-  },
   "help": "Help",
   "@help": {
     "description": "Bottom navigation label for help"
@@ -3711,21 +2399,9 @@
   "@pro": {
     "description": "Badge label for pro/unlimited users"
   },
-  "wearableAiCompanion": "Wearable AI companion",
-  "@wearableAiCompanion": {
-    "description": "Widget subtitle for device promotion"
-  },
-  "loadingMemories": "Loading memories...",
-  "@loadingMemories": {
-    "description": "Loading overlay message when reloading memories"
-  },
   "allMemories": "All Memories",
   "@allMemories": {
     "description": "Filter option to show all memories"
-  },
-  "aboutYou": "About You",
-  "@aboutYou": {
-    "description": "Filter option for system memories"
   },
   "@insights": {
     "description": "Filter option for interesting memories"
@@ -3733,22 +2409,6 @@
   "manual": "Manual",
   "@manual": {
     "description": "Filter option for manual memories"
-  },
-  "loadingYourMemories": "Loading your memories...",
-  "@loadingYourMemories": {
-    "description": "Loading state message"
-  },
-  "createYourFirstMemory": "Create your first memory to get started",
-  "@createYourFirstMemory": {
-    "description": "Empty state message when no memories"
-  },
-  "tryAdjustingFilter": "Try adjusting your search or filter",
-  "@tryAdjustingFilter": {
-    "description": "Empty state message when filter has no results"
-  },
-  "whatWouldYouLikeToRemember": "What would you like to remember?",
-  "@whatWouldYouLikeToRemember": {
-    "description": "Hint text for memory content input field"
   },
   "category": "Category",
   "@category": {
@@ -3764,84 +2424,16 @@
   "@private": {
     "description": "Option for private memory visibility"
   },
-  "failedToSaveCheckConnection": "Failed to save. Please check your connection.",
-  "@failedToSaveCheckConnection": {
-    "description": "Error message when saving memory fails"
-  },
-  "@saveChanges": {
-    "description": "Button text to save edited memory"
-  },
   "createMemory": "Create Memory",
   "@createMemory": {
     "description": "Button text to create new memory"
   },
-  "deleteMemoryConfirmation": "Are you sure you want to delete this memory? This action cannot be undone.",
-  "@deleteMemoryConfirmation": {
-    "description": "Confirmation message for deleting memory"
-  },
   "@makePublic": {
     "description": "Menu option to change memory visibility to public"
-  },
-  "makePrivate": "Make Private",
-  "@makePrivate": {
-    "description": "Menu option to change memory visibility to private"
-  },
-  "organizeAndControlMemories": "Organize and control your memories",
-  "@organizeAndControlMemories": {
-    "description": "Subtitle for memory management dialog"
   },
   "total": "Total",
   "@total": {
     "description": "Label for total memory count statistic"
-  },
-  "makeAllMemoriesPrivate": "Make All Memories Private",
-  "@makeAllMemoriesPrivate": {
-    "description": "Action to make all memories private"
-  },
-  "setAllMemoriesToPrivate": "Set all memories to private visibility",
-  "@setAllMemoriesToPrivate": {
-    "description": "Description for making all memories private"
-  },
-  "makeAllMemoriesPublic": "Make All Memories Public",
-  "@makeAllMemoriesPublic": {
-    "description": "Action to make all memories public"
-  },
-  "setAllMemoriesToPublic": "Set all memories to public visibility",
-  "@setAllMemoriesToPublic": {
-    "description": "Description for making all memories public"
-  },
-  "permanentlyRemoveAllMemories": "Permanently remove all memories from Toki",
-  "@permanentlyRemoveAllMemories": {
-    "description": "Description for deleting all memories"
-  },
-  "allMemoriesAreNowPrivate": "All memories are now private",
-  "@allMemoriesAreNowPrivate": {
-    "description": "Success message after making all memories private"
-  },
-  "allMemoriesAreNowPublic": "All memories are now public",
-  "@allMemoriesAreNowPublic": {
-    "description": "Success message after making all memories public"
-  },
-  "clearOmisMemory": "Clear Toki's Memory",
-  "@clearOmisMemory": {
-    "description": "Confirmation dialog title for clearing all memories"
-  },
-  "clearMemoryConfirmation": "Are you sure you want to clear Toki's memory? This action cannot be undone and will permanently delete all {count} memories.",
-  "@clearMemoryConfirmation": {
-    "description": "Confirmation message for clearing all memories",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "omisMemoryCleared": "Toki's memory about you has been cleared",
-  "@omisMemoryCleared": {
-    "description": "Success message after clearing all memories"
-  },
-  "welcomeToOmi": "Welcome to Toki",
-  "@welcomeToOmi": {
-    "description": "Welcome message on auth screen"
   },
   "continueWithApple": "Continue with Apple",
   "@continueWithApple": {
@@ -3850,10 +2442,6 @@
   "continueWithGoogle": "Continue with Google",
   "@continueWithGoogle": {
     "description": "Button to sign in with Google"
-  },
-  "byContinuingYouAgree": "By continuing, you agree to our ",
-  "@byContinuingYouAgree": {
-    "description": "First part of terms agreement text"
   },
   "termsOfService": "Terms of Service",
   "@termsOfService": {
@@ -3867,22 +2455,6 @@
   "@dataAndPrivacy": {
     "description": "Consent dialog title"
   },
-  "secureAuthViaAppleId": "Secure authentication via Apple ID",
-  "@secureAuthViaAppleId": {
-    "description": "Description for Apple authentication"
-  },
-  "secureAuthViaGoogleAccount": "Secure authentication via Google Account",
-  "@secureAuthViaGoogleAccount": {
-    "description": "Description for Google authentication"
-  },
-  "whatWeCollect": "What we collect",
-  "@whatWeCollect": {
-    "description": "Section title in consent dialog"
-  },
-  "dataCollectionMessage": "By continuing, your conversations, recordings, and personal information will be securely stored on our servers to provide AI-powered insights and enable all app features.",
-  "@dataCollectionMessage": {
-    "description": "Explanation of data collection in consent dialog"
-  },
   "dataProtection": "Data Protection",
   "@dataProtection": {
     "description": "Section title for data protection info"
@@ -3891,248 +2463,32 @@
   "@yourDataIsProtected": {
     "description": "First part of data protection text"
   },
-  "pleaseSelectYourPrimaryLanguage": "Please select your primary language",
-  "chooseYourLanguage": "Choose your language",
-  "selectPreferredLanguageForBestExperience": "Select your preferred language for the best Toki experience",
-  "searchLanguages": "Search languages...",
-  "selectALanguage": "Select a language",
-  "tryDifferentSearchTerm": "Try a different search term",
-  "pleaseEnterYourName": "Please enter your name",
-  "nameMustBeAtLeast2Characters": "Name must be at least 2 characters",
-  "tellUsHowYouWouldLikeToBeAddressed": "Tell us how you'd like to be addressed. This helps personalize your Toki experience.",
-  "charactersCount": "{count} characters",
-  "@charactersCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "enableFeaturesForBestExperience": "Enable features for the best Toki experience on your device.",
-  "microphoneAccess": "Microphone Access",
-  "recordAudioConversations": "Record audio conversations",
-  "microphoneAccessDescription": "Toki needs microphone access to record your conversations and provide transcriptions.",
-  "screenRecording": "Screen Recording",
-  "captureSystemAudioFromMeetings": "Capture system audio from meetings",
-  "screenRecordingDescription": "Toki needs screen recording permission to capture system audio from your browser-based meetings.",
-  "accessibility": "Accessibility",
-  "detectBrowserBasedMeetings": "Detect browser-based meetings",
-  "accessibilityDescription": "Toki needs accessibility permission to detect when you join Zoom, Meet, or Teams meetings in your browser.",
   "pleaseWait": "Please wait...",
-  "joinTheCommunity": "Join the community!",
-  "loadingProfile": "Loading profile...",
-  "profileSettings": "Profile Settings",
-  "noEmailSet": "No email set",
-  "userIdCopiedToClipboard": "User ID copied to clipboard",
-  "yourInformation": "Your Information",
-  "setYourName": "Set Your Name",
-  "changeYourName": "Change Your Name",
-  "manageYourOmiPersona": "Manage your Toki persona",
-  "voiceAndPeople": "Voice & People",
   "teachOmiYourVoice": "Teach Toki your voice",
-  "tellOmiWhoSaidIt": "Tell Toki who said it 🗣️",
   "payment": "Payment",
-  "addOrChangeYourPaymentMethod": "Add or change your payment method",
-  "preferences": "Preferences",
-  "helpImproveOmiBySharing": "Help improve Toki by sharing anonymized analytics data",
   "deleteAccount": "Delete Account",
-  "deleteYourAccountAndAllData": "Delete your account and all data",
-  "clearLogs": "Clear logs",
-  "debugLogsCleared": "Debug logs cleared",
   "exportConversations": "Export Conversations",
-  "exportAllConversationsToJson": "Export all your conversations to a JSON file.",
-  "conversationsExportStarted": "Conversations Export Started. This may take a few seconds, please wait.",
-  "mcpDescription": "To connect Toki with other applications to read, search, and manage your memories and conversations. Create a key to get started.",
-  "apiKeys": "API Keys",
-  "errorLabel": "Error: {error}",
-  "@errorLabel": {
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "noApiKeysFound": "No API keys found. Create one to get started.",
-  "advancedSettings": "Advanced Settings",
-  "triggersWhenNewConversationCreated": "Triggers when a new conversation is created.",
-  "triggersWhenNewTranscriptReceived": "Triggers when a new transcript is received.",
-  "realtimeAudioBytes": "Realtime Audio Bytes",
-  "triggersWhenAudioBytesReceived": "Triggers when audio bytes are received.",
-  "everyXSeconds": "Every x seconds",
-  "triggersWhenDaySummaryGenerated": "Triggers when day summary is generated.",
-  "tryLatestExperimentalFeatures": "Try the latest experimental features from Toki Team.",
-  "transcriptionServiceDiagnosticStatus": "Transcription service diagnostic status",
-  "enableDetailedDiagnosticMessages": "Enable detailed diagnostic messages from the transcription service",
-  "autoCreateAndTagNewSpeakers": "Auto-create and tag new speakers",
-  "automaticallyCreateNewPerson": "Automatically create a new person when a name is detected in the transcript.",
-  "pilotFeatures": "Pilot Features",
-  "pilotFeaturesDescription": "These features are tests and no support is guaranteed.",
-  "suggestFollowUpQuestion": "Suggest follow up question",
   "saveSettings": "Save Settings",
-  "syncingDeveloperSettings": "Syncing Developer Settings...",
   "summary": "Summary",
   "auto": "Auto",
   "noSummaryForApp": "No summary available for this app. Try another app for better results.",
-  "tryAnotherApp": "Try Another App",
-  "generatedBy": "Generated by {appName}",
-  "@generatedBy": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
   "overview": "Overview",
-  "otherAppResults": "Other App Results",
   "unknownApp": "Unknown App",
-  "noSummaryAvailable": "No Summary Available",
-  "conversationNoSummaryYet": "This conversation doesn't have a summary yet.",
-  "chooseSummarizationApp": "Choose Summarization App",
-  "setAsDefaultSummarizationApp": "{appName} set as default summarization app",
-  "@setAsDefaultSummarizationApp": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
-  "letOmiChooseAutomatically": "Let Toki choose the best app automatically",
-  "deleteConversationConfirmation": "Are you sure you want to delete this conversation? This action cannot be undone.",
-  "conversationDeleted": "Conversation deleted",
-  "generatingLink": "Generating link...",
-  "editConversation": "Edit conversation",
-  "conversationLinkCopiedToClipboard": "Conversation link copied to clipboard",
-  "conversationTranscriptCopiedToClipboard": "Conversation transcript copied to clipboard",
-  "editConversationDialogTitle": "Edit Conversation",
-  "changeTheConversationTitle": "Change the conversation title",
-  "conversationTitle": "Conversation Title",
-  "enterConversationTitle": "Enter conversation title...",
-  "conversationTitleUpdatedSuccessfully": "Conversation title updated successfully",
-  "failedToUpdateConversationTitle": "Failed to update conversation title",
-  "errorUpdatingConversationTitle": "Error updating conversation title",
-  "settingUp": "Setting up...",
-  "@settingUp": {
-    "description": "Status message when initializing recording"
-  },
-  "startYourFirstRecording": "Start Your First Recording",
-  "@startYourFirstRecording": {
-    "description": "Call-to-action text for first recording"
-  },
-  "preparingSystemAudioCapture": "Preparing system audio capture",
-  "@preparingSystemAudioCapture": {
-    "description": "Status when preparing audio capture"
-  },
-  "clickTheButtonToCaptureAudio": "Click the button to capture audio for live transcripts, AI insights, and automatic saving.",
-  "@clickTheButtonToCaptureAudio": {
-    "description": "Instructions for starting recording"
-  },
   "reconnecting": "Reconnecting...",
   "@reconnecting": {
     "description": "Status when reconnecting to audio"
-  },
-  "recordingPaused": "Recording Paused",
-  "@recordingPaused": {
-    "description": "Status when recording is paused"
-  },
-  "recordingActive": "Recording Active",
-  "@recordingActive": {
-    "description": "Status when recording is active"
   },
   "startRecording": "Start Recording",
   "@startRecording": {
     "description": "Button text to start recording"
   },
-  "resumingInCountdown": "Resuming in {countdown}s...",
-  "@resumingInCountdown": {
-    "description": "Status when auto-resuming with countdown",
-    "placeholders": {
-      "countdown": {
-        "type": "String"
-      }
-    }
-  },
-  "tapPlayToResume": "Tap play to resume",
-  "@tapPlayToResume": {
-    "description": "Instruction when paused"
-  },
-  "listeningForAudio": "Listening for audio...",
-  "@listeningForAudio": {
-    "description": "Status when listening for audio"
-  },
-  "preparingAudioCapture": "Preparing audio capture",
-  "@preparingAudioCapture": {
-    "description": "Status when preparing to capture"
-  },
-  "clickToBeginRecording": "Click to begin recording",
-  "@clickToBeginRecording": {
-    "description": "Instruction to start recording"
-  },
-  "translated": "translated",
-  "@translated": {
-    "description": "Label for translated text"
-  },
-  "liveTranscript": "Live Transcript",
-  "@liveTranscript": {
-    "description": "Header for live transcript section"
-  },
-  "segmentsSingular": "{count} segment",
-  "@segmentsSingular": {
-    "description": "Segment count (singular)",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "segmentsPlural": "{count} segments",
-  "@segmentsPlural": {
-    "description": "Segment count (plural)",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "startRecordingToSeeTranscript": "Start recording to see live transcript",
-  "@startRecordingToSeeTranscript": {
-    "description": "Empty state message for transcript"
-  },
   "paused": "Paused",
   "@paused": {
     "description": "Recording status: paused"
   },
-  "initializing": "Initializing...",
-  "@initializing": {
-    "description": "Recording status: initializing"
-  },
   "recording": "Recording",
   "@recording": {
     "description": "Recording status: recording"
-  },
-  "microphoneChangedResumingIn": "Microphone changed. Resuming in {countdown}s",
-  "@microphoneChangedResumingIn": {
-    "description": "Status when microphone changed and auto-resuming",
-    "placeholders": {
-      "countdown": {
-        "type": "String"
-      }
-    }
-  },
-  "clickPlayToResumeOrStop": "Click play to resume or stop to finish",
-  "@clickPlayToResumeOrStop": {
-    "description": "Instruction when paused"
-  },
-  "settingUpSystemAudioCapture": "Setting up system audio capture",
-  "@settingUpSystemAudioCapture": {
-    "description": "Status when setting up audio capture"
-  },
-  "capturingAudioAndGeneratingTranscript": "Capturing audio and generating transcript",
-  "@capturingAudioAndGeneratingTranscript": {
-    "description": "Status when actively recording"
-  },
-  "clickToBeginRecordingSystemAudio": "Click to begin recording system audio",
-  "@clickToBeginRecordingSystemAudio": {
-    "description": "Instruction to start system audio recording"
   },
   "you": "You",
   "@you": {
@@ -4147,14 +2503,6 @@
       }
     }
   },
-  "translatedByOmi": "translated by omi",
-  "@translatedByOmi": {
-    "description": "Credit line for translations"
-  },
-  "backToConversations": "Back to Conversations",
-  "@backToConversations": {
-    "description": "Back button text"
-  },
   "systemAudio": "System",
   "@systemAudio": {
     "description": "Label for system audio"
@@ -4163,42 +2511,8 @@
   "@mic": {
     "description": "Label for microphone"
   },
-  "audioInputSetTo": "Audio input set to {deviceName}",
-  "@audioInputSetTo": {
-    "description": "Success message when audio device changed",
-    "placeholders": {
-      "deviceName": {
-        "type": "String"
-      }
-    }
-  },
-  "errorSwitchingAudioDevice": "Error switching audio device: {error}",
-  "@errorSwitchingAudioDevice": {
-    "description": "Error message when device switch fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "selectAudioInput": "Select Audio Input",
-  "@selectAudioInput": {
-    "description": "Dropdown header for audio device selection"
-  },
-  "loadingDevices": "Loading devices...",
-  "@loadingDevices": {
-    "description": "Status when loading audio devices"
-  },
-  "settingsHeader": "SETTINGS",
-  "@settingsHeader": {
-    "description": "Settings navigation header"
-  },
   "@account": {
     "description": "Account section label"
-  },
-  "plansAndBilling": "Plans & Billing",
-  "@plansAndBilling": {
-    "description": "Plans and billing section"
   },
   "calendarIntegration": "Calendar Integration",
   "@calendarIntegration": {
@@ -4226,27 +2540,8 @@
   "@selectTime": {
     "description": "Title for time picker dialog"
   },
-  "@debugLogsCleared": {
-    "description": "Success message when logs cleared"
-  },
   "@knowledgeGraphDeleted": {
     "description": "Success message when knowledge graph deleted"
-  },
-  "@yourInformation": {
-    "description": "Account information section title"
-  },
-  "@voiceAndPeople": {
-    "description": "Voice and people section title"
-  },
-  "@preferences": {
-    "description": "Preferences section title"
-  },
-  "accountGroup": "Account",
-  "@accountGroup": {
-    "description": "Account group title"
-  },
-  "@userIdCopiedToClipboard": {
-    "description": "Success message for User ID copy"
   },
   "@deleteAccount": {
     "description": "Delete account button"
@@ -4259,26 +2554,6 @@
   "@signOutConfirmation": {
     "description": "Confirmation message in sign out dialog"
   },
-  "customVocabularyHeader": "CUSTOM VOCABULARY",
-  "@customVocabularyHeader": {
-    "description": "Custom vocabulary section header"
-  },
-  "addWordsDescription": "Add words that Toki should recognize during transcription.",
-  "@addWordsDescription": {
-    "description": "Custom vocabulary description"
-  },
-  "enterWordsHint": "Enter words (comma separated)",
-  "@enterWordsHint": {
-    "description": "Text field hint for vocabulary input"
-  },
-  "dailySummaryHeader": "DAILY SUMMARY",
-  "@dailySummaryHeader": {
-    "description": "Daily summary section header"
-  },
-  "dailySummaryTitle": "Daily Summary",
-  "@dailySummaryTitle": {
-    "description": "Daily summary toggle title"
-  },
   "dailySummaryDescription": "Get a personalized summary of your day's conversations delivered as a notification.",
   "@dailySummaryDescription": {
     "description": "Description text for daily summary section"
@@ -4287,102 +2562,18 @@
   "@deliveryTime": {
     "description": "Label for delivery time setting"
   },
-  "deliveryTimeDescription": "When to receive your daily summary",
-  "@deliveryTimeDescription": {
-    "description": "Delivery time description"
-  },
-  "viewPlansAndUsage": "View Plans & Usage",
-  "@viewPlansAndUsage": {
-    "description": "View plans button"
-  },
-  "viewPlansDescription": "Manage your subscription and see usage stats",
-  "@viewPlansDescription": {
-    "description": "View plans description"
-  },
-  "addOrChangePaymentMethod": "Add or change your payment method",
-  "@addOrChangePaymentMethod": {
-    "description": "Payment method description"
-  },
   "displayOptions": "Display Options",
   "showMeetingsInMenuBar": "Show Meetings in Menu Bar",
-  "displayUpcomingMeetingsDescription": "Display upcoming meetings in the menu bar",
-  "showEventsWithoutParticipants": "Show Events Without Participants",
-  "includePersonalEventsDescription": "Include personal events with no attendees",
   "upcomingMeetings": "Upcoming Meetings",
-  "checkingNext7Days": "Checking the next 7 days",
-  "shortcuts": "Shortcuts",
-  "shortcutChangeInstruction": "Click on a shortcut to change it. Press Escape to cancel.",
-  "configurePersonaDescription": "Configure your AI persona",
-  "configureSTTProvider": "Configure STT provider",
-  "setConversationEndDescription": "Set when conversations auto-end",
-  "importDataDescription": "Import data from other sources",
-  "exportConversationsDescription": "Export conversations to JSON",
-  "exportingConversations": "Exporting conversations...",
-  "clearNodesDescription": "Clear all nodes and connections",
   "deleteKnowledgeGraphQuestion": "Delete Knowledge Graph?",
-  "deleteKnowledgeGraphWarning": "This will delete all derived knowledge graph data. Your original memories remain safe.",
-  "connectOmiWithAI": "Connect Toki with AI assistants",
-  "noAPIKeys": "No API keys. Create one to get started.",
-  "autoCreateWhenDetected": "Auto-create when name detected",
-  "trackPersonalGoals": "Track personal goals on homepage",
   "dailyReflectionDescription": "Get a reminder at 9 PM to reflect on your day and capture your thoughts.",
-  "endpointURL": "Endpoint URL",
-  "links": "Links",
-  "discordMemberCount": "8000+ members on Discord",
-  "userInformation": "User Information",
   "capabilities": "Capabilities",
   "@capabilities": {
     "description": "Section title for app capabilities"
   },
-  "previewScreenshots": "Preview Screenshots",
-  "@previewScreenshots": {
-    "description": "Section title for preview screenshots"
-  },
-  "holdOnPreparingForm": "Hold on, we are preparing the form for you",
-  "@holdOnPreparingForm": {
-    "description": "Loading message while preparing form"
-  },
-  "bySubmittingYouAgreeToOmi": "By submitting, you agree to Toki ",
-  "@bySubmittingYouAgreeToOmi": {
-    "description": "Text before Terms & Privacy Policy link"
-  },
-  "termsAndPrivacyPolicy": "Terms & Privacy Policy",
-  "@termsAndPrivacyPolicy": {
-    "description": "Terms and Privacy Policy link text"
-  },
-  "helpsDiagnoseIssuesAutoDeletes": "Helps diagnose issues. Auto-deletes after 3 days.",
-  "manageYourApp": "Manage Your App",
-  "@manageYourApp": {
-    "description": "Title for app management page"
-  },
-  "updatingYourApp": "Updating your app",
-  "@updatingYourApp": {
-    "description": "Loading message when updating app"
-  },
-  "updateAppQuestion": "Update App?",
-  "@updateAppQuestion": {
-    "description": "Dialog title asking to confirm app update"
-  },
-  "updateAppConfirmation": "Are you sure you want to update your app? The changes will reflect once reviewed by our team.",
-  "@updateAppConfirmation": {
-    "description": "Dialog description explaining app update will be reviewed"
-  },
   "updateApp": "Update App",
   "@updateApp": {
     "description": "Button text to update app"
-  },
-  "createAndSubmitNewApp": "Create and submit a new app",
-  "@createAndSubmitNewApp": {
-    "description": "Button text to create and submit a new app"
-  },
-  "appsCount": "Apps ({count})",
-  "@appsCount": {
-    "description": "Label showing number of installed apps",
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
   },
   "newVersionAvailable": "New Version Available  🎉",
   "@newVersionAvailable": {
@@ -4392,141 +2583,13 @@
   "@no": {
     "description": "Button text to decline or dismiss"
   },
-  "invalidPaymentUrl": "Invalid payment URL",
-  "@invalidPaymentUrl": {
-    "description": "Error message for invalid payment URL"
-  },
-  "permissionsAndTriggers": "Permissions & Triggers",
-  "@permissionsAndTriggers": {
-    "description": "Section title for permissions and triggers"
-  },
-  "chatFeatures": "Chat Features",
-  "@chatFeatures": {
-    "description": "Section title for chat features"
-  },
-  "uninstall": "Uninstall",
-  "@uninstall": {
-    "description": "Button text to uninstall app"
-  },
   "installs": "INSTALLS",
   "@installs": {
     "description": "Label for install count"
   },
-  "priceLabel": "PRICE",
-  "@priceLabel": {
-    "description": "Label for price"
-  },
-  "updatedLabel": "UPDATED",
-  "@updatedLabel": {
-    "description": "Label for updated date"
-  },
-  "createdLabel": "CREATED",
-  "@createdLabel": {
-    "description": "Label for created date"
-  },
-  "featuredLabel": "FEATURED",
-  "@featuredLabel": {
-    "description": "Label for featured status"
-  },
-  "cancelling": "Cancelling...",
-  "@cancelling": {
-    "description": "Loading text while cancelling"
-  },
-  "betaTesterMessage": "You are a beta tester for this app. It is not public yet. It will be public once approved.",
-  "@betaTesterMessage": {
-    "description": "Message shown to beta testers"
-  },
-  "appUnderReviewMessage": "Your app is under review and visible only to you. It will be public once approved.",
-  "@appUnderReviewMessage": {
-    "description": "Message shown when app is under review"
-  },
-  "appRejectedMessage": "Your app has been rejected. Please update the app details and resubmit for review.",
-  "@appRejectedMessage": {
-    "description": "Message shown when app is rejected"
-  },
-  "invalidIntegrationUrl": "Invalid integration URL",
-  "@invalidIntegrationUrl": {
-    "description": "Error message for invalid integration URL"
-  },
-  "tapToComplete": "Tap to complete",
-  "@tapToComplete": {
-    "description": "Instruction to tap to complete setup"
-  },
-  "invalidSetupInstructionsUrl": "Invalid setup instructions URL",
-  "@invalidSetupInstructionsUrl": {
-    "description": "Error message for invalid setup instructions URL"
-  },
-  "pushToTalk": "Push to Talk",
-  "@pushToTalk": {
-    "description": "Capability label for push to talk feature"
-  },
-  "summaryPrompt": "Summary Prompt",
-  "@summaryPrompt": {
-    "description": "Title for summary prompt section"
-  },
-  "pleaseSelectARating": "Please select a rating",
-  "@pleaseSelectARating": {
-    "description": "Error message when no rating selected"
-  },
-  "reviewAddedSuccessfully": "Review added successfully 🚀",
-  "@reviewAddedSuccessfully": {
-    "description": "Success message when review is added"
-  },
-  "reviewUpdatedSuccessfully": "Review updated successfully 🚀",
-  "@reviewUpdatedSuccessfully": {
-    "description": "Success message when review is updated"
-  },
-  "failedToSubmitReview": "Failed to submit review. Please try again.",
-  "@failedToSubmitReview": {
-    "description": "Error message when review submission fails"
-  },
-  "addYourReview": "Add Your Review",
-  "@addYourReview": {
-    "description": "Dialog title for adding review"
-  },
-  "editYourReview": "Edit Your Review",
-  "@editYourReview": {
-    "description": "Dialog title for editing review"
-  },
-  "writeAReviewOptional": "Write a review (optional)",
-  "@writeAReviewOptional": {
-    "description": "Placeholder text for review input"
-  },
-  "submitReview": "Submit Review",
-  "@submitReview": {
-    "description": "Button text to submit review"
-  },
   "updateReview": "Update Review",
   "@updateReview": {
     "description": "Button text to update review"
-  },
-  "yourReview": "Your Review",
-  "@yourReview": {
-    "description": "Label for user's own review"
-  },
-  "anonymousUser": "Anonymous User",
-  "@anonymousUser": {
-    "description": "Display name for anonymous users"
-  },
-  "issueActivatingApp": "There was an issue activating this app. Please try again.",
-  "@issueActivatingApp": {
-    "description": "Dialog description for activation error"
-  },
-  "dataAccessNoticeDescription": "This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app",
-  "@dataAccessNoticeDescription": {
-    "description": "Description for data access notice dialog"
-  },
-  "copyUrl": "Copy URL",
-  "@copyUrl": {
-    "description": "Button to copy conversation URL to clipboard"
-  },
-  "txtFormat": "TXT",
-  "@txtFormat": {
-    "description": "TXT file format label"
-  },
-  "pdfFormat": "PDF",
-  "@pdfFormat": {
-    "description": "PDF file format label"
   },
   "weekdayMon": "Mon",
   "@weekdayMon": {
@@ -4618,183 +2681,17 @@
   "@permissionDeniedForAppleReminders": {
     "description": "Error when Apple Reminders permission is denied"
   },
-  "failedToCreateApiKey": "Failed to create provider API key: {error}",
-  "@failedToCreateApiKey": {
-    "description": "Error message when API key creation fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
   "createAKey": "Create a Key",
   "@createAKey": {
     "description": "Dialog title for creating a new API key"
-  },
-  "apiKeyRevokedSuccessfully": "API key revoked successfully",
-  "@apiKeyRevokedSuccessfully": {
-    "description": "Success message when API key is revoked"
-  },
-  "failedToRevokeApiKey": "Failed to revoke API key: {error}",
-  "@failedToRevokeApiKey": {
-    "description": "Error message when API key revocation fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "omiApiKeys": "Toki API Keys",
-  "@omiApiKeys": {
-    "description": "Dialog title for API keys info"
-  },
-  "apiKeysDescription": "API Keys are used for authentication when your app communicates with the OMI server. They allow your application to create memories and access other OMI services securely.",
-  "@apiKeysDescription": {
-    "description": "Description of what API keys are used for"
-  },
-  "aboutOmiApiKeys": "About Toki API Keys",
-  "@aboutOmiApiKeys": {
-    "description": "Tooltip for API keys info button"
-  },
-  "yourNewKey": "Your new key:",
-  "@yourNewKey": {
-    "description": "Label shown above newly created API key"
-  },
-  "copyToClipboard": "Copy to clipboard",
-  "@copyToClipboard": {
-    "description": "Tooltip for copy button"
-  },
-  "pleaseCopyKeyNow": "Please copy it now and write it down somewhere safe. ",
-  "@pleaseCopyKeyNow": {
-    "description": "Warning to copy key immediately"
-  },
-  "willNotSeeAgain": "You will not be able to see it again.",
-  "@willNotSeeAgain": {
-    "description": "Warning that key won't be shown again"
   },
   "revokeKey": "Revoke key",
   "@revokeKey": {
     "description": "Tooltip for revoke button"
   },
-  "revokeApiKeyQuestion": "Revoke API Key?",
-  "@revokeApiKeyQuestion": {
-    "description": "Confirmation dialog title for revoking API key"
-  },
-  "revokeApiKeyWarning": "This action cannot be undone. Any applications using this key will no longer be able to access the API.",
-  "@revokeApiKeyWarning": {
-    "description": "Warning message about revoking API key"
-  },
   "revoke": "Revoke",
   "@revoke": {
     "description": "Button text to confirm revocation"
-  },
-  "whatWouldYouLikeToCreate": "What would you like to create?",
-  "@whatWouldYouLikeToCreate": {
-    "description": "Title asking user what they want to create"
-  },
-  "createAnApp": "Create an App",
-  "@createAnApp": {
-    "description": "Option to create an app"
-  },
-  "createAndShareYourApp": "Create and share your app",
-  "@createAndShareYourApp": {
-    "description": "Subtitle for create app option"
-  },
-  "createMyClone": "Create my Clone",
-  "@createMyClone": {
-    "description": "Option to create digital clone"
-  },
-  "createYourDigitalClone": "Create your digital clone",
-  "@createYourDigitalClone": {
-    "description": "Subtitle for create clone option"
-  },
-  "itemApp": "App",
-  "@itemApp": {
-    "description": "The word 'App' used as parameter in other strings"
-  },
-  "itemPersona": "Persona",
-  "@itemPersona": {
-    "description": "The word 'Persona' used as parameter in other strings"
-  },
-  "keepItemPublic": "Keep {item} Public",
-  "@keepItemPublic": {
-    "description": "Toggle label to keep app or persona public",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "makeItemPublicQuestion": "Make {item} Public?",
-  "@makeItemPublicQuestion": {
-    "description": "Dialog title asking to make app or persona public",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "makeItemPrivateQuestion": "Make {item} Private?",
-  "@makeItemPrivateQuestion": {
-    "description": "Dialog title asking to make app or persona private",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "makeItemPublicExplanation": "If you make the {item} public, it can be used by everyone",
-  "@makeItemPublicExplanation": {
-    "description": "Explanation of what happens when making public",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "makeItemPrivateExplanation": "If you make the {item} private now, it will stop working for everyone and will be visible only to you",
-  "@makeItemPrivateExplanation": {
-    "description": "Explanation of what happens when making private",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "manageApp": "Manage App",
-  "@manageApp": {
-    "description": "Menu item to manage app settings"
-  },
-  "updatePersonaDetails": "Update Persona Details",
-  "@updatePersonaDetails": {
-    "description": "Menu item to update persona details"
-  },
-  "deleteItemTitle": "Delete {item}",
-  "@deleteItemTitle": {
-    "description": "Menu item to delete app or persona",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "deleteItemQuestion": "Delete {item}?",
-  "@deleteItemQuestion": {
-    "description": "Dialog title asking to confirm deletion",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
-  },
-  "deleteItemConfirmation": "Are you sure you want to delete this {item}? This action cannot be undone.",
-  "@deleteItemConfirmation": {
-    "description": "Dialog message explaining deletion is permanent",
-    "placeholders": {
-      "item": {
-        "type": "String"
-      }
-    }
   },
   "revokeKeyQuestion": "Revoke Key?",
   "@revokeKeyQuestion": {
@@ -5007,183 +2904,9 @@
       }
     }
   },
-  "omiTraining": "Toki Training",
-  "@omiTraining": {
-    "description": "Title for the Toki Training page/section"
-  },
-  "learnMoreAtOmiTraining": "Learn more at omi.me/training",
-  "@learnMoreAtOmiTraining": {
-    "description": "Link text to learn more about training"
-  },
-  "agreeToContributeData": "I understand and agree to contribute my data for AI training",
-  "@agreeToContributeData": {
-    "description": "Checkbox label for agreeing to contribute data"
-  },
-  "submitRequest": "Submit Request",
-  "@submitRequest": {
-    "description": "Button text to submit request"
-  },
-  "thankYouRequestUnderReview": "Thank you! Your request is under review. We will notify you once approved.",
-  "@thankYouRequestUnderReview": {
-    "description": "Success message after submitting training data request"
-  },
-  "planRemainsActiveUntil": "Your plan will remain active until {date}. After that, you will lose access to your unlimited features. Are you sure?",
-  "@planRemainsActiveUntil": {
-    "description": "Message explaining plan remains active until date",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "January 15, 2026"
-      }
-    }
-  },
-  "confirmCancellation": "Confirm Cancellation",
-  "@confirmCancellation": {
-    "description": "Button text to confirm cancellation"
-  },
-  "keepMyPlan": "Keep My Plan",
-  "@keepMyPlan": {
-    "description": "Button text to keep current plan"
-  },
-  "switchedToOnDevice": "Switched to on-device transcription",
-  "@switchedToOnDevice": {
-    "description": "Success message when switched to on-device transcription"
-  },
-  "couldNotSwitchToFreePlan": "Could not switch to free plan. Please try again.",
-  "@couldNotSwitchToFreePlan": {
-    "description": "Error message when switching to free plan fails"
-  },
-  "couldNotLoadPlans": "Could not load available plans. Please try again.",
-  "@couldNotLoadPlans": {
-    "description": "Error message when plans cannot be loaded"
-  },
-  "selectedPlanNotAvailable": "Selected plan is not available. Please try again.",
-  "@selectedPlanNotAvailable": {
-    "description": "Error message when selected plan is not available"
-  },
-  "importantBillingInfo": "Important Billing Information:",
-  "@importantBillingInfo": {
-    "description": "Header for billing information section"
-  },
-  "monthlyPlanContinues": "Your current monthly plan will continue until the end of your billing period",
-  "@monthlyPlanContinues": {
-    "description": "Info about monthly plan continuing"
-  },
-  "paymentMethodCharged": "Your existing payment method will be charged automatically when your monthly plan ends",
-  "@paymentMethodCharged": {
-    "description": "Info about payment method being charged"
-  },
-  "thirteenMonthsCoverage": "You'll get 13 months of coverage total (current month + 12 months annual)",
-  "@thirteenMonthsCoverage": {
-    "description": "Info about total coverage period"
-  },
-  "confirmPlanChange": "Confirm Plan Change",
-  "@confirmPlanChange": {
-    "description": "Dialog title for confirming plan change"
-  },
-  "confirmAndProceed": "Confirm & Proceed",
-  "@confirmAndProceed": {
-    "description": "Button text to confirm and proceed"
-  },
-  "yourOmiUnleashed": "Your Toki, unleashed. Go unlimited for endless possibilities.",
-  "@yourOmiUnleashed": {
-    "description": "Marketing text for unlimited plan"
-  },
-  "planEndedOn": "Your plan ended on {date}.\\nResubscribe now - you'll be charged immediately for a new billing period.",
-  "@planEndedOn": {
-    "description": "Message when plan has ended",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "January 15, 2026"
-      }
-    }
-  },
-  "planSetToCancelOn": "Your plan is set to cancel on {date}.\\nResubscribe now to keep your benefits - no charge until {date}.",
-  "@planSetToCancelOn": {
-    "description": "Message when plan is set to cancel",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "January 15, 2026"
-      }
-    }
-  },
-  "annualPlanStartsAutomatically": "Your annual plan will start automatically when your monthly plan ends.",
-  "@annualPlanStartsAutomatically": {
-    "description": "Info that annual plan starts automatically"
-  },
-  "planRenewsOn": "Your plan renews on {date}.",
-  "@planRenewsOn": {
-    "description": "Message showing plan renewal date",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "January 15, 2026"
-      }
-    }
-  },
-  "askOmiAnything": "Ask Toki anything about your life",
-  "@askOmiAnything": {
-    "description": "Feature: ask Toki anything"
-  },
-  "unlockOmiInfiniteMemory": "Unlock Toki's infinite memory",
-  "@unlockOmiInfiniteMemory": {
-    "description": "Feature: unlock infinite memory"
-  },
-  "youreOnAnnualPlan": "You're on the Annual Plan",
-  "@youreOnAnnualPlan": {
-    "description": "Message showing user is on annual plan"
-  },
-  "alreadyBestValuePlan": "You already have the best value plan. No changes needed.",
-  "@alreadyBestValuePlan": {
-    "description": "Message when user already has best plan"
-  },
-  "unableToLoadPlans": "Unable to load plans",
-  "@unableToLoadPlans": {
-    "description": "Error message when plans cannot load"
-  },
-  "checkConnectionTryAgain": "Please check your connection and try again",
-  "@checkConnectionTryAgain": {
-    "description": "Message to check connection"
-  },
-  "useFreePlan": "Use Free Plan",
-  "@useFreePlan": {
-    "description": "Button to use free plan"
-  },
-  "continueText": "Continue",
-  "@continueText": {
-    "description": "Continue button text"
-  },
-  "resubscribe": "Resubscribe",
-  "@resubscribe": {
-    "description": "Button to resubscribe"
-  },
-  "couldNotOpenPaymentSettings": "Could not open payment settings. Please try again.",
-  "@couldNotOpenPaymentSettings": {
-    "description": "Error when payment settings cannot open"
-  },
-  "managePaymentMethod": "Manage Payment Method",
-  "@managePaymentMethod": {
-    "description": "Button to manage payment method"
-  },
-  "endsOnDate": "Ends on {date}",
-  "@endsOnDate": {
-    "description": "Shows end date",
-    "placeholders": {
-      "date": {
-        "type": "String",
-        "example": "January 15, 2026"
-      }
-    }
-  },
   "active": "Active",
   "@active": {
     "description": "Status label for active"
-  },
-  "freePlan": "Free Plan",
-  "@freePlan": {
-    "description": "Label for free plan"
   },
   "configure": "Configure",
   "@configure": {
@@ -5225,53 +2948,9 @@
   "@thankYouText": {
     "description": "Privacy page - thankYouText"
   },
-  "wifiSyncSettings": "WiFi Sync Settings",
-  "@wifiSyncSettings": {
-    "description": "WiFi sync settings - wifiSyncSettings"
-  },
-  "enterHotspotCredentials": "Enter your phone's hotspot credentials",
-  "@enterHotspotCredentials": {
-    "description": "WiFi sync settings - enterHotspotCredentials"
-  },
-  "wifiSyncUsesHotspot": "WiFi sync uses your phone as a hotspot. Find your hotspot name and password in Settings > Personal Hotspot.",
-  "@wifiSyncUsesHotspot": {
-    "description": "WiFi sync settings - wifiSyncUsesHotspot"
-  },
-  "hotspotNameSsid": "Hotspot Name (SSID)",
-  "@hotspotNameSsid": {
-    "description": "WiFi sync settings - hotspotNameSsid"
-  },
-  "exampleIphoneHotspot": "e.g. iPhone Hotspot",
-  "@exampleIphoneHotspot": {
-    "description": "WiFi sync settings - exampleIphoneHotspot"
-  },
   "password": "Password",
   "@password": {
     "description": "WiFi sync settings - password"
-  },
-  "enterHotspotPassword": "Enter hotspot password",
-  "@enterHotspotPassword": {
-    "description": "WiFi sync settings - enterHotspotPassword"
-  },
-  "saveCredentials": "Save Credentials",
-  "@saveCredentials": {
-    "description": "WiFi sync settings - saveCredentials"
-  },
-  "clearCredentials": "Clear Credentials",
-  "@clearCredentials": {
-    "description": "WiFi sync settings - clearCredentials"
-  },
-  "pleaseEnterHotspotName": "Please enter a hotspot name",
-  "@pleaseEnterHotspotName": {
-    "description": "WiFi sync settings - pleaseEnterHotspotName"
-  },
-  "wifiCredentialsSaved": "WiFi credentials saved",
-  "@wifiCredentialsSaved": {
-    "description": "WiFi sync settings - wifiCredentialsSaved"
-  },
-  "wifiCredentialsCleared": "WiFi credentials cleared",
-  "@wifiCredentialsCleared": {
-    "description": "WiFi sync settings - wifiCredentialsCleared"
   },
   "summaryGeneratedForDate": "Summary generated for {date}",
   "@summaryGeneratedForDate": {
@@ -5327,10 +3006,6 @@
   "@knowledgeGraphDeleteDescription": {
     "description": "Developer settings - knowledgeGraphDeleteDescription"
   },
-  "configureDailySummaryDigest": "Configure your daily action items digest",
-  "@configureDailySummaryDigest": {
-    "description": "Subtitle for Daily Summary menu item in profile settings"
-  },
   "accessesDataTypes": "Accesses {dataTypes}",
   "@accessesDataTypes": {
     "description": "Description showing what data types an app accesses, e.g. 'Accesses Conversations & Memories'",
@@ -5374,25 +3049,13 @@
   "@noSpecificDataAccessConfigured": {
     "description": "Message shown when app has no specific data access"
   },
-  "basicPlanDescription": "1,200 premium mins + unlimited on-device",
-  "@basicPlanDescription": {
-    "description": "Description of basic plan features in usage page"
-  },
   "minutes": "minutes",
   "@minutes": {
     "description": "Unit label for minutes"
   },
-  "omiHas": "Toki has:",
-  "@omiHas": {
-    "description": "Fallback text for share stats when period is unknown"
-  },
   "setupOnDevice": "Setup on-device",
   "@setupOnDevice": {
     "description": "Link text to setup on-device transcription"
-  },
-  "alwaysAvailable": "always available.",
-  "@alwaysAvailable": {
-    "description": "Text indicating on-device is always available"
   },
   "importHistory": "Import History",
   "@importHistory": {
@@ -5509,10 +3172,6 @@
   "newTag": "NEW",
   "@newTag": {
     "description": "newTag label"
-  },
-  "needHelpChatWithUs": "Need Help? Chat with us",
-  "@needHelpChatWithUs": {
-    "description": "needHelpChatWithUs label"
   },
   "localStorageEnabled": "Local storage enabled",
   "@localStorageEnabled": {
@@ -5659,18 +3318,6 @@
   "availablePaymentMethods": "Available Payment Methods",
   "@availablePaymentMethods": {
     "description": "Section header for available payment methods"
-  },
-  "activeStatus": "Active",
-  "@activeStatus": {
-    "description": "Status label when payment method is active"
-  },
-  "connectedStatus": "Connected",
-  "@connectedStatus": {
-    "description": "Status label when payment method is connected"
-  },
-  "notConnectedStatus": "Not Connected",
-  "@notConnectedStatus": {
-    "description": "Status label when payment method is not connected"
   },
   "setActive": "Set Active",
   "@setActive": {
@@ -6041,63 +3688,11 @@
   "@updateOmiFirmware": {
     "description": "Button text to update Toki device firmware"
   },
-  "anErrorOccurredTryAgain": "An error occurred. Please try again.",
-  "@anErrorOccurredTryAgain": {
-    "description": "Generic error message asking user to try again"
-  },
-  "welcomeBackSimple": "Welcome back",
-  "@welcomeBackSimple": {
-    "description": "Simple welcome message without user name"
-  },
-  "addVocabularyDescription": "Add words that Toki should recognize during transcription.",
-  "@addVocabularyDescription": {
-    "description": "Description for custom vocabulary section"
-  },
-  "enterWordsCommaSeparated": "Enter words (comma separated)",
-  "@enterWordsCommaSeparated": {
-    "description": "Placeholder hint for vocabulary input field"
-  },
-  "whenToReceiveDailySummary": "When to receive your daily summary",
-  "@whenToReceiveDailySummary": {
-    "description": "Description for delivery time setting"
-  },
   "@upcomingMeetings": {
     "description": "Section header for upcoming meetings in calendar"
   },
   "@noUpcomingMeetings": {
     "description": "Empty state when no meetings scheduled"
-  },
-  "checkingNextSevenDays": "Checking the next 7 days",
-  "@checkingNextSevenDays": {
-    "description": "Subtitle for no upcoming meetings state"
-  },
-  "@exportingConversations": {
-    "description": "Snackbar message when exporting conversations"
-  },
-  "failedToDeleteError": "Failed to delete: {error}",
-  "@failedToDeleteError": {
-    "description": "Error message when deletion fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "developerApiKeys": "Developer API Keys",
-  "@developerApiKeys": {
-    "description": "Section header for developer API keys"
-  },
-  "noApiKeysCreateOne": "No API keys. Create one to get started.",
-  "@noApiKeysCreateOne": {
-    "description": "Empty state for MCP API keys section"
-  },
-  "commandRequired": "⌘ required",
-  "@commandRequired": {
-    "description": "Error message when command key is not pressed for shortcut"
-  },
-  "spaceKey": "Space",
-  "@spaceKey": {
-    "description": "Display name for the space key in shortcuts"
   },
   "loadMoreRemaining": "Load More ({count} remaining)",
   "@loadMoreRemaining": {
@@ -6153,10 +3748,6 @@
         "type": "String"
       }
     }
-  },
-  "wrappedYourTopDays": "Your Top Days",
-  "@wrappedYourTopDays": {
-    "description": "Badge for top days in Wrapped"
   },
   "wrappedBestMoments": "Best Moments",
   "@wrappedBestMoments": {
@@ -6310,10 +3901,6 @@
   "@wrappedShare": {
     "description": "Share button label"
   },
-  "wrappedShareYourWrapped": "Share Your Wrapped",
-  "@wrappedShareYourWrapped": {
-    "description": "Button text for sharing wrapped on final card"
-  },
   "wrappedMy2025": "My 2025",
   "@wrappedMy2025": {
     "description": "Title text for shareable image"
@@ -6341,18 +3928,6 @@
   "wrappedMostCringeMoment": "Most Cringe",
   "@wrappedMostCringeMoment": {
     "description": "Label for most embarrassing/cringe moment"
-  },
-  "wrappedMinutesLabel": "minutes",
-  "@wrappedMinutesLabel": {
-    "description": "Label under minutes count"
-  },
-  "wrappedConversationsLabel": "conversations",
-  "@wrappedConversationsLabel": {
-    "description": "Label under conversations count"
-  },
-  "wrappedDaysActiveLabel": "days active",
-  "@wrappedDaysActiveLabel": {
-    "description": "Label under days active count"
   },
   "wrappedTasksGenerated": "tasks generated",
   "@wrappedTasksGenerated": {
@@ -6434,10 +4009,6 @@
   "@wrappedCringeMomentTitle": {
     "description": "Default title for cringe moment in collage"
   },
-  "wrappedYouTalkedAboutBadge": "You Talked About",
-  "@wrappedYouTalkedAboutBadge": {
-    "description": "Badge text for category chart card"
-  },
   "wrappedCompletedLabel": "Completed",
   "@wrappedCompletedLabel": {
     "description": "Completed label in actions card"
@@ -6465,18 +4036,6 @@
   "wrappedTopPhrasesLabelUpper": "TOP PHRASES",
   "@wrappedTopPhrasesLabelUpper": {
     "description": "Section title in summary collage (uppercase)"
-  },
-  "wrappedYourHeader": "Your",
-  "@wrappedYourHeader": {
-    "description": "First line of header for top days card"
-  },
-  "wrappedTopDaysHeader": "Top Days",
-  "@wrappedTopDaysHeader": {
-    "description": "Second line of header for top days card"
-  },
-  "wrappedYourTopDaysBadge": "Your Top Days",
-  "@wrappedYourTopDaysBadge": {
-    "description": "Badge text for top days summary"
   },
   "wrappedBestHeader": "Best",
   "@wrappedBestHeader": {
@@ -6586,29 +4145,9 @@
   "@personalizingExperience": {
     "description": "Loading message shown while personalizing user experience"
   },
-  "keepSpeakingUntil100": "Keep speaking until you get 100%.",
-  "@keepSpeakingUntil100": {
-    "description": "Instruction to user during speech profile recording"
-  },
-  "greatJobAlmostThere": "Great job, you are almost there",
-  "@greatJobAlmostThere": {
-    "description": "Encouragement message during speech profile recording"
-  },
-  "soCloseJustLittleMore": "So close, just a little more",
-  "@soCloseJustLittleMore": {
-    "description": "Encouragement message when speech profile is nearly complete"
-  },
   "notificationFrequency": "Notification Frequency",
   "@notificationFrequency": {
     "description": "Section header for notification frequency settings"
-  },
-  "controlNotificationFrequency": "Control how often Toki sends you proactive notifications.",
-  "@controlNotificationFrequency": {
-    "description": "Description for notification frequency control"
-  },
-  "yourScore": "Your score",
-  "@yourScore": {
-    "description": "Label for your score button"
   },
   "dailyScoreBreakdown": "Daily Score Breakdown",
   "@dailyScoreBreakdown": {
@@ -6662,10 +4201,6 @@
   "@failedToGenerateSummary": {
     "description": "Error message when summary generation fails"
   },
-  "recap": "Recap",
-  "@recap": {
-    "description": "Label for recap/daily summaries tab"
-  },
   "deleteQuoted": "Delete \"{name}\"",
   "@deleteQuoted": {
     "description": "Dialog title for deleting an item",
@@ -6691,18 +4226,6 @@
   "removeFromAllFolders": "Remove from all folders",
   "@removeFromAllFolders": {
     "description": "Description for no folder option"
-  },
-  "buildAndShareYourCustomApp": "Build and share your custom app",
-  "@buildAndShareYourCustomApp": {
-    "description": "Subtitle for create app button"
-  },
-  "searchAppsPlaceholder": "Search 1500+ Apps",
-  "@searchAppsPlaceholder": {
-    "description": "Search bar placeholder text"
-  },
-  "filters": "Filters",
-  "@filters": {
-    "description": "Filter button label"
   },
   "frequencyOff": "Off",
   "@frequencyOff": {
@@ -6857,14 +4380,6 @@
   "@syncCancelled": {
     "description": "Snackbar message when sync is cancelled"
   },
-  "deleteProcessedFiles": "Delete Processed Files",
-  "@deleteProcessedFiles": {
-    "description": "Dialog title for deleting processed files"
-  },
-  "processedFilesDeleted": "Processed files deleted",
-  "@processedFilesDeleted": {
-    "description": "Snackbar message when processed files are deleted"
-  },
   "wifiEnableFailed": "Failed to enable WiFi on device. Please try again.",
   "@wifiEnableFailed": {
     "description": "Error message when WiFi fails to enable on device"
@@ -6918,10 +4433,6 @@
   "@processingFailed": {
     "description": "Error title when processing fails"
   },
-  "downloadingFromSdCard": "Downloading from SD Card",
-  "@downloadingFromSdCard": {
-    "description": "Progress label when downloading from SD card"
-  },
   "processingProgress": "Processing {current}/{total}",
   "@processingProgress": {
     "description": "Progress label showing current/total items",
@@ -6962,14 +4473,6 @@
   "audioFromOmiWillAppearHere": "Audio from your Toki device will appear here",
   "@audioFromOmiWillAppearHere": {
     "description": "Empty state description for recordings"
-  },
-  "deleteProcessed": "Delete Processed",
-  "@deleteProcessed": {
-    "description": "Menu item to delete processed files"
-  },
-  "tryDifferentFilter": "Try a different filter",
-  "@tryDifferentFilter": {
-    "description": "Hint when no recordings match current filter"
   },
   "recordings": "Recordings",
   "@recordings": {
@@ -7070,18 +4573,6 @@
   "@setWebhookUrlInSettings": {
     "description": "Dialog message prompting to set webhook URL"
   },
-  "sendWebUrl": "Send web url",
-  "@sendWebUrl": {
-    "description": "Option to share conversation via web URL"
-  },
-  "sendTranscript": "Send Transcript",
-  "@sendTranscript": {
-    "description": "Option to share transcript"
-  },
-  "sendSummary": "Send Summary",
-  "@sendSummary": {
-    "description": "Option to share summary"
-  },
   "debugModeDetected": "Debug Mode Detected",
   "@debugModeDetected": {
     "description": "Warning title for debug mode"
@@ -7111,10 +4602,6 @@
   "@deviceNotCompatible": {
     "description": "Dialog title for incompatible device"
   },
-  "deviceRequirements": "Your device does not meet the requirements for On-Device transcription.",
-  "@deviceRequirements": {
-    "description": "Message about device requirements"
-  },
   "willLikelyCrash": "Enabling this will likely cause the app to crash or freeze.",
   "@willLikelyCrash": {
     "description": "Warning about enabling on incompatible device"
@@ -7131,10 +4618,6 @@
   "@olderDeviceDetected": {
     "description": "Title for older device warning dialog"
   },
-  "onDeviceSlower": "On-device transcription may be slower on this device.",
-  "@onDeviceSlower": {
-    "description": "Warning about slower transcription"
-  },
   "batteryUsageHigher": "Battery usage will be higher than cloud transcription.",
   "@batteryUsageHigher": {
     "description": "Warning about battery usage"
@@ -7146,14 +4629,6 @@
   "highResourceUsage": "High Resource Usage",
   "@highResourceUsage": {
     "description": "Title for high resource usage dialog"
-  },
-  "onDeviceIntensive": "On-Device transcription is computationally intensive.",
-  "@onDeviceIntensive": {
-    "description": "Message about computational intensity"
-  },
-  "batteryDrainIncrease": "Battery drain will increase significantly.",
-  "@batteryDrainIncrease": {
-    "description": "Warning about battery drain"
   },
   "deviceMayWarmUp": "Device may warm up during extended use.",
   "@deviceMayWarmUp": {
@@ -7167,10 +4642,6 @@
   "@cloudProvider": {
     "description": "Tab label for cloud provider option"
   },
-  "localProcessingInfo": "Audio is processed locally. Works offline, more private, but uses more battery.",
-  "@localProcessingInfo": {
-    "description": "Info about local processing"
-  },
   "model": "Model",
   "@model": {
     "description": "Label for model selector"
@@ -7179,25 +4650,13 @@
   "@performanceWarning": {
     "description": "Title for performance warning dialog"
   },
-  "largeModelWarning": "This model is large and may crash the app or run very slowly on mobile devices.\n\n\"small\" or \"base\" is recommended.",
-  "@largeModelWarning": {
-    "description": "Warning about large model sizes"
-  },
   "usingNativeIosSpeech": "Using Native iOS Speech Recognition",
   "@usingNativeIosSpeech": {
     "description": "Label for iOS native speech recognition"
   },
-  "noModelDownloadRequired": "Your device's native speech engine will be used. No model download required.",
-  "@noModelDownloadRequired": {
-    "description": "Info about iOS native speech"
-  },
   "modelReady": "Model Ready",
   "@modelReady": {
     "description": "Status when model is downloaded"
-  },
-  "redownload": "Re-download",
-  "@redownload": {
-    "description": "Button to re-download model"
   },
   "doNotCloseApp": "Please do not close the app.",
   "@doNotCloseApp": {
@@ -7404,77 +4863,9 @@
   "@device": {
     "description": "Fallback text for device name"
   },
-  "chatAssistantsTitle": "Chat Assistants",
-  "@chatAssistantsTitle": {
-    "description": "Title for chat assistants capability page"
-  },
-  "permissionReadConversations": "Read Conversations",
-  "@permissionReadConversations": {
-    "description": "Permission title for reading conversations"
-  },
-  "permissionReadMemories": "Read Memories",
-  "@permissionReadMemories": {
-    "description": "Permission title for reading memories"
-  },
-  "permissionReadTasks": "Read Tasks",
-  "@permissionReadTasks": {
-    "description": "Permission title for reading tasks"
-  },
-  "permissionCreateConversations": "Create Conversations",
-  "@permissionCreateConversations": {
-    "description": "Permission title for creating conversations"
-  },
-  "permissionCreateMemories": "Create Memories",
-  "@permissionCreateMemories": {
-    "description": "Permission title for creating memories"
-  },
-  "permissionTypeAccess": "Access",
-  "@permissionTypeAccess": {
-    "description": "Permission type label for access permissions"
-  },
-  "permissionTypeCreate": "Create",
-  "@permissionTypeCreate": {
-    "description": "Permission type label for create permissions"
-  },
-  "permissionTypeTrigger": "Trigger",
-  "@permissionTypeTrigger": {
-    "description": "Permission type label for trigger permissions"
-  },
-  "permissionDescReadConversations": "This app can access your conversations.",
-  "@permissionDescReadConversations": {
-    "description": "Description for read conversations permission"
-  },
-  "permissionDescReadMemories": "This app can access your memories.",
-  "@permissionDescReadMemories": {
-    "description": "Description for read memories permission"
-  },
-  "permissionDescReadTasks": "This app can access your tasks.",
-  "@permissionDescReadTasks": {
-    "description": "Description for read tasks permission"
-  },
-  "permissionDescCreateConversations": "This app can create new conversations.",
-  "@permissionDescCreateConversations": {
-    "description": "Description for create conversations permission"
-  },
-  "permissionDescCreateMemories": "This app can create new memories.",
-  "@permissionDescCreateMemories": {
-    "description": "Description for create memories permission"
-  },
-  "realtimeListening": "Realtime Listening",
-  "@realtimeListening": {
-    "description": "Label for realtime listening trigger"
-  },
   "setupCompleted": "Completed",
   "@setupCompleted": {
     "description": "Status text when setup is completed"
-  },
-  "pleaseSelectRating": "Please select a rating",
-  "@pleaseSelectRating": {
-    "description": "Validation message to select a rating"
-  },
-  "writeReviewOptional": "Write a review (optional)",
-  "@writeReviewOptional": {
-    "description": "Hint text for review input field"
   },
   "setupQuestionsIntro": "Help us improve Toki by answering a few questions.  🫶 💜",
   "@setupQuestionsIntro": {
@@ -7664,110 +5055,9 @@
   "@checkOutMyMemoryGraph": {
     "description": "Share text for memory graph"
   },
-  "getButton": "Get",
-  "@getButton": {
-    "description": "Button text to get/install an app"
-  },
-  "openingApp": "Opening {appName}...",
-  "@openingApp": {
-    "description": "Snackbar message when opening an app",
-    "placeholders": {
-      "appName": {
-        "type": "String",
-        "example": "My App"
-      }
-    }
-  },
-  "writeSomething": "Write something",
-  "@writeSomething": {
-    "description": "Hint text for reply text field"
-  },
-  "submitReply": "Submit Reply",
-  "@submitReply": {
-    "description": "Button text to submit a reply"
-  },
-  "editYourReply": "Edit Your Reply",
-  "@editYourReply": {
-    "description": "Button text to edit an existing reply"
-  },
-  "replyToReview": "Reply To Review",
-  "@replyToReview": {
-    "description": "Button text to reply to a review"
-  },
-  "rateAndReviewThisApp": "Rate and Review this App",
-  "@rateAndReviewThisApp": {
-    "description": "Title prompting user to rate and review an app"
-  },
-  "noChangesInReview": "No changes in review to update.",
-  "@noChangesInReview": {
-    "description": "Message when user tries to submit an unchanged review"
-  },
-  "cantRateWithoutInternet": "Can't rate app without internet connection.",
-  "@cantRateWithoutInternet": {
-    "description": "Error message when trying to rate without internet"
-  },
-  "appAnalytics": "App Analytics",
-  "@appAnalytics": {
-    "description": "Title for app analytics section"
-  },
-  "learnMoreLink": "learn more",
-  "@learnMoreLink": {
-    "description": "Link text to learn more (lowercase)"
-  },
-  "moneyEarned": "Money Earned",
-  "@moneyEarned": {
-    "description": "Label for money earned from app"
-  },
-  "writeYourReply": "Write your reply...",
-  "@writeYourReply": {
-    "description": "Hint text for reply input field"
-  },
-  "replySentSuccessfully": "Reply sent successfully",
-  "@replySentSuccessfully": {
-    "description": "Success message after sending a reply"
-  },
-  "failedToSendReply": "Failed to send reply: {error}",
-  "@failedToSendReply": {
-    "description": "Error message when reply fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
   "send": "Send",
   "@send": {
     "description": "Button text to send a message or reply"
-  },
-  "starFilter": "{count} Star",
-  "@starFilter": {
-    "description": "Filter chip for star rating",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "noReviewsFound": "No Reviews Found",
-  "@noReviewsFound": {
-    "description": "Empty state message when no reviews match filter"
-  },
-  "editReply": "Edit Reply",
-  "@editReply": {
-    "description": "Button text to edit an existing reply"
-  },
-  "reply": "Reply",
-  "@reply": {
-    "description": "Button text to reply to something"
-  },
-  "starFilterLabel": "{count} Star",
-  "@starFilterLabel": {
-    "description": "Filter chip label for star rating",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
   },
   "sharePublicLink": "Share Public Link",
   "makePersonaPublic": "Make Persona Public",
@@ -7782,44 +5072,7 @@
   "processedConversations": "Processed Conversations",
   "updatedConversations": "Updated Conversations",
   "newConversations": "New Conversations",
-  "summaryTemplate": "Summary Template",
-  "suggestedTemplates": "Suggested Templates",
-  "otherTemplates": "Other Templates",
-  "availableTemplates": "Available Templates",
-  "getCreative": "Get Creative",
-  "defaultLabel": "Default",
-  "lastUsedLabel": "Last Used",
-  "setDefaultApp": "Set Default App",
-  "setDefaultAppContent": "Set {appName} as your default summarization app?\\n\\nThis app will be automatically used for all future conversation summaries.",
-  "@setDefaultAppContent": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
-  "setDefaultButton": "Set Default",
-  "setAsDefaultSuccess": "{appName} set as default summarization app",
-  "@setAsDefaultSuccess": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
   "createCustomTemplate": "Create Custom Template",
-  "allTemplates": "All Templates",
-  "errorInstallingApp": "Error installing {appName}: {error}",
-  "@errorInstallingApp": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      },
-      "error": {
-        "type": "String"
-      }
-    }
-  },
   "tagSpeaker": "Tag Speaker {speakerId}",
   "@tagSpeaker": {
     "placeholders": {
@@ -8380,101 +5633,6 @@
   "@appCreatedSuccessfully": {
     "description": "Success message after app is created"
   },
-  "addAppSelectCoreCapability": "Please select one more core capability for your app to proceed",
-  "@addAppSelectCoreCapability": {
-    "description": "Validation error when only proactive notification capability is selected"
-  },
-  "addAppSelectPaymentPlan": "Please select a payment plan and enter a price for your app",
-  "@addAppSelectPaymentPlan": {
-    "description": "Validation error when paid app has no payment plan or price"
-  },
-  "addAppSelectCapability": "Please select at least one capability for your app",
-  "@addAppSelectCapability": {
-    "description": "Validation error when no capability is selected"
-  },
-  "addAppSelectLogo": "Please select a logo for your app",
-  "@addAppSelectLogo": {
-    "description": "Validation error when no app logo is selected"
-  },
-  "addAppEnterChatPrompt": "Please enter a chat prompt for your app",
-  "@addAppEnterChatPrompt": {
-    "description": "Validation error when chat capability selected but no prompt entered"
-  },
-  "addAppEnterConversationPrompt": "Please enter a conversation prompt for your app",
-  "@addAppEnterConversationPrompt": {
-    "description": "Validation error when memories capability selected but no prompt entered"
-  },
-  "addAppSelectTriggerEvent": "Please select a trigger event for your app",
-  "@addAppSelectTriggerEvent": {
-    "description": "Validation error when external integration selected but no trigger event"
-  },
-  "addAppEnterWebhookUrl": "Please enter a webhook URL for your app",
-  "@addAppEnterWebhookUrl": {
-    "description": "Validation error when external integration selected but no webhook URL"
-  },
-  "addAppSelectCategory": "Please select a category for your app",
-  "@addAppSelectCategory": {
-    "description": "Validation error when no app category selected"
-  },
-  "addAppFillRequiredFields": "Please fill in all the required fields correctly",
-  "@addAppFillRequiredFields": {
-    "description": "Generic validation error for incomplete form"
-  },
-  "addAppUpdatedSuccess": "App updated successfully 🚀",
-  "@addAppUpdatedSuccess": {
-    "description": "Success message after app update"
-  },
-  "addAppUpdateFailed": "Failed to update app. Please try again later",
-  "@addAppUpdateFailed": {
-    "description": "Error message when app update fails"
-  },
-  "addAppSubmittedSuccess": "App submitted successfully 🚀",
-  "@addAppSubmittedSuccess": {
-    "description": "Success message after app submission"
-  },
-  "addAppErrorOpeningFilePicker": "Error opening file picker: {message}",
-  "@addAppErrorOpeningFilePicker": {
-    "description": "Error when file picker fails to open",
-    "placeholders": {
-      "message": {
-        "type": "String"
-      }
-    }
-  },
-  "addAppErrorSelectingImage": "Error selecting image: {error}",
-  "@addAppErrorSelectingImage": {
-    "description": "Error when image selection fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "addAppPhotosPermissionDenied": "Photos permission denied. Please allow access to photos to select an image",
-  "@addAppPhotosPermissionDenied": {
-    "description": "Error when photos permission is denied"
-  },
-  "addAppErrorSelectingImageRetry": "Error selecting image. Please try again.",
-  "@addAppErrorSelectingImageRetry": {
-    "description": "Generic error when image selection fails"
-  },
-  "addAppErrorSelectingThumbnail": "Error selecting thumbnail: {error}",
-  "@addAppErrorSelectingThumbnail": {
-    "description": "Error when thumbnail selection fails",
-    "placeholders": {
-      "error": {
-        "type": "String"
-      }
-    }
-  },
-  "addAppErrorSelectingThumbnailRetry": "Error selecting thumbnail. Please try again.",
-  "@addAppErrorSelectingThumbnailRetry": {
-    "description": "Generic error when thumbnail selection fails"
-  },
-  "addAppPersonaConflictWithCapabilities": "Persona cannot be selected with other capabilities",
-  "@addAppPersonaConflictWithCapabilities": {
-    "description": "Error when trying to select Persona alongside other capabilities"
-  },
   "personaTwitterHandleNotFound": "Twitter handle not found",
   "@personaTwitterHandleNotFound": {
     "description": "Error shown when Twitter handle is not found"
@@ -8577,55 +5735,9 @@
   "@paymentStatusNotConnected": {
     "description": "Status label when payment method is not connected"
   },
-  "paymentAppCost": "App Cost",
-  "@paymentAppCost": {
-    "description": "Label for app cost input field"
-  },
-  "paymentEnterValidAmount": "Please enter a valid amount",
-  "@paymentEnterValidAmount": {
-    "description": "Validation error when amount is not a valid number"
-  },
-  "paymentEnterAmountGreaterThanZero": "Please enter an amount greater than 0",
-  "@paymentEnterAmountGreaterThanZero": {
-    "description": "Validation error when app cost is less than 1"
-  },
   "paymentPlan": "Payment Plan",
   "@paymentPlan": {
     "description": "Label for payment plan selection"
-  },
-  "paymentNoneSelected": "None Selected",
-  "@paymentNoneSelected": {
-    "description": "Placeholder when no payment plan is selected"
-  },
-  "aiGenPleaseEnterDescription": "Please enter a description for your app",
-  "@aiGenPleaseEnterDescription": {
-    "description": "Validation error when app description is empty in AI app generator"
-  },
-  "aiGenCreatingAppIcon": "Creating app icon...",
-  "@aiGenCreatingAppIcon": {
-    "description": "Status message shown while generating app icon"
-  },
-  "aiGenErrorOccurredWithDetails": "An error occurred: {message}",
-  "@aiGenErrorOccurredWithDetails": {
-    "description": "Error message with details in AI app generator",
-    "placeholders": {
-      "message": {
-        "type": "String",
-        "example": "Network error"
-      }
-    }
-  },
-  "aiGenAppCreatedSuccessfully": "App created successfully!",
-  "@aiGenAppCreatedSuccessfully": {
-    "description": "Success message when AI-generated app is created"
-  },
-  "aiGenErrorWhileCreatingApp": "An error occurred while creating the app",
-  "@aiGenErrorWhileCreatingApp": {
-    "description": "Error message when exception occurs during app creation"
-  },
-  "aiGenPleaseGenerateAppFirst": "Please generate an app first",
-  "@aiGenPleaseGenerateAppFirst": {
-    "description": "Validation error when trying to submit without generating app first"
   },
   "xHandleTitle": "What's your X handle?",
   "@xHandleTitle": {
@@ -8655,19 +5767,6 @@
   "@connectOmiDevice": {
     "description": "Button text to connect Toki device"
   },
-  "planSwitchingDescriptionWithTitle": "You're switching your Unlimited Plan to the {title}. Are you sure you want to proceed?",
-  "@planSwitchingDescriptionWithTitle": {
-    "description": "Dialog description when switching from unlimited plan",
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
-  "couldNotSchedulePlanChange": "Could not schedule plan change. Please try again.",
-  "@couldNotSchedulePlanChange": {
-    "description": "Error when plan change cannot be scheduled"
-  },
   "transcriptionJsonPlaceholder": "Paste your JSON configuration here...",
   "@transcriptionJsonPlaceholder": {
     "description": "JSON configuration placeholder hint text in transcription settings"
@@ -8675,10 +5774,6 @@
   "transcriptionSourceOmi": "Toki",
   "@transcriptionSourceOmi": {
     "description": "Tab title for Toki transcription source option"
-  },
-  "pricePlaceholder": "0.00",
-  "@pricePlaceholder": {
-    "description": "Placeholder text for the price input field showing a sample price format"
   },
   "importErrorOpeningFilePicker": "Error opening file picker: {message}",
   "@importErrorOpeningFilePicker": {
@@ -8746,45 +5841,9 @@
       }
     }
   },
-  "onboardingSignIn": "Sign In",
-  "@onboardingSignIn": {
-    "description": "Onboarding step title for sign in"
-  },
-  "onboardingYourName": "Your Name",
-  "@onboardingYourName": {
-    "description": "Onboarding step title for name entry"
-  },
-  "onboardingLanguage": "Language",
-  "@onboardingLanguage": {
-    "description": "Onboarding step title for language selection"
-  },
-  "onboardingPermissions": "Permissions",
-  "@onboardingPermissions": {
-    "description": "Onboarding step title for permissions"
-  },
   "onboardingComplete": "Complete",
   "@onboardingComplete": {
     "description": "Onboarding step title for completion"
-  },
-  "onboardingWelcomeToOmi": "Welcome to Toki",
-  "@onboardingWelcomeToOmi": {
-    "description": "Onboarding step description for sign in"
-  },
-  "onboardingTellUsAboutYourself": "Tell us about yourself",
-  "@onboardingTellUsAboutYourself": {
-    "description": "Onboarding step description for name entry"
-  },
-  "onboardingChooseYourPreference": "Choose your preference",
-  "@onboardingChooseYourPreference": {
-    "description": "Onboarding step description for language selection"
-  },
-  "onboardingGrantRequiredAccess": "Grant required access",
-  "@onboardingGrantRequiredAccess": {
-    "description": "Onboarding step description for permissions"
-  },
-  "onboardingYoureAllSet": "You're all set",
-  "@onboardingYoureAllSet": {
-    "description": "Onboarding step description for completion"
   },
   "searchTranscriptOrSummary": "Search transcript or summary...",
   "@searchTranscriptOrSummary": {
@@ -8858,14 +5917,6 @@
   "@failedToConnectClickUpRetry": {
     "description": "Error message when ClickUp authentication fails"
   },
-  "successfullyConnectedNotion": "Successfully connected to Notion!",
-  "@successfullyConnectedNotion": {
-    "description": "Success message when Notion OAuth completes"
-  },
-  "failedToRefreshNotionStatus": "Failed to refresh Notion connection status.",
-  "@failedToRefreshNotionStatus": {
-    "description": "Error message when Notion status refresh fails"
-  },
   "successfullyConnectedGoogle": "Successfully connected to Google!",
   "@successfullyConnectedGoogle": {
     "description": "Success message when Google Calendar OAuth completes"
@@ -8873,22 +5924,6 @@
   "failedToRefreshGoogleStatus": "Failed to refresh Google connection status.",
   "@failedToRefreshGoogleStatus": {
     "description": "Error message when Google status refresh fails"
-  },
-  "successfullyConnectedWhoop": "Successfully connected to Whoop!",
-  "@successfullyConnectedWhoop": {
-    "description": "Success message when Whoop OAuth completes"
-  },
-  "failedToRefreshWhoopStatus": "Failed to refresh Whoop connection status.",
-  "@failedToRefreshWhoopStatus": {
-    "description": "Error message when Whoop status refresh fails"
-  },
-  "successfullyConnectedGitHub": "Successfully connected to GitHub!",
-  "@successfullyConnectedGitHub": {
-    "description": "Success message when GitHub OAuth completes"
-  },
-  "failedToRefreshGitHubStatus": "Failed to refresh GitHub connection status.",
-  "@failedToRefreshGitHubStatus": {
-    "description": "Error message when GitHub status refresh fails"
   },
   "authFailedToSignInWithGoogle": "Failed to sign in with Google, please try again.",
   "@authFailedToSignInWithGoogle": {
@@ -9188,24 +6223,6 @@
   "@locationPermissionContent": {
     "description": "Explanation text for location permission dialog"
   },
-  "pdfTranscriptExport": "Transcript Export",
-  "@pdfTranscriptExport": {
-    "description": "Title for PDF transcript export document"
-  },
-  "pdfConversationExport": "Conversation Export",
-  "@pdfConversationExport": {
-    "description": "Title for PDF conversation export document"
-  },
-  "pdfTitleLabel": "Title: {title}",
-  "@pdfTitleLabel": {
-    "description": "Label showing the conversation title in PDF export",
-    "placeholders": {
-      "title": {
-        "type": "String",
-        "example": "Meeting Notes"
-      }
-    }
-  },
   "conversationNewIndicator": "New 🚀",
   "@conversationNewIndicator": {
     "description": "Indicator shown when a conversation is newly created"
@@ -9457,18 +6474,13 @@
     "description": "Message shown when WiFi sync fails because device hardware does not support WiFi, automatically falling back to Bluetooth transfer"
   },
   "appleHealthNotAvailable": "Apple Health is not available on this device",
-  "downloadAudio": "Download Audio",
-  "audioDownloadSuccess": "Audio downloaded successfully",
   "audioDownloadFailed": "Failed to download audio",
   "downloadingAudio": "Downloading audio...",
   "shareAudio": "Share Audio",
   "preparingAudio": "Preparing Audio",
-  "gettingAudioFiles": "Getting audio files...",
   "downloadingAudioProgress": "Downloading Audio",
   "processingAudio": "Processing Audio",
-  "combiningAudioFiles": "Combining audio files...",
   "audioReady": "Audio Ready",
-  "openingShareSheet": "Opening share sheet...",
   "audioShareFailed": "Share Failed",
   "dailyRecaps": "Daily Recaps",
   "removeFilter": "Remove Filter",
@@ -9504,7 +6516,6 @@
   "scopeUserFacts": "User Facts",
   "scopeUserConversations": "User Conversations",
   "scopeUserChat": "User Chat",
-  "capabilitySummary": "Summary",
   "capabilityFeatured": "Featured",
   "capabilityTasks": "Tasks",
   "capabilityIntegrations": "Integrations",
@@ -9515,13 +6526,6 @@
   "categoryPersonalWellness": "Personal & Lifestyle",
   "rating": "Rating",
   "categories": "Categories",
-  "sortBy": "Sort",
-  "highestRating": "Highest Rating",
-  "lowestRating": "Lowest Rating",
-  "resetFilters": "Reset filters",
-  "applyFilters": "Apply filters",
-  "mostInstalls": "Most Installs",
-  "couldNotOpenUrl": "Could not open URL. Please try again.",
   "newTask": "New Task",
   "@newTask": {
     "description": "Button text for creating a new task"
@@ -9534,19 +6538,7 @@
   "@addTask": {
     "description": "Menu option to add a new task"
   },
-  "addMcpServer": "Add MCP Server",
-  "connectExternalAiTools": "Connect external AI tools",
   "mcpServerUrl": "MCP Server URL",
-  "mcpServerConnected": "{count} tools connected successfully",
-  "@mcpServerConnected": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "mcpConnectionFailed": "Failed to connect to MCP server",
-  "authorizingMcpServer": "Authorizing...",
   "whereDidYouHearAboutOmi": "How did you find us?",
   "tiktok": "TikTok",
   "youtube": "YouTube",
@@ -9564,8 +6556,6 @@
   "audioPlaybackFailed": "Unable to play audio. The file may be corrupted or missing.",
   "connectionGuide": "Connection Guide",
   "iveDoneThis": "I've done this",
-  "pairNewDevice": "Pair new device",
-  "dontSeeYourDevice": "Don't see your device?",
   "reportAnIssue": "Report an issue",
   "pairingTitleOmi": "Turn On Toki",
   "@pairingTitleOmi": {
@@ -9660,24 +6650,7 @@
       }
     }
   },
-  "processedStatus": "Processed",
   "corruptedStatus": "Corrupted",
-  "nPending": "{count} pending",
-  "@nPending": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "nProcessed": "{count} processed",
-  "@nProcessed": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "synced": "Synced",
   "@synced": {
     "description": "Label for synced/processed recordings tab"
@@ -9694,15 +6667,6 @@
   "@pending": {
     "description": "Pending tab label for sync page"
   },
-  "whatsNewInVersion": "What's New in {version}",
-  "@whatsNewInVersion": {
-    "description": "Title for changelog with version number",
-    "placeholders": {
-      "version": {
-        "type": "String"
-      }
-    }
-  },
   "addToYourTaskList": "Add to your task list?",
   "failedToCreateShareLink": "Failed to create share link",
   "deleteGoal": "Delete Goal",
@@ -9712,7 +6676,6 @@
   "networkNameSsid": "Network Name (SSID)",
   "enterWifiNetworkName": "Enter WiFi network name",
   "enterWifiPassword": "Enter WiFi password",
-  "appIconLabel": "App Icon",
   "onboardingWhatIKnowAboutYouTitle": "Here is what I know about you",
   "@onboardingWhatIKnowAboutYouTitle": {
     "description": "Title for onboarding step that previews the memory graph"
@@ -9775,101 +6738,6 @@
     "description": "Confirmation dialog message for cleaning today task deadlines"
   },
   "tasksOverdue": "Overdue",
-  "phoneCallsWithOmi": "Phone Calls with Toki",
-  "phoneCallsSubtitle": "Make calls with real-time transcription",
-  "phoneSetupStep1Title": "Verify your phone number",
-  "phoneSetupStep1Subtitle": "We'll call you to confirm it's yours",
-  "phoneSetupStep2Title": "Enter a verification code",
-  "phoneSetupStep2Subtitle": "A short code you'll type on the call",
-  "phoneSetupStep3Title": "Start calling your contacts",
-  "phoneSetupStep3Subtitle": "With live transcription built in",
-  "phoneGetStarted": "Get Started",
-  "callRecordingConsentDisclaimer": "Call recording may require consent in your jurisdiction",
-  "enterYourNumber": "Enter your number",
-  "phoneNumberCallerIdHint": "Once verified, this becomes your caller ID",
-  "phoneNumberHint": "Phone number",
-  "failedToStartVerification": "Failed to start verification",
-  "phoneContinue": "Continue",
-  "verifyYourNumber": "Verify your number",
-  "answerTheCallFrom": "Answer the call from",
-  "onTheCallEnterThisCode": "On the call, enter this code",
-  "followTheVoiceInstructions": "Follow the voice instructions",
-  "statusCalling": "Calling...",
-  "statusCallInProgress": "Call in progress",
-  "statusVerifiedLabel": "Verified",
-  "statusCallMissed": "Call missed",
-  "statusTimedOut": "Timed out",
-  "phoneTryAgain": "Try Again",
-  "phonePageTitle": "Phone",
-  "phoneContactsTab": "Contacts",
-  "phoneKeypadTab": "Keypad",
-  "grantContactsAccess": "Grant access to your contacts",
-  "phoneAllow": "Allow",
-  "phoneSearchHint": "Search",
-  "phoneNoContactsFound": "No contacts found",
-  "phoneEnterNumber": "Enter number",
-  "failedToStartCall": "Failed to start call",
-  "callStateConnecting": "Connecting...",
-  "callStateRinging": "Ringing...",
-  "callStateEnded": "Call Ended",
-  "callStateFailed": "Call Failed",
-  "transcriptPlaceholder": "Transcript will appear here...",
-  "phoneUnmute": "Unmute",
-  "phoneMute": "Mute",
-  "phoneSpeaker": "Speaker",
-  "phoneEndCall": "End",
-  "phoneCallSettingsTitle": "Phone Call Settings",
-  "yourVerifiedNumbers": "Your Verified Numbers",
-  "verifiedNumbersDescription": "When you call someone, they'll see this number on their phone",
-  "noVerifiedNumbers": "No verified numbers",
-  "deletePhoneNumberConfirm": "Delete {phoneNumber}?",
-  "@deletePhoneNumberConfirm": {
-    "placeholders": {
-      "phoneNumber": {
-        "type": "String"
-      }
-    }
-  },
-  "deletePhoneNumberWarning": "You'll need to verify again to make calls",
-  "phoneDeleteButton": "Delete",
-  "verifiedMinutesAgo": "Verified {minutes}m ago",
-  "@verifiedMinutesAgo": {
-    "placeholders": {
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
-  "verifiedHoursAgo": "Verified {hours}h ago",
-  "@verifiedHoursAgo": {
-    "placeholders": {
-      "hours": {
-        "type": "int"
-      }
-    }
-  },
-  "verifiedDaysAgo": "Verified {days}d ago",
-  "@verifiedDaysAgo": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "verifiedOnDate": "Verified on {date}",
-  "@verifiedOnDate": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "verifiedFallback": "Verified",
-  "callAlreadyInProgress": "A call is already in progress",
-  "failedToGetCallToken": "Failed to get call token. Verify your phone number first.",
-  "failedToInitializeCallService": "Failed to initialize call service",
-  "speakerLabelYou": "You",
-  "speakerLabelUnknown": "Unknown",
   "showDailyScoreOnHomepage": "Show Daily Score on homepage",
   "@showDailyScoreOnHomepage": {
     "description": "Description for show daily score toggle in developer settings"
@@ -9877,30 +6745,6 @@
   "showTasksOnHomepage": "Show Tasks on homepage",
   "@showTasksOnHomepage": {
     "description": "Description for show tasks toggle in developer settings"
-  },
-  "phoneCallsUpsellSubtitle": "Make calls through Toki and get real-time transcription, automatic summaries, and more. Available exclusively for Unlimited plan subscribers.",
-  "@phoneCallsUpsellSubtitle": {
-    "description": "Subtitle explaining phone calls feature on upsell sheet"
-  },
-  "phoneCallsUpsellFeature1": "Real-time transcription of every call",
-  "@phoneCallsUpsellFeature1": {
-    "description": "Phone calls upsell feature 1"
-  },
-  "phoneCallsUpsellFeature2": "Automatic call summaries and action items",
-  "@phoneCallsUpsellFeature2": {
-    "description": "Phone calls upsell feature 2"
-  },
-  "phoneCallsUpsellFeature3": "Recipients see your real number, not a random one",
-  "@phoneCallsUpsellFeature3": {
-    "description": "Phone calls upsell feature 3"
-  },
-  "phoneCallsUpsellFeature4": "Your calls stay private and secure",
-  "@phoneCallsUpsellFeature4": {
-    "description": "Phone calls upsell feature 4"
-  },
-  "phoneCallsMaybeLater": "Maybe later",
-  "@phoneCallsMaybeLater": {
-    "description": "Dismiss button text on phone calls upsell sheet"
   },
   "deleteSynced": "Delete Synced",
   "@deleteSynced": {
@@ -9950,15 +6794,6 @@
   "@allFilesDeleted": {
     "description": "Snackbar message after all files deleted"
   },
-  "nFiles": "{count} recordings",
-  "@nFiles": {
-    "description": "Count of files",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "manageStorage": "Manage Storage",
   "@manageStorage": {
     "description": "Menu option and sheet title for managing recording storage"
@@ -9975,18 +6810,8 @@
   "@clearAll": {
     "description": "Button label to clear all files"
   },
-  "phoneKeypad": "Keypad",
-  "@phoneKeypad": {
-    "description": "Label for the keypad/dialpad button during an active phone call"
-  },
-  "phoneHideKeypad": "Hide Keypad",
-  "@phoneHideKeypad": {
-    "description": "Label for the button to dismiss the in-call keypad"
-  },
   "fairUsePolicy": "Fair Use",
   "fairUseLoadError": "Unable to load fair use status. Please try again.",
-  "fairUseStatusNormal": "Your usage is within normal limits.",
-  "fairUseStageNormal": "Normal",
   "fairUseStageWarning": "Warning",
   "fairUseStageThrottle": "Throttled",
   "fairUseStageRestrict": "Restricted",
@@ -10028,14 +6853,6 @@
   },
   "transcriptionPaused": "Recording, reconnecting",
   "transcriptionPausedReconnecting": "Still recording — reconnecting to transcription...",
-  "fairUseBannerStatus": "Fair Use: {status}",
-  "@fairUseBannerStatus": {
-    "placeholders": {
-      "status": {
-        "type": "String"
-      }
-    }
-  },
   "improveConnectionTitle": "Improve Connection",
   "improveConnectionContent": "We've improved how Toki stays connected to your device. To activate this, please go to the Device Info page, tap \"Disconnect Device\", and then pair your device again.",
   "improveConnectionAction": "Got it",
@@ -10048,57 +6865,18 @@
     }
   },
   "cloudTranscriptionPoweredByDeepgram": "Cloud transcription powered by Deepgram.",
-  "addAppCapabilityConflictWithPersona": "Conflict",
-  "aiGenFailedToCreateApp": "Failed",
-  "aiGenFailedToGenerateApp": "Failed",
-  "aiGenFailedToRegenerateIcon": "Failed",
-  "appCapabilities": "Capabilities",
-  "appCategoryModalTitle": "Category",
   "appStore": "App Store",
-  "chatAppsTitle": "Chat Apps",
   "createApp": "Create App",
   "createYourOwnApp": "Create App",
   "enableApps": "Enable Apps",
   "externalAppAccess": "External Access",
   "externalAppAccessDescription": "External access description",
   "failedToCreateApp": "Failed",
-  "failedToInstallApp": "Failed to install {appName}",
-  "fetchingYourAppDetails": "Loading...",
-  "noChatAppsEnabled": "No apps enabled",
-  "privateAppsCount": "{count} private",
-  "@privateAppsCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "publicAppsCount": "{count} public",
-  "@publicAppsCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "rateOnAppStore": "Rate",
-  "selectApp": "Select App",
-  "submitApp": "Submit",
-  "submitAppPrivateDescription": "Private",
-  "submitAppPublicDescription": "Public",
-  "submitAppQuestion": "Submit?",
-  "@failedToInstallApp": {
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      }
-    }
-  },
   "usageStatistics": "Usage Statistics",
   "transcriptionTime": "Transcription Time",
   "wordsTranscribed": "Words Transcribed",
   "insightsGained": "Insights Gained",
   "memoriesCreated": "Memories Created",
-  "hours": "hours",
   "noDataYet": "No data yet"
 }
