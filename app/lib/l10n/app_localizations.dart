@@ -16084,6 +16084,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your device clock is off by ~{minutes} min. Check your date & time settings.'**
   String clockSkewWarning(int minutes);
+
+  /// No description provided for @cloudTranscriptionPoweredByDeepgram.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud transcription powered by Deepgram.'**
+  String get cloudTranscriptionPoweredByDeepgram;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -8643,4 +8643,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String clockSkewWarning(int minutes) {
     return 'Your device clock is off by ~$minutes min. Check your date & time settings.';
   }
+
+  @override
+  String get cloudTranscriptionPoweredByDeepgram => 'Cloud transcription powered by Deepgram.';
 }

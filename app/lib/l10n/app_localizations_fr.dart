@@ -8725,4 +8725,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String clockSkewWarning(int minutes) {
     return 'L\'horloge de votre appareil est décalée de ~$minutes min. Vérifiez vos paramètres de date et heure.';
   }
+
+  @override
+  String get cloudTranscriptionPoweredByDeepgram => 'Transcription cloud propulsée par Deepgram.';
 }

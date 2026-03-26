@@ -10366,5 +10366,6 @@
                 "type": "int"
             }
         }
-    }
+    },
+    "cloudTranscriptionPoweredByDeepgram": "Cloud transcription powered by Deepgram."
 }

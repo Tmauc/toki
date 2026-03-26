@@ -8502,4 +8502,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String clockSkewWarning(int minutes) {
     return 'デバイスの時計が約$minutes分ずれています。日付と時刻の設定を確認してください。';
   }
+
+  @override
+  String get cloudTranscriptionPoweredByDeepgram => 'Deepgramによるクラウド文字起こし。';
 }

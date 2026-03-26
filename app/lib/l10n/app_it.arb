@@ -2806,5 +2806,6 @@
     "improveConnectionTitle": "Migliora connessione",
     "improveConnectionContent": "Abbiamo migliorato il modo in cui Toki rimane connesso al tuo dispositivo. Per attivarlo, vai alla pagina Info dispositivo, tocca \"Disconnetti dispositivo\" e associa nuovamente il tuo dispositivo.",
     "improveConnectionAction": "Capito",
-    "clockSkewWarning": "L'orologio del dispositivo è sfasato di ~{minutes} min. Controlla le impostazioni di data e ora."
+    "clockSkewWarning": "L'orologio del dispositivo è sfasato di ~{minutes} min. Controlla le impostazioni di data e ora.",
+    "cloudTranscriptionPoweredByDeepgram": "Trascrizione cloud con Deepgram."
 }

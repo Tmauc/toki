@@ -2841,5 +2841,6 @@
     "improveConnectionTitle": "Améliorer la connexion",
     "improveConnectionContent": "Nous avons amélioré la façon dont Toki reste connecté à votre appareil. Pour activer cela, allez sur la page Infos de l'appareil, appuyez sur \"Déconnecter l'appareil\", puis reconnectez votre appareil.",
     "improveConnectionAction": "Compris",
-    "clockSkewWarning": "L'horloge de votre appareil est décalée de ~{minutes} min. Vérifiez vos paramètres de date et heure."
+    "clockSkewWarning": "L'horloge de votre appareil est décalée de ~{minutes} min. Vérifiez vos paramètres de date et heure.",
+    "cloudTranscriptionPoweredByDeepgram": "Transcription cloud propulsée par Deepgram."
 }

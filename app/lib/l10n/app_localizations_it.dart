@@ -8698,4 +8698,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String clockSkewWarning(int minutes) {
     return 'L\'orologio del dispositivo è sfasato di ~$minutes min. Controlla le impostazioni di data e ora.';
   }
+
+  @override
+  String get cloudTranscriptionPoweredByDeepgram => 'Trascrizione cloud con Deepgram.';
 }
