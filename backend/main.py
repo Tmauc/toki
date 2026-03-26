@@ -97,11 +97,13 @@ app.include_router(apps.router)
 app.include_router(custom_auth.router)
 app.include_router(calendar_meetings.router)
 app.include_router(calendar_onboarding.router)
-app.include_router(oauth.router)  # Added oauth router (for Omi Apps)
+# TOKI: oauth router for marketplace apps disabled
+# app.include_router(oauth.router)
 app.include_router(auth.router)  # Added auth router (for the main Omi App, this is the core auth router)
 
 
-app.include_router(payment.router)
+# TOKI: payment router disabled — monetization removed
+# app.include_router(payment.router)
 app.include_router(mcp.router)
 app.include_router(mcp_sse.router)
 app.include_router(developer.router)
