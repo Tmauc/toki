@@ -36,10 +36,8 @@ def _redact_phone(number: str) -> str:
 
 
 def _require_unlimited_plan(uid: str):
-    """Raise 403 if the user is not on a paid plan."""
-    subscription = users_db.get_user_valid_subscription(uid)
-    if not subscription or not is_paid_plan(subscription.plan):
-        raise HTTPException(status_code=403, detail="Phone calls require a paid subscription")
+    """TOKI: monetization disabled — always allow."""
+    return
 
 
 router = APIRouter()
