@@ -213,6 +213,7 @@ getTranscriptWidget(
   VoidCallback? onTapWhenSearchEmpty,
   Function(TranscriptSegment)? onSegmentTap,
   Function(int)? onEditSegmentText,
+  Function(String speakerLabel)? onTokiIdentify,
 }) {
   if (conversationCreating) {
     return const Padding(
@@ -245,6 +246,7 @@ getTranscriptWidget(
       onTapWhenSearchEmpty: onTapWhenSearchEmpty,
       onSegmentTap: onSegmentTap,
       onEditSegmentText: onEditSegmentText,
+      onTokiIdentify: onTokiIdentify,
     );
   }
 

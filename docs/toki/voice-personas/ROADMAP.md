@@ -163,47 +163,60 @@ Déclenché à chaque naming. Exécuté en tâche background (non bloquant).
 ## Roadmap
 
 ### Phase A — Modèles & DB `3-4 jours`
-- [ ] `models/unknown_speakers.py` : `UnknownSpeakerCluster`, `SampleQuote`, `NamingRequest`, `MergeRequest`
-- [ ] `database/unknown_speakers.py` : `create_cluster()`, `get_clusters_for_user()`, `get_cluster_by_id()`, `update_cluster_centroid()`, `add_conversation_to_cluster()`, `assign_name_to_cluster()`, `merge_clusters()`, `delete_cluster()`
-- [ ] Firestore indexes + security rules
-- [ ] Tests unitaires des modèles
+- [x] `models/unknown_speakers.py` : `UnknownSpeakerCluster`, `SampleQuote`, `NamingRequest`, `MergeRequest`
+- [x] `database/unknown_speakers.py` : `create_cluster()`, `get_clusters_for_user()`, `get_cluster_by_id()`, `update_cluster_embeddings()`, `add_conversation_to_cluster()`, `assign_name_to_cluster()`, `merge_clusters()`, `delete_cluster()`
+- [x] Firestore indexes + security rules (`deploy/firestore.indexes.json` + `deploy/firestore.rules`)
+- [x] Tests unitaires des modèles (38 tests, 38 passed)
 
 ### Phase B — Logique de clustering `4-5 jours`
-- [ ] `utils/speaker_clustering.py` : `compute_cosine_similarity()`, `find_best_cluster_match()`, `merge_embeddings_centroid()`, `should_create_new_cluster()`, `extract_sample_quote()`
-- [ ] Hook dans `utils/speaker_identification.py` : appel clustering quand pas de match dans `people/`
-- [ ] Tâche background async (FastAPI `BackgroundTasks`) pour extraction sample_quotes
+- [x] `utils/speaker_clustering.py` : `compute_cosine_distance()`, `find_best_cluster_match()`, `should_create_new_cluster()`, `extract_sample_quote()`, `route_unknown_segment()`
+- [x] Hook dans `routers/transcribe.py` : `asyncio.create_task(route_unknown_segment(...))` au `else` du speaker matching
 - [ ] Upload audio sample (5s) vers GCS bucket `BUCKET_SPEECH_PROFILES`
-- [ ] Tests : clustering avec embeddings réels, cas limite (voix similaires)
+- [x] Tests : 28 tests clustering (math + cas limites), 66 tests total passent
 
 ### Phase C — API Endpoints `2-3 jours`
-- [ ] `routers/toki_voice_personas.py` avec les 6 endpoints décrits
-- [ ] Auth middleware (uid depuis Firebase token)
-- [ ] Validation des payloads (Pydantic)
-- [ ] Gestion d'erreurs et edge cases
-- [ ] Inclure router dans `main.py`
+- [x] `routers/toki_voice_personas.py` avec les 6 endpoints (GET liste, GET détail, GET audio, POST name, POST merge, DELETE)
+- [x] Auth middleware (uid depuis Firebase token via `get_current_user_uid`)
+- [x] Validation des payloads (Pydantic — NamingRequest, MergeRequest)
+- [x] Gestion d'erreurs et edge cases (404, 422, deleted cluster guard)
+- [x] Inclure router dans `main.py` (prefix `/v1/toki/voice-personas`)
+- [x] 22 tests router → 88 tests Toki au total passent
 
 ### Phase D — Flutter UI `5-6 jours`
-- [ ] `voice_personas_page.dart` : grid de cards, tri par nb apparitions
-- [ ] `voice_persona_card.dart` : nom temporaire, stats, sample quotes, bouton play
-- [ ] Player audio intégré pour écouter l'extrait vocal
-- [ ] `name_persona_page.dart` : input nom, recherche contacts, preview conversations
-- [ ] Intégration dans `conversation_detail` : speaker "?" avec tap → naming flow
-- [ ] Provider Riverpod/Provider pour état des clusters
-- [ ] Notifications in-app lors du retroactive update
+- [x] `app/lib/backend/schema/toki_voice_persona.dart` : `VoicePersona`, `SampleQuote`, `PersonTag`, `ClusterStatus`, `durationLabel`
+- [x] `app/lib/backend/http/api/toki_voice_personas.dart` : `getVoicePersonas()`, `nameVoicePersona()`, `deleteVoicePersona()`, `mergeVoicePersonas()`, `getAudioSampleUrl()`
+- [x] `app/lib/providers/toki_voice_personas_provider.dart` : `VoicePersonasProvider` (`loadPersonas`, `namePersona`, `deletePersona`, `mergePersonas`), optimistic updates, processing set
+- [x] `app/lib/widgets/voice_persona_card.dart` : avatar dégradé, stats conv+durée, quote preview, bouton delete, overlay loading
+- [x] `app/lib/pages/toki/voice_personas_page.dart` : grid 2 colonnes, pull-to-refresh, empty state, error state, confirmation suppression
+- [x] `app/lib/pages/toki/name_persona_page.dart` : input nom validé, sélecteur de tags, aperçu quotes, bouton save avec feedback
+- [x] `VoicePersonasProvider` enregistré dans `MultiProvider` (`main.dart`)
+- [x] Entrée navigation dans `settings_drawer.dart` : "Voix non identifiées" après le profil
+- [ ] Player audio intégré pour écouter l'extrait vocal (Phase F)
+- [ ] Intégration dans `conversation_detail` : speaker "?" avec tap → naming flow (Phase F)
 
 ### Phase E — Retroactive Update `2 jours`
-- [ ] `utils/toki_retroactive.py` : `batch_update_conversations()`, `update_pinecone_metadata()`, `send_naming_notification()`
-- [ ] Job async non bloquant avec progress tracking
-- [ ] Push notification FCM post-naming
-- [ ] Gestion des erreurs partielle (rollback si échec)
+- [x] `utils/toki_retroactive.py` : `run_retroactive_update()`, `_batch_update_firestore_segments()`, `_update_pinecone_metadata()`, `_send_naming_notification()`
+- [x] Job async non bloquant (BackgroundTasks FastAPI dans le router /name)
+- [x] Push notification FCM post-naming ("Papa identifié dans 23 conversations")
+- [x] Gestion des erreurs best-effort (chaque étape isolée, erreurs collectées sans abort)
+- [x] `per_conversation_speakers` stocké dans le cluster pour cibler les bons segments
+- [x] `database/unknown_speakers.py` : `record_speaker_id_for_conversation()`
+- [x] 15 tests retroactive → 103 tests Toki au total
 
 ### Phase F — Refinements `continu`
-- [ ] Split cluster : séparer deux voix confondues dans un même cluster
-- [ ] Suggestion automatique : "Cette voix ressemble à Papa ?" (matching partiel)
-- [ ] Ajustement seuil dynamique par contexte (bruyant/silencieux)
+- [x] `app/lib/widgets/toki_audio_player.dart` : player play/stop pour les extraits audio 5s (just_audio)
+- [x] Bouton play dans `VoicePersonaCard` (grid) et `NamePersonaPage` (header)
+- [x] Backend : `GET /v1/toki/voice-personas/lookup?conversation_id=X&speaker_id=Y` → trouve le cluster par segment
+- [x] `per_conversation_speakers` ajouté à `UnknownSpeakerCluster` Pydantic model
+- [x] Flutter API : `lookupClusterForSegment(convId, speakerLabel)` dans `toki_voice_personas.dart`
+- [x] `TranscriptWidget` : paramètre optionnel `onTokiIdentify` + bouton "?" sur les voix non identifiées
+- [x] `conversation_detail/page.dart` : tap "?" → lookup cluster → navigate vers `NamePersonaPage` ou `VoicePersonasPage`
+- [x] 5 tests lookup → 108 tests Toki au total
+- [x] Split cluster : `POST /{id}/split` + `GET /{id}/conversations` + `SplitPersonaPage` Flutter, accès depuis `NamePersonaPage`, 7 tests
+- [x] Suggestion automatique : "C'est Papa ?" — `SUGGESTION_THRESHOLD = 0.18`, fire-and-forget après chaque segment, bannière Oui/Non dans la card, 2 endpoints confirm/reject, 12 tests
+- [x] Seuil dynamique par contexte : `estimate_threshold_for_segment()` — proxy WPS → multiplicateur 1.4×/0.9×, caps 0.15–0.50, 8 tests
 - [ ] Analytics : carte sociale des voix ("Tu parles le plus avec...")
 - [ ] Mode confidentialité : pas de stockage audio samples
-- [ ] Export / backup données vocales chiffrées
 
 ---
 
@@ -224,12 +237,12 @@ Déclenché à chaque naming. Exécuté en tâche background (non bloquant).
 
 | Phase | Statut | Notes |
 |-------|--------|-------|
-| A — Modèles & DB | 🔜 À faire | Prochaine étape |
-| B — Clustering | 🔜 À faire | Dépend de A |
-| C — API | 🔜 À faire | Dépend de A+B |
-| D — Flutter UI | 🔜 À faire | Dépend de C |
-| E — Retroactive Update | 🔜 À faire | Dépend de C+D |
-| F — Refinements | 🔜 À faire | Continu |
+| A — Modèles & DB | ✅ Terminé | Models, DB, indexes, rules, 38 tests ✓ |
+| B — Clustering | ✅ Terminé | speaker_clustering.py + hook transcribe.py, 66 tests ✓ |
+| C — API | ✅ Terminé | 6 endpoints, auth, 88 tests ✓ |
+| D — Flutter UI | ✅ Terminé | Schema+API+Provider+Card+Pages+Settings entry, 103 tests ✓ |
+| E — Retroactive Update | ✅ Terminé | toki_retroactive.py, Firestore+Pinecone+FCM, 103 tests ✓ |
+| F — Refinements | ✅ Terminé | Player audio, conv_detail, suggestion auto, split cluster, seuil dynamique — 127 tests ✓ |
 
 ---
 

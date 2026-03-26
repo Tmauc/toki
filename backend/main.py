@@ -52,6 +52,7 @@ from routers import (
     agent_tools,
     metrics,
     fair_use_admin,
+    toki_voice_personas,  # TOKI: Voice Personas feature
 )
 
 from utils.other.timeout import TimeoutMiddleware
@@ -114,6 +115,7 @@ app.include_router(phone_calls.router)
 app.include_router(agent_tools.router)
 app.include_router(metrics.router)
 app.include_router(fair_use_admin.router)
+app.include_router(toki_voice_personas.router)  # TOKI: /v1/toki/voice-personas
 
 
 methods_timeout = {

@@ -2179,6 +2179,14 @@ async def _stream_handler(
                 )
             else:
                 logger.info(f"Speaker ID: speaker {speaker_id} no match (best={best_distance:.3f}) {uid} {session_id}")
+                # TOKI: route unmatched segment to unknown-speaker clustering (fire-and-forget)
+                try:
+                    from utils.speaker_clustering import route_unknown_segment
+                    asyncio.create_task(
+                        route_unknown_segment(uid, query_embedding, segment, current_conversation_id, session_id)
+                    )
+                except Exception as toki_err:
+                    logger.warning(f"[TOKI] speaker_clustering task creation failed: {toki_err} {uid} {session_id}")
 
         except Exception as e:
             logger.error(f"Speaker ID: match error for speaker {speaker_id}: {e} {uid} {session_id}")

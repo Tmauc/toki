@@ -40,6 +40,12 @@ import 'widgets/edit_segment_sheet.dart';
 import 'widgets/name_speaker_sheet.dart';
 import 'widgets/share_to_contacts_sheet.dart';
 
+import 'package:omi/backend/http/api/toki_voice_personas.dart' as toki_api;
+import 'package:omi/backend/schema/toki_voice_persona.dart';
+import 'package:omi/pages/toki/name_persona_page.dart';
+import 'package:omi/pages/toki/voice_personas_page.dart';
+import 'package:omi/providers/toki_voice_personas_provider.dart';
+
 import 'package:omi/backend/preferences.dart';
 
 // import 'share.dart';
@@ -1432,6 +1438,33 @@ class _TranscriptWidgetsState extends State<TranscriptWidgets> with AutomaticKee
                     if (!saved) MixpanelManager().editSegmentTextCancelled();
                   },
                 );
+              },
+              onTokiIdentify: (speakerLabel) async {
+                final convId = provider.conversation.id;
+                final persona = await toki_api.lookupClusterForSegment(convId, speakerLabel);
+                if (!context.mounted) return;
+                final voiceProvider = context.read<VoicePersonasProvider>();
+                if (persona != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ChangeNotifierProvider.value(
+                        value: voiceProvider,
+                        child: NamePersonaPage(persona: persona),
+                      ),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ChangeNotifierProvider.value(
+                        value: voiceProvider,
+                        child: const VoicePersonasPage(),
+                      ),
+                    ),
+                  );
+                }
               },
               editSegment: (segmentId, speakerId) {
                 final connectivityProvider = Provider.of<ConnectivityProvider>(context, listen: false);
