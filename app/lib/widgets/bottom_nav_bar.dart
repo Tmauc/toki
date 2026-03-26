@@ -107,12 +107,12 @@ class BottomNavBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Apps tab
+                    // Phone Calls tab (TOKI: replaces Apps tab)
                     Expanded(
                       child: InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          MixpanelManager().bottomNavigationTabClicked('Apps');
+                          MixpanelManager().bottomNavigationTabClicked('Phone Calls');
                           primaryFocus?.unfocus();
                           onTabTap(3, home.selectedIndex == 3);
                         },
@@ -120,7 +120,7 @@ class BottomNavBar extends StatelessWidget {
                           height: 90,
                           child: Center(
                             child: Icon(
-                              FontAwesomeIcons.puzzlePiece,
+                              FontAwesomeIcons.phone,
                               color: home.selectedIndex == 3 ? Colors.white : Colors.grey,
                               size: 26,
                             ),

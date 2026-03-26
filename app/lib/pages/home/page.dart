@@ -117,7 +117,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerProviderStateMixin {
   ForegroundUtil foregroundUtil = ForegroundUtil();
-  List<Widget> screens = [Container(), const SizedBox(), const SizedBox(), const SizedBox()];
+  List<Widget> screens = [Container(), const SizedBox(), const SizedBox(), const SizedBox()]; // TOKI: 4 tabs
 
   final _upgrader = MyUpgrader(debugLogging: false, debugDisplayOnce: false);
   bool scriptsInProgress = false;
@@ -126,18 +126,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
   final GlobalKey<State<ConversationsPage>> _conversationsPageKey = GlobalKey<State<ConversationsPage>>();
   final GlobalKey<State<ActionItemsPage>> _actionItemsPageKey = GlobalKey<State<ActionItemsPage>>();
   final GlobalKey<State<MemoriesPage>> _memoriesPageKey = GlobalKey<State<MemoriesPage>>();
-  final GlobalKey<AppsPageState> _appsPageKey = GlobalKey<AppsPageState>();
+  // TOKI: _appsPageKey removed — marketplace disabled
   late final List<Widget> _pages;
 
-  // Freemium switch handler for auto-switch dialogs
-  final FreemiumSwitchHandler _freemiumHandler = FreemiumSwitchHandler();
+  // TOKI: FreemiumSwitchHandler removed — monetization disabled
 
   CaptureProvider? _captureProvider;
 
-  void _initiateApps() {
-    context.read<AppProvider>().getApps();
-    context.read<AppProvider>().getPopularApps();
-  }
+  // TOKI: _initiateApps removed — marketplace disabled
 
   void _scrollToTop(int pageIndex) {
     switch (pageIndex) {
@@ -159,12 +155,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
           (memoriesState as dynamic).scrollToTop();
         }
         break;
-      case 3:
-        final appsState = _appsPageKey.currentState;
-        if (appsState != null) {
-          appsState.scrollToTop();
-        }
-        break;
+      // TOKI: case 3 (Apps) removed — marketplace disabled
     }
   }
 
@@ -237,7 +228,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
       ConversationsPage(key: _conversationsPageKey),
       ActionItemsPage(key: _actionItemsPageKey, onAddGoal: _addGoal),
       MemoriesPage(key: _memoriesPageKey),
-      AppsPage(key: _appsPageKey),
+      const PhoneCallsPage(), // TOKI: replaces Apps tab
     ];
     SharedPreferencesUtil().onboardingCompleted = true;
     updateUserOnboardingState(completed: true);
@@ -267,9 +258,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
         case "facts":
           homePageIdx = 2;
           break;
-        case "apps":
-          homePageIdx = 3;
-          break;
+        // TOKI: "apps" route removed — marketplace disabled
       }
     }
 
@@ -289,7 +278,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _initiateApps();
+      // TOKI: _initiateApps() removed — marketplace disabled
 
       if (!PlatformService.isDesktop) {
         final permission = await Geolocator.checkPermission();
@@ -311,15 +300,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
       // Navigate
       if (!mounted) return;
       switch (pageAlias) {
-        case "apps":
-          if (detailPageId != null && detailPageId.isNotEmpty) {
-            final appProvider = context.read<AppProvider>();
-            var app = await appProvider.getAppFromId(detailPageId);
-            if (app != null && mounted) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AppDetailPage(app: app)));
-            }
-          }
-          break;
+        // TOKI: "apps" deep link removed — marketplace disabled
         case "chat":
           Logger.debug('inside chat alias $detailPageId');
           if (detailPageId != null && detailPageId.isNotEmpty) {
@@ -427,7 +408,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
     });
 
     _listenToMessagesFromNotification();
-    _listenToFreemiumThreshold();
+    // TOKI: _listenToFreemiumThreshold() removed — monetization disabled
     _checkForAnnouncements();
     super.initState();
 
@@ -468,28 +449,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
     );
   }
 
-  void _listenToFreemiumThreshold() {
-    // Listen to capture provider for freemium threshold events
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-
-      _captureProvider = Provider.of<CaptureProvider>(context, listen: false);
-      _captureProvider!.addListener(_onCaptureProviderChanged);
-      // Connect freemium session reset callback
-      _captureProvider!.onFreemiumSessionReset = () {
-        _freemiumHandler.resetDialogFlag();
-      };
-    });
-  }
-
-  void _onCaptureProviderChanged() {
-    if (!mounted || _captureProvider == null) return;
-
-    _freemiumHandler.checkAndShowDialog(context, _captureProvider!).catchError((e) {
-      Logger.debug('[Freemium] Error checking dialog: $e');
-      return false;
-    });
-  }
+  // TOKI: _listenToFreemiumThreshold and _onCaptureProviderChanged removed — monetization disabled
 
   void _listenToMessagesFromNotification() {
     _notificationStreamSubscription = NotificationService.instance.listenForServerMessages.listen((message) {
@@ -602,7 +562,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
               resizeToAvoidBottomInset: false,
               appBar: homeProvider.selectedIndex == 5 ? null : _buildAppBar(context),
               body: DefaultTabController(
-                length: 4,
+                length: 4, // TOKI: Home, Action Items, Memories, Phone Calls
                 initialIndex: homeProvider.selectedIndex,
                 child: GestureDetector(
                   onTap: () {
@@ -622,7 +582,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                       Consumer<HomeProvider>(
                         builder: (context, home, child) {
                           if (home.isChatFieldFocused ||
-                              home.isAppsSearchFieldFocused ||
+                              // TOKI: isAppsSearchFieldFocused removed — marketplace disabled
                               home.isMemoriesSearchFieldFocused) {
                             return const SizedBox.shrink();
                           }
@@ -638,42 +598,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                   }
                                 },
                               ),
-                              // Phone calls button - bottom left
-                              if (home.selectedIndex == 0)
-                                Positioned(
-                                  left: 20,
-                                  bottom: 100,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      HapticFeedback.mediumImpact();
-                                      MixpanelManager().bottomNavigationTabClicked('Phone Calls');
-                                      var usageProvider = context.read<UsageProvider>();
-                                      if (usageProvider.subscription == null) {
-                                        await usageProvider.fetchSubscription();
-                                      }
-                                      var isUnlimited =
-                                          usageProvider.subscription?.subscription.plan == PlanType.unlimited;
-                                      if (!isUnlimited) {
-                                        MixpanelManager().phoneCallUpsellShown(source: 'home');
-                                        if (!context.mounted) return;
-                                        showPhoneCallsUpsell(context);
-                                        return;
-                                      }
-                                      if (!context.mounted) return;
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const PhoneCallsPage()),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 56,
-                                      height: 56,
-                                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF1F1F25)),
-                                      child: const Icon(FontAwesomeIcons.phone, size: 22, color: Colors.white70),
-                                    ),
-                                  ),
-                                ),
-                              // Ask Omi button - bottom right
+                              // TOKI: Phone calls moved to nav bar tab 3
+                              // Ask Toki button - bottom right
                               if (home.selectedIndex == 0)
                                 Positioned(
                                   right: 20,
@@ -688,26 +614,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                       );
                                     },
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(32),
+                                      width: 56,
+                                      height: 56,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
                                         color: Colors.deepPurple,
                                       ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Icon(FontAwesomeIcons.solidComment, size: 22, color: Colors.white),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            context.l10n.askOmi,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      child: const Icon(FontAwesomeIcons.solidComment, size: 22, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -1081,19 +994,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
     } catch (_) {}
     // Cancel stream subscription to prevent memory leak
     _notificationStreamSubscription?.cancel();
-    // Remove capture provider listener using stored reference
-    if (_captureProvider != null) {
-      _captureProvider!.removeListener(_onCaptureProviderChanged);
-      _captureProvider!.onFreemiumSessionReset = null;
-      _captureProvider = null;
-    }
+    // TOKI: freemium listener cleanup removed — monetization disabled
     // Remove device provider callback
     try {
       final deviceProvider = Provider.of<DeviceProvider>(context, listen: false);
       deviceProvider.onDeviceConnected = null;
     } catch (_) {}
-    // Clean up freemium handler
-    _freemiumHandler.dispose();
     // Remove foreground task callback to prevent memory leak
     FlutterForegroundTask.removeTaskDataCallback(_onReceiveTaskData);
     ForegroundUtil.stopForegroundTask();

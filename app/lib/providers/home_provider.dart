@@ -37,10 +37,10 @@ class HomeProvider extends ChangeNotifier {
   int selectedIndex = 0;
   Function(int idx)? onSelectedIndexChanged;
   final FocusNode chatFieldFocusNode = FocusNode();
-  final FocusNode appsSearchFieldFocusNode = FocusNode();
+  final FocusNode appsSearchFieldFocusNode = FocusNode(); // TOKI: kept for compatibility but unused
   final FocusNode convoSearchFieldFocusNode = FocusNode();
   final FocusNode memoriesSearchFieldFocusNode = FocusNode();
-  bool isAppsSearchFieldFocused = false;
+  bool isAppsSearchFieldFocused = false; // TOKI: always false — marketplace disabled
   bool isChatFieldFocused = false;
   bool isConvoSearchFieldFocused = false;
   bool isMemoriesSearchFieldFocused = false;
