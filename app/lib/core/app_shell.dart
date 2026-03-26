@@ -20,7 +20,6 @@ import 'package:omi/providers/integration_provider.dart';
 import 'package:omi/providers/message_provider.dart';
 import 'package:omi/providers/people_provider.dart';
 import 'package:omi/providers/task_integration_provider.dart';
-import 'package:omi/providers/usage_provider.dart';
 import 'package:omi/providers/user_provider.dart';
 import 'package:omi/services/asana_service.dart';
 import 'package:omi/services/clickup_service.dart';
@@ -358,7 +357,6 @@ class _AppShellState extends State<AppShell> {
       context.read<MessageProvider>().setMessagesFromCache();
       context.read<AppProvider>().setAppsFromCache();
       context.read<MessageProvider>().refreshMessages();
-      context.read<UsageProvider>().fetchSubscription();
       context.read<TaskIntegrationProvider>().loadFromBackend();
 
       NotificationService.instance.saveNotificationToken();
