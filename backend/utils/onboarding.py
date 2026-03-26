@@ -9,14 +9,53 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-ONBOARDING_QUESTIONS = [
-    {'question': "How old are you?", 'category': 'age'},
-    {'question': "Where do you live?", 'category': 'location'},
-    {'question': "What do you do for work?", 'category': 'work'},
-    {'question': "What is your long-term goal?", 'category': 'long_term_goal'},
-    {'question': "What are your goals this month?", 'category': 'monthly_goals'},
-    {'question': "What do you have planned for today?", 'category': 'daily_plans'},
-]
+ONBOARDING_QUESTIONS = {
+    'en': [
+        {'question': "If you could have any superpower, what would it be?", 'category': 'icebreaker'},
+        {'question': "What's the weirdest thing you've ever eaten?", 'category': 'icebreaker'},
+        {'question': "If you could live anywhere in the world, where would you go?", 'category': 'icebreaker'},
+        {'question': "What's a movie you could watch a hundred times?", 'category': 'icebreaker'},
+        {'question': "What would you do if you won the lottery tomorrow?", 'category': 'icebreaker'},
+        {'question': "Tell me about the best day you've had recently.", 'category': 'icebreaker'},
+    ],
+    'fr': [
+        {'question': "Si tu pouvais avoir un super pouvoir, ce serait lequel ?", 'category': 'icebreaker'},
+        {'question': "C'est quoi le truc le plus bizarre que tu aies mangé ?", 'category': 'icebreaker'},
+        {'question': "Si tu pouvais vivre n'importe où dans le monde, tu irais où ?", 'category': 'icebreaker'},
+        {'question': "C'est quoi un film que tu pourrais regarder cent fois ?", 'category': 'icebreaker'},
+        {'question': "Tu ferais quoi si tu gagnais au loto demain ?", 'category': 'icebreaker'},
+        {'question': "Raconte-moi ta meilleure journée récemment.", 'category': 'icebreaker'},
+    ],
+    'es': [
+        {'question': "Si pudieras tener un superpoder, ¿cuál sería?", 'category': 'icebreaker'},
+        {'question': "¿Qué es lo más raro que has comido?", 'category': 'icebreaker'},
+        {'question': "Si pudieras vivir en cualquier lugar del mundo, ¿dónde irías?", 'category': 'icebreaker'},
+        {'question': "¿Cuál es una película que podrías ver cien veces?", 'category': 'icebreaker'},
+        {'question': "¿Qué harías si ganaras la lotería mañana?", 'category': 'icebreaker'},
+        {'question': "Cuéntame tu mejor día reciente.", 'category': 'icebreaker'},
+    ],
+    'it': [
+        {'question': "Se potessi avere un superpotere, quale sarebbe?", 'category': 'icebreaker'},
+        {'question': "Qual è la cosa più strana che hai mai mangiato?", 'category': 'icebreaker'},
+        {'question': "Se potessi vivere ovunque nel mondo, dove andresti?", 'category': 'icebreaker'},
+        {'question': "Qual è un film che potresti guardare cento volte?", 'category': 'icebreaker'},
+        {'question': "Cosa faresti se vincessi la lotteria domani?", 'category': 'icebreaker'},
+        {'question': "Raccontami la tua giornata migliore di recente.", 'category': 'icebreaker'},
+    ],
+    'ja': [
+        {'question': "もしスーパーパワーが手に入るとしたら、何がいい？", 'category': 'icebreaker'},
+        {'question': "今まで食べた一番変なものは何？", 'category': 'icebreaker'},
+        {'question': "世界のどこにでも住めるとしたら、どこに行く？", 'category': 'icebreaker'},
+        {'question': "百回見ても飽きない映画は何？", 'category': 'icebreaker'},
+        {'question': "もし明日宝くじに当たったら、何をする？", 'category': 'icebreaker'},
+        {'question': "最近あった一番いい日のことを教えて。", 'category': 'icebreaker'},
+    ],
+}
+
+def get_onboarding_questions(language: str = 'en') -> list:
+    """Get onboarding questions for the given language, fallback to English."""
+    lang_key = language.split('-')[0] if '-' in language else language
+    return ONBOARDING_QUESTIONS.get(lang_key, ONBOARDING_QUESTIONS['en'])
 
 
 class OnboardingHandler:
@@ -25,11 +64,11 @@ class OnboardingHandler:
     # Special speaker ID for Omi question segments (use 99 to avoid conflicts with real speakers)
     OMI_SPEAKER_ID = 99
 
-    def __init__(self, uid: str, send_message: Callable, stream_transcript: Optional[Callable] = None):
+    def __init__(self, uid: str, send_message: Callable, stream_transcript: Optional[Callable] = None, language: str = 'en'):
         self.uid = uid
         self.send_message = send_message
         self.stream_transcript = stream_transcript  # Callback to inject segments into transcript stream
-        self.questions = ONBOARDING_QUESTIONS.copy()
+        self.questions = get_onboarding_questions(language).copy()
         self.current_question_index = 0
         self.answers: List[Dict] = []
         self.current_transcript = ''

@@ -397,7 +397,7 @@ async def _stream_handler(
             nonlocal realtime_segment_buffers
             realtime_segment_buffers.extend(segments)
 
-        onboarding_handler = OnboardingHandler(uid, send_onboarding_event, onboarding_stream_transcript)
+        onboarding_handler = OnboardingHandler(uid, send_onboarding_event, onboarding_stream_transcript, language=language)
         spawn(onboarding_handler.send_current_question())
 
     locked_conversation_ids: Set[str] = set()
