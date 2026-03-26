@@ -42,7 +42,7 @@ class ActionItemNotificationHandler {
         content: NotificationContent(
           id: notificationId,
           channelKey: channelKey,
-          title: '⏰ ${ctx?.l10n.actionItemReminderTitle ?? 'Omi Reminder'}',
+          title: '⏰ ${ctx?.l10n.actionItemReminderTitle ?? 'Toki Reminder'}',
           body: description,
           payload: {'action_item_id': actionItemId, 'navigate_to': '/action-items'},
           notificationLayout: NotificationLayout.Default,

@@ -58,7 +58,7 @@ class _CloneSuccessScreenState extends State<CloneSuccessScreen> {
                       Text(
                         FirebaseAuth.instance.currentUser?.isAnonymous == false
                             ? 'X Connected Successfully!'
-                            : 'Your Omi clone is\nverified and live!',
+                            : 'Your Toki clone is\nverified and live!',
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                       ),

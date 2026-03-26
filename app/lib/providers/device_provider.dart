@@ -396,8 +396,8 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
     _disconnectNotificationTimer = Timer(const Duration(seconds: 30), () {
       final ctx = globalNavigatorKey.currentContext;
       NotificationService.instance.createNotification(
-        title: ctx?.l10n.deviceDisconnectedNotificationTitle ?? 'Your Omi Device Disconnected',
-        body: ctx?.l10n.deviceDisconnectedNotificationBody ?? 'Please reconnect to continue using your Omi.',
+        title: ctx?.l10n.deviceDisconnectedNotificationTitle ?? 'Your Toki Device Disconnected',
+        body: ctx?.l10n.deviceDisconnectedNotificationBody ?? 'Please reconnect to continue using Toki.',
       );
     });
     MixpanelManager().deviceDisconnected();

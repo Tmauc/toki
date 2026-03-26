@@ -5,40 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'app_localizations_ar.dart';
-import 'app_localizations_bg.dart';
-import 'app_localizations_ca.dart';
-import 'app_localizations_cs.dart';
-import 'app_localizations_da.dart';
-import 'app_localizations_de.dart';
-import 'app_localizations_el.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
-import 'app_localizations_et.dart';
-import 'app_localizations_fi.dart';
 import 'app_localizations_fr.dart';
-import 'app_localizations_hi.dart';
-import 'app_localizations_hu.dart';
-import 'app_localizations_id.dart';
 import 'app_localizations_it.dart';
 import 'app_localizations_ja.dart';
-import 'app_localizations_ko.dart';
-import 'app_localizations_lt.dart';
-import 'app_localizations_lv.dart';
-import 'app_localizations_ms.dart';
-import 'app_localizations_nl.dart';
-import 'app_localizations_no.dart';
-import 'app_localizations_pl.dart';
-import 'app_localizations_pt.dart';
-import 'app_localizations_ro.dart';
-import 'app_localizations_ru.dart';
-import 'app_localizations_sk.dart';
-import 'app_localizations_sv.dart';
-import 'app_localizations_th.dart';
-import 'app_localizations_tr.dart';
-import 'app_localizations_uk.dart';
-import 'app_localizations_vi.dart';
-import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -123,46 +94,17 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('ar'),
-    Locale('bg'),
-    Locale('ca'),
-    Locale('cs'),
-    Locale('da'),
-    Locale('de'),
-    Locale('el'),
     Locale('en'),
     Locale('es'),
-    Locale('et'),
-    Locale('fi'),
     Locale('fr'),
-    Locale('hi'),
-    Locale('hu'),
-    Locale('id'),
     Locale('it'),
-    Locale('ja'),
-    Locale('ko'),
-    Locale('lt'),
-    Locale('lv'),
-    Locale('ms'),
-    Locale('nl'),
-    Locale('no'),
-    Locale('pl'),
-    Locale('pt'),
-    Locale('ro'),
-    Locale('ru'),
-    Locale('sk'),
-    Locale('sv'),
-    Locale('th'),
-    Locale('tr'),
-    Locale('uk'),
-    Locale('vi'),
-    Locale('zh')
+    Locale('ja')
   ];
 
   /// The app title displayed in various places
   ///
   /// In en, this message translates to:
-  /// **'Omi'**
+  /// **'Toki'**
   String get appTitle;
 
   /// Tab label for conversation summary
@@ -384,7 +326,7 @@ abstract class AppLocalizations {
   /// Hint text for creating a person
   ///
   /// In en, this message translates to:
-  /// **'Create a new person and train Omi to recognize their speech too!'**
+  /// **'Create a new person and train Toki to recognize their speech too!'**
   String get createPersonHint;
 
   /// Speech profile setting
@@ -453,10 +395,10 @@ abstract class AppLocalizations {
   /// **'Could not access the selected file'**
   String get couldNotAccessFile;
 
-  /// Shortcut to ask Omi a question
+  /// Shortcut to ask Toki a question
   ///
   /// In en, this message translates to:
-  /// **'Ask Omi'**
+  /// **'Ask Toki'**
   String get askOmi;
 
   /// Status when download is done
@@ -648,7 +590,7 @@ abstract class AppLocalizations {
   /// Loading text when clearing chat
   ///
   /// In en, this message translates to:
-  /// **'Deleting your messages from Omi\'s memory...'**
+  /// **'Deleting your messages from Toki\'s memory...'**
   String get deletingMessages;
 
   /// Snackbar message for copied text
@@ -708,7 +650,7 @@ abstract class AppLocalizations {
   /// Chat share subject
   ///
   /// In en, this message translates to:
-  /// **'Chat with Omi'**
+  /// **'Chat with Toki'**
   String get chatWithOmi;
 
   /// Navigation label for apps page
@@ -768,7 +710,7 @@ abstract class AppLocalizations {
   /// About page title
   ///
   /// In en, this message translates to:
-  /// **'About Omi'**
+  /// **'About Toki'**
   String get aboutOmi;
 
   /// Link text for Privacy Policy
@@ -990,7 +932,7 @@ abstract class AppLocalizations {
   /// Mac app download link
   ///
   /// In en, this message translates to:
-  /// **'Get Omi for Mac'**
+  /// **'Get Toki for Mac'**
   String get getOmiForMac;
 
   /// Referral program menu item
@@ -1026,7 +968,7 @@ abstract class AppLocalizations {
   /// Data privacy page introduction
   ///
   /// In en, this message translates to:
-  /// **'At Omi, we are committed to protecting your privacy. This page allows you to control how your data is stored and used.'**
+  /// **'At Toki, we are committed to protecting your privacy. This page allows you to control how your data is stored and used.'**
   String get privacyIntro;
 
   /// Learn more link
@@ -1164,7 +1106,7 @@ abstract class AppLocalizations {
   /// Message shown when device is disconnected
   ///
   /// In en, this message translates to:
-  /// **'Your Omi has been disconnected 😔'**
+  /// **'Your Toki has been disconnected 😔'**
   String get deviceDisconnectedMessage;
 
   /// Message shown after device is unpaired
@@ -1194,7 +1136,7 @@ abstract class AppLocalizations {
   /// Message encouraging user to connect device
   ///
   /// In en, this message translates to:
-  /// **'Connect your Omi device to access\ndevice settings and customization'**
+  /// **'Connect your Toki device to access\ndevice settings and customization'**
   String get connectDeviceMessage;
 
   /// Device information section header
@@ -1458,7 +1400,7 @@ abstract class AppLocalizations {
   /// Usage page title
   ///
   /// In en, this message translates to:
-  /// **'Your Omi Insights'**
+  /// **'Your Toki Insights'**
   String get yourOmiInsights;
 
   /// Label for today date
@@ -1494,7 +1436,7 @@ abstract class AppLocalizations {
   /// Empty state description
   ///
   /// In en, this message translates to:
-  /// **'Start a conversation with Omi\nto see your usage insights here.'**
+  /// **'Start a conversation with Toki\nto see your usage insights here.'**
   String get startConversationToSeeInsights;
 
   /// Listening stat title
@@ -1506,7 +1448,7 @@ abstract class AppLocalizations {
   /// Listening stat subtitle
   ///
   /// In en, this message translates to:
-  /// **'Total time Omi has actively listened.'**
+  /// **'Total time Toki has actively listened.'**
   String get listeningSubtitle;
 
   /// Understanding stat title
@@ -1602,7 +1544,7 @@ abstract class AppLocalizations {
   /// Share stats base message
   ///
   /// In en, this message translates to:
-  /// **'Sharing my Omi stats! (omi.me - your always-on AI assistant)'**
+  /// **'Sharing my Toki stats! (omi.me - your always-on AI assistant)'**
   String get shareStatsMessage;
 
   /// Share stats period: Today
@@ -1680,7 +1622,7 @@ abstract class AppLocalizations {
   /// No description provided for @omiDebugLog.
   ///
   /// In en, this message translates to:
-  /// **'Omi debug log'**
+  /// **'Toki debug log'**
   String get omiDebugLog;
 
   /// No description provided for @logShared.
@@ -1728,7 +1670,7 @@ abstract class AppLocalizations {
   /// No description provided for @exportedConversations.
   ///
   /// In en, this message translates to:
-  /// **'Exported Conversations from Omi'**
+  /// **'Exported Conversations from Toki'**
   String get exportedConversations;
 
   /// No description provided for @exportShared.
@@ -2064,7 +2006,7 @@ abstract class AppLocalizations {
   /// No description provided for @vocabularyHint.
   ///
   /// In en, this message translates to:
-  /// **'Omi, Callie, OpenAI'**
+  /// **'Toki, Callie, OpenAI'**
   String get vocabularyHint;
 
   /// Title for device connection page
@@ -2130,7 +2072,7 @@ abstract class AppLocalizations {
   /// No description provided for @authAccessMessage.
   ///
   /// In en, this message translates to:
-  /// **'You\'ll need to authorize Omi to access your {appName} data. This will open your browser for authentication.'**
+  /// **'You\'ll need to authorize Toki to access your {appName} data. This will open your browser for authentication.'**
   String authAccessMessage(String appName);
 
   /// No description provided for @continueAction.
@@ -2310,7 +2252,7 @@ abstract class AppLocalizations {
   /// No description provided for @howShouldOmiCallYou.
   ///
   /// In en, this message translates to:
-  /// **'How should Omi call you?'**
+  /// **'How should Toki call you?'**
   String get howShouldOmiCallYou;
 
   /// Hint text for name input field
@@ -2784,7 +2726,7 @@ abstract class AppLocalizations {
   /// No description provided for @authorizeOmiForTasks.
   ///
   /// In en, this message translates to:
-  /// **'You\'ll need to authorize Omi to create tasks in your {appName} account. This will open your browser for authentication.'**
+  /// **'You\'ll need to authorize Toki to create tasks in your {appName} account. This will open your browser for authentication.'**
   String authorizeOmiForTasks(String appName);
 
   /// Continue button label
@@ -2856,7 +2798,7 @@ abstract class AppLocalizations {
   /// No description provided for @omiUnlimited.
   ///
   /// In en, this message translates to:
-  /// **'Omi Unlimited'**
+  /// **'Toki Unlimited'**
   String get omiUnlimited;
 
   /// No description provided for @hostRequired.
@@ -3078,13 +3020,13 @@ abstract class AppLocalizations {
   /// Warning about device codec compatibility
   ///
   /// In en, this message translates to:
-  /// **'{device} uses {reason}. Omi will be used.'**
+  /// **'{device} uses {reason}. Toki will be used.'**
   String deviceUsesCodec(String device, String reason);
 
   /// No description provided for @omiTranscription.
   ///
   /// In en, this message translates to:
-  /// **'Omi Transcription'**
+  /// **'Toki Transcription'**
   String get omiTranscription;
 
   /// No description provided for @bestInClassTranscription.
@@ -3366,7 +3308,7 @@ abstract class AppLocalizations {
   /// Explanation text for why Bluetooth is required
   ///
   /// In en, this message translates to:
-  /// **'Omi needs Bluetooth to connect to your wearable. Please enable Bluetooth and try again.'**
+  /// **'Toki needs Bluetooth to connect to your wearable. Please enable Bluetooth and try again.'**
   String get bluetoothNeeded;
 
   /// Link text to contact support
@@ -3396,7 +3338,7 @@ abstract class AppLocalizations {
   /// Description for background activity permission
   ///
   /// In en, this message translates to:
-  /// **'Let Omi run in the background for better stability'**
+  /// **'Let Toki run in the background for better stability'**
   String get backgroundActivityDesc;
 
   /// Title for location access permission
@@ -3450,7 +3392,7 @@ abstract class AppLocalizations {
   /// Title for the app review prompt
   ///
   /// In en, this message translates to:
-  /// **'Loving Omi?'**
+  /// **'Loving Toki?'**
   String get lovingOmi;
 
   /// App review prompt text for iOS users
@@ -3486,7 +3428,7 @@ abstract class AppLocalizations {
   /// Introduction text for speech profile setup
   ///
   /// In en, this message translates to:
-  /// **'Omi needs to learn your goals and your voice. You\'ll be able to modify it later.'**
+  /// **'Toki needs to learn your goals and your voice. You\'ll be able to modify it later.'**
   String get speechProfileIntro;
 
   /// Button text to begin a process
@@ -3588,7 +3530,7 @@ abstract class AppLocalizations {
   /// Button text to connect specific device models
   ///
   /// In en, this message translates to:
-  /// **'Connect Omi / OmiGlass'**
+  /// **'Connect Toki / TokiGlass'**
   String get connectOmiOmiGlass;
 
   /// Button text to proceed without connecting a hardware device
@@ -3660,7 +3602,7 @@ abstract class AppLocalizations {
   /// App title or branding on onboarding screen
   ///
   /// In en, this message translates to:
-  /// **'Omi – Your AI Companion'**
+  /// **'Toki – Your AI Companion'**
   String get omiYourAiCompanion;
 
   /// App value proposition or description
@@ -3690,7 +3632,7 @@ abstract class AppLocalizations {
   /// Instructions after permission is granted
   ///
   /// In en, this message translates to:
-  /// **'Permission granted! Now:\n\nOpen the Omi app on your watch and tap \"Continue\" below'**
+  /// **'Permission granted! Now:\n\nOpen the Toki app on your watch and tap \"Continue\" below'**
   String get permissionGrantedNow;
 
   /// Instructions for granting microphone permission
@@ -3714,7 +3656,7 @@ abstract class AppLocalizations {
   /// Troubleshooting instructions for watch setup
   ///
   /// In en, this message translates to:
-  /// **'Troubleshooting:\n\n1. Ensure Omi is installed on your watch\n2. Open the Omi app on your watch\n3. Look for the permission popup\n4. Tap \"Allow\" when prompted\n5. App on your watch will close - reopen it\n6. Come back and tap \"Continue\" on your iPhone'**
+  /// **'Troubleshooting:\n\n1. Ensure Toki is installed on your watch\n2. Open the Toki app on your watch\n3. Look for the permission popup\n4. Tap \"Allow\" when prompted\n5. App on your watch will close - reopen it\n6. Come back and tap \"Continue\" on your iPhone'**
   String get troubleshootingSteps;
 
   /// Success message
@@ -3765,7 +3707,7 @@ abstract class AppLocalizations {
   /// **'Select your language'**
   String get selectYourLanguage;
 
-  /// Subtitle describing Omi on auth screen
+  /// Subtitle describing Toki on auth screen
   ///
   /// In en, this message translates to:
   /// **'Your personal growth journey with AI that listens to your every word.'**
@@ -3990,13 +3932,13 @@ abstract class AppLocalizations {
   /// Dialog title for clearing memory
   ///
   /// In en, this message translates to:
-  /// **'Clear Omi\'s Memory'**
+  /// **'Clear Toki\'s Memory'**
   String get clearMemoryTitle;
 
   /// Dialog content for clearing memory
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to clear Omi\'s memory? This action cannot be undone.'**
+  /// **'Are you sure you want to clear Toki\'s memory? This action cannot be undone.'**
   String get clearMemoryMessage;
 
   /// Button text to confirm clearing all memories
@@ -4008,7 +3950,7 @@ abstract class AppLocalizations {
   /// Snackbar success message
   ///
   /// In en, this message translates to:
-  /// **'Omi\'s memory about you has been cleared'**
+  /// **'Toki\'s memory about you has been cleared'**
   String get memoryClearedSuccess;
 
   /// Info message when there are no memories to delete
@@ -4296,7 +4238,7 @@ abstract class AppLocalizations {
   /// Message explaining how translation works and where to change language settings
   ///
   /// In en, this message translates to:
-  /// **'Omi translates conversations into your primary language. Update it anytime in Settings → Profiles.'**
+  /// **'Toki translates conversations into your primary language. Update it anytime in Settings → Profiles.'**
   String get translationNoticeMessage;
 
   /// Error message shown when network request fails
@@ -4635,10 +4577,10 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacyPolicyTitle;
 
-  /// Label for default Omi STT provider
+  /// Label for default Toki STT provider
   ///
   /// In en, this message translates to:
-  /// **'Omi'**
+  /// **'Toki'**
   String get omiSttProvider;
 
   /// Message shown when a value is copied
@@ -4944,7 +4886,7 @@ abstract class AppLocalizations {
   /// Step 2: Syncing audio files
   ///
   /// In en, this message translates to:
-  /// **'Omi then syncs the audio files with the server'**
+  /// **'Toki then syncs the audio files with the server'**
   String get omiSyncsAudioFiles;
 
   /// Step 3: Server processing
@@ -4962,13 +4904,13 @@ abstract class AppLocalizations {
   /// Welcome message on completion screen
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Omi! Your AI companion is ready to assist you with conversations, tasks, and more.'**
+  /// **'Welcome to Toki! Your AI companion is ready to assist you with conversations, tasks, and more.'**
   String get welcomeToOmiDescription;
 
   /// Button to complete onboarding and start using the app
   ///
   /// In en, this message translates to:
-  /// **'Start Using Omi'**
+  /// **'Start Using Toki'**
   String get startUsingOmi;
 
   /// Back button label
@@ -5112,7 +5054,7 @@ abstract class AppLocalizations {
   /// Message explaining how to get started with conversations
   ///
   /// In en, this message translates to:
-  /// **'Start capturing conversations with your Omi device to see them here.'**
+  /// **'Start capturing conversations with your Toki device to see them here.'**
   String get startCapturingConversations;
 
   /// Tip about using mobile app for audio capture
@@ -5142,7 +5084,7 @@ abstract class AppLocalizations {
   /// Message shown when there are no tasks due today
   ///
   /// In en, this message translates to:
-  /// **'No tasks for today.\nAsk Omi for more tasks or create manually.'**
+  /// **'No tasks for today.\nAsk Toki for more tasks or create manually.'**
   String get noTasksForToday;
 
   /// Header for daily score widget
@@ -5436,7 +5378,7 @@ abstract class AppLocalizations {
   /// Subtitle describing the purpose of the create app page
   ///
   /// In en, this message translates to:
-  /// **'Build and submit your custom Omi app'**
+  /// **'Build and submit your custom Toki app'**
   String get buildSubmitCustomOmiApp;
 
   /// Loading message shown while app is being submitted
@@ -5526,7 +5468,7 @@ abstract class AppLocalizations {
   /// Terms and conditions agreement checkbox text
   ///
   /// In en, this message translates to:
-  /// **'By submitting this app, I agree to the Omi AI Terms of Service and Privacy Policy'**
+  /// **'By submitting this app, I agree to the Toki AI Terms of Service and Privacy Policy'**
   String get submitAppTermsAgreement;
 
   /// Button text to submit the app
@@ -5610,7 +5552,7 @@ abstract class AppLocalizations {
   /// Warning message about app data access in confirmation dialog
   ///
   /// In en, this message translates to:
-  /// **'This app will access your data. Omi AI is not responsible for how your data is used, modified, or deleted by this app'**
+  /// **'This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app'**
   String get dataAccessWarning;
 
   /// Button label to install an app
@@ -6282,7 +6224,7 @@ abstract class AppLocalizations {
   /// Widget title for device promotion
   ///
   /// In en, this message translates to:
-  /// **'Get Omi Device'**
+  /// **'Get Toki Device'**
   String get getOmiDevice;
 
   /// Widget subtitle for device promotion
@@ -6414,7 +6356,7 @@ abstract class AppLocalizations {
   /// Description for deleting all memories
   ///
   /// In en, this message translates to:
-  /// **'Permanently remove all memories from Omi'**
+  /// **'Permanently remove all memories from Toki'**
   String get permanentlyRemoveAllMemories;
 
   /// Success message after making all memories private
@@ -6432,25 +6374,25 @@ abstract class AppLocalizations {
   /// Confirmation dialog title for clearing all memories
   ///
   /// In en, this message translates to:
-  /// **'Clear Omi\'s Memory'**
+  /// **'Clear Toki\'s Memory'**
   String get clearOmisMemory;
 
   /// Confirmation message for clearing all memories
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to clear Omi\'s memory? This action cannot be undone and will permanently delete all {count} memories.'**
+  /// **'Are you sure you want to clear Toki\'s memory? This action cannot be undone and will permanently delete all {count} memories.'**
   String clearMemoryConfirmation(int count);
 
   /// Success message after clearing all memories
   ///
   /// In en, this message translates to:
-  /// **'Omi\'s memory about you has been cleared'**
+  /// **'Toki\'s memory about you has been cleared'**
   String get omisMemoryCleared;
 
   /// Welcome message on auth screen
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Omi'**
+  /// **'Welcome to Toki'**
   String get welcomeToOmi;
 
   /// Button to sign in with Apple
@@ -6540,7 +6482,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectPreferredLanguageForBestExperience.
   ///
   /// In en, this message translates to:
-  /// **'Select your preferred language for the best Omi experience'**
+  /// **'Select your preferred language for the best Toki experience'**
   String get selectPreferredLanguageForBestExperience;
 
   /// No description provided for @searchLanguages.
@@ -6576,7 +6518,7 @@ abstract class AppLocalizations {
   /// No description provided for @tellUsHowYouWouldLikeToBeAddressed.
   ///
   /// In en, this message translates to:
-  /// **'Tell us how you\'d like to be addressed. This helps personalize your Omi experience.'**
+  /// **'Tell us how you\'d like to be addressed. This helps personalize your Toki experience.'**
   String get tellUsHowYouWouldLikeToBeAddressed;
 
   /// No description provided for @charactersCount.
@@ -6588,7 +6530,7 @@ abstract class AppLocalizations {
   /// No description provided for @enableFeaturesForBestExperience.
   ///
   /// In en, this message translates to:
-  /// **'Enable features for the best Omi experience on your device.'**
+  /// **'Enable features for the best Toki experience on your device.'**
   String get enableFeaturesForBestExperience;
 
   /// No description provided for @microphoneAccess.
@@ -6606,7 +6548,7 @@ abstract class AppLocalizations {
   /// No description provided for @microphoneAccessDescription.
   ///
   /// In en, this message translates to:
-  /// **'Omi needs microphone access to record your conversations and provide transcriptions.'**
+  /// **'Toki needs microphone access to record your conversations and provide transcriptions.'**
   String get microphoneAccessDescription;
 
   /// No description provided for @screenRecording.
@@ -6624,7 +6566,7 @@ abstract class AppLocalizations {
   /// No description provided for @screenRecordingDescription.
   ///
   /// In en, this message translates to:
-  /// **'Omi needs screen recording permission to capture system audio from your browser-based meetings.'**
+  /// **'Toki needs screen recording permission to capture system audio from your browser-based meetings.'**
   String get screenRecordingDescription;
 
   /// No description provided for @accessibility.
@@ -6642,7 +6584,7 @@ abstract class AppLocalizations {
   /// No description provided for @accessibilityDescription.
   ///
   /// In en, this message translates to:
-  /// **'Omi needs accessibility permission to detect when you join Zoom, Meet, or Teams meetings in your browser.'**
+  /// **'Toki needs accessibility permission to detect when you join Zoom, Meet, or Teams meetings in your browser.'**
   String get accessibilityDescription;
 
   /// No description provided for @pleaseWait.
@@ -6702,7 +6644,7 @@ abstract class AppLocalizations {
   /// No description provided for @manageYourOmiPersona.
   ///
   /// In en, this message translates to:
-  /// **'Manage your Omi persona'**
+  /// **'Manage your Toki persona'**
   String get manageYourOmiPersona;
 
   /// Voice and people section title
@@ -6714,13 +6656,13 @@ abstract class AppLocalizations {
   /// No description provided for @teachOmiYourVoice.
   ///
   /// In en, this message translates to:
-  /// **'Teach Omi your voice'**
+  /// **'Teach Toki your voice'**
   String get teachOmiYourVoice;
 
   /// No description provided for @tellOmiWhoSaidIt.
   ///
   /// In en, this message translates to:
-  /// **'Tell Omi who said it 🗣️'**
+  /// **'Tell Toki who said it 🗣️'**
   String get tellOmiWhoSaidIt;
 
   /// No description provided for @payment.
@@ -6744,7 +6686,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpImproveOmiBySharing.
   ///
   /// In en, this message translates to:
-  /// **'Help improve Omi by sharing anonymized analytics data'**
+  /// **'Help improve Toki by sharing anonymized analytics data'**
   String get helpImproveOmiBySharing;
 
   /// Delete account button
@@ -6792,7 +6734,7 @@ abstract class AppLocalizations {
   /// No description provided for @mcpDescription.
   ///
   /// In en, this message translates to:
-  /// **'To connect Omi with other applications to read, search, and manage your memories and conversations. Create a key to get started.'**
+  /// **'To connect Toki with other applications to read, search, and manage your memories and conversations. Create a key to get started.'**
   String get mcpDescription;
 
   /// No description provided for @apiKeys.
@@ -6858,7 +6800,7 @@ abstract class AppLocalizations {
   /// No description provided for @tryLatestExperimentalFeatures.
   ///
   /// In en, this message translates to:
-  /// **'Try the latest experimental features from Omi Team.'**
+  /// **'Try the latest experimental features from Toki Team.'**
   String get tryLatestExperimentalFeatures;
 
   /// No description provided for @transcriptionServiceDiagnosticStatus.
@@ -6990,7 +6932,7 @@ abstract class AppLocalizations {
   /// No description provided for @letOmiChooseAutomatically.
   ///
   /// In en, this message translates to:
-  /// **'Let Omi choose the best app automatically'**
+  /// **'Let Toki choose the best app automatically'**
   String get letOmiChooseAutomatically;
 
   /// No description provided for @deleteConversationConfirmation.
@@ -7356,7 +7298,7 @@ abstract class AppLocalizations {
   /// Custom vocabulary description
   ///
   /// In en, this message translates to:
-  /// **'Add words that Omi should recognize during transcription.'**
+  /// **'Add words that Toki should recognize during transcription.'**
   String get addWordsDescription;
 
   /// Text field hint for vocabulary input
@@ -7530,7 +7472,7 @@ abstract class AppLocalizations {
   /// No description provided for @connectOmiWithAI.
   ///
   /// In en, this message translates to:
-  /// **'Connect Omi with AI assistants'**
+  /// **'Connect Toki with AI assistants'**
   String get connectOmiWithAI;
 
   /// No description provided for @noAPIKeys.
@@ -7602,7 +7544,7 @@ abstract class AppLocalizations {
   /// Text before Terms & Privacy Policy link
   ///
   /// In en, this message translates to:
-  /// **'By submitting, you agree to Omi '**
+  /// **'By submitting, you agree to Toki '**
   String get bySubmittingYouAgreeToOmi;
 
   /// Terms and Privacy Policy link text
@@ -7902,7 +7844,7 @@ abstract class AppLocalizations {
   /// Description for data access notice dialog
   ///
   /// In en, this message translates to:
-  /// **'This app will access your data. Omi AI is not responsible for how your data is used, modified, or deleted by this app'**
+  /// **'This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app'**
   String get dataAccessNoticeDescription;
 
   /// Button to copy conversation URL to clipboard
@@ -8040,7 +7982,7 @@ abstract class AppLocalizations {
   /// Dialog title for API keys info
   ///
   /// In en, this message translates to:
-  /// **'Omi API Keys'**
+  /// **'Toki API Keys'**
   String get omiApiKeys;
 
   /// Description of what API keys are used for
@@ -8052,7 +7994,7 @@ abstract class AppLocalizations {
   /// Tooltip for API keys info button
   ///
   /// In en, this message translates to:
-  /// **'About Omi API Keys'**
+  /// **'About Toki API Keys'**
   String get aboutOmiApiKeys;
 
   /// Label shown above newly created API key
@@ -8292,7 +8234,7 @@ abstract class AppLocalizations {
   /// Description of E2EE encryption explaining its benefits
   ///
   /// In en, this message translates to:
-  /// **'End-to-end encryption is the gold standard for privacy. When enabled, your data is encrypted on your device before it\'s sent to our servers. This means no one, not even Omi, can access your content.'**
+  /// **'End-to-end encryption is the gold standard for privacy. When enabled, your data is encrypted on your device before it\'s sent to our servers. This means no one, not even Toki, can access your content.'**
   String get e2eeDescription;
 
   /// Header for trade-offs section in E2EE dialog
@@ -8352,7 +8294,7 @@ abstract class AppLocalizations {
   /// Description of secure encryption explaining how data is protected
   ///
   /// In en, this message translates to:
-  /// **'Your data is encrypted with a key unique to you on our servers, hosted on Google Cloud. This means your raw content is inaccessible to anyone, including Omi staff or Google, directly from the database.'**
+  /// **'Your data is encrypted with a key unique to you on our servers, hosted on Google Cloud. This means your raw content is inaccessible to anyone, including Toki staff or Google, directly from the database.'**
   String get secureEncryptionDescription;
 
   /// Title for E2EE card
@@ -8481,10 +8423,10 @@ abstract class AppLocalizations {
   /// **'Error: {error}'**
   String errorWithMessage(String error);
 
-  /// Title for the Omi Training page/section
+  /// Title for the Toki Training page/section
   ///
   /// In en, this message translates to:
-  /// **'Omi Training'**
+  /// **'Toki Training'**
   String get omiTraining;
 
   /// Label for training data program
@@ -8493,10 +8435,10 @@ abstract class AppLocalizations {
   /// **'Training Data Program'**
   String get trainingDataProgram;
 
-  /// Description for getting Omi Unlimited free by contributing data
+  /// Description for getting Toki Unlimited free by contributing data
   ///
   /// In en, this message translates to:
-  /// **'Get Omi Unlimited for free by contributing your data to train AI models.'**
+  /// **'Get Toki Unlimited for free by contributing your data to train AI models.'**
   String get getOmiUnlimitedFree;
 
   /// Bullet points explaining training data program benefits
@@ -8658,7 +8600,7 @@ abstract class AppLocalizations {
   /// Marketing text for unlimited plan
   ///
   /// In en, this message translates to:
-  /// **'Your Omi, unleashed. Go unlimited for endless possibilities.'**
+  /// **'Your Toki, unleashed. Go unlimited for endless possibilities.'**
   String get yourOmiUnleashed;
 
   /// Message when plan has ended
@@ -8691,16 +8633,16 @@ abstract class AppLocalizations {
   /// **'Unlimited conversations'**
   String get unlimitedConversations;
 
-  /// Feature: ask Omi anything
+  /// Feature: ask Toki anything
   ///
   /// In en, this message translates to:
-  /// **'Ask Omi anything about your life'**
+  /// **'Ask Toki anything about your life'**
   String get askOmiAnything;
 
   /// Feature: unlock infinite memory
   ///
   /// In en, this message translates to:
-  /// **'Unlock Omi\'s infinite memory'**
+  /// **'Unlock Toki\'s infinite memory'**
   String get unlockOmiInfiniteMemory;
 
   /// Message showing user is on annual plan
@@ -8802,7 +8744,7 @@ abstract class AppLocalizations {
   /// Privacy page - privacyIntroText
   ///
   /// In en, this message translates to:
-  /// **'At Omi, we take your privacy very seriously. We want to be transparent about the data we collect and how we use it to improve our product for you. Here\'s what you need to know:'**
+  /// **'At Toki, we take your privacy very seriously. We want to be transparent about the data we collect and how we use it to improve our product for you. Here\'s what you need to know:'**
   String get privacyIntroText;
 
   /// Privacy page - whatWeTrack
@@ -8832,13 +8774,13 @@ abstract class AppLocalizations {
   /// Privacy page - commitmentText
   ///
   /// In en, this message translates to:
-  /// **'We are committed to using the data we collect only to make Omi a better product for you. Your privacy and trust are paramount to us.'**
+  /// **'We are committed to using the data we collect only to make Toki a better product for you. Your privacy and trust are paramount to us.'**
   String get commitmentText;
 
   /// Privacy page - thankYouText
   ///
   /// In en, this message translates to:
-  /// **'Thank you for being a valued user of Omi. If you have any questions or concerns, feel free to reach out to us to team@basedhardware.com.'**
+  /// **'Thank you for being a valued user of Toki. If you have any questions or concerns, feel free to reach out to us to team@basedhardware.com.'**
   String get thankYouText;
 
   /// WiFi sync settings - wifiSyncSettings
@@ -9036,7 +8978,7 @@ abstract class AppLocalizations {
   /// Fallback text for share stats when period is unknown
   ///
   /// In en, this message translates to:
-  /// **'Omi has:'**
+  /// **'Toki has:'**
   String get omiHas;
 
   /// Message shown when all premium minutes are used
@@ -9198,7 +9140,7 @@ abstract class AppLocalizations {
   /// Explanation of how people/speech recognition works
   ///
   /// In en, this message translates to:
-  /// **'Once a person is created, you can go to a conversation transcript, and assign them their corresponding segments, that way Omi will be able to recognize their speech too!'**
+  /// **'Once a person is created, you can go to a conversation transcript, and assign them their corresponding segments, that way Toki will be able to recognize their speech too!'**
   String get howPeopleWorks;
 
   /// Hint text for tap to delete action
@@ -9717,10 +9659,10 @@ abstract class AppLocalizations {
   /// **'Enable Apps'**
   String get enableApps;
 
-  /// The Omi app/assistant name shown in chat app selection
+  /// The Toki app/assistant name shown in chat app selection
   ///
   /// In en, this message translates to:
-  /// **'Omi'**
+  /// **'Toki'**
   String get omiAppName;
 
   /// Text shown to expand collapsed content, with down arrow
@@ -9765,28 +9707,28 @@ abstract class AppLocalizations {
   /// **'Checking Apple Watch...'**
   String get checkingAppleWatch;
 
-  /// Title prompting user to install Omi on Apple Watch
+  /// Title prompting user to install Toki on Apple Watch
   ///
   /// In en, this message translates to:
-  /// **'Install Omi on your\nApple Watch'**
+  /// **'Install Toki on your\nApple Watch'**
   String get installOmiOnAppleWatch;
 
-  /// Description explaining need to install Omi app on watch
+  /// Description explaining need to install Toki app on watch
   ///
   /// In en, this message translates to:
-  /// **'To use your Apple Watch with Omi, you need to install the Omi app on your watch first.'**
+  /// **'To use your Apple Watch with Toki, you need to install the Toki app on your watch first.'**
   String get installOmiOnAppleWatchDescription;
 
-  /// Title prompting user to open Omi on Apple Watch
+  /// Title prompting user to open Toki on Apple Watch
   ///
   /// In en, this message translates to:
-  /// **'Open Omi on your\nApple Watch'**
+  /// **'Open Toki on your\nApple Watch'**
   String get openOmiOnAppleWatch;
 
-  /// Description explaining Omi is installed and user should open it
+  /// Description explaining Toki is installed and user should open it
   ///
   /// In en, this message translates to:
-  /// **'The Omi app is installed on your Apple Watch. Open it and tap Start to begin.'**
+  /// **'The Toki app is installed on your Apple Watch. Open it and tap Start to begin.'**
   String get openOmiOnAppleWatchDescription;
 
   /// Button text to open Watch app on iPhone
@@ -9804,7 +9746,7 @@ abstract class AppLocalizations {
   /// Error message when Watch app cannot be opened automatically
   ///
   /// In en, this message translates to:
-  /// **'Unable to open Apple Watch app. Please manually open the Watch app on your Apple Watch and install Omi from the \"Available Apps\" section.'**
+  /// **'Unable to open Apple Watch app. Please manually open the Watch app on your Apple Watch and install Toki from the \"Available Apps\" section.'**
   String get unableToOpenWatchApp;
 
   /// Success message when Apple Watch connects
@@ -9816,7 +9758,7 @@ abstract class AppLocalizations {
   /// Error message when Apple Watch is not reachable
   ///
   /// In en, this message translates to:
-  /// **'Apple Watch still not reachable. Please make sure the Omi app is open on your watch.'**
+  /// **'Apple Watch still not reachable. Please make sure the Toki app is open on your watch.'**
   String get appleWatchNotReachable;
 
   /// Error message with error details when connection check fails
@@ -9957,7 +9899,7 @@ abstract class AppLocalizations {
   /// **'No summary'**
   String get noSummary;
 
-  /// Button text to update Omi device firmware
+  /// Button text to update Toki device firmware
   ///
   /// In en, this message translates to:
   /// **'Update omi firmware'**
@@ -9978,7 +9920,7 @@ abstract class AppLocalizations {
   /// Description for custom vocabulary section
   ///
   /// In en, this message translates to:
-  /// **'Add words that Omi should recognize during transcription.'**
+  /// **'Add words that Toki should recognize during transcription.'**
   String get addVocabularyDescription;
 
   /// Placeholder hint for vocabulary input field
@@ -10284,7 +10226,7 @@ abstract class AppLocalizations {
   /// Subtitle on the intro card
   ///
   /// In en, this message translates to:
-  /// **'Omi Life Recap'**
+  /// **'Toki Life Recap'**
   String get wrappedOmiLifeRecap;
 
   /// Instruction text on intro card
@@ -10296,7 +10238,7 @@ abstract class AppLocalizations {
   /// Text shared when sharing wrapped images
   ///
   /// In en, this message translates to:
-  /// **'My 2025, remembered by Omi ✨ omi.me/wrapped'**
+  /// **'My 2025, remembered by Toki ✨ omi.me/wrapped'**
   String get wrappedShareText;
 
   /// Error message when sharing fails
@@ -10338,7 +10280,7 @@ abstract class AppLocalizations {
   /// Subtitle text for shareable image
   ///
   /// In en, this message translates to:
-  /// **'remembered by Omi'**
+  /// **'remembered by Toki'**
   String get wrappedRememberedByOmi;
 
   /// Label for the most fun day in memorable days
@@ -10764,7 +10706,7 @@ abstract class AppLocalizations {
   /// Description for notification frequency control
   ///
   /// In en, this message translates to:
-  /// **'Control how often Omi sends you proactive notifications.'**
+  /// **'Control how often Toki sends you proactive notifications.'**
   String get controlNotificationFrequency;
 
   /// Label for your score button
@@ -10812,7 +10754,7 @@ abstract class AppLocalizations {
   /// Description text for notification frequency section
   ///
   /// In en, this message translates to:
-  /// **'Control how often Omi sends you proactive notifications and reminders.'**
+  /// **'Control how often Toki sends you proactive notifications and reminders.'**
   String get notificationFrequencyDescription;
 
   /// Label for slider minimum value
@@ -11256,7 +11198,7 @@ abstract class AppLocalizations {
   /// Empty state description for recordings
   ///
   /// In en, this message translates to:
-  /// **'Audio from your Omi device will appear here'**
+  /// **'Audio from your Toki device will appear here'**
   String get audioFromOmiWillAppearHere;
 
   /// Menu item to delete processed files
@@ -11472,7 +11414,7 @@ abstract class AppLocalizations {
   /// Suggestion to use cloud transcription
   ///
   /// In en, this message translates to:
-  /// **'Consider using Omi Cloud for better performance.'**
+  /// **'Consider using Toki Cloud for better performance.'**
   String get considerOmiCloud;
 
   /// Title for high resource usage dialog
@@ -11733,10 +11675,10 @@ abstract class AppLocalizations {
   /// **'Available Space: {space}'**
   String availableSpaceWithValue(String space);
 
-  /// Description of Omi transcription features
+  /// Description of Toki transcription features
   ///
   /// In en, this message translates to:
-  /// **'Omis built-in live transcription is optimized for real-time conversations with automatic speaker detection and diarization.'**
+  /// **'Tokis built-in live transcription is optimized for real-time conversations with automatic speaker detection and diarization.'**
   String get omiTranscriptionOptimized;
 
   /// Reset button label
@@ -11904,7 +11846,7 @@ abstract class AppLocalizations {
   /// Intro text for setup questions page
   ///
   /// In en, this message translates to:
-  /// **'Help us improve Omi by answering a few questions.  🫶 💜'**
+  /// **'Help us improve Toki by answering a few questions.  🫶 💜'**
   String get setupQuestionsIntro;
 
   /// Question about profession
@@ -11913,10 +11855,10 @@ abstract class AppLocalizations {
   /// **'1. What do you do?'**
   String get setupQuestionProfession;
 
-  /// Question about Omi usage location
+  /// Question about Toki usage location
   ///
   /// In en, this message translates to:
-  /// **'2. Where do you plan to use your Omi?'**
+  /// **'2. Where do you plan to use your Toki?'**
   String get setupQuestionUsage;
 
   /// Question about age range
@@ -12354,13 +12296,13 @@ abstract class AppLocalizations {
   /// No description provided for @getOmi.
   ///
   /// In en, this message translates to:
-  /// **'Get Omi'**
+  /// **'Get Toki'**
   String get getOmi;
 
   /// No description provided for @iHaveOmiDevice.
   ///
   /// In en, this message translates to:
-  /// **'I have Omi device'**
+  /// **'I have Toki device'**
   String get iHaveOmiDevice;
 
   /// No description provided for @goal.
@@ -12888,7 +12830,7 @@ abstract class AppLocalizations {
   /// Description of fast transfer feature in dialog
   ///
   /// In en, this message translates to:
-  /// **'Fast Transfer uses WiFi for ~5x faster speeds. Your phone will temporarily connect to your Omi device\'s WiFi network during transfer.'**
+  /// **'Fast Transfer uses WiFi for ~5x faster speeds. Your phone will temporarily connect to your Toki device\'s WiFi network during transfer.'**
   String get fastTransferDescription;
 
   /// Warning that internet is paused during transfer
@@ -12900,7 +12842,7 @@ abstract class AppLocalizations {
   /// Description text on transfer method page
   ///
   /// In en, this message translates to:
-  /// **'Choose how recordings are transferred from your Omi device to your phone.'**
+  /// **'Choose how recordings are transferred from your Toki device to your phone.'**
   String get chooseTransferMethodDescription;
 
   /// Speed description for WiFi transfer
@@ -12918,7 +12860,7 @@ abstract class AppLocalizations {
   /// Description of fast transfer method card
   ///
   /// In en, this message translates to:
-  /// **'Creates a direct WiFi connection to your Omi device. Your phone temporarily disconnects from your regular WiFi during transfer.'**
+  /// **'Creates a direct WiFi connection to your Toki device. Your phone temporarily disconnects from your regular WiFi during transfer.'**
   String get fastTransferMethodDescription;
 
   /// Name of bluetooth transfer method
@@ -12966,13 +12908,13 @@ abstract class AppLocalizations {
   /// Title for device disconnected notification
   ///
   /// In en, this message translates to:
-  /// **'Your Omi Device Disconnected'**
+  /// **'Your Toki Device Disconnected'**
   String get deviceDisconnectedNotificationTitle;
 
   /// Body text for device disconnected notification
   ///
   /// In en, this message translates to:
-  /// **'Please reconnect to continue using your Omi.'**
+  /// **'Please reconnect to continue using your Toki.'**
   String get deviceDisconnectedNotificationBody;
 
   /// Title for firmware update available dialog
@@ -12984,7 +12926,7 @@ abstract class AppLocalizations {
   /// Description for firmware update dialog with version parameter
   ///
   /// In en, this message translates to:
-  /// **'A new firmware update ({version}) is available for your Omi device. Would you like to update now?'**
+  /// **'A new firmware update ({version}) is available for your Toki device. Would you like to update now?'**
   String firmwareUpdateAvailableDescription(String version);
 
   /// Button text to postpone an action
@@ -13380,7 +13322,7 @@ abstract class AppLocalizations {
   /// Error shown when no knowledge source is connected
   ///
   /// In en, this message translates to:
-  /// **'Please connect at least one knowledge data source (Omi or Twitter)'**
+  /// **'Please connect at least one knowledge data source (Toki or Twitter)'**
   String get personaConnectKnowledgeSource;
 
   /// Success message when persona is updated
@@ -13578,7 +13520,7 @@ abstract class AppLocalizations {
   /// Description explaining why X handle is needed
   ///
   /// In en, this message translates to:
-  /// **'We will pre-train your Omi clone\nbased on your account\'s activity'**
+  /// **'We will pre-train your Toki clone\nbased on your account\'s activity'**
   String get xHandleDescription;
 
   /// Placeholder hint for X handle input field
@@ -13605,10 +13547,10 @@ abstract class AppLocalizations {
   /// **'Next'**
   String get nextButton;
 
-  /// Button text to connect Omi device
+  /// Button text to connect Toki device
   ///
   /// In en, this message translates to:
-  /// **'Connect Omi Device'**
+  /// **'Connect Toki Device'**
   String get connectOmiDevice;
 
   /// Dialog description when switching from unlimited plan
@@ -13659,10 +13601,10 @@ abstract class AppLocalizations {
   /// **'Paste your JSON configuration here...'**
   String get transcriptionJsonPlaceholder;
 
-  /// Tab title for Omi transcription source option
+  /// Tab title for Toki transcription source option
   ///
   /// In en, this message translates to:
-  /// **'Omi'**
+  /// **'Toki'**
   String get transcriptionSourceOmi;
 
   /// Placeholder text for the price input field showing a sample price format
@@ -13710,7 +13652,7 @@ abstract class AppLocalizations {
   /// Title for action item reminder notifications
   ///
   /// In en, this message translates to:
-  /// **'Omi Reminder'**
+  /// **'Toki Reminder'**
   String get actionItemReminderTitle;
 
   /// Notification title when a device disconnects
@@ -13758,7 +13700,7 @@ abstract class AppLocalizations {
   /// Onboarding step description for sign in
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Omi'**
+  /// **'Welcome to Toki'**
   String get onboardingWelcomeToOmi;
 
   /// Onboarding step description for name entry
@@ -15099,37 +15041,37 @@ abstract class AppLocalizations {
   /// **'Report an issue'**
   String get reportAnIssue;
 
-  /// Pairing title for Omi device
+  /// Pairing title for Toki device
   ///
   /// In en, this message translates to:
-  /// **'Turn On Omi'**
+  /// **'Turn On Toki'**
   String get pairingTitleOmi;
 
-  /// Pairing description for Omi device
+  /// Pairing description for Toki device
   ///
   /// In en, this message translates to:
   /// **'Press and hold the device until it vibrates to turn it on.'**
   String get pairingDescOmi;
 
-  /// Pairing title for Omi DevKit
+  /// Pairing title for Toki DevKit
   ///
   /// In en, this message translates to:
-  /// **'Put Omi DevKit in Pairing Mode'**
+  /// **'Put Toki DevKit in Pairing Mode'**
   String get pairingTitleOmiDevkit;
 
-  /// Pairing description for Omi DevKit
+  /// Pairing description for Toki DevKit
   ///
   /// In en, this message translates to:
   /// **'Press the button once to turn on. The LED will blink purple when in pairing mode.'**
   String get pairingDescOmiDevkit;
 
-  /// Pairing title for Omi Glass
+  /// Pairing title for Toki Glass
   ///
   /// In en, this message translates to:
-  /// **'Turn On Omi Glass'**
+  /// **'Turn On Toki Glass'**
   String get pairingTitleOmiGlass;
 
-  /// Pairing description for Omi Glass
+  /// Pairing description for Toki Glass
   ///
   /// In en, this message translates to:
   /// **'Power on by pressing the side button for 3 seconds.'**
@@ -15204,7 +15146,7 @@ abstract class AppLocalizations {
   /// Pairing description for Apple Watch
   ///
   /// In en, this message translates to:
-  /// **'Install and open the Omi app on your Apple Watch, then tap Connect in the app.'**
+  /// **'Install and open the Toki app on your Apple Watch, then tap Connect in the app.'**
   String get pairingDescAppleWatch;
 
   /// Pairing title for Neo One device
@@ -15360,7 +15302,7 @@ abstract class AppLocalizations {
   /// Description for onboarding memory graph preview step
   ///
   /// In en, this message translates to:
-  /// **'This map updates as Omi learns from your conversations.'**
+  /// **'This map updates as Toki learns from your conversations.'**
   String get onboardingWhatIKnowAboutYouDescription;
 
   /// Title for the API environment switcher in developer settings
@@ -15462,7 +15404,7 @@ abstract class AppLocalizations {
   /// No description provided for @phoneCallsWithOmi.
   ///
   /// In en, this message translates to:
-  /// **'Phone Calls with Omi'**
+  /// **'Phone Calls with Toki'**
   String get phoneCallsWithOmi;
 
   /// No description provided for @phoneCallsSubtitle.
@@ -15834,13 +15776,13 @@ abstract class AppLocalizations {
   /// Title for the phone calls upsell sheet shown to non-unlimited users
   ///
   /// In en, this message translates to:
-  /// **'Phone Calls via Omi'**
+  /// **'Phone Calls via Toki'**
   String get phoneCallsUnlimitedOnly;
 
   /// Subtitle explaining phone calls feature on upsell sheet
   ///
   /// In en, this message translates to:
-  /// **'Make calls through Omi and get real-time transcription, automatic summaries, and more. Available exclusively for Unlimited plan subscribers.'**
+  /// **'Make calls through Toki and get real-time transcription, automatic summaries, and more. Available exclusively for Unlimited plan subscribers.'**
   String get phoneCallsUpsellSubtitle;
 
   /// Phone calls upsell feature 1
@@ -16068,7 +16010,7 @@ abstract class AppLocalizations {
   /// No description provided for @fairUseAboutBody.
   ///
   /// In en, this message translates to:
-  /// **'Omi is designed for personal conversations, meetings, and live interactions. Usage is measured by real speech time detected, not connection time. If usage significantly exceeds normal patterns for non-personal content, adjustments may apply.'**
+  /// **'Toki is designed for personal conversations, meetings, and live interactions. Usage is measured by real speech time detected, not connection time. If usage significantly exceeds normal patterns for non-personal content, adjustments may apply.'**
   String get fairUseAboutBody;
 
   /// Snackbar message when case reference is copied to clipboard
@@ -16128,7 +16070,7 @@ abstract class AppLocalizations {
   /// No description provided for @improveConnectionContent.
   ///
   /// In en, this message translates to:
-  /// **'We\'ve improved how Omi stays connected to your device. To activate this, please go to the Device Info page, tap \"Disconnect Device\", and then pair your device again.'**
+  /// **'We\'ve improved how Toki stays connected to your device. To activate this, please go to the Device Info page, tap \"Disconnect Device\", and then pair your device again.'**
   String get improveConnectionContent;
 
   /// No description provided for @improveConnectionAction.
@@ -16153,42 +16095,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>[
-        'ar',
-        'bg',
-        'ca',
-        'cs',
-        'da',
-        'de',
-        'el',
-        'en',
-        'es',
-        'et',
-        'fi',
-        'fr',
-        'hi',
-        'hu',
-        'id',
-        'it',
-        'ja',
-        'ko',
-        'lt',
-        'lv',
-        'ms',
-        'nl',
-        'no',
-        'pl',
-        'pt',
-        'ro',
-        'ru',
-        'sk',
-        'sv',
-        'th',
-        'tr',
-        'uk',
-        'vi',
-        'zh'
-      ].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'es', 'fr', 'it', 'ja'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -16197,74 +16104,16 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'ar':
-      return AppLocalizationsAr();
-    case 'bg':
-      return AppLocalizationsBg();
-    case 'ca':
-      return AppLocalizationsCa();
-    case 'cs':
-      return AppLocalizationsCs();
-    case 'da':
-      return AppLocalizationsDa();
-    case 'de':
-      return AppLocalizationsDe();
-    case 'el':
-      return AppLocalizationsEl();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
-    case 'et':
-      return AppLocalizationsEt();
-    case 'fi':
-      return AppLocalizationsFi();
     case 'fr':
       return AppLocalizationsFr();
-    case 'hi':
-      return AppLocalizationsHi();
-    case 'hu':
-      return AppLocalizationsHu();
-    case 'id':
-      return AppLocalizationsId();
     case 'it':
       return AppLocalizationsIt();
     case 'ja':
       return AppLocalizationsJa();
-    case 'ko':
-      return AppLocalizationsKo();
-    case 'lt':
-      return AppLocalizationsLt();
-    case 'lv':
-      return AppLocalizationsLv();
-    case 'ms':
-      return AppLocalizationsMs();
-    case 'nl':
-      return AppLocalizationsNl();
-    case 'no':
-      return AppLocalizationsNo();
-    case 'pl':
-      return AppLocalizationsPl();
-    case 'pt':
-      return AppLocalizationsPt();
-    case 'ro':
-      return AppLocalizationsRo();
-    case 'ru':
-      return AppLocalizationsRu();
-    case 'sk':
-      return AppLocalizationsSk();
-    case 'sv':
-      return AppLocalizationsSv();
-    case 'th':
-      return AppLocalizationsTh();
-    case 'tr':
-      return AppLocalizationsTr();
-    case 'uk':
-      return AppLocalizationsUk();
-    case 'vi':
-      return AppLocalizationsVi();
-    case 'zh':
-      return AppLocalizationsZh();
   }
 
   throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '

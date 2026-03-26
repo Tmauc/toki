@@ -33,8 +33,8 @@ class _FCMNotificationService implements NotificationInterface {
   final channel = NotificationChannel(
     channelGroupKey: 'channel_group_key',
     channelKey: 'channel',
-    channelName: 'Omi Notifications',
-    channelDescription: 'Notification channel for Omi',
+    channelName: 'Toki Notifications',
+    channelDescription: 'Notification channel for Toki',
     defaultColor: const Color(0xFF9D50DD),
     ledColor: Colors.white,
   );
@@ -124,8 +124,8 @@ class _FCMNotificationService implements NotificationInterface {
     try {
       if (PlatformService.isDesktop) return;
       await platform.invokeMethod('setNotificationOnKillService', {
-        'title': "Your Omi Device Disconnected",
-        'description': "Please keep your app opened to continue using your Omi.",
+        'title': "Your Toki Device Disconnected",
+        'description': "Please keep your app opened to continue using Toki.",
       });
     } catch (e) {
       Logger.debug('NotifOnKill error: $e');

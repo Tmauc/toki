@@ -90,8 +90,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await AwesomeNotifications().initialize(null, [
     NotificationChannel(
       channelKey: 'channel',
-      channelName: 'Omi Notifications',
-      channelDescription: 'Notification channel for Omi',
+      channelName: 'Toki Notifications',
+      channelDescription: 'Notification channel for Toki',
       defaultColor: const Color(0xFF9D50DD),
       ledColor: Colors.white,
     ),

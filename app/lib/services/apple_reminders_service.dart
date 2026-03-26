@@ -160,7 +160,7 @@ class AppleRemindersService {
     }
 
     // Add the reminder
-    final success = await addReminder(title: actionItemDescription, notes: 'From Omi', listName: 'Reminders');
+    final success = await addReminder(title: actionItemDescription, notes: 'From Toki', listName: 'Reminders');
 
     return success ? AppleRemindersResult.success : AppleRemindersResult.failed;
   }

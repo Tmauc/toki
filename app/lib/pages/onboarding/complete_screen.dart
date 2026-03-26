@@ -101,7 +101,7 @@ class _OnboardingCompleteScreenState extends State<OnboardingCompleteScreen> wit
                             fontFamily: 'Manrope',
                           ),
                           children: const [
-                            TextSpan(text: 'Just use Omi in the background for '),
+                            TextSpan(text: 'Just use Toki in the background for '),
                             TextSpan(
                               text: '2\u00A0days',
                               style: TextStyle(color: Color(0xFF9B59B6)),
@@ -126,7 +126,7 @@ class _OnboardingCompleteScreenState extends State<OnboardingCompleteScreen> wit
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Start Using Omi',
+                                'Start Using Toki',
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, fontFamily: 'Manrope'),
                               ),
                               SizedBox(width: 8),

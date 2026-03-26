@@ -80,7 +80,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
   Widget _buildSttChip() {
     final useCustom = SharedPreferencesUtil().useCustomStt;
     final config = SharedPreferencesUtil().customSttConfig;
-    final label = useCustom ? SttProviderConfig.get(config.provider).displayName : 'Omi';
+    final label = useCustom ? SttProviderConfig.get(config.provider).displayName : 'Toki';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -701,7 +701,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                                     if (files.length == 1) {
                                       final result = await Share.shareXFiles([
                                         XFile(files.first.path),
-                                      ], text: 'Omi debug log');
+                                      ], text: 'Toki debug log');
                                       if (result.status == ShareResultStatus.success) {
                                         Logger.debug('Log shared');
                                       }
@@ -770,7 +770,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                                     if (selected != null) {
                                       final result = await Share.shareXFiles([
                                         XFile(selected.path),
-                                      ], text: 'Omi debug log');
+                                      ], text: 'Toki debug log');
                                       if (result.status == ShareResultStatus.success) {
                                         Logger.debug('Log shared');
                                       }
@@ -862,7 +862,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
 
                             final result = await Share.shareXFiles([
                               XFile(exportedPath),
-                            ], text: 'Exported Data from Omi');
+                            ], text: 'Exported Data from Toki');
                             if (result.status == ShareResultStatus.success) {
                               Logger.debug('Export shared');
                             }
@@ -1619,7 +1619,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                                   Row(
                                     children: [
                                       const Text(
-                                        'Omi Agent',
+                                        'Toki Agent',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
