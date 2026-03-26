@@ -536,11 +536,7 @@ class _IntegrationsPageState extends State<IntegrationsPage> with WidgetsBinding
                 child: ListView(
                   children: [
                     ...IntegrationApp.values.map((app) => _buildAppTile(app, isLoading)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Divider(color: Colors.grey.shade800, thickness: 1),
-                    ),
-                    _buildCreateYourOwnAppTile(),
+                    // TOKI: "Create Your Own App" removed — marketplace disabled
                   ],
                 ),
               ),

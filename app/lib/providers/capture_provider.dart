@@ -99,18 +99,19 @@ class CaptureProvider extends ChangeNotifier
   bool _isAutoReconnecting = false;
   bool get isAutoReconnecting => _isAutoReconnecting;
 
-  bool get outOfCredits => usageProvider?.isOutOfCredits ?? false;
+  // TOKI: monetization disabled — all features unlocked
+  bool get outOfCredits => false;
 
-  // Freemium: Threshold notification state
+  // Freemium: Threshold notification state (TOKI: disabled)
   bool _freemiumThresholdReached = false;
   int _freemiumRemainingSeconds = 0;
   bool _freemiumRequiresUserAction = false;
 
-  bool get freemiumThresholdReached => _freemiumThresholdReached;
-  int get freemiumRemainingSeconds => _freemiumRemainingSeconds;
+  bool get freemiumThresholdReached => false; // TOKI: disabled
+  int get freemiumRemainingSeconds => 0; // TOKI: disabled
 
   /// Whether user needs to take action (e.g., setup on-device STT)
-  bool get freemiumRequiresUserAction => _freemiumRequiresUserAction;
+  bool get freemiumRequiresUserAction => false; // TOKI: disabled
 
   Timer? _reconnectTimer;
   int _reconnectCountdown = 5;

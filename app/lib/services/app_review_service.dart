@@ -83,8 +83,10 @@ class AppReviewService {
     await prefs.setBool(_hasShownReviewForActionItemKey, true);
   }
 
-  // Shows the review prompt if conditions are met
+  // TOKI: review prompts disabled
   Future<bool> showReviewPromptIfNeeded(BuildContext context, {bool isProcessingFirstConversation = false}) async {
+    return false;
+    // ignore: dead_code
     final hasCompleted = await hasCompletedFirstActionItem();
     final isFirst = await isFirstConversation();
 

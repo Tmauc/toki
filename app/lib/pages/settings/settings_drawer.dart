@@ -211,7 +211,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   }
 
   Future<void> _copyVersionInfo() async {
-    final versionPart = buildVersion != null ? 'Omi AI ${version ?? ""} ($buildVersion)' : 'Omi AI ${version ?? ""}';
+    final versionPart = buildVersion != null ? 'Toki ${version ?? ""} ($buildVersion)' : 'Toki ${version ?? ""}';
     final devicePart = shortDeviceInfo ?? context.l10n.unknownDevice;
     final fullVersionInfo = '$versionPart — $devicePart';
 
@@ -298,44 +298,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   },
                 ),
                 const Divider(height: 1, color: Color(0xFF3C3C43)),
-                Consumer<UsageProvider>(
-                  builder: (context, usageProvider, child) {
-                    final isUnlimited = usageProvider.subscription?.subscription.plan == PlanType.unlimited;
-                    return _buildSettingsItem(
-                      title: context.l10n.planAndUsage,
-                      icon: const FaIcon(FontAwesomeIcons.chartLine, color: Color(0xFF8E8E93), size: 20),
-                      trailingChip: isUnlimited
-                          ? Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.amber.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const FaIcon(FontAwesomeIcons.crown, color: Colors.amber, size: 10),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    context.l10n.pro.toUpperCase(),
-                                    style: const TextStyle(
-                                      color: Colors.amber,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : null,
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UsagePage()));
-                      },
-                    );
-                  },
-                ),
-                const Divider(height: 1, color: Color(0xFF3C3C43)),
+                // TOKI: Plan and Usage hidden — monetization disabled
                 _buildSettingsItem(
                   title: context.l10n.offlineSync,
                   icon: const FaIcon(FontAwesomeIcons.solidCloud, color: Color(0xFF8E8E93), size: 20),
@@ -371,61 +334,24 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const IntegrationsPage()));
                   },
                 ),
-                Consumer<UsageProvider>(
-                  builder: (context, usageProvider, child) {
-                    final isUnlimited = usageProvider.subscription?.subscription.plan == PlanType.unlimited;
-                    if (!isUnlimited) return const SizedBox.shrink();
-                    return Column(
-                      children: [
-                        const Divider(height: 1, color: Color(0xFF3C3C43)),
-                        _buildSettingsItem(
-                          title: 'Phone Calls',
-                          icon: const FaIcon(FontAwesomeIcons.phone, color: Color(0xFF8E8E93), size: 20),
-                          onTap: () {
-                            Navigator.of(
-                              context,
-                            ).push(MaterialPageRoute(builder: (context) => const PhoneCallSettingsPage()));
-                          },
-                        ),
-                      ],
-                    );
+                // TOKI: Phone Calls always visible — monetization disabled
+                const Divider(height: 1, color: Color(0xFF3C3C43)),
+                _buildSettingsItem(
+                  title: 'Phone Calls',
+                  icon: const FaIcon(FontAwesomeIcons.phone, color: Color(0xFF8E8E93), size: 20),
+                  onTap: () {
+                    Navigator.of(
+                      context,
+                    ).push(MaterialPageRoute(builder: (context) => const PhoneCallSettingsPage()));
                   },
                 ),
               ],
             ),
             const SizedBox(height: 32),
 
-            // Support & Settings Section
+            // Settings Section (TOKI: feedback, help center, what's new removed)
             _buildSectionContainer(
               children: [
-                if (PlatformService.isIntercomSupported) ...[
-                  _buildSettingsItem(
-                    title: context.l10n.feedbackBug,
-                    icon: const FaIcon(FontAwesomeIcons.solidEnvelope, color: Color(0xFF8E8E93), size: 20),
-                    onTap: () async {
-                      final Uri url = Uri.parse('https://feedback.omi.me/');
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url, mode: LaunchMode.inAppBrowserView);
-                      }
-                    },
-                  ),
-                  const Divider(height: 1, color: Color(0xFF3C3C43)),
-                  _buildSettingsItem(
-                    title: context.l10n.helpCenter,
-                    icon: const FaIcon(FontAwesomeIcons.book, color: Color(0xFF8E8E93), size: 20),
-                    onTap: () async {
-                      final Uri url = Uri.parse('https://help.omi.me/en/');
-                      if (await canLaunchUrl(url)) {
-                        try {
-                          await launchUrl(url, mode: LaunchMode.inAppBrowserView);
-                        } catch (e) {
-                          await launchUrl(url, mode: LaunchMode.externalApplication);
-                        }
-                      }
-                    },
-                  ),
-                  const Divider(height: 1, color: Color(0xFF3C3C43)),
-                ],
                 _buildSettingsItem(
                   title: context.l10n.developerSettings,
                   icon: const FaIcon(FontAwesomeIcons.code, color: Color(0xFF8E8E93), size: 20),
@@ -433,42 +359,11 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                     await routeToPage(context, const DeveloperSettingsPage());
                   },
                 ),
-                const Divider(height: 1, color: Color(0xFF3C3C43)),
-                _buildSettingsItem(
-                  title: context.l10n.whatsNew,
-                  icon: const FaIcon(FontAwesomeIcons.solidStar, color: Color(0xFF8E8E93), size: 20),
-                  onTap: () {
-                    MixpanelManager().whatsNewOpened();
-                    ChangelogSheet.showWithLoading(context, () => getAppChangelogs(limit: 5));
-                  },
-                ),
               ],
             ),
             const SizedBox(height: 32),
 
-            // Share & Get Section
-            _buildSectionContainer(
-              children: [
-                _buildSettingsItem(
-                  title: context.l10n.getOmiForMac,
-                  icon: const FaIcon(FontAwesomeIcons.desktop, color: Color(0xFF8E8E93), size: 20),
-                  onTap: () async {
-                    final Uri url = Uri.parse('https://apps.apple.com/us/app/omi-ai-scale-yourself/id6502156163');
-                    await launchUrl(url, mode: LaunchMode.externalApplication);
-                  },
-                ),
-                const Divider(height: 1, color: Color(0xFF3C3C43)),
-                _buildSettingsItem(
-                  title: context.l10n.referralProgram,
-                  icon: const FaIcon(FontAwesomeIcons.gift, color: Color(0xFF8E8E93), size: 20),
-                  showNewTag: true,
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReferralPage()));
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 32),
+            // TOKI: Share & Get section hidden — referral/Mac app not applicable
 
             // Sign Out Section
             _buildSectionContainer(
@@ -477,11 +372,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   title: context.l10n.signOut,
                   icon: const FaIcon(FontAwesomeIcons.signOutAlt, color: Color(0xFF8E8E93), size: 20),
                   onTap: () async {
-                    // Capture the provider reference before any navigation
+                    // Capture references before navigation
                     final personaProvider = Provider.of<PersonaProvider>(context, listen: false);
-                    final navigator = Navigator.of(context);
-
-                    navigator.pop(); // Close the settings drawer
 
                     await showDialog(
                       context: context,
@@ -542,11 +434,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
               title: context.l10n.signOut,
               icon: const FaIcon(FontAwesomeIcons.signOutAlt, color: Color(0xFF8E8E93), size: 20),
               onTap: () async {
-                // Capture the provider reference before any navigation
+                // Capture references before navigation
                 final personaProvider = Provider.of<PersonaProvider>(context, listen: false);
-                final navigator = Navigator.of(context);
-
-                navigator.pop(); // Close the settings drawer
 
                 await showDialog(
                   context: context,
@@ -555,11 +444,10 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                       ctx,
                       () => Navigator.of(ctx).pop(),
                       () async {
-                        Navigator.of(ctx).pop(); // Close dialog first
-                        SharedPreferencesUtil().hasOmiDevice = null;
-                        SharedPreferencesUtil().verifiedPersonaId = null;
-                        personaProvider.setRouting(PersonaProfileRouting.no_device);
+                        Navigator.of(ctx).pop(); // Close dialog
+                        await SharedPreferencesUtil().clear();
                         await AuthService.instance.signOut();
+                        personaProvider.setRouting(PersonaProfileRouting.no_device);
                         if (context.mounted) {
                           routeToPage(context, const AppShell(), replace: true);
                         }

@@ -909,7 +909,7 @@ class _PlansSheetState extends State<PlansSheet> {
                                   );
                                 } else {
                                   return Text(
-                                    isUnlimited ? 'Change Plan' : 'Keep Omi Unlimited',
+                                    isUnlimited ? 'Change Plan' : 'Keep Toki Unlimited',
                                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                   );
                                 }
@@ -931,7 +931,7 @@ class _PlansSheetState extends State<PlansSheet> {
                               return Text(
                                 isUnlimited
                                     ? 'You are on the Unlimited Plan.'
-                                    : 'Choose your plan to unlock unlimited Omi.',
+                                    : 'Choose your plan to unlock unlimited Toki.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
                               );
@@ -944,8 +944,7 @@ class _PlansSheetState extends State<PlansSheet> {
                             builder: (context) {
                               // Check if subscription period has ended
                               final sub = provider.subscription?.subscription;
-                              final periodEnded =
-                                  sub?.currentPeriodEnd != null &&
+                              final periodEnded = sub?.currentPeriodEnd != null &&
                                   DateTime.fromMillisecondsSinceEpoch(
                                     sub!.currentPeriodEnd! * 1000,
                                   ).isBefore(DateTime.now());
@@ -997,10 +996,10 @@ class _PlansSheetState extends State<PlansSheet> {
                               const SizedBox(height: 16),
                               _buildFeatureItem(
                                 faIcon: FontAwesomeIcons.solidComments,
-                                text: 'Ask Omi anything about your life',
+                                text: 'Ask Toki anything about your life',
                               ),
                               const SizedBox(height: 16),
-                              _buildFeatureItem(faIcon: FontAwesomeIcons.brain, text: 'Unlock Omi\'s infinite memory'),
+                              _buildFeatureItem(faIcon: FontAwesomeIcons.brain, text: 'Unlock Toki\'s infinite memory'),
                             ],
                           ),
                           const SizedBox(height: 32),
@@ -1009,8 +1008,7 @@ class _PlansSheetState extends State<PlansSheet> {
                         // Training Data Opt-in Option - only show after plans are loaded
                         Consumer2<UsageProvider, UserProvider>(
                           builder: (context, usageProvider, userProvider, child) {
-                            final shouldShowTrainingOption =
-                                _showTrainingDataOptIn &&
+                            final shouldShowTrainingOption = _showTrainingDataOptIn &&
                                 !usageProvider.isLoadingPlans &&
                                 usageProvider.availablePlans != null;
 
@@ -1338,8 +1336,7 @@ class _PlansSheetState extends State<PlansSheet> {
                             final isOnAnnualPlan = currentPlan?['interval'] == 'year';
                             final hasScheduledUpgrade = _hasScheduledUpgrade();
                             final usageProvider = context.read<UsageProvider>();
-                            final shouldShowContinueButton =
-                                !isOnAnnualPlan &&
+                            final shouldShowContinueButton = !isOnAnnualPlan &&
                                 !hasScheduledUpgrade &&
                                 !isCancelled &&
                                 !usageProvider.isLoadingPlans &&
@@ -1405,7 +1402,7 @@ class _PlansSheetState extends State<PlansSheet> {
                         if (!isUnlimited) ...[
                           const SizedBox(height: 32),
                           Text(
-                            'Omi is free, but freemium has limits that affect your experience:',
+                            'Toki is free, but freemium has limits that affect your experience:',
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey.shade400, fontSize: 14, fontWeight: FontWeight.w500),
                           ),

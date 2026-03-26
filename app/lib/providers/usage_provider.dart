@@ -50,15 +50,7 @@ class UsageProvider with ChangeNotifier {
   bool get isLoadingPlans => _isLoadingPlans;
 
   bool get isOutOfCredits {
-    if (_forceOutOfCredits) return true;
-    if (_subscription == null) return false;
-    if (_subscription!.subscription.plan == PlanType.unlimited) return false;
-    // For basic plan, check if used is >= limit and limit is not 0 (unlimited).
-    if (_subscription!.transcriptionSecondsLimit > 0 &&
-        _subscription!.transcriptionSecondsUsed >= _subscription!.transcriptionSecondsLimit) {
-      return true;
-    }
-    return false;
+    return false; // TOKI: monetization disabled — all features unlocked
   }
 
   Future<void> markAsOutOfCreditsAndRefresh() async {
