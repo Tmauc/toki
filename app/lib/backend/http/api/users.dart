@@ -8,7 +8,6 @@ import 'package:omi/backend/schema/daily_summary.dart';
 import 'package:omi/backend/schema/geolocation.dart';
 import 'package:omi/backend/schema/person.dart';
 import 'package:omi/env/env.dart';
-import 'package:omi/models/subscription.dart';
 import 'package:omi/models/user_usage.dart';
 import 'package:omi/utils/logger.dart';
 
@@ -441,21 +440,6 @@ Future<bool> setTranscriptionPreferences({bool? singleLanguageMode, List<String>
   if (response == null) return false;
   Logger.debug('setTranscriptionPreferences response: ${response.body}');
   return response.statusCode == 200;
-}
-
-Future<UserSubscriptionResponse?> getUserSubscription() async {
-  var response = await makeApiCall(
-    url: '${Env.apiBaseUrl}v1/users/me/subscription',
-    headers: {},
-    method: 'GET',
-    body: '',
-  );
-  if (response == null) return null;
-  Logger.debug('getUserSubscription response: ${response.body}');
-  if (response.statusCode == 200) {
-    return UserSubscriptionResponse.fromJson(jsonDecode(response.body));
-  }
-  return null;
 }
 
 // Daily Summary Settings
