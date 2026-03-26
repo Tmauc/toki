@@ -555,41 +555,8 @@ def set_user_app_sub_customer_id(app_id: str, uid: str, customer_id: str):
 
 
 def find_app_subscription(app_id: str, uid: str, status_filter: str = 'all') -> dict | None:
-    """
-    Find a user's subscription for a specific app using cached customer ID or metadata search.
-
-    Args:
-        app_id: The app ID to search for
-        uid: The user ID
-        status_filter: Stripe subscription status filter ('all', 'active', etc.)
-
-    Returns:
-        Dictionary representation of the subscription or None if not found
-    """
-    try:
-
-        cached_customer_id = get_user_app_subscription_customer_id(app_id, uid)
-        latest_subscription = None
-
-        if cached_customer_id:
-            pass  # TOKI: stripe removed
-                cached_customer_id, app_id, uid, status_filter
-            )
-
-            if latest_subscription is None:
-                cached_customer_id = None
-
-        if not latest_subscription and not cached_customer_id:
-            pass  # TOKI: stripe removed
-
-            # Cache the customer ID for future lookups
-            if latest_subscription and latest_subscription.get('customer'):
-                set_user_app_subscription_customer_id(app_id, uid, latest_subscription.get('customer'))
-
-        return latest_subscription
-    except Exception as e:
-        logger.error(f"Error finding app subscription: {e}")
-        return None
+    """TOKI: monetization disabled — no app subscriptions."""
+    return None
 
 
 def is_audio_bytes_app_enabled(uid: str):
