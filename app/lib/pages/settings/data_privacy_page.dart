@@ -45,24 +45,7 @@ class _DataPrivacyPageState extends State<DataPrivacyPage> {
               textAlign: TextAlign.center,
               text: TextSpan(
                 style: TextStyle(fontSize: 16, color: Colors.grey.shade400, height: 1.5),
-                children: [
-                  TextSpan(text: '${context.l10n.privacyIntro} '),
-                  TextSpan(
-                    text: context.l10n.learnMore,
-                    style: TextStyle(
-                      color: Colors.deepPurple.shade300,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.deepPurple.shade300,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        final url = Uri.parse('https://www.omi.me/pages/privacy');
-                        if (await canLaunchUrl(url)) {
-                          await launchUrl(url, mode: LaunchMode.externalApplication);
-                        }
-                      },
-                  ),
-                ],
+                text: context.l10n.privacyIntro,
               ),
             ),
           ),
@@ -141,9 +124,8 @@ class _DataPrivacyPageState extends State<DataPrivacyPage> {
                   const SizedBox(height: 24),
                   Consumer<AppProvider>(
                     builder: (context, appProvider, child) {
-                      final appsWithDataAccess = appProvider.apps
-                          .where((app) => app.enabled && app.worksExternally())
-                          .toList();
+                      final appsWithDataAccess =
+                          appProvider.apps.where((app) => app.enabled && app.worksExternally()).toList();
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
