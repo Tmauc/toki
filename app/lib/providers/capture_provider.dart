@@ -27,7 +27,6 @@ import 'package:omi/providers/calendar_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/providers/message_provider.dart';
 import 'package:omi/providers/people_provider.dart';
-import 'package:omi/providers/usage_provider.dart';
 import 'package:omi/services/connectivity_service.dart';
 import 'package:omi/services/services.dart';
 import 'package:omi/services/sockets/transcription_service.dart';
@@ -53,7 +52,6 @@ import 'package:omi/backend/schema/message_event.dart'
         TranslationEvent,
         PhotoProcessingEvent,
         PhotoDescribedEvent,
-        FreemiumThresholdReachedEvent,
         SegmentsDeletedEvent;
 
 class CaptureProvider extends ChangeNotifier
@@ -62,7 +60,6 @@ class CaptureProvider extends ChangeNotifier
   ConversationProvider? conversationProvider;
   MessageProvider? messageProvider;
   PeopleProvider? peopleProvider;
-  UsageProvider? usageProvider;
   CalendarProvider? calendarProvider;
 
   // Cache refresh for backend-created persons
@@ -93,20 +90,6 @@ class CaptureProvider extends ChangeNotifier
 
   bool _isAutoReconnecting = false;
   bool get isAutoReconnecting => _isAutoReconnecting;
-
-  // TOKI: monetization disabled — all features unlocked
-  bool get outOfCredits => false;
-
-  // Freemium: Threshold notification state (TOKI: disabled)
-  bool _freemiumThresholdReached = false;
-  int _freemiumRemainingSeconds = 0;
-  bool _freemiumRequiresUserAction = false;
-
-  bool get freemiumThresholdReached => false; // TOKI: disabled
-  int get freemiumRemainingSeconds => 0; // TOKI: disabled
-
-  /// Whether user needs to take action (e.g., setup on-device STT)
-  bool get freemiumRequiresUserAction => false; // TOKI: disabled
 
   Timer? _reconnectTimer;
   int _reconnectCountdown = 5;
@@ -225,11 +208,10 @@ class CaptureProvider extends ChangeNotifier
     }
   }
 
-  void updateProviderInstances(ConversationProvider? cp, MessageProvider? mp, PeopleProvider? pp, UsageProvider? up) {
+  void updateProviderInstances(ConversationProvider? cp, MessageProvider? mp, PeopleProvider? pp) {
     conversationProvider = cp;
     messageProvider = mp;
     peopleProvider = pp;
-    usageProvider = up;
 
     notifyListeners();
   }
@@ -1329,10 +1311,6 @@ class CaptureProvider extends ChangeNotifier
     _transcriptionServiceStatuses = [];
     _transcriptServiceReady = false;
 
-    if (closeCode == 4002) {
-      usageProvider?.markAsOutOfCreditsAndRefresh();
-    }
-
     // Show brief warning when transcription drops during phone mic recording
     if (recordingState == RecordingState.record) {
       final ctx = globalNavigatorKey.currentContext;
@@ -1486,21 +1464,9 @@ class CaptureProvider extends ChangeNotifier
 
     if (event is MessageServiceStatusEvent) {
       // Handle freemium threshold event via status field
-      if (event.status == 'freemium_threshold_reached') {
-        // Parse as FreemiumThresholdReachedEvent for consistent handling
-        final thresholdEvent = FreemiumThresholdReachedEvent.fromJson({'status_text': event.statusText});
-        _handleFreemiumThresholdReached(thresholdEvent);
-        return;
-      }
-
       _transcriptionServiceStatuses.add(event);
       _transcriptionServiceStatuses = List.from(_transcriptionServiceStatuses);
       notifyListeners();
-      return;
-    }
-
-    if (event is FreemiumThresholdReachedEvent) {
-      _handleFreemiumThresholdReached(event);
       return;
     }
 
@@ -1758,53 +1724,6 @@ class CaptureProvider extends ChangeNotifier
   void onConnectionStateChanged(bool isConnected) {
     _isConnected = isConnected;
     notifyListeners();
-  }
-
-  // ============== Freemium: Threshold Notification ==============
-
-  /// Handle freemium threshold reached: Notify user based on required action
-  void _handleFreemiumThresholdReached(FreemiumThresholdReachedEvent event) {
-    if (_freemiumThresholdReached) return;
-
-    _freemiumThresholdReached = true;
-    _freemiumRemainingSeconds = event.remainingSeconds;
-    _freemiumRequiresUserAction = event.requiresUserAction;
-
-    Logger.debug('[Freemium] Threshold reached - ${event.remainingSeconds} seconds remaining');
-    Logger.debug('[Freemium] Action required: ${event.action.name}, requires user action: ${event.requiresUserAction}');
-
-    if (event.requiresUserAction) {
-      Logger.debug('[Freemium] User should setup on-device transcription in Settings > Transcription');
-    } else {
-      Logger.debug('[Freemium] No user action required - backend will handle fallback');
-    }
-
-    // Update usage provider to reflect approaching limit
-    usageProvider?.refreshSubscription();
-
-    notifyListeners();
-  }
-
-  /// Callback for external components to reset their freemium session state
-  VoidCallback? onFreemiumSessionReset;
-
-  /// Reset freemium threshold state (e.g., when credits reset or on new session)
-  void resetFreemiumThresholdState() {
-    _freemiumThresholdReached = false;
-    _freemiumRemainingSeconds = 0;
-    _freemiumRequiresUserAction = false;
-    // Notify external handlers (e.g., FreemiumSwitchHandler)
-    onFreemiumSessionReset?.call();
-    notifyListeners();
-  }
-
-  /// Check if credits were restored and reset threshold state
-  Future<void> checkCreditsAndResetThresholdIfNeeded() async {
-    await usageProvider?.fetchSubscription();
-    if (usageProvider?.isOutOfCredits == false && _freemiumThresholdReached) {
-      Logger.debug('[Freemium] Credits restored! Resetting threshold state.');
-      resetFreemiumThresholdState();
-    }
   }
 
   void setIsWalSupported(bool value) {
