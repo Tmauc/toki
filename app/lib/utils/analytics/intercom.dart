@@ -22,6 +22,7 @@ class IntercomManager {
   }
 
   Future<void> initIntercom() async {
+    return; // TOKI: Intercom disabled — no data sent to third parties
     if (Env.intercomAppId == null) return;
     return PlatformService.executeIfSupportedAsync(
       _isIntercomEnabled,

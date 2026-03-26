@@ -19,6 +19,7 @@ class GrowthbookUtil {
   GrowthbookUtil._internal();
 
   static Future<void> init() async {
+    return; // TOKI: GrowthBook A/B testing disabled — no data sent to third parties
     if (Env.growthbookApiKey == null) return;
     print('GrowthbookUtil init');
     var attr = {'id': SharedPreferencesUtil().uid, 'device': Platform.isAndroid ? 'android' : 'ios'};

@@ -11,18 +11,8 @@ class AnalyticsManager {
 
   AnalyticsManager._internal();
 
-  void setUserAttributes() {
-    PlatformManager.instance.mixpanel.setPeopleValues();
-    PlatformManager.instance.intercom.setUserAttributes();
-  }
-
-  void setUserAttribute(String key, dynamic value) {
-    PlatformManager.instance.mixpanel.setUserProperty(key, value);
-    PlatformManager.instance.intercom.updateCustomAttributes({key: value});
-  }
-
-  void trackEvent(String eventName, {Map<String, dynamic>? properties}) {
-    PlatformManager.instance.mixpanel.track(eventName, properties: properties);
-    PlatformManager.instance.intercom.logEvent(eventName, metaData: properties);
-  }
+  // TOKI: All third-party analytics disabled
+  void setUserAttributes() {}
+  void setUserAttribute(String key, dynamic value) {}
+  void trackEvent(String eventName, {Map<String, dynamic>? properties}) {}
 }
