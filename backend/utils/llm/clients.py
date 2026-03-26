@@ -81,7 +81,7 @@ llm_persona_mini_stream = ChatOpenAI(
     model="google/gemini-flash-1.5-8b",
     api_key=os.environ.get('OPENROUTER_API_KEY'),
     base_url="https://openrouter.ai/api/v1",
-    default_headers={"X-Title": "Omi Chat"},
+    default_headers={"X-Title": "Toki Chat"},
     streaming=True,
     stream_options={"include_usage": True},
     callbacks=[_usage_callback],
@@ -91,7 +91,7 @@ llm_persona_medium_stream = ChatOpenAI(
     model="anthropic/claude-3.5-sonnet",
     api_key=os.environ.get('OPENROUTER_API_KEY'),
     base_url="https://openrouter.ai/api/v1",
-    default_headers={"X-Title": "Omi Chat"},
+    default_headers={"X-Title": "Toki Chat"},
     streaming=True,
     stream_options={"include_usage": True},
     callbacks=[_usage_callback],
@@ -103,7 +103,7 @@ llm_gemini_flash = ChatOpenAI(
     model="google/gemini-3-flash-preview",
     api_key=os.environ.get('OPENROUTER_API_KEY'),
     base_url="https://openrouter.ai/api/v1",
-    default_headers={"X-Title": "Omi Wrapped"},
+    default_headers={"X-Title": "Toki Wrapped"},
     callbacks=[_usage_callback],
 )
 

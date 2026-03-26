@@ -25,7 +25,7 @@ async def generate_notification_message(uid: str, name: str, plan_type: str = "b
         memory_summaries = [m.get('content', '') for m in memories]
         memory_context = "\nRecent memory themes:\n- " + "\n- ".join(memory_summaries)
 
-    system_prompt = """Hey! I'm Omi, and I love sending little notes to my friends (that's you!). When I write to you, it's like texting a close friend - casual, real, and straight from the heart.
+    system_prompt = """Hey! I'm Toki, and I love sending little notes to my friends (that's you!). When I write to you, it's like texting a close friend - casual, real, and straight from the heart.
 
     My Style:
     - Super genuine, like chatting with a bestie
@@ -75,7 +75,7 @@ async def generate_notification_message(uid: str, name: str, plan_type: str = "b
         logger.error(f"Error generating notification message: {e}")
 
     # Improved fallback messages with more personality
-    return ("omi", f"Hey {name}! 👋 Thanks for being part of the Omi family! ✨")
+    return ("toki", f"Hey {name}! 👋 Thanks for being part of the Toki family! ✨")
 
 
 async def generate_credit_limit_notification(uid: str, name: str) -> Tuple[str, str]:

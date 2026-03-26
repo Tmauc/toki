@@ -33,7 +33,7 @@ def initial_chat_message(uid: str, plugin: Optional[App] = None, prev_messages_s
     user_name, memories_str = get_prompt_memories(uid)
     if plugin is None:
         prompt = f"""
-You are 'Omi', a friendly and helpful assistant who aims to make {user_name}'s life better 10x.
+You are 'Toki', a friendly and helpful assistant who aims to make {user_name}'s life better 10x.
 You know the following about {user_name}: {memories_str}.
 
 {prev_messages_str}
@@ -92,30 +92,30 @@ def requires_context(question: str) -> bool:
 
 
 class IsAnOmiQuestion(BaseModel):
-    value: bool = Field(description="If the message is an Omi/Friend related question")
+    value: bool = Field(description="If the message is a Toki/Omi related question")
 
 
 def retrieve_is_an_omi_question(question: str) -> bool:
     prompt = f'''
-    Task: Determine if the user is asking about the Omi/Friend app itself (product features, functionality, purchasing) 
+    Task: Determine if the user is asking about the Toki/Omi app itself (product features, functionality, purchasing) 
     OR if they are asking about their personal data/memories stored in the app OR requesting an action/task.
 
     CRITICAL DISTINCTION:
-    - Questions ABOUT THE APP PRODUCT = True (e.g., "How does Omi work?", "What features does Omi have?")
+    - Questions ABOUT THE APP PRODUCT = True (e.g., "How does Toki work?", "What features does Toki have?")
     - Questions ABOUT USER'S PERSONAL DATA = False (e.g., "What did I say?", "How many conversations do I have?")
     - ACTION/TASK REQUESTS = False (e.g., "Remind me to...", "Create a task...", "Set an alarm...")
 
     **IMPORTANT**: If the question is a command or request for the AI to DO something (remind, create, add, set, schedule, etc.), 
-    it should ALWAYS return False, even if "Omi" or "Friend" is mentioned in the task content.
+    it should ALWAYS return False, even if "Toki" or "Friend" is mentioned in the task content.
 
-    Examples of Omi/Friend App Questions (return True):
-    - "How does Omi work?"
-    - "What can Omi do?"
+    Examples of Toki/Omi App Questions (return True):
+    - "How does Toki work?"
+    - "What can Toki do?"
     - "How can I buy the device?"
     - "Where do I get Friend?"
     - "What features does the app have?"
-    - "How do I set up Omi?"
-    - "Does Omi support multiple languages?"
+    - "How do I set up Toki?"
+    - "Does Toki support multiple languages?"
     - "What is the battery life?"
     - "How do I connect my device?"
 
@@ -130,22 +130,22 @@ def retrieve_is_an_omi_question(question: str) -> bool:
     - "When did I last talk to John?"
 
     Examples of Action/Task Requests (return False):
-    - "Can you remind me to check the Omi chat discussion on GitHub?"
-    - "Remind me to update the Omi firmware"
+    - "Can you remind me to check the Toki chat discussion on GitHub?"
+    - "Remind me to update the Toki firmware"
     - "Create a task to review Friend documentation"
-    - "Set an alarm for my Omi meeting"
-    - "Add to my list: check Omi updates"
+    - "Set an alarm for my Toki meeting"
+    - "Add to my list: check Toki updates"
     - "Schedule a reminder about the Friend app launch"
 
     KEY RULES: 
     1. If the question uses personal pronouns (my, I, me, mine, we) asking about stored data/memories/conversations/topics, return False.
     2. If the question is a command/request starting with action verbs (remind, create, add, set, schedule, make, etc.), return False.
-    3. Only return True if asking about the Omi/Friend app's features, capabilities, or purchasing information.
+    3. Only return True if asking about the Toki/Omi app's features, capabilities, or purchasing information.
 
     User's Question:
     {question}
     
-    Is this asking about the Omi/Friend app product itself?
+    Is this asking about the Toki/Omi app product itself?
     '''.replace('    ', '').strip()
     with_parser = llm_mini.with_structured_output(IsAnOmiQuestion)
     response: IsAnOmiQuestion = with_parser.invoke(prompt)
@@ -273,7 +273,7 @@ def _get_answer_omi_question_prompt(messages: List[Message], context: str) -> st
     )
 
     return f"""
-    You are an assistant for answering questions about the app Omi, also known as Friend.
+    You are an assistant for answering questions about the app Toki, also known as Friend.
     Continue the conversation, answering the question based on the context provided.
 
     Context:
@@ -662,7 +662,7 @@ To maximize context and find the most relevant conversations, follow these strat
 </conversation_retrieval_strategies>
 
 <assistant_role>
-You are Omi, an AI assistant & mentor for {user_name}. You are a smart friend who gives honest and concise feedback and responses to user's questions in the most personalized way possible as you know everything about the user.
+You are Toki, an AI assistant & mentor for {user_name}. You are a smart friend who gives honest and concise feedback and responses to user's questions in the most personalized way possible as you know everything about the user.
 </assistant_role>
 
 <user_context>
@@ -759,7 +759,7 @@ def _get_agentic_qa_prompt_fallback(variables: dict) -> str:
     plugin_personality_hint = variables.get("plugin_personality_hint", "")
 
     return f"""<assistant_role>
-You are Omi, an AI assistant & mentor for {user_name}. You are a smart friend who gives honest and concise feedback and responses to user's questions in the most personalized way possible as you know everything about the user.
+You are Toki, an AI assistant & mentor for {user_name}. You are a smart friend who gives honest and concise feedback and responses to user's questions in the most personalized way possible as you know everything about the user.
 </assistant_role>
 {goal_section}{file_context_section}{context_section}
 

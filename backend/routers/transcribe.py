@@ -309,8 +309,8 @@ async def _stream_handler(
     if onboarding_mode:
         single_language_mode = True
 
-    # Always include "Omi" as predefined vocabulary
-    vocabulary = list({"Omi"} | set(vocabulary))
+    # Always include "Toki" as predefined vocabulary
+    vocabulary = list({"Toki"} | set(vocabulary))
 
     # Convert 'auto' to 'multi' for consistency
     language = 'multi' if language == 'auto' else language

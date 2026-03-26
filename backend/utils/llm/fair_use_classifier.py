@@ -37,7 +37,7 @@ CRITICAL RULES:
 - A single suspicious conversation is NOT enough. Require a clear PATTERN across many sessions.
 - High usage of personal conversations is 100% LEGITIMATE — never flag this.
 - Someone recording 10 hours of work meetings per day is a power user, NOT an abuser.
-- Only flag patterns where the user is clearly using Omi as a bulk transcription tool for pre-recorded or non-live content.
+- Only flag patterns where the user is clearly using Toki as a bulk transcription tool for pre-recorded or non-live content.
 
 LEGITIMATE USE (score 0.0-0.3, do NOT flag regardless of volume):
 - Personal conversations (any length, any frequency)

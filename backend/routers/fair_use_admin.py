@@ -213,7 +213,7 @@ def _user_facing_message(stage: str, case_ref: str = '') -> str:
     messages = {
         'none': 'Your usage is within normal limits.',
         'warning': (
-            'Your usage is higher than typical. Omi is designed for personal conversations. '
+            'Your usage is higher than typical. Toki is designed for personal conversations. '
             f'If non-personal content transcription continues, your service may be adjusted.{ref_note}'
         ),
         'throttle': (
