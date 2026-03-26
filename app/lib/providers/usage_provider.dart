@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:omi/backend/http/api/payment.dart';
 import 'package:omi/backend/http/api/users.dart';
-import 'package:omi/models/subscription.dart';
 import 'package:omi/models/user_usage.dart';
 import 'package:omi/utils/logger.dart';
 
 class UsageProvider with ChangeNotifier {
-  UserSubscriptionResponse? _subscription;
-  UserSubscriptionResponse? get subscription => _subscription;
   UsageStats? _todayUsage;
   UsageStats? get todayUsage => _todayUsage;
 
@@ -33,60 +29,24 @@ class UsageProvider with ChangeNotifier {
   List<UsageHistoryPoint>? _allTimeHistory;
   List<UsageHistoryPoint>? get allTimeHistory => _allTimeHistory;
 
-  bool _isUsageLoading = false;
-  bool _isSubscriptionLoading = false;
-  bool _isPaymentLoading = false;
-  bool get isLoading => _isUsageLoading || _isSubscriptionLoading || _isPaymentLoading;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   String? _error;
   String? get error => _error;
 
-  bool _forceOutOfCredits = false;
+  bool get isOutOfCredits => false;
 
-  // Payment-related state
-  Map<String, dynamic>? _availablePlans;
-  Map<String, dynamic>? get availablePlans => _availablePlans;
-  bool _isLoadingPlans = false;
-  bool get isLoadingPlans => _isLoadingPlans;
+  Future<void> fetchSubscription() async {}
 
-  bool get isOutOfCredits {
-    return false; // TOKI: monetization disabled — all features unlocked
-  }
+  Future<void> refreshSubscription() async {}
 
-  Future<void> markAsOutOfCreditsAndRefresh() async {
-    if (!_forceOutOfCredits) {
-      _forceOutOfCredits = true;
-      notifyListeners(); // Immediate UI update
-    }
-    await fetchSubscription(); // Sync with backend
-  }
-
-  Future<void> fetchSubscription() async {
-    if (_isSubscriptionLoading) return;
-
-    _isSubscriptionLoading = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      _subscription = await getUserSubscription();
-    } catch (e) {
-      _error = 'Failed to load subscription data. Please try again later.';
-      Logger.debug('Failed to fetch subscription: $e');
-    } finally {
-      _isSubscriptionLoading = false;
-      _forceOutOfCredits = false; // Reset optimistic flag
-      notifyListeners();
-    }
-  }
-
-  /// Alias for fetchSubscription - refreshes subscription data from backend
-  Future<void> refreshSubscription() => fetchSubscription();
+  Future<void> markAsOutOfCreditsAndRefresh() async {}
 
   Future<void> fetchUsageStats({required String period}) async {
-    if (_isUsageLoading) return;
+    if (_isLoading) return;
 
-    _isUsageLoading = true;
+    _isLoading = true;
     _error = null;
     notifyListeners();
 
@@ -118,120 +78,14 @@ class UsageProvider with ChangeNotifier {
       _error = 'Failed to load usage data. Please try again later.';
       Logger.debug('Failed to fetch usage stats: $e');
     } finally {
-      _isUsageLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
 
-  // Payment-related methods
-  Future<void> loadAvailablePlans() async {
-    if (_isLoadingPlans) return;
-
-    _isLoadingPlans = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      final response = await getAvailablePlans();
-      if (response != null) {
-        _availablePlans = response;
-      } else {
-        _error = 'Failed to load available plans. Please try again later.';
-      }
-    } catch (e) {
-      _error = 'Failed to load available plans. Please try again later.';
-      Logger.debug('Error loading available plans: $e');
-    } finally {
-      _isLoadingPlans = false;
-      notifyListeners();
-    }
-  }
-
-  Future<bool> cancelUserSubscription() async {
-    if (_isPaymentLoading) return false;
-
-    _isPaymentLoading = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      final success = await cancelSubscription();
-      if (success) {
-        await fetchSubscription();
-        await loadAvailablePlans();
-      }
-      return success;
-    } catch (e) {
-      _error = 'Failed to cancel subscription. Please try again later.';
-      Logger.debug('Error canceling subscription: $e');
-      return false;
-    } finally {
-      _isPaymentLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<Map<String, dynamic>?> upgradeUserSubscription({required String priceId}) async {
-    if (_isPaymentLoading) return null;
-
-    _isPaymentLoading = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      final result = await upgradeSubscription(priceId: priceId);
-      if (result != null) {
-        await fetchSubscription(); // Refresh subscription data
-        await loadAvailablePlans(); // Refresh available plans
-      }
-      return result;
-    } catch (e) {
-      _error = 'Failed to upgrade subscription. Please try again later.';
-      Logger.debug('Error upgrading subscription: $e');
-      return null;
-    } finally {
-      _isPaymentLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<Map<String, dynamic>?> createUserCheckoutSession({required String priceId}) async {
-    if (_isPaymentLoading) return null;
-
-    _isPaymentLoading = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      final sessionData = await createCheckoutSession(priceId: priceId);
-      return sessionData;
-    } catch (e) {
-      _error = 'Failed to create checkout session. Please try again later.';
-      Logger.debug('Error creating checkout session: $e');
-      return null;
-    } finally {
-      _isPaymentLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<Map<String, String>?> openCustomerPortal() async {
-    if (_isPaymentLoading) return null;
-
-    _isPaymentLoading = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      final sessionData = await createCustomerPortalSession();
-      return sessionData;
-    } catch (e) {
-      _error = 'Failed to open customer portal. Please try again.';
-      Logger.debug('Error opening customer portal: $e');
-      return null;
-    } finally {
-      _isPaymentLoading = false;
-      notifyListeners();
+  Future<void> fetchAllPeriods() async {
+    for (final period in ['today', 'monthly', 'yearly', 'all_time']) {
+      await fetchUsageStats(period: period);
     }
   }
 }
