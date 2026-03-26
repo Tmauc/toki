@@ -415,7 +415,7 @@ class _OmiGlassOtaUpdateState extends State<OmiGlassOtaUpdate> {
             padding: const EdgeInsets.only(left: 4, right: 4, bottom: 12),
             child: Text(
               context.l10n.whatsNew,
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+              style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
             ),
           ),
           Container(

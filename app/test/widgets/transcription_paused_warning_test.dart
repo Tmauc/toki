@@ -37,7 +37,7 @@ void main() {
     await SharedPreferencesUtil.init();
   });
 
-  Future<void> _pumpLocalizedApp(WidgetTester tester, Widget child) async {
+  Future<void> pumpLocalizedApp(WidgetTester tester, Widget child) async {
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: const [
@@ -64,7 +64,7 @@ void main() {
       captureProvider.onConnectionStateChanged(true);
       captureProvider.updateRecordingState(RecordingState.pause);
 
-      await _pumpLocalizedApp(
+      await pumpLocalizedApp(
         tester,
         MultiProvider(
           providers: [
@@ -93,7 +93,7 @@ void main() {
       captureProvider.onConnectionStateChanged(true);
       captureProvider.updateRecordingState(RecordingState.record);
 
-      await _pumpLocalizedApp(
+      await pumpLocalizedApp(
         tester,
         MultiProvider(
           providers: [

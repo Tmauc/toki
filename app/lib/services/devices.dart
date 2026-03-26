@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 
 import 'package:collection/collection.dart';
 
@@ -9,7 +7,6 @@ import 'package:omi/backend/preferences.dart';
 import 'package:omi/backend/schema/bt_device/bt_device.dart';
 import 'package:omi/services/devices/device_connection.dart';
 import 'package:omi/services/devices/discovery/apple_watch_discoverer.dart';
-import 'package:omi/services/devices/discovery/bluetooth_discoverer.dart';
 import 'package:omi/services/devices/discovery/device_discoverer.dart';
 import 'package:omi/services/devices/discovery/native_bluetooth_discoverer.dart';
 import 'package:omi/services/devices/errors.dart';

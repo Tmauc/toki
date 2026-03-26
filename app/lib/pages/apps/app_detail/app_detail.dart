@@ -472,7 +472,7 @@ class _AppDetailPageState extends State<AppDetailPage> {
             final permission = entry.value;
             final isLast = entry.key == permissionItems.length - 1;
             return _buildPermissionItem(permission, isLast);
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -564,7 +564,7 @@ class _AppDetailPageState extends State<AppDetailPage> {
   }
 
   Widget _buildChatToolChip(ChatTool tool) {
-    final color = Colors.grey;
+    const color = Colors.grey;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
@@ -1572,7 +1572,7 @@ class _AppDetailPageState extends State<AppDetailPage> {
                                       children: [
                                         Text(
                                           context.l10n.ratingsAndReviews,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -2137,8 +2137,8 @@ class _RecentReviewsSectionState extends State<RecentReviewsSection> {
                     )
                   : Text(
                       widget.userReview == null
-                          ? AppLocalizations.of(context)!.submitReview
-                          : AppLocalizations.of(context)!.updateReview,
+                          ? AppLocalizations.of(context).submitReview
+                          : AppLocalizations.of(context).updateReview,
                     ),
             ),
           ),
@@ -2148,7 +2148,7 @@ class _RecentReviewsSectionState extends State<RecentReviewsSection> {
   }
 
   Widget _buildReviewItem(BuildContext context, AppReview review, {bool isUserReview = false}) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final displayName =
         isUserReview ? l10n.yourReview : (review.username.isNotEmpty ? review.username : l10n.anonymousUser);
     final avatarSeed = review.uid.isNotEmpty ? review.uid : review.username;

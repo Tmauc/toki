@@ -222,7 +222,7 @@ class _CalendarSettingsPageState extends State<CalendarSettingsPage> {
           const SizedBox(width: 10),
           Transform.scale(
             scale: 0.8,
-            child: CupertinoSwitch(value: isEnabled, onChanged: onToggle, activeColor: ResponsiveHelper.purplePrimary),
+            child: CupertinoSwitch(value: isEnabled, onChanged: onToggle, activeTrackColor: ResponsiveHelper.purplePrimary),
           ),
         ],
       ),
@@ -279,7 +279,7 @@ class _CalendarSettingsPageState extends State<CalendarSettingsPage> {
           const SizedBox(width: 10),
           Transform.scale(
             scale: 0.8,
-            child: CupertinoSwitch(value: value, onChanged: onChanged, activeColor: ResponsiveHelper.purplePrimary),
+            child: CupertinoSwitch(value: value, onChanged: onChanged, activeTrackColor: ResponsiveHelper.purplePrimary),
           ),
         ],
       ),
@@ -344,7 +344,7 @@ class _CalendarSettingsPageState extends State<CalendarSettingsPage> {
                         SharedPreferencesUtil().enabledCalendarIds = _enabledCalendarIds.toList();
                       });
                     },
-                    activeColor: ResponsiveHelper.purplePrimary,
+                    activeTrackColor: ResponsiveHelper.purplePrimary,
                   ),
                 ),
               ],

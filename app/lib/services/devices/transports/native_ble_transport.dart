@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:omi/gen/pigeon_communicator.g.dart';
 import 'package:omi/services/bridges/ble_bridge.dart';
-import 'package:omi/services/devices/models.dart';
 import 'package:omi/utils/logger.dart';
 import 'device_transport.dart';
 

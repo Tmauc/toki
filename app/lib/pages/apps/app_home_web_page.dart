@@ -11,7 +11,7 @@ import 'package:omi/utils/browser.dart';
 class AppHomeWebPage extends StatefulWidget {
   final App app;
 
-  const AppHomeWebPage({Key? key, required this.app}) : super(key: key);
+  const AppHomeWebPage({super.key, required this.app});
 
   @override
   State<AppHomeWebPage> createState() => _AppHomeWebPageState();

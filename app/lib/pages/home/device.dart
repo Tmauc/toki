@@ -216,7 +216,7 @@ class _ConnectedDeviceState extends State<ConnectedDevice> {
             onTap: provider.connectedDevice != null
                 ? () {
                     // Route to OmiGlass OTA page for openglass devices
-                    final deviceName = provider.connectedDevice?.name?.toLowerCase() ?? '';
+                    final deviceName = provider.connectedDevice?.name.toLowerCase() ?? '';
                     final isOpenGlass = provider.connectedDevice?.type == DeviceType.openglass ||
                         deviceName.contains('openglass') ||
                         deviceName.contains('omiglass') ||

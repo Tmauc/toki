@@ -144,7 +144,7 @@ class _DeviceOnboardingPageState extends State<DeviceOnboardingPage> with Single
                 // Bottom drawer card - wraps content
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(32, 24, 32, 20),
+                  padding: const EdgeInsets.fromLTRB(32, 24, 32, 20),
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),

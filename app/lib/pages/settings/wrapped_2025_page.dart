@@ -775,8 +775,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
   Widget _buildCardBase({
     required Color backgroundColor,
     required Widget child,
-    Color textColor = Colors.white,
-    bool isDark = true,
     EdgeInsets? customPadding,
   }) {
     return Container(
@@ -1330,7 +1328,6 @@ class _YearInNumbersAnimated extends StatefulWidget {
     required this.percentile,
     required this.isActive,
     this.onShare,
-    this.shareKey,
   });
 
   @override
@@ -2480,8 +2477,6 @@ class _MemorableDaysAnimated extends StatefulWidget {
     this.summaryBadgeText = 'Your Top Days',
     this.onShare,
     this.badgeColor = WrappedColors.teal,
-    this.isSingleMoment = false,
-    this.badgeEmoji,
   });
 
   @override
@@ -4504,7 +4499,7 @@ class _ThatsAWrapAnimatedState extends State<_ThatsAWrapAnimated> with TickerPro
                           // Stats row
                           Row(
                             children: [
-                              Expanded(child: _buildStatItem('${widget.totalHours.toStringAsFixed(0)}', 'hours', '⏱️')),
+                              Expanded(child: _buildStatItem(widget.totalHours.toStringAsFixed(0), 'hours', '⏱️')),
                               Container(width: 1, height: 50, color: Colors.white.withOpacity(0.2)),
                               Expanded(child: _buildStatItem('${widget.totalConvs}', 'convos', '💬')),
                               Container(width: 1, height: 50, color: Colors.white.withOpacity(0.2)),

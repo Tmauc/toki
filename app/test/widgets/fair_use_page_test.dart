@@ -705,13 +705,13 @@ void main() {
       );
 
       await tester.pumpWidget(
-        buildTestApp(FairUseSuccessHarness(
+        buildTestApp(const FairUseSuccessHarness(
           status: {
             'stage': 'warning',
             'case_ref': 'FU-99887',
             'message': '',
-            'usage_pct': {'daily': 85.0},
-            'limits': {'daily_hours': 2.0},
+            'usage_pct': const {'daily': 85.0},
+            'limits': const {'daily_hours': 2.0},
             'speech_hours_today': 1.7,
             'speech_hours_3day': 0,
             'speech_hours_weekly': 0,

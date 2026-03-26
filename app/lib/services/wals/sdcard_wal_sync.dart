@@ -328,7 +328,7 @@ class SDCardWalSyncImpl implements SDCardWalSync {
     int fileNum = wal.fileNum;
     int offset = wal.storageOffset;
 
-    Logger.debug("_readStorageBytesToFileLegacy ${offset}");
+    Logger.debug("_readStorageBytesToFileLegacy $offset");
 
     List<List<int>> bytesData = [];
     var chunkSize = sdcardChunkSizeSecs * 100;
@@ -461,7 +461,7 @@ class SDCardWalSyncImpl implements SDCardWalSync {
     int offset = wal.storageOffset;
     int timerStart = wal.timerStart;
 
-    Logger.debug("_readStorageBytesToFileWithMarkers ${offset}");
+    Logger.debug("_readStorageBytesToFileWithMarkers $offset");
 
     List<List<int>> bytesData = [];
     var bytesLeft = 0;
