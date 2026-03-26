@@ -97,8 +97,7 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
       'Top Phrases',
       'Summary Collage',
     ];
-    if (page >= 0 && page < cardNames.length) {
-    }
+    if (page >= 0 && page < cardNames.length) {}
   }
 
   Future<void> _loadWrappedStatus() async {
@@ -145,15 +144,13 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
             final totalMinutes = (totalHours * 60).toInt();
             final totalConvs = _result?['total_conversations'] ?? 0;
             final daysActive = _result?['days_active'] ?? 0;
-          } else if (_status == WrappedStatus.error) {
-          }
+          } else if (_status == WrappedStatus.error) {}
         }
       }
     });
   }
 
   Future<void> _generateWrapped() async {
-
     setState(() {
       _status = WrappedStatus.processing;
       _progress = {'step': context.l10n.wrappedStarting, 'pct': 0.0};
@@ -199,7 +196,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
     final cardName = cardInfo?['name'] ?? filename;
     final cardIndex = cardInfo?['index'] ?? -1;
 
-
     try {
       HapticFeedback.mediumImpact();
 
@@ -239,7 +235,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
         text: context.l10n.wrappedShareText,
         sharePositionOrigin: sharePositionOrigin,
       );
-
 
       // Clear the template after sharing
       if (mounted) {
@@ -1328,6 +1323,7 @@ class _YearInNumbersAnimated extends StatefulWidget {
     required this.percentile,
     required this.isActive,
     this.onShare,
+    this.shareKey,
   });
 
   @override
@@ -1965,9 +1961,8 @@ class _CategoryChartAnimatedState extends State<_CategoryChartAnimated> with Tic
               final isFirst = index == 0;
 
               // Label appears when its slice starts animating
-              final labelOpacity = index < _sliceAnimations.length
-                  ? _sliceAnimations[index].value.clamp(0.0, 1.0)
-                  : 0.0;
+              final labelOpacity =
+                  index < _sliceAnimations.length ? _sliceAnimations[index].value.clamp(0.0, 1.0) : 0.0;
 
               return Opacity(
                 opacity: labelOpacity,
@@ -2224,9 +2219,8 @@ class _ActionsAnimatedState extends State<_ActionsAnimated> with TickerProviderS
                               color: WrappedColors.indigo,
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              decoration: strikethroughProgress > 0.9
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none,
+                              decoration:
+                                  strikethroughProgress > 0.9 ? TextDecoration.lineThrough : TextDecoration.none,
                               decorationColor: WrappedColors.indigo,
                               decorationThickness: 2,
                             ),
@@ -2423,8 +2417,8 @@ class _MemorableDayData {
     required this.title,
     required this.description,
     required this.dateStr,
-  }) : month = _parseMonth(dateStr),
-       day = _parseDay(dateStr);
+  })  : month = _parseMonth(dateStr),
+        day = _parseDay(dateStr);
 
   static int _parseMonth(String dateStr) {
     final months = {
@@ -2477,6 +2471,8 @@ class _MemorableDaysAnimated extends StatefulWidget {
     this.summaryBadgeText = 'Your Top Days',
     this.onShare,
     this.badgeColor = WrappedColors.teal,
+    this.isSingleMoment = false,
+    this.badgeEmoji,
   });
 
   @override
@@ -2703,9 +2699,8 @@ class _MemorableDaysAnimatedState extends State<_MemorableDaysAnimated> with Tic
     return AnimatedBuilder(
       animation: _introAnimation,
       builder: (context, child) {
-        final currentDay = widget.days.isNotEmpty && _currentDayIndex < widget.days.length
-            ? widget.days[_currentDayIndex]
-            : null;
+        final currentDay =
+            widget.days.isNotEmpty && _currentDayIndex < widget.days.length ? widget.days[_currentDayIndex] : null;
 
         return Column(
           children: [
