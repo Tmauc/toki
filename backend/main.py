@@ -26,13 +26,11 @@ from routers import (
     sync,
     apps,
     custom_auth,
-    # payment,  # TOKI: removed
     integration,
     conversations,
     memories,
     mcp,
     mcp_sse,
-    # oauth,  # TOKI: removed
     auth,
     action_items,
     task_integrations,
@@ -47,11 +45,8 @@ from routers import (
     wrapped,
     folders,
     goals,
-    announcements,
-    phone_calls,
     agent_tools,
     metrics,
-    fair_use_admin,
     toki_voice_personas,  # TOKI: Voice Personas feature
 )
 
@@ -97,13 +92,7 @@ app.include_router(apps.router)
 app.include_router(custom_auth.router)
 app.include_router(calendar_meetings.router)
 app.include_router(calendar_onboarding.router)
-# TOKI: oauth router for marketplace apps disabled
-# app.include_router(oauth.router)
-app.include_router(auth.router)  # Added auth router (for the main Omi App, this is the core auth router)
-
-
-# TOKI: payment router disabled — monetization removed
-# app.include_router(payment.router)
+app.include_router(auth.router)
 app.include_router(mcp.router)
 app.include_router(mcp_sse.router)
 app.include_router(developer.router)
@@ -112,11 +101,8 @@ app.include_router(wrapped.router)
 app.include_router(folders.router)
 app.include_router(knowledge_graph.router)
 app.include_router(goals.router)
-app.include_router(announcements.router)
-app.include_router(phone_calls.router)
 app.include_router(agent_tools.router)
 app.include_router(metrics.router)
-app.include_router(fair_use_admin.router)
 app.include_router(toki_voice_personas.router)  # TOKI: /v1/toki/voice-personas
 
 
