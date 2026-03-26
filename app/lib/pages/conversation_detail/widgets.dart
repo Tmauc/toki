@@ -60,9 +60,8 @@ List<TextSpan> highlightSearchMatches(String text, String searchQuery, {int curr
       TextSpan(
         text: text.substring(index, index + searchQuery.length),
         style: TextStyle(
-          backgroundColor: isCurrentResult
-              ? Colors.orange.withValues(alpha: 0.9)
-              : Colors.deepPurple.withValues(alpha: 0.6),
+          backgroundColor:
+              isCurrentResult ? Colors.orange.withValues(alpha: 0.9) : Colors.deepPurple.withValues(alpha: 0.6),
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
@@ -541,8 +540,7 @@ class ActionItemsListWidget extends StatelessWidget {
                                   context.read<ConversationDetailProvider>().updateActionItemState(value, idx);
                                   setConversationActionItemState(provider.conversation.id, [idx], [value]);
                                   if (value) {
-                                  } else {
-                                  }
+                                  } else {}
                                 }
                               },
                             ),
@@ -721,11 +719,9 @@ class AppResultDetailWidget extends StatelessWidget {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => const SummarizedAppsBottomSheet(),
+                            // TOKI: Summary apps disabled — custom summary plugins coming soon
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Custom summary plugins coming soon')),
                             );
                           },
                           child: RichText(
@@ -909,11 +905,9 @@ class GetAppsWidgets extends StatelessWidget {
                 ),
                 child: MaterialButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => const SummarizedAppsBottomSheet(),
+                    // TOKI: Summary apps disabled — custom summary plugins coming soon
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Custom summary plugins coming soon')),
                     );
                   },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
