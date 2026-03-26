@@ -107,7 +107,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerProviderStateMixin {
   ForegroundUtil foregroundUtil = ForegroundUtil();
-  List<Widget> screens = [Container(), const SizedBox(), const SizedBox(), const SizedBox()]; // TOKI: 4 tabs
+  List<Widget> screens = [Container(), const SizedBox(), const SizedBox()]; // TOKI: 3 tabs
 
   final _upgrader = MyUpgrader(debugLogging: false, debugDisplayOnce: false);
   bool scriptsInProgress = false;
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
       ConversationsPage(key: _conversationsPageKey),
       ActionItemsPage(key: _actionItemsPageKey, onAddGoal: _addGoal),
       MemoriesPage(key: _memoriesPageKey),
-      const PhoneCallsPage(), // TOKI: replaces Apps tab
+      // TOKI: PhoneCallsPage disabled — Twilio not configured
     ];
     SharedPreferencesUtil().onboardingCompleted = true;
     updateUserOnboardingState(completed: true);
@@ -516,7 +516,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
               resizeToAvoidBottomInset: false,
               appBar: homeProvider.selectedIndex == 5 ? null : _buildAppBar(context),
               body: DefaultTabController(
-                length: 4, // TOKI: Home, Action Items, Memories, Phone Calls
+                length: 3, // TOKI: Home, Action Items, Memories
                 initialIndex: homeProvider.selectedIndex,
                 child: GestureDetector(
                   onTap: () {

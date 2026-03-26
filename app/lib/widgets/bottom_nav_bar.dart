@@ -103,26 +103,7 @@ class BottomNavBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Phone Calls tab (TOKI: replaces Apps tab)
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          HapticFeedback.mediumImpact();
-                          primaryFocus?.unfocus();
-                          onTabTap(3, home.selectedIndex == 3);
-                        },
-                        child: SizedBox(
-                          height: 90,
-                          child: Center(
-                            child: Icon(
-                              FontAwesomeIcons.phone,
-                              color: home.selectedIndex == 3 ? Colors.white : Colors.grey,
-                              size: 26,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // TOKI: Phone Calls tab disabled — Twilio not configured
                   ],
                 ),
               ),
