@@ -69,7 +69,7 @@ from database.users import get_stripe_connect_account_id
 from models.app import App, UsageHistoryItem, UsageHistoryType
 from models.conversation import Conversation
 from models.other import Person
-from utils import stripe
+# TOKI: stripe removed
 from utils.llm.persona import condense_conversations, condense_memories, generate_persona_description, condense_tweets
 from utils.llm.usage_tracker import track_usage, Features
 from utils.social import get_twitter_timeline, TwitterProfile, get_twitter_profile
@@ -515,15 +515,15 @@ def upsert_app_payment_link(
 
         # product
         if not app.payment_product_id:
-            payment_product = stripe.create_product(f"{app.name} Monthly Plan", app.description, app.image)
+            pass  # TOKI: stripe removed
             app.payment_product_id = payment_product.id
 
         # price
-        payment_price = stripe.create_app_monthly_recurring_price(app.payment_product_id, int(price * 100))
+        pass  # TOKI: stripe removed
         app.payment_price_id = payment_price.id
 
         # payment link
-        payment_link = stripe.create_app_payment_link(app.payment_price_id, app.id, stripe_acc_id)
+        pass  # TOKI: stripe removed
         app.payment_link_id = payment_link.id
         app.payment_link = payment_link.url
 
@@ -572,7 +572,7 @@ def find_app_subscription(app_id: str, uid: str, status_filter: str = 'all') -> 
         latest_subscription = None
 
         if cached_customer_id:
-            latest_subscription = stripe.find_app_subscription_by_customer_id(
+            pass  # TOKI: stripe removed
                 cached_customer_id, app_id, uid, status_filter
             )
 
@@ -580,7 +580,7 @@ def find_app_subscription(app_id: str, uid: str, status_filter: str = 'all') -> 
                 cached_customer_id = None
 
         if not latest_subscription and not cached_customer_id:
-            latest_subscription = stripe.find_app_subscription_by_metadata(app_id, uid, status_filter)
+            pass  # TOKI: stripe removed
 
             # Cache the customer ID for future lookups
             if latest_subscription and latest_subscription.get('customer'):

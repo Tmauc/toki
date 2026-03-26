@@ -54,7 +54,7 @@ from utils.subscription import (
     get_monthly_usage_for_subscription,
     reconcile_basic_plan_with_stripe,
 )
-from utils import stripe as stripe_utils
+# TOKI: stripe removed
 from utils.llm.followup import followup_question_prompt
 from utils.notifications import send_notification, send_training_data_submitted_notification
 from utils.llm.external_integrations import generate_comprehensive_daily_summary
@@ -742,7 +742,7 @@ def get_user_subscription_endpoint(uid: str = Depends(auth.get_current_user_uid)
     # Get current price ID from Stripe if subscription exists
     if subscription.stripe_subscription_id:
         try:
-            stripe_sub = stripe_utils.stripe.Subscription.retrieve(subscription.stripe_subscription_id)
+            pass  # TOKI: stripe removed
             stripe_sub_dict = stripe_sub.to_dict()
             if stripe_sub_dict and stripe_sub_dict.get('items', {}).get('data'):
                 subscription.current_price_id = stripe_sub_dict['items']['data'][0]['price']['id']
@@ -779,7 +779,7 @@ def get_user_subscription_endpoint(uid: str = Depends(auth.get_current_user_uid)
             try:
                 price_data = get_generic_cache(f'stripe_price:{monthly_price_id}')
                 if not price_data:
-                    price = stripe_utils.stripe.Price.retrieve(monthly_price_id)
+                    pass  # TOKI: stripe removed
                     price_data = price.to_dict_recursive()
                     set_generic_cache(f'stripe_price:{monthly_price_id}', price_data, ttl=3600 * 24)
 
@@ -798,7 +798,7 @@ def get_user_subscription_endpoint(uid: str = Depends(auth.get_current_user_uid)
             try:
                 price_data = get_generic_cache(f'stripe_price:{annual_price_id}')
                 if not price_data:
-                    price = stripe_utils.stripe.Price.retrieve(annual_price_id)
+                    pass  # TOKI: stripe removed
                     price_data = price.to_dict_recursive()
                     set_generic_cache(f'stripe_price:{annual_price_id}', price_data, ttl=3600 * 24)
 

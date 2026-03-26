@@ -26,13 +26,13 @@ from routers import (
     sync,
     apps,
     custom_auth,
-    payment,
+    # payment,  # TOKI: removed
     integration,
     conversations,
     memories,
     mcp,
     mcp_sse,
-    oauth,
+    # oauth,  # TOKI: removed
     auth,
     action_items,
     task_integrations,
