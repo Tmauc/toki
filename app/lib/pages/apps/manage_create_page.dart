@@ -112,7 +112,7 @@ class ManageCreatePage extends StatelessWidget {
                               : Padding(
                                   padding: const EdgeInsets.only(left: 16.0, bottom: 10),
                                   child: Text(
-                                    context.l10n.privateAppsCount(provider.userPrivateApps.length.toString()),
+                                    context.l10n.privateAppsCount(provider.userPrivateApps.length),
                                     style: const TextStyle(fontSize: 18),
                                   ),
                                 ),
@@ -134,7 +134,7 @@ class ManageCreatePage extends StatelessWidget {
                               : Padding(
                                   padding: const EdgeInsets.only(left: 16.0, bottom: 10),
                                   child: Text(
-                                    context.l10n.publicAppsCount(provider.userPublicApps.length.toString()),
+                                    context.l10n.publicAppsCount(provider.userPublicApps.length),
                                     style: const TextStyle(fontSize: 18),
                                   ),
                                 ),

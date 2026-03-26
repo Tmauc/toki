@@ -301,9 +301,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryAdjustingSearch => 'Try adjusting your search or filters';
 
   @override
-  String get createYourOwnApp => 'Create Your Own App';
-
-  @override
   String get buildAndShareApp => 'Build and share your custom app';
 
   @override
@@ -455,15 +452,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get dataProtectionDesc =>
       'Your data is secured by default with strong encryption. Review your settings and future privacy options below.';
-
-  @override
-  String get appAccess => 'App Access';
-
-  @override
-  String get appAccessDesc => 'The following apps can access your data. Tap on an app to manage its permissions.';
-
-  @override
-  String get noAppsExternalAccess => 'No installed apps have external access to your data.';
 
   @override
   String get deviceName => 'Device Name';
@@ -1672,9 +1660,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get creating => 'Creating...';
 
   @override
-  String get createApp => 'Create App';
-
-  @override
   String get searchingForDevices => 'Searching for devices...';
 
   @override
@@ -1760,9 +1745,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get leaveReviewAndroid =>
       'Help us reach more people by leaving a review in the Google Play Store. Your feedback means the world to us!';
-
-  @override
-  String get rateOnAppStore => 'Rate on App Store';
 
   @override
   String get rateOnGooglePlay => 'Rate on Google Play';
@@ -2769,9 +2751,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadingApps => 'Loading apps...';
 
   @override
-  String get browseInstallCreateApps => 'Browse, install, and create apps';
-
-  @override
   String get all => 'All';
 
   @override
@@ -2799,25 +2778,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createNewApp => 'Create New App';
 
   @override
-  String get buildSubmitCustomOmiApp => 'Build and submit your custom Toki app';
-
-  @override
   String get submittingYourApp => 'Submitting your app...';
 
   @override
   String get preparingFormForYou => 'Preparing the form for you...';
 
   @override
-  String get appDetails => 'App Details';
-
-  @override
   String get paymentDetails => 'Payment Details';
 
   @override
   String get previewAndScreenshots => 'Preview and Screenshots';
-
-  @override
-  String get appCapabilities => 'App Capabilities';
 
   @override
   String get aiPrompts => 'AI Prompts';
@@ -2846,28 +2816,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get makeMyAppPublic => 'Make my app public';
 
   @override
-  String get submitAppTermsAgreement =>
-      'By submitting this app, I agree to the Toki AI Terms of Service and Privacy Policy';
-
-  @override
-  String get submitApp => 'Submit App';
-
-  @override
   String get needHelpGettingStarted => 'Need help getting started?';
 
   @override
   String get clickHereForAppBuildingGuides => 'Click here for app building guides and documentation';
-
-  @override
-  String get submitAppQuestion => 'Submit App?';
-
-  @override
-  String get submitAppPublicDescription =>
-      'Your app will be reviewed and made public. You can start using it immediately, even during the review!';
-
-  @override
-  String get submitAppPrivateDescription =>
-      'Your app will be reviewed and made available to you privately. You can start using it immediately, even during the review!';
 
   @override
   String get startEarning => 'Start Earning! 💰';
@@ -2882,9 +2834,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get installsCount => 'Installs';
 
   @override
-  String get uninstallApp => 'Uninstall App';
-
-  @override
   String get subscribe => 'Subscribe';
 
   @override
@@ -2893,9 +2842,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get dataAccessWarning =>
       'This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app';
-
-  @override
-  String get installApp => 'Install App';
 
   @override
   String get betaTesterNotice =>
@@ -2985,9 +2931,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appIdCopiedToClipboard => 'App ID copied to clipboard';
-
-  @override
-  String get appCategoryModalTitle => 'App Category';
 
   @override
   String get pricingFree => 'Free';
@@ -3943,9 +3886,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updatingYourApp => 'Updating your app';
 
   @override
-  String get fetchingYourAppDetails => 'Fetching your app details';
-
-  @override
   String get updateAppQuestion => 'Update App?';
 
   @override
@@ -3961,16 +3901,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String appsCount(String count) {
     return 'Apps ($count)';
-  }
-
-  @override
-  String privateAppsCount(String count) {
-    return 'Private Apps ($count)';
-  }
-
-  @override
-  String publicAppsCount(String count) {
-    return 'Public Apps ($count)';
   }
 
   @override
@@ -4293,13 +4223,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get keyWord => 'Key';
-
-  @override
-  String get externalAppAccess => 'External App Access';
-
-  @override
-  String get externalAppAccessDescription =>
-      'The following installed apps have external integrations and can access your data, such as conversations and memories.';
 
   @override
   String get noExternalAppsHaveAccess => 'No external apps have access to your data.';
@@ -5035,9 +4958,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearChatAction => 'Clear Chat';
 
   @override
-  String get enableApps => 'Enable Apps';
-
-  @override
   String get omiAppName => 'Toki';
 
   @override
@@ -5692,15 +5612,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get syncingMessages => 'Syncing messages with server...';
-
-  @override
-  String get chatAppsTitle => 'Chat Apps';
-
-  @override
-  String get selectApp => 'Select App';
-
-  @override
-  String get noChatAppsEnabled => 'No chat apps enabled.\nTap \"Enable Apps\" to add some.';
 
   @override
   String get disable => 'Disable';
@@ -6491,11 +6402,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get allTemplates => 'All Templates';
 
   @override
-  String failedToInstallApp(String appName) {
-    return 'Failed to install $appName. Please try again.';
-  }
-
-  @override
   String errorInstallingApp(String appName, String error) {
     return 'Error installing $appName: $error';
   }
@@ -6907,9 +6813,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appCreatedSuccessfully => 'App created successfully!';
 
   @override
-  String get failedToCreateApp => 'Failed to create app. Please try again.';
-
-  @override
   String get addAppSelectCoreCapability => 'Please select one more core capability for your app to proceed';
 
   @override
@@ -6972,9 +6875,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addAppErrorSelectingThumbnailRetry => 'Error selecting thumbnail. Please try again.';
-
-  @override
-  String get addAppCapabilityConflictWithPersona => 'Other capabilities cannot be selected with Persona';
 
   @override
   String get addAppPersonaConflictWithCapabilities => 'Persona cannot be selected with other capabilities';
@@ -7082,16 +6982,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aiGenAppCreatedSuccessfully => 'App created successfully!';
 
   @override
-  String get aiGenFailedToCreateApp => 'Failed to create app';
-
-  @override
   String get aiGenErrorWhileCreatingApp => 'An error occurred while creating the app';
-
-  @override
-  String get aiGenFailedToGenerateApp => 'Failed to generate app. Please try again.';
-
-  @override
-  String get aiGenFailedToRegenerateIcon => 'Failed to regenerate icon';
 
   @override
   String get aiGenPleaseGenerateAppFirst => 'Please generate an app first';
@@ -7915,9 +7806,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get linkedIn => 'LinkedIn';
 
   @override
-  String get appStore => 'App Store';
-
-  @override
   String get googleSearch => 'Google Search';
 
   @override
@@ -8503,4 +8391,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cloudTranscriptionPoweredByDeepgram => 'Cloud transcription powered by Deepgram.';
+
+  @override
+  String get addAppCapabilityConflictWithPersona => 'Conflict';
+
+  @override
+  String get aiGenFailedToCreateApp => 'Failed';
+
+  @override
+  String get aiGenFailedToGenerateApp => 'Failed';
+
+  @override
+  String get aiGenFailedToRegenerateIcon => 'Failed';
+
+  @override
+  String get appCapabilities => 'Capabilities';
+
+  @override
+  String get appCategoryModalTitle => 'Category';
+
+  @override
+  String get appStore => 'App Store';
+
+  @override
+  String get chatAppsTitle => 'Chat Apps';
+
+  @override
+  String get createApp => 'Create App';
+
+  @override
+  String get createYourOwnApp => 'Create App';
+
+  @override
+  String get enableApps => 'Enable Apps';
+
+  @override
+  String get externalAppAccess => 'External Access';
+
+  @override
+  String get externalAppAccessDescription => 'External access description';
+
+  @override
+  String get failedToCreateApp => 'Failed';
+
+  @override
+  String failedToInstallApp(String appName) {
+    return 'Failed to install $appName';
+  }
+
+  @override
+  String get fetchingYourAppDetails => 'Loading...';
+
+  @override
+  String get noChatAppsEnabled => 'No apps enabled';
+
+  @override
+  String privateAppsCount(int count) {
+    return '$count private';
+  }
+
+  @override
+  String publicAppsCount(int count) {
+    return '$count public';
+  }
+
+  @override
+  String get rateOnAppStore => 'Rate';
+
+  @override
+  String get selectApp => 'Select App';
+
+  @override
+  String get submitApp => 'Submit';
+
+  @override
+  String get submitAppPrivateDescription => 'Private';
+
+  @override
+  String get submitAppPublicDescription => 'Public';
+
+  @override
+  String get submitAppQuestion => 'Submit?';
 }

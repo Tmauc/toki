@@ -122,76 +122,7 @@ class _DataPrivacyPageState extends State<DataPrivacyPage> {
                   const SizedBox(height: 24),
                   const Divider(color: Colors.grey),
                   const SizedBox(height: 24),
-                  Consumer<AppProvider>(
-                    builder: (context, appProvider, child) {
-                      final appsWithDataAccess =
-                          appProvider.apps.where((app) => app.enabled && app.worksExternally()).toList();
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.l10n.appAccess,
-                            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(context.l10n.appAccessDesc, style: TextStyle(color: Colors.grey.shade400, fontSize: 14)),
-                          const SizedBox(height: 16),
-                          if (appsWithDataAccess.isEmpty)
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF1A1A1A),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    Icon(Icons.apps_outlined, color: Colors.grey.shade600, size: 32),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      context.l10n.noAppsExternalAccess,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(color: Colors.grey.shade400),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          else
-                            Column(
-                              children: appsWithDataAccess.map((app) {
-                                return Card(
-                                  color: const Color(0xFF1A1A1A),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    side: const BorderSide(color: Color(0xFF35343B), width: 1),
-                                  ),
-                                  elevation: 0,
-                                  clipBehavior: Clip.antiAlias,
-                                  child: ListTile(
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    leading: CircleAvatar(backgroundImage: NetworkImage(app.getImageUrl())),
-                                    title: Text(app.getName()),
-                                    subtitle: Text(
-                                      _getAccessDescription(context, app),
-                                      style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
-                                    ),
-                                    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                                    onTap: () {
-                                      routeToPage(context, AppDetailPage(app: app, preventAutoOpenHomePage: true));
-                                    },
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                        ],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 32),
+                  // TOKI: App access section removed — marketplace disabled
                 ],
               ),
               if (isLoading && !isMigrating)

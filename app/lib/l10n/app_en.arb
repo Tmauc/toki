@@ -399,10 +399,6 @@
     "@tryAdjustingSearch": {
         "description": "Hint when no apps found"
     },
-    "createYourOwnApp": "Create Your Own App",
-    "@createYourOwnApp": {
-        "description": "Button title for creating custom apps"
-    },
     "buildAndShareApp": "Build and share your custom app",
     "@buildAndShareApp": {
         "description": "Create app button subtitle"
@@ -598,18 +594,6 @@
     "dataProtectionDesc": "Your data is secured by default with strong encryption. Review your settings and future privacy options below.",
     "@dataProtectionDesc": {
         "description": "Data protection section description"
-    },
-    "appAccess": "App Access",
-    "@appAccess": {
-        "description": "App access section title"
-    },
-    "appAccessDesc": "The following apps can access your data. Tap on an app to manage its permissions.",
-    "@appAccessDesc": {
-        "description": "App access section description"
-    },
-    "noAppsExternalAccess": "No installed apps have external access to your data.",
-    "@noAppsExternalAccess": {
-        "description": "Empty state for app access"
     },
     "deviceName": "Device Name",
     "@deviceName": {
@@ -1576,10 +1560,6 @@
     "@creating": {
         "description": "Loading state text when app generation is in progress"
     },
-    "createApp": "Create App",
-    "@createApp": {
-        "description": "Button label to create a new app"
-    },
     "@connect": {
         "description": "Title for device connection page"
     },
@@ -1686,10 +1666,6 @@
     "leaveReviewAndroid": "Help us reach more people by leaving a review in the Google Play Store. Your feedback means the world to us!",
     "@leaveReviewAndroid": {
         "description": "App review prompt text for Android users"
-    },
-    "rateOnAppStore": "Rate on App Store",
-    "@rateOnAppStore": {
-        "description": "Button text to rate on Apple App Store"
     },
     "rateOnGooglePlay": "Rate on Google Play",
     "@rateOnGooglePlay": {
@@ -3155,10 +3131,6 @@
     "@loadingApps": {
         "description": "Loading message shown when apps are being loaded"
     },
-    "browseInstallCreateApps": "Browse, install, and create apps",
-    "@browseInstallCreateApps": {
-        "description": "Subtitle describing app page functionality"
-    },
     "all": "All",
     "@all": {
         "description": "Filter label to show all items"
@@ -3195,10 +3167,6 @@
     "@createNewApp": {
         "description": "Title for the create new app page"
     },
-    "buildSubmitCustomOmiApp": "Build and submit your custom Toki app",
-    "@buildSubmitCustomOmiApp": {
-        "description": "Subtitle describing the purpose of the create app page"
-    },
     "submittingYourApp": "Submitting your app...",
     "@submittingYourApp": {
         "description": "Loading message shown while app is being submitted"
@@ -3207,10 +3175,6 @@
     "@preparingFormForYou": {
         "description": "Loading message shown while form is being prepared"
     },
-    "appDetails": "App Details",
-    "@appDetails": {
-        "description": "Section title for app metadata information"
-    },
     "paymentDetails": "Payment Details",
     "@paymentDetails": {
         "description": "Section title for payment information for paid apps"
@@ -3218,10 +3182,6 @@
     "previewAndScreenshots": "Preview and Screenshots",
     "@previewAndScreenshots": {
         "description": "Section title for app preview images"
-    },
-    "appCapabilities": "App Capabilities",
-    "@appCapabilities": {
-        "description": "Section title for app capabilities selection"
     },
     "aiPrompts": "AI Prompts",
     "@aiPrompts": {
@@ -3255,14 +3215,6 @@
     "@makeMyAppPublic": {
         "description": "Checkbox label for making app publicly available"
     },
-    "submitAppTermsAgreement": "By submitting this app, I agree to the Toki AI Terms of Service and Privacy Policy",
-    "@submitAppTermsAgreement": {
-        "description": "Terms and conditions agreement checkbox text"
-    },
-    "submitApp": "Submit App",
-    "@submitApp": {
-        "description": "Button text to submit the app"
-    },
     "needHelpGettingStarted": "Need help getting started?",
     "@needHelpGettingStarted": {
         "description": "Help banner title"
@@ -3270,18 +3222,6 @@
     "clickHereForAppBuildingGuides": "Click here for app building guides and documentation",
     "@clickHereForAppBuildingGuides": {
         "description": "Help banner description with link to documentation"
-    },
-    "submitAppQuestion": "Submit App?",
-    "@submitAppQuestion": {
-        "description": "Confirmation dialog title"
-    },
-    "submitAppPublicDescription": "Your app will be reviewed and made public. You can start using it immediately, even during the review!",
-    "@submitAppPublicDescription": {
-        "description": "Dialog description for public app submission"
-    },
-    "submitAppPrivateDescription": "Your app will be reviewed and made available to you privately. You can start using it immediately, even during the review!",
-    "@submitAppPrivateDescription": {
-        "description": "Dialog description for private app submission"
     },
     "startEarning": "Start Earning! 💰",
     "@startEarning": {
@@ -3299,10 +3239,6 @@
     "@installsCount": {
         "description": "Label for number of app installs"
     },
-    "uninstallApp": "Uninstall App",
-    "@uninstallApp": {
-        "description": "Button label to uninstall an installed app"
-    },
     "subscribe": "Subscribe",
     "@subscribe": {
         "description": "Button label to subscribe to a paid app"
@@ -3314,10 +3250,6 @@
     "dataAccessWarning": "This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app",
     "@dataAccessWarning": {
         "description": "Warning message about app data access in confirmation dialog"
-    },
-    "installApp": "Install App",
-    "@installApp": {
-        "description": "Button label to install an app"
     },
     "betaTesterNotice": "You are a beta tester for this app. It is not public yet. It will be public once approved.",
     "@betaTesterNotice": {
@@ -3435,10 +3367,6 @@
     "appIdCopiedToClipboard": "App ID copied to clipboard",
     "@appIdCopiedToClipboard": {
         "description": "Success message when app ID is copied"
-    },
-    "appCategoryModalTitle": "App Category",
-    "@appCategoryModalTitle": {
-        "description": "Title for the category selection modal"
     },
     "pricingFree": "Free",
     "@pricingFree": {
@@ -4431,10 +4359,6 @@
     "@updatingYourApp": {
         "description": "Loading message when updating app"
     },
-    "fetchingYourAppDetails": "Fetching your app details",
-    "@fetchingYourAppDetails": {
-        "description": "Loading message when fetching app details"
-    },
     "updateAppQuestion": "Update App?",
     "@updateAppQuestion": {
         "description": "Dialog title asking to confirm app update"
@@ -4454,24 +4378,6 @@
     "appsCount": "Apps ({count})",
     "@appsCount": {
         "description": "Label showing number of installed apps",
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "privateAppsCount": "Private Apps ({count})",
-    "@privateAppsCount": {
-        "description": "Label showing number of private apps",
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "publicAppsCount": "Public Apps ({count})",
-    "@publicAppsCount": {
-        "description": "Label showing number of public apps",
         "placeholders": {
             "count": {
                 "type": "String"
@@ -4939,14 +4845,6 @@
     "keyWord": "Key",
     "@keyWord": {
         "description": "The word 'Key' for use in parameterized strings"
-    },
-    "externalAppAccess": "External App Access",
-    "@externalAppAccess": {
-        "description": "Section title for external app access settings"
-    },
-    "externalAppAccessDescription": "The following installed apps have external integrations and can access your data, such as conversations and memories.",
-    "@externalAppAccessDescription": {
-        "description": "Description explaining which apps can access user data"
     },
     "noExternalAppsHaveAccess": "No external apps have access to your data.",
     "@noExternalAppsHaveAccess": {
@@ -5957,10 +5855,6 @@
     "@clearChatAction": {
         "description": "Menu item text for clearing chat history"
     },
-    "enableApps": "Enable Apps",
-    "@enableApps": {
-        "description": "Menu item text to navigate to apps page and enable more chat apps"
-    },
     "omiAppName": "Toki",
     "@omiAppName": {
         "description": "The Toki app/assistant name shown in chat app selection"
@@ -6865,18 +6759,6 @@
     "syncingMessages": "Syncing messages with server...",
     "@syncingMessages": {
         "description": "Loading text when syncing messages"
-    },
-    "chatAppsTitle": "Chat Apps",
-    "@chatAppsTitle": {
-        "description": "Title for chat apps drawer/section"
-    },
-    "selectApp": "Select App",
-    "@selectApp": {
-        "description": "Section header for selecting an app"
-    },
-    "noChatAppsEnabled": "No chat apps enabled.\nTap \"Enable Apps\" to add some.",
-    "@noChatAppsEnabled": {
-        "description": "Empty state message when no chat apps are enabled"
     },
     "disable": "Disable",
     "@disable": {
@@ -7927,14 +7809,6 @@
     },
     "createCustomTemplate": "Create Custom Template",
     "allTemplates": "All Templates",
-    "failedToInstallApp": "Failed to install {appName}. Please try again.",
-    "@failedToInstallApp": {
-        "placeholders": {
-            "appName": {
-                "type": "String"
-            }
-        }
-    },
     "errorInstallingApp": "Error installing {appName}: {error}",
     "@errorInstallingApp": {
         "placeholders": {
@@ -8506,10 +8380,6 @@
     "@appCreatedSuccessfully": {
         "description": "Success message after app is created"
     },
-    "failedToCreateApp": "Failed to create app. Please try again.",
-    "@failedToCreateApp": {
-        "description": "Error message when app creation fails"
-    },
     "addAppSelectCoreCapability": "Please select one more core capability for your app to proceed",
     "@addAppSelectCoreCapability": {
         "description": "Validation error when only proactive notification capability is selected"
@@ -8600,10 +8470,6 @@
     "addAppErrorSelectingThumbnailRetry": "Error selecting thumbnail. Please try again.",
     "@addAppErrorSelectingThumbnailRetry": {
         "description": "Generic error when thumbnail selection fails"
-    },
-    "addAppCapabilityConflictWithPersona": "Other capabilities cannot be selected with Persona",
-    "@addAppCapabilityConflictWithPersona": {
-        "description": "Error when trying to select capabilities alongside Persona"
     },
     "addAppPersonaConflictWithCapabilities": "Persona cannot be selected with other capabilities",
     "@addAppPersonaConflictWithCapabilities": {
@@ -8753,21 +8619,9 @@
     "@aiGenAppCreatedSuccessfully": {
         "description": "Success message when AI-generated app is created"
     },
-    "aiGenFailedToCreateApp": "Failed to create app",
-    "@aiGenFailedToCreateApp": {
-        "description": "Error message when app creation fails"
-    },
     "aiGenErrorWhileCreatingApp": "An error occurred while creating the app",
     "@aiGenErrorWhileCreatingApp": {
         "description": "Error message when exception occurs during app creation"
-    },
-    "aiGenFailedToGenerateApp": "Failed to generate app. Please try again.",
-    "@aiGenFailedToGenerateApp": {
-        "description": "Error message when AI app generation fails"
-    },
-    "aiGenFailedToRegenerateIcon": "Failed to regenerate icon",
-    "@aiGenFailedToRegenerateIcon": {
-        "description": "Error message when icon regeneration fails"
     },
     "aiGenPleaseGenerateAppFirst": "Please generate an app first",
     "@aiGenPleaseGenerateAppFirst": {
@@ -9705,7 +9559,6 @@
     "event": "Event",
     "coworker": "Coworker",
     "linkedIn": "LinkedIn",
-    "appStore": "App Store",
     "googleSearch": "Google Search",
     "audioPlaybackUnavailable": "Audio file is not available for playback",
     "audioPlaybackFailed": "Unable to play audio. The file may be corrupted or missing.",
@@ -10194,5 +10047,51 @@
             }
         }
     },
-    "cloudTranscriptionPoweredByDeepgram": "Cloud transcription powered by Deepgram."
+    "cloudTranscriptionPoweredByDeepgram": "Cloud transcription powered by Deepgram.",
+    "addAppCapabilityConflictWithPersona": "Conflict",
+    "aiGenFailedToCreateApp": "Failed",
+    "aiGenFailedToGenerateApp": "Failed",
+    "aiGenFailedToRegenerateIcon": "Failed",
+    "appCapabilities": "Capabilities",
+    "appCategoryModalTitle": "Category",
+    "appStore": "App Store",
+    "chatAppsTitle": "Chat Apps",
+    "createApp": "Create App",
+    "createYourOwnApp": "Create App",
+    "enableApps": "Enable Apps",
+    "externalAppAccess": "External Access",
+    "externalAppAccessDescription": "External access description",
+    "failedToCreateApp": "Failed",
+    "failedToInstallApp": "Failed to install {appName}",
+    "fetchingYourAppDetails": "Loading...",
+    "noChatAppsEnabled": "No apps enabled",
+    "privateAppsCount": "{count} private",
+    "@privateAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "publicAppsCount": "{count} public",
+    "@publicAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "rateOnAppStore": "Rate",
+    "selectApp": "Select App",
+    "submitApp": "Submit",
+    "submitAppPrivateDescription": "Private",
+    "submitAppPublicDescription": "Public",
+    "submitAppQuestion": "Submit?",
+    "@failedToInstallApp": {
+        "placeholders": {
+            "appName": {
+                "type": "String"
+            }
+        }
+    }
 }

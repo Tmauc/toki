@@ -93,7 +93,6 @@
     "apps": "アプリ",
     "noAppsFound": "アプリが見つかりません",
     "tryAdjustingSearch": "検索やフィルターを調整してみてください",
-    "createYourOwnApp": "独自のアプリを作成",
     "buildAndShareApp": "カスタムアプリを作成して共有",
     "searchApps": "アプリを検索...",
     "myApps": "マイアプリ",
@@ -143,9 +142,6 @@
     "learnMore": "詳細を見る...",
     "dataProtectionLevel": "データ保護レベル",
     "dataProtectionDesc": "データは強力な暗号化で既定で保護されています。以下の設定と今後のプライバシーオプションを確認してください。",
-    "appAccess": "アプリのアクセス",
-    "appAccessDesc": "以下のアプリがあなたのデータにアクセスできます。アプリをタップして権限を管理してください。",
-    "noAppsExternalAccess": "インストールされたアプリは外部からデータにアクセスしていません。",
     "deviceName": "デバイス名",
     "deviceId": "デバイスID",
     "firmware": "ファームウェア",
@@ -517,7 +513,6 @@
     "freeForEveryone": "全員無料",
     "perMonthLabel": "/月",
     "creating": "作成中...",
-    "createApp": "アプリを作成",
     "searchingForDevices": "デバイスを検索中...",
     "devicesFoundNearby": "{count}台のデバイスが近くに見つかりました",
     "pairingSuccessful": "ペアリング成功",
@@ -542,7 +537,6 @@
     "lovingOmi": "Tokiを楽しんでいますか？",
     "leaveReviewIos": "App Storeでレビューを残して、より多くの人に届けるお手伝いをしてください。皆様のフィードバックは私たちにとって非常に大切です！",
     "leaveReviewAndroid": "Google Playストアでレビューを残して、より多くの人に届けるお手伝いをしてください。皆様のフィードバックは私たちにとって非常に大切です！",
-    "rateOnAppStore": "App Storeで評価",
     "rateOnGooglePlay": "Google Playで評価",
     "maybeLater": "後で",
     "speechProfileIntro": "Tokiはあなたの目標と声を学ぶ必要があります。後で変更できます。",
@@ -829,7 +823,6 @@
     "setDueDateAndTime": "期限と時刻を設定",
     "reloadingApps": "アプリを再読み込み中...",
     "loadingApps": "アプリを読み込み中...",
-    "browseInstallCreateApps": "アプリを閲覧、インストール、作成",
     "all": "すべて",
     "open": "開く",
     "install": "インストール",
@@ -839,13 +832,10 @@
     "checkBackLaterForNewApps": "後ほど新しいアプリを確認してください",
     "pleaseCheckInternetConnectionAndTryAgain": "インターネット接続を確認して、もう一度お試しください",
     "createNewApp": "新しいアプリを作成",
-    "buildSubmitCustomOmiApp": "カスタムTokiアプリを構築して送信する",
     "submittingYourApp": "アプリを送信しています...",
     "preparingFormForYou": "フォームを準備しています...",
-    "appDetails": "アプリの詳細",
     "paymentDetails": "支払い詳細",
     "previewAndScreenshots": "プレビューとスクリーンショット",
-    "appCapabilities": "アプリの機能",
     "aiPrompts": "AIプロンプト",
     "chatPrompt": "チャットプロンプト",
     "chatPromptPlaceholder": "あなたは素晴らしいアプリです。ユーザーのクエリに応答し、良い気分にさせることがあなたの仕事です...",
@@ -854,22 +844,15 @@
     "notificationScopes": "通知スコープ",
     "appPrivacyAndTerms": "アプリのプライバシーと利用規約",
     "makeMyAppPublic": "アプリを公開する",
-    "submitAppTermsAgreement": "このアプリを送信することにより、Toki AIの利用規約とプライバシーポリシーに同意します",
-    "submitApp": "アプリを送信",
     "needHelpGettingStarted": "始めるのに助けが必要ですか？",
     "clickHereForAppBuildingGuides": "アプリ構築ガイドとドキュメントについてはここをクリック",
-    "submitAppQuestion": "アプリを送信しますか？",
-    "submitAppPublicDescription": "あなたのアプリはレビューされ、公開されます。レビュー中でもすぐに使い始めることができます！",
-    "submitAppPrivateDescription": "あなたのアプリはレビューされ、プライベートに利用可能になります。レビュー中でもすぐに使い始めることができます！",
     "startEarning": "収益を開始！💰",
     "connectStripeOrPayPal": "StripeまたはPayPalを接続して、アプリの支払いを受け取ります。",
     "connectNow": "今すぐ接続",
     "installsCount": "インストール",
-    "uninstallApp": "アプリをアンインストール",
     "subscribe": "サブスクライブ",
     "dataAccessNotice": "データアクセス通知",
     "dataAccessWarning": "このアプリはあなたのデータにアクセスします。Toki AIは、このアプリによってデータがどのように使用、変更、または削除されるかについて責任を負いません",
-    "installApp": "アプリをインストール",
     "betaTesterNotice": "あなたはこのアプリのベータテスターです。まだ公開されていません。承認されると公開されます。",
     "appUnderReviewOwner": "あなたのアプリは審査中で、あなただけに表示されます。承認されると公開されます。",
     "appRejectedNotice": "あなたのアプリは却下されました。アプリの詳細を更新して、再度審査に提出してください。",
@@ -898,7 +881,6 @@
     "appPricingLabel": "アプリの価格設定",
     "noneSelected": "未選択",
     "appIdCopiedToClipboard": "アプリIDをクリップボードにコピーしました",
-    "appCategoryModalTitle": "アプリカテゴリ",
     "pricingFree": "無料",
     "pricingPaid": "有料",
     "loadingCapabilities": "機能を読み込み中...",
@@ -1215,14 +1197,11 @@
     "termsAndPrivacyPolicy": "利用規約とプライバシーポリシー",
     "manageYourApp": "アプリを管理",
     "updatingYourApp": "アプリを更新中",
-    "fetchingYourAppDetails": "アプリの詳細を取得中",
     "updateAppQuestion": "アプリを更新しますか？",
     "updateAppConfirmation": "アプリを更新してよろしいですか？変更はチームの審査後に反映されます。",
     "updateApp": "アプリを更新",
     "createAndSubmitNewApp": "新しいアプリを作成して送信",
     "appsCount": "アプリ ({count})",
-    "privateAppsCount": "プライベートアプリ ({count})",
-    "publicAppsCount": "公開アプリ ({count})",
     "newVersionAvailable": "新しいバージョンが利用可能です  🎉",
     "no": "いいえ",
     "invalidPaymentUrl": "無効な支払いURL",
@@ -1317,8 +1296,6 @@
     "keyCreated": "キーが作成されました",
     "keyCreatedMessage": "新しいキーが作成されました。今すぐコピーしてください。再度表示することはできません。",
     "keyWord": "キー",
-    "externalAppAccess": "外部アプリのアクセス",
-    "externalAppAccessDescription": "以下のインストール済みアプリは外部連携があり、会話やメモリーなどのデータにアクセスできます。",
     "noExternalAppsHaveAccess": "外部アプリはデータにアクセスできません。",
     "maximumSecurityE2ee": "最大セキュリティ（E2EE）",
     "e2eeDescription": "エンドツーエンド暗号化はプライバシーの最高基準です。有効にすると、データはサーバーに送信される前にデバイス上で暗号化されます。これは、Tokiを含め、誰もあなたのコンテンツにアクセスできないことを意味します。",
@@ -1542,7 +1519,6 @@
     "consentDataMessage": "続行すると、このアプリと共有するすべてのデータ（会話、録音、個人情報を含む）が安全に当社のサーバーに保存され、AI搭載のインサイトを提供し、すべてのアプリ機能を有効にします。",
     "tasksEmptyStateMessage": "会話からのタスクがここに表示されます。\n手動で作成するには + をタップしてください。",
     "clearChatAction": "チャットを消去",
-    "enableApps": "アプリを有効化",
     "omiAppName": "Toki",
     "showMore": "もっと見る ↓",
     "showLess": "閉じる ↑",
@@ -1770,9 +1746,6 @@
     "frequencyDescMaximum": "常に関与し続ける",
     "clearChatQuestion": "チャットを削除しますか？",
     "syncingMessages": "サーバーとメッセージを同期中...",
-    "chatAppsTitle": "チャットアプリ",
-    "selectApp": "アプリを選択",
-    "noChatAppsEnabled": "チャットアプリが有効になっていません。\n「アプリを有効化」をタップして追加してください。",
     "disable": "無効化",
     "photoLibrary": "フォトライブラリ",
     "chooseFile": "ファイルを選択",
@@ -2050,14 +2023,6 @@
     },
     "createCustomTemplate": "カスタムテンプレートを作成",
     "allTemplates": "すべてのテンプレート",
-    "failedToInstallApp": "{appName}のインストールに失敗しました。もう一度お試しください。",
-    "@failedToInstallApp": {
-        "placeholders": {
-            "appName": {
-                "type": "String"
-            }
-        }
-    },
     "errorInstallingApp": "{appName}のインストール中にエラーが発生: {error}",
     "@errorInstallingApp": {
         "placeholders": {
@@ -2207,7 +2172,6 @@
     "installingApp": "アプリをインストール中...",
     "appCreatedAndInstalled": "アプリが作成・インストールされました！",
     "appCreatedSuccessfully": "アプリが正常に作成されました！",
-    "failedToCreateApp": "アプリの作成に失敗しました。もう一度お試しください。",
     "addAppSelectCoreCapability": "アプリのコア機能をもう1つ選択してください",
     "addAppSelectPaymentPlan": "支払いプランを選択し、アプリの価格を入力してください",
     "addAppSelectCapability": "アプリの機能を少なくとも1つ選択してください",
@@ -2227,7 +2191,6 @@
     "addAppErrorSelectingImageRetry": "画像選択エラー。もう一度お試しください。",
     "addAppErrorSelectingThumbnail": "サムネイル選択エラー: {error}",
     "addAppErrorSelectingThumbnailRetry": "サムネイル選択エラー。もう一度お試しください。",
-    "addAppCapabilityConflictWithPersona": "ペルソナと他の機能を同時に選択することはできません",
     "addAppPersonaConflictWithCapabilities": "ペルソナは他の機能と同時に選択できません",
     "personaTwitterHandleNotFound": "Twitterハンドルが見つかりません",
     "personaTwitterHandleSuspended": "Twitterハンドルは停止されています",
@@ -2261,10 +2224,7 @@
     "aiGenCreatingAppIcon": "アプリアイコンを作成中...",
     "aiGenErrorOccurredWithDetails": "エラーが発生しました: {message}",
     "aiGenAppCreatedSuccessfully": "アプリが正常に作成されました！",
-    "aiGenFailedToCreateApp": "アプリの作成に失敗しました",
     "aiGenErrorWhileCreatingApp": "アプリの作成中にエラーが発生しました",
-    "aiGenFailedToGenerateApp": "アプリの生成に失敗しました。もう一度お試しください。",
-    "aiGenFailedToRegenerateIcon": "アイコンの再生成に失敗しました",
     "aiGenPleaseGenerateAppFirst": "先にアプリを生成してください",
     "xHandleTitle": "Xのユーザー名は？",
     "xHandleDescription": "アカウントのアクティビティに基づいて\nTokiクローンを事前トレーニングします",
@@ -2539,7 +2499,6 @@
     "event": "イベント",
     "coworker": "同僚",
     "linkedIn": "LinkedIn",
-    "appStore": "App Store",
     "googleSearch": "Google Search",
     "audioPlaybackUnavailable": "音声ファイルは再生できません",
     "audioPlaybackFailed": "音声を再生できません。ファイルが破損しているか見つかりません。",
@@ -2763,5 +2722,51 @@
     "improveConnectionContent": "Tokiがデバイスとの接続を維持する方法を改善しました。これを有効にするには、デバイス情報ページに移動し、「デバイスを切断」をタップしてから、デバイスを再度ペアリングしてください。",
     "improveConnectionAction": "了解",
     "clockSkewWarning": "デバイスの時計が約{minutes}分ずれています。日付と時刻の設定を確認してください。",
-    "cloudTranscriptionPoweredByDeepgram": "Deepgramによるクラウド文字起こし。"
+    "cloudTranscriptionPoweredByDeepgram": "Deepgramによるクラウド文字起こし。",
+    "addAppCapabilityConflictWithPersona": "Conflict",
+    "aiGenFailedToCreateApp": "Failed",
+    "aiGenFailedToGenerateApp": "Failed",
+    "aiGenFailedToRegenerateIcon": "Failed",
+    "appCapabilities": "Capabilities",
+    "appCategoryModalTitle": "Category",
+    "appStore": "App Store",
+    "chatAppsTitle": "Chat Apps",
+    "createApp": "Create App",
+    "createYourOwnApp": "Create App",
+    "enableApps": "Enable Apps",
+    "externalAppAccess": "External Access",
+    "externalAppAccessDescription": "External access description",
+    "failedToCreateApp": "Failed",
+    "failedToInstallApp": "Failed to install {appName}",
+    "fetchingYourAppDetails": "Loading...",
+    "noChatAppsEnabled": "No apps enabled",
+    "privateAppsCount": "{count} private",
+    "@privateAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "publicAppsCount": "{count} public",
+    "@publicAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "rateOnAppStore": "Rate",
+    "selectApp": "Select App",
+    "submitApp": "Submit",
+    "submitAppPrivateDescription": "Private",
+    "submitAppPublicDescription": "Public",
+    "submitAppQuestion": "Submit?",
+    "@failedToInstallApp": {
+        "placeholders": {
+            "appName": {
+                "type": "String"
+            }
+        }
+    }
 }

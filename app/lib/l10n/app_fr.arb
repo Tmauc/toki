@@ -94,7 +94,6 @@
     "apps": "Applications",
     "noAppsFound": "Aucune application trouvée",
     "tryAdjustingSearch": "Essayez d'ajuster votre recherche ou vos filtres",
-    "createYourOwnApp": "Créez votre propre application",
     "buildAndShareApp": "Créez et partagez votre application personnalisée",
     "searchApps": "Rechercher des applications...",
     "myApps": "Mes applications",
@@ -144,9 +143,6 @@
     "learnMore": "En savoir plus...",
     "dataProtectionLevel": "Niveau de protection des données",
     "dataProtectionDesc": "Vos données sont sécurisées par défaut avec un cryptage fort. Vérifiez vos paramètres et les futures options de confidentialité ci-dessous.",
-    "appAccess": "Accès des applications",
-    "appAccessDesc": "Les applications suivantes peuvent accéder à vos données. Appuyez sur une application pour gérer ses autorisations.",
-    "noAppsExternalAccess": "Aucune application installée n'a d'accès externe à vos données.",
     "deviceName": "Nom de l'appareil",
     "deviceId": "ID de l'appareil",
     "firmware": "Micrologiciel",
@@ -517,7 +513,6 @@
     "freeForEveryone": "Gratuit pour tous",
     "perMonthLabel": "/ mois",
     "creating": "Création...",
-    "createApp": "Créer une application",
     "searchingForDevices": "Recherche d'appareils...",
     "devicesFoundNearby": "{count} {count, plural, =1{APPAREIL} other{APPAREILS}} TROUVÉ(S) À PROXIMITÉ",
     "pairingSuccessful": "APPAIRAGE RÉUSSI",
@@ -542,7 +537,6 @@
     "lovingOmi": "Vous aimez Toki ?",
     "leaveReviewIos": "Aidez-nous à atteindre plus de personnes en laissant un avis sur l'App Store. Votre retour compte énormément pour nous !",
     "leaveReviewAndroid": "Aidez-nous à atteindre plus de personnes en laissant un avis sur le Google Play Store. Votre retour compte énormément pour nous !",
-    "rateOnAppStore": "Noter sur l'App Store",
     "rateOnGooglePlay": "Noter sur Google Play",
     "maybeLater": "Peut-être plus tard",
     "speechProfileIntro": "Toki doit apprendre vos objectifs et votre voix. Vous pourrez le modifier plus tard.",
@@ -828,7 +822,6 @@
     "setDueDateAndTime": "Définir la date et l'heure d'échéance",
     "reloadingApps": "Rechargement des applications...",
     "loadingApps": "Chargement des applications...",
-    "browseInstallCreateApps": "Parcourir, installer et créer des applications",
     "all": "All",
     "open": "Ouvrir",
     "install": "Installer",
@@ -838,13 +831,10 @@
     "checkBackLaterForNewApps": "Revenez plus tard pour de nouvelles applications",
     "pleaseCheckInternetConnectionAndTryAgain": "Veuillez vérifier votre connexion Internet et réessayer",
     "createNewApp": "Créer une nouvelle application",
-    "buildSubmitCustomOmiApp": "Créez et soumettez votre application Toki personnalisée",
     "submittingYourApp": "Soumission de votre application...",
     "preparingFormForYou": "Préparation du formulaire pour vous...",
-    "appDetails": "Détails de l'application",
     "paymentDetails": "Détails de paiement",
     "previewAndScreenshots": "Aperçu et captures d'écran",
-    "appCapabilities": "Capacités de l'application",
     "aiPrompts": "Invites IA",
     "chatPrompt": "Invite de chat",
     "chatPromptPlaceholder": "Vous êtes une application géniale, votre travail consiste à répondre aux questions des utilisateurs et à les faire se sentir bien...",
@@ -853,22 +843,15 @@
     "notificationScopes": "Portées de notification",
     "appPrivacyAndTerms": "Confidentialité et conditions de l'application",
     "makeMyAppPublic": "Rendre mon application publique",
-    "submitAppTermsAgreement": "En soumettant cette application, j'accepte les Conditions d'utilisation et la Politique de confidentialité d'Toki AI",
-    "submitApp": "Soumettre l'application",
     "needHelpGettingStarted": "Besoin d'aide pour commencer ?",
     "clickHereForAppBuildingGuides": "Cliquez ici pour les guides de création d'applications et la documentation",
-    "submitAppQuestion": "Soumettre l'application ?",
-    "submitAppPublicDescription": "Votre application sera examinée et rendue publique. Vous pouvez commencer à l'utiliser immédiatement, même pendant l'examen !",
-    "submitAppPrivateDescription": "Votre application sera examinée et mise à votre disposition en privé. Vous pouvez commencer à l'utiliser immédiatement, même pendant l'examen !",
     "startEarning": "Commencez à gagner ! 💰",
     "connectStripeOrPayPal": "Connectez Stripe ou PayPal pour recevoir des paiements pour votre application.",
     "connectNow": "Connecter maintenant",
     "installsCount": "Installations",
-    "uninstallApp": "Désinstaller l'application",
     "subscribe": "S'abonner",
     "dataAccessNotice": "Avis d'accès aux données",
     "dataAccessWarning": "Cette application accédera à vos données. Toki AI n'est pas responsable de la manière dont vos données sont utilisées, modifiées ou supprimées par cette application",
-    "installApp": "Installer l'application",
     "betaTesterNotice": "Vous êtes un testeur bêta pour cette application. Elle n'est pas encore publique. Elle sera publique une fois approuvée.",
     "appUnderReviewOwner": "Votre application est en cours de révision et visible uniquement pour vous. Elle sera publique une fois approuvée.",
     "appRejectedNotice": "Votre application a été rejetée. Veuillez mettre à jour les détails de l'application et la soumettre à nouveau pour révision.",
@@ -897,7 +880,6 @@
     "appPricingLabel": "Tarification de l'application",
     "noneSelected": "Aucune sélection",
     "appIdCopiedToClipboard": "ID de l'application copié dans le presse-papiers",
-    "appCategoryModalTitle": "Catégorie de l'application",
     "pricingFree": "Gratuit",
     "pricingPaid": "Payant",
     "loadingCapabilities": "Chargement des fonctionnalités...",
@@ -1214,14 +1196,11 @@
     "termsAndPrivacyPolicy": "Conditions et Politique de Confidentialité",
     "manageYourApp": "Gérer votre application",
     "updatingYourApp": "Mise à jour de votre application",
-    "fetchingYourAppDetails": "Récupération des détails de votre application",
     "updateAppQuestion": "Mettre à jour l'application ?",
     "updateAppConfirmation": "Êtes-vous sûr de vouloir mettre à jour votre application ? Les modifications seront appliquées après examen par notre équipe.",
     "updateApp": "Mettre à jour l'application",
     "createAndSubmitNewApp": "Créer et soumettre une nouvelle application",
     "appsCount": "Applications ({count})",
-    "privateAppsCount": "Applications privées ({count})",
-    "publicAppsCount": "Applications publiques ({count})",
     "newVersionAvailable": "Nouvelle version disponible  🎉",
     "no": "Non",
     "invalidPaymentUrl": "URL de paiement invalide",
@@ -1316,8 +1295,6 @@
     "keyCreated": "Clé créée",
     "keyCreatedMessage": "Votre nouvelle clé a été créée. Veuillez la copier maintenant. Vous ne pourrez plus la voir.",
     "keyWord": "Clé",
-    "externalAppAccess": "Accès des applications externes",
-    "externalAppAccessDescription": "Les applications installées suivantes ont des intégrations externes et peuvent accéder à vos données, telles que les conversations et les souvenirs.",
     "noExternalAppsHaveAccess": "Aucune application externe n'a accès à vos données.",
     "maximumSecurityE2ee": "Sécurité maximale (E2EE)",
     "e2eeDescription": "Le chiffrement de bout en bout est la référence en matière de confidentialité. Lorsqu'il est activé, vos données sont chiffrées sur votre appareil avant d'être envoyées à nos serveurs. Cela signifie que personne, pas même Toki, ne peut accéder à votre contenu.",
@@ -1541,7 +1518,6 @@
     "consentDataMessage": "En continuant, toutes les données que vous partagez avec cette application (y compris vos conversations, enregistrements et informations personnelles) seront stockées en toute sécurité sur nos serveurs pour vous fournir des informations basées sur l'IA et activer toutes les fonctionnalités de l'application.",
     "tasksEmptyStateMessage": "Les tâches de vos conversations apparaîtront ici.\nAppuyez sur + pour en créer une manuellement.",
     "clearChatAction": "Effacer le chat",
-    "enableApps": "Activer les applications",
     "omiAppName": "Toki",
     "showMore": "afficher plus ↓",
     "showLess": "afficher moins ↑",
@@ -1769,9 +1745,6 @@
     "frequencyDescMaximum": "Restez constamment engagé",
     "clearChatQuestion": "Effacer la conversation ?",
     "syncingMessages": "Synchronisation des messages avec le serveur...",
-    "chatAppsTitle": "Applications de chat",
-    "selectApp": "Sélectionner une application",
-    "noChatAppsEnabled": "Aucune application de chat activée.\nAppuyez sur \"Activer les applications\" pour en ajouter.",
     "disable": "Désactiver",
     "photoLibrary": "Photothèque",
     "chooseFile": "Choisir un fichier",
@@ -2049,14 +2022,6 @@
     },
     "createCustomTemplate": "Créer un modèle personnalisé",
     "allTemplates": "Tous les modèles",
-    "failedToInstallApp": "Échec de l'installation de {appName}. Veuillez réessayer.",
-    "@failedToInstallApp": {
-        "placeholders": {
-            "appName": {
-                "type": "String"
-            }
-        }
-    },
     "errorInstallingApp": "Erreur lors de l'installation de {appName} : {error}",
     "@errorInstallingApp": {
         "placeholders": {
@@ -2206,7 +2171,6 @@
     "installingApp": "Installation de l'application...",
     "appCreatedAndInstalled": "Application créée et installée !",
     "appCreatedSuccessfully": "Application créée avec succès !",
-    "failedToCreateApp": "Échec de la création. Veuillez réessayer.",
     "addAppSelectCoreCapability": "Veuillez sélectionner une capacité principale supplémentaire pour votre application",
     "addAppSelectPaymentPlan": "Veuillez sélectionner un plan de paiement et entrer un prix pour votre application",
     "addAppSelectCapability": "Veuillez sélectionner au moins une capacité pour votre application",
@@ -2226,7 +2190,6 @@
     "addAppErrorSelectingImageRetry": "Erreur lors de la sélection de l'image. Veuillez réessayer.",
     "addAppErrorSelectingThumbnail": "Erreur lors de la sélection de la miniature: {error}",
     "addAppErrorSelectingThumbnailRetry": "Erreur lors de la sélection de la miniature. Veuillez réessayer.",
-    "addAppCapabilityConflictWithPersona": "Les autres capacités ne peuvent pas être sélectionnées avec Persona",
     "addAppPersonaConflictWithCapabilities": "Persona ne peut pas être sélectionné avec d'autres capacités",
     "personaTwitterHandleNotFound": "Identifiant Twitter non trouvé",
     "personaTwitterHandleSuspended": "Identifiant Twitter suspendu",
@@ -2260,10 +2223,7 @@
     "aiGenCreatingAppIcon": "Création de l'icône de l'application...",
     "aiGenErrorOccurredWithDetails": "Une erreur s'est produite : {message}",
     "aiGenAppCreatedSuccessfully": "Application créée avec succès !",
-    "aiGenFailedToCreateApp": "Échec de la création de l'application",
     "aiGenErrorWhileCreatingApp": "Une erreur s'est produite lors de la création de l'application",
-    "aiGenFailedToGenerateApp": "Échec de la génération de l'application. Veuillez réessayer.",
-    "aiGenFailedToRegenerateIcon": "Échec de la régénération de l'icône",
     "aiGenPleaseGenerateAppFirst": "Veuillez d'abord générer une application",
     "xHandleTitle": "Quel est votre identifiant X ?",
     "xHandleDescription": "Nous pré-entraînerons votre clone Toki",
@@ -2573,7 +2533,6 @@
     "event": "Événement",
     "coworker": "Collègue",
     "linkedIn": "LinkedIn",
-    "appStore": "App Store",
     "googleSearch": "Google Search",
     "audioPlaybackUnavailable": "Le fichier audio n'est pas disponible pour la lecture",
     "audioPlaybackFailed": "Impossible de lire l'audio. Le fichier est peut-être corrompu ou manquant.",
@@ -2797,5 +2756,51 @@
     "improveConnectionContent": "Nous avons amélioré la façon dont Toki reste connecté à votre appareil. Pour activer cela, allez sur la page Infos de l'appareil, appuyez sur \"Déconnecter l'appareil\", puis reconnectez votre appareil.",
     "improveConnectionAction": "Compris",
     "clockSkewWarning": "L'horloge de votre appareil est décalée de ~{minutes} min. Vérifiez vos paramètres de date et heure.",
-    "cloudTranscriptionPoweredByDeepgram": "Transcription cloud propulsée par Deepgram."
+    "cloudTranscriptionPoweredByDeepgram": "Transcription cloud propulsée par Deepgram.",
+    "addAppCapabilityConflictWithPersona": "Conflict",
+    "aiGenFailedToCreateApp": "Failed",
+    "aiGenFailedToGenerateApp": "Failed",
+    "aiGenFailedToRegenerateIcon": "Failed",
+    "appCapabilities": "Capabilities",
+    "appCategoryModalTitle": "Category",
+    "appStore": "App Store",
+    "chatAppsTitle": "Chat Apps",
+    "createApp": "Create App",
+    "createYourOwnApp": "Create App",
+    "enableApps": "Enable Apps",
+    "externalAppAccess": "External Access",
+    "externalAppAccessDescription": "External access description",
+    "failedToCreateApp": "Failed",
+    "failedToInstallApp": "Failed to install {appName}",
+    "fetchingYourAppDetails": "Loading...",
+    "noChatAppsEnabled": "No apps enabled",
+    "privateAppsCount": "{count} private",
+    "@privateAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "publicAppsCount": "{count} public",
+    "@publicAppsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "rateOnAppStore": "Rate",
+    "selectApp": "Select App",
+    "submitApp": "Submit",
+    "submitAppPrivateDescription": "Private",
+    "submitAppPublicDescription": "Public",
+    "submitAppQuestion": "Submit?",
+    "@failedToInstallApp": {
+        "placeholders": {
+            "appName": {
+                "type": "String"
+            }
+        }
+    }
 }

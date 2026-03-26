@@ -665,12 +665,6 @@ abstract class AppLocalizations {
   /// **'Try adjusting your search or filters'**
   String get tryAdjustingSearch;
 
-  /// Button title for creating custom apps
-  ///
-  /// In en, this message translates to:
-  /// **'Create Your Own App'**
-  String get createYourOwnApp;
-
   /// Create app button subtitle
   ///
   /// In en, this message translates to:
@@ -964,24 +958,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your data is secured by default with strong encryption. Review your settings and future privacy options below.'**
   String get dataProtectionDesc;
-
-  /// App access section title
-  ///
-  /// In en, this message translates to:
-  /// **'App Access'**
-  String get appAccess;
-
-  /// App access section description
-  ///
-  /// In en, this message translates to:
-  /// **'The following apps can access your data. Tap on an app to manage its permissions.'**
-  String get appAccessDesc;
-
-  /// Empty state for app access
-  ///
-  /// In en, this message translates to:
-  /// **'No installed apps have external access to your data.'**
-  String get noAppsExternalAccess;
 
   /// Device name label
   ///
@@ -3203,12 +3179,6 @@ abstract class AppLocalizations {
   /// **'Creating...'**
   String get creating;
 
-  /// Button label to create a new app
-  ///
-  /// In en, this message translates to:
-  /// **'Create App'**
-  String get createApp;
-
   /// Status text while scanning for Bluetooth devices
   ///
   /// In en, this message translates to:
@@ -3352,12 +3322,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Help us reach more people by leaving a review in the Google Play Store. Your feedback means the world to us!'**
   String get leaveReviewAndroid;
-
-  /// Button text to rate on Apple App Store
-  ///
-  /// In en, this message translates to:
-  /// **'Rate on App Store'**
-  String get rateOnAppStore;
 
   /// Button text to rate on Google Play Store
   ///
@@ -5261,12 +5225,6 @@ abstract class AppLocalizations {
   /// **'Loading apps...'**
   String get loadingApps;
 
-  /// Subtitle describing app page functionality
-  ///
-  /// In en, this message translates to:
-  /// **'Browse, install, and create apps'**
-  String get browseInstallCreateApps;
-
   /// Filter label to show all items
   ///
   /// In en, this message translates to:
@@ -5321,12 +5279,6 @@ abstract class AppLocalizations {
   /// **'Create New App'**
   String get createNewApp;
 
-  /// Subtitle describing the purpose of the create app page
-  ///
-  /// In en, this message translates to:
-  /// **'Build and submit your custom Toki app'**
-  String get buildSubmitCustomOmiApp;
-
   /// Loading message shown while app is being submitted
   ///
   /// In en, this message translates to:
@@ -5339,12 +5291,6 @@ abstract class AppLocalizations {
   /// **'Preparing the form for you...'**
   String get preparingFormForYou;
 
-  /// Section title for app metadata information
-  ///
-  /// In en, this message translates to:
-  /// **'App Details'**
-  String get appDetails;
-
   /// Section title for payment information for paid apps
   ///
   /// In en, this message translates to:
@@ -5356,12 +5302,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preview and Screenshots'**
   String get previewAndScreenshots;
-
-  /// Section title for app capabilities selection
-  ///
-  /// In en, this message translates to:
-  /// **'App Capabilities'**
-  String get appCapabilities;
 
   /// Section title for AI prompt configuration
   ///
@@ -5411,18 +5351,6 @@ abstract class AppLocalizations {
   /// **'Make my app public'**
   String get makeMyAppPublic;
 
-  /// Terms and conditions agreement checkbox text
-  ///
-  /// In en, this message translates to:
-  /// **'By submitting this app, I agree to the Toki AI Terms of Service and Privacy Policy'**
-  String get submitAppTermsAgreement;
-
-  /// Button text to submit the app
-  ///
-  /// In en, this message translates to:
-  /// **'Submit App'**
-  String get submitApp;
-
   /// Help banner title
   ///
   /// In en, this message translates to:
@@ -5434,24 +5362,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Click here for app building guides and documentation'**
   String get clickHereForAppBuildingGuides;
-
-  /// Confirmation dialog title
-  ///
-  /// In en, this message translates to:
-  /// **'Submit App?'**
-  String get submitAppQuestion;
-
-  /// Dialog description for public app submission
-  ///
-  /// In en, this message translates to:
-  /// **'Your app will be reviewed and made public. You can start using it immediately, even during the review!'**
-  String get submitAppPublicDescription;
-
-  /// Dialog description for private app submission
-  ///
-  /// In en, this message translates to:
-  /// **'Your app will be reviewed and made available to you privately. You can start using it immediately, even during the review!'**
-  String get submitAppPrivateDescription;
 
   /// Payment setup modal title
   ///
@@ -5477,12 +5387,6 @@ abstract class AppLocalizations {
   /// **'Installs'**
   String get installsCount;
 
-  /// Button label to uninstall an installed app
-  ///
-  /// In en, this message translates to:
-  /// **'Uninstall App'**
-  String get uninstallApp;
-
   /// Button label to subscribe to a paid app
   ///
   /// In en, this message translates to:
@@ -5500,12 +5404,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This app will access your data. Toki AI is not responsible for how your data is used, modified, or deleted by this app'**
   String get dataAccessWarning;
-
-  /// Button label to install an app
-  ///
-  /// In en, this message translates to:
-  /// **'Install App'**
-  String get installApp;
 
   /// Notice shown to beta testers of private apps
   ///
@@ -5674,12 +5572,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App ID copied to clipboard'**
   String get appIdCopiedToClipboard;
-
-  /// Title for the category selection modal
-  ///
-  /// In en, this message translates to:
-  /// **'App Category'**
-  String get appCategoryModalTitle;
 
   /// Free pricing option
   ///
@@ -7499,12 +7391,6 @@ abstract class AppLocalizations {
   /// **'Updating your app'**
   String get updatingYourApp;
 
-  /// Loading message when fetching app details
-  ///
-  /// In en, this message translates to:
-  /// **'Fetching your app details'**
-  String get fetchingYourAppDetails;
-
   /// Dialog title asking to confirm app update
   ///
   /// In en, this message translates to:
@@ -7534,18 +7420,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apps ({count})'**
   String appsCount(String count);
-
-  /// Label showing number of private apps
-  ///
-  /// In en, this message translates to:
-  /// **'Private Apps ({count})'**
-  String privateAppsCount(String count);
-
-  /// Label showing number of public apps
-  ///
-  /// In en, this message translates to:
-  /// **'Public Apps ({count})'**
-  String publicAppsCount(String count);
 
   /// Dialog title when a new app version is available
   ///
@@ -8104,18 +7978,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Key'**
   String get keyWord;
-
-  /// Section title for external app access settings
-  ///
-  /// In en, this message translates to:
-  /// **'External App Access'**
-  String get externalAppAccess;
-
-  /// Description explaining which apps can access user data
-  ///
-  /// In en, this message translates to:
-  /// **'The following installed apps have external integrations and can access your data, such as conversations and memories.'**
-  String get externalAppAccessDescription;
 
   /// Message shown when no external apps have data access
   ///
@@ -9455,12 +9317,6 @@ abstract class AppLocalizations {
   /// **'Clear Chat'**
   String get clearChatAction;
 
-  /// Menu item text to navigate to apps page and enable more chat apps
-  ///
-  /// In en, this message translates to:
-  /// **'Enable Apps'**
-  String get enableApps;
-
   /// The Toki app/assistant name shown in chat app selection
   ///
   /// In en, this message translates to:
@@ -10714,24 +10570,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Syncing messages with server...'**
   String get syncingMessages;
-
-  /// Title for chat apps drawer/section
-  ///
-  /// In en, this message translates to:
-  /// **'Chat Apps'**
-  String get chatAppsTitle;
-
-  /// Section header for selecting an app
-  ///
-  /// In en, this message translates to:
-  /// **'Select App'**
-  String get selectApp;
-
-  /// Empty state message when no chat apps are enabled
-  ///
-  /// In en, this message translates to:
-  /// **'No chat apps enabled.\nTap \"Enable Apps\" to add some.'**
-  String get noChatAppsEnabled;
 
   /// Button to disable/remove an app
   ///
@@ -12191,12 +12029,6 @@ abstract class AppLocalizations {
   /// **'All Templates'**
   String get allTemplates;
 
-  /// No description provided for @failedToInstallApp.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to install {appName}. Please try again.'**
-  String failedToInstallApp(String appName);
-
   /// No description provided for @errorInstallingApp.
   ///
   /// In en, this message translates to:
@@ -12929,12 +12761,6 @@ abstract class AppLocalizations {
   /// **'App created successfully!'**
   String get appCreatedSuccessfully;
 
-  /// Error message when app creation fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to create app. Please try again.'**
-  String get failedToCreateApp;
-
   /// Validation error when only proactive notification capability is selected
   ///
   /// In en, this message translates to:
@@ -13048,12 +12874,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error selecting thumbnail. Please try again.'**
   String get addAppErrorSelectingThumbnailRetry;
-
-  /// Error when trying to select capabilities alongside Persona
-  ///
-  /// In en, this message translates to:
-  /// **'Other capabilities cannot be selected with Persona'**
-  String get addAppCapabilityConflictWithPersona;
 
   /// Error when trying to select Persona alongside other capabilities
   ///
@@ -13253,29 +13073,11 @@ abstract class AppLocalizations {
   /// **'App created successfully!'**
   String get aiGenAppCreatedSuccessfully;
 
-  /// Error message when app creation fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to create app'**
-  String get aiGenFailedToCreateApp;
-
   /// Error message when exception occurs during app creation
   ///
   /// In en, this message translates to:
   /// **'An error occurred while creating the app'**
   String get aiGenErrorWhileCreatingApp;
-
-  /// Error message when AI app generation fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to generate app. Please try again.'**
-  String get aiGenFailedToGenerateApp;
-
-  /// Error message when icon regeneration fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to regenerate icon'**
-  String get aiGenFailedToRegenerateIcon;
 
   /// Validation error when trying to submit without generating app first
   ///
@@ -14729,12 +14531,6 @@ abstract class AppLocalizations {
   /// **'LinkedIn'**
   String get linkedIn;
 
-  /// No description provided for @appStore.
-  ///
-  /// In en, this message translates to:
-  /// **'App Store'**
-  String get appStore;
-
   /// No description provided for @googleSearch.
   ///
   /// In en, this message translates to:
@@ -15820,6 +15616,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cloud transcription powered by Deepgram.'**
   String get cloudTranscriptionPoweredByDeepgram;
+
+  /// No description provided for @addAppCapabilityConflictWithPersona.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflict'**
+  String get addAppCapabilityConflictWithPersona;
+
+  /// No description provided for @aiGenFailedToCreateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get aiGenFailedToCreateApp;
+
+  /// No description provided for @aiGenFailedToGenerateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get aiGenFailedToGenerateApp;
+
+  /// No description provided for @aiGenFailedToRegenerateIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get aiGenFailedToRegenerateIcon;
+
+  /// No description provided for @appCapabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Capabilities'**
+  String get appCapabilities;
+
+  /// No description provided for @appCategoryModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get appCategoryModalTitle;
+
+  /// No description provided for @appStore.
+  ///
+  /// In en, this message translates to:
+  /// **'App Store'**
+  String get appStore;
+
+  /// No description provided for @chatAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat Apps'**
+  String get chatAppsTitle;
+
+  /// No description provided for @createApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Create App'**
+  String get createApp;
+
+  /// No description provided for @createYourOwnApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Create App'**
+  String get createYourOwnApp;
+
+  /// No description provided for @enableApps.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Apps'**
+  String get enableApps;
+
+  /// No description provided for @externalAppAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'External Access'**
+  String get externalAppAccess;
+
+  /// No description provided for @externalAppAccessDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'External access description'**
+  String get externalAppAccessDescription;
+
+  /// No description provided for @failedToCreateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failedToCreateApp;
+
+  /// No description provided for @failedToInstallApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to install {appName}'**
+  String failedToInstallApp(String appName);
+
+  /// No description provided for @fetchingYourAppDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get fetchingYourAppDetails;
+
+  /// No description provided for @noChatAppsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'No apps enabled'**
+  String get noChatAppsEnabled;
+
+  /// No description provided for @privateAppsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} private'**
+  String privateAppsCount(int count);
+
+  /// No description provided for @publicAppsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} public'**
+  String publicAppsCount(int count);
+
+  /// No description provided for @rateOnAppStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rateOnAppStore;
+
+  /// No description provided for @selectApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Select App'**
+  String get selectApp;
+
+  /// No description provided for @submitApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submitApp;
+
+  /// No description provided for @submitAppPrivateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get submitAppPrivateDescription;
+
+  /// No description provided for @submitAppPublicDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get submitAppPublicDescription;
+
+  /// No description provided for @submitAppQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit?'**
+  String get submitAppQuestion;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

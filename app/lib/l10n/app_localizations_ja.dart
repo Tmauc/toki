@@ -299,9 +299,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tryAdjustingSearch => '検索やフィルターを調整してみてください';
 
   @override
-  String get createYourOwnApp => '独自のアプリを作成';
-
-  @override
   String get buildAndShareApp => 'カスタムアプリを作成して共有';
 
   @override
@@ -447,15 +444,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dataProtectionDesc => 'データは強力な暗号化で既定で保護されています。以下の設定と今後のプライバシーオプションを確認してください。';
-
-  @override
-  String get appAccess => 'アプリのアクセス';
-
-  @override
-  String get appAccessDesc => '以下のアプリがあなたのデータにアクセスできます。アプリをタップして権限を管理してください。';
-
-  @override
-  String get noAppsExternalAccess => 'インストールされたアプリは外部からデータにアクセスしていません。';
 
   @override
   String get deviceName => 'デバイス名';
@@ -1654,9 +1642,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get creating => '作成中...';
 
   @override
-  String get createApp => 'アプリを作成';
-
-  @override
   String get searchingForDevices => 'デバイスを検索中...';
 
   @override
@@ -1731,9 +1716,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get leaveReviewAndroid => 'Google Playストアでレビューを残して、より多くの人に届けるお手伝いをしてください。皆様のフィードバックは私たちにとって非常に大切です！';
-
-  @override
-  String get rateOnAppStore => 'App Storeで評価';
 
   @override
   String get rateOnGooglePlay => 'Google Playで評価';
@@ -2720,9 +2702,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get loadingApps => 'アプリを読み込み中...';
 
   @override
-  String get browseInstallCreateApps => 'アプリを閲覧、インストール、作成';
-
-  @override
   String get all => 'すべて';
 
   @override
@@ -2750,25 +2729,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get createNewApp => '新しいアプリを作成';
 
   @override
-  String get buildSubmitCustomOmiApp => 'カスタムTokiアプリを構築して送信する';
-
-  @override
   String get submittingYourApp => 'アプリを送信しています...';
 
   @override
   String get preparingFormForYou => 'フォームを準備しています...';
 
   @override
-  String get appDetails => 'アプリの詳細';
-
-  @override
   String get paymentDetails => '支払い詳細';
 
   @override
   String get previewAndScreenshots => 'プレビューとスクリーンショット';
-
-  @override
-  String get appCapabilities => 'アプリの機能';
 
   @override
   String get aiPrompts => 'AIプロンプト';
@@ -2795,25 +2765,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get makeMyAppPublic => 'アプリを公開する';
 
   @override
-  String get submitAppTermsAgreement => 'このアプリを送信することにより、Toki AIの利用規約とプライバシーポリシーに同意します';
-
-  @override
-  String get submitApp => 'アプリを送信';
-
-  @override
   String get needHelpGettingStarted => '始めるのに助けが必要ですか？';
 
   @override
   String get clickHereForAppBuildingGuides => 'アプリ構築ガイドとドキュメントについてはここをクリック';
-
-  @override
-  String get submitAppQuestion => 'アプリを送信しますか？';
-
-  @override
-  String get submitAppPublicDescription => 'あなたのアプリはレビューされ、公開されます。レビュー中でもすぐに使い始めることができます！';
-
-  @override
-  String get submitAppPrivateDescription => 'あなたのアプリはレビューされ、プライベートに利用可能になります。レビュー中でもすぐに使い始めることができます！';
 
   @override
   String get startEarning => '収益を開始！💰';
@@ -2828,9 +2783,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get installsCount => 'インストール';
 
   @override
-  String get uninstallApp => 'アプリをアンインストール';
-
-  @override
   String get subscribe => 'サブスクライブ';
 
   @override
@@ -2838,9 +2790,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dataAccessWarning => 'このアプリはあなたのデータにアクセスします。Toki AIは、このアプリによってデータがどのように使用、変更、または削除されるかについて責任を負いません';
-
-  @override
-  String get installApp => 'アプリをインストール';
 
   @override
   String get betaTesterNotice => 'あなたはこのアプリのベータテスターです。まだ公開されていません。承認されると公開されます。';
@@ -2927,9 +2876,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get appIdCopiedToClipboard => 'アプリIDをクリップボードにコピーしました';
-
-  @override
-  String get appCategoryModalTitle => 'アプリカテゴリ';
 
   @override
   String get pricingFree => '無料';
@@ -3873,9 +3819,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get updatingYourApp => 'アプリを更新中';
 
   @override
-  String get fetchingYourAppDetails => 'アプリの詳細を取得中';
-
-  @override
   String get updateAppQuestion => 'アプリを更新しますか？';
 
   @override
@@ -3890,16 +3833,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String appsCount(String count) {
     return 'アプリ ($count)';
-  }
-
-  @override
-  String privateAppsCount(String count) {
-    return 'プライベートアプリ ($count)';
-  }
-
-  @override
-  String publicAppsCount(String count) {
-    return '公開アプリ ($count)';
   }
 
   @override
@@ -4216,12 +4149,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get keyWord => 'キー';
-
-  @override
-  String get externalAppAccess => '外部アプリのアクセス';
-
-  @override
-  String get externalAppAccessDescription => '以下のインストール済みアプリは外部連携があり、会話やメモリーなどのデータにアクセスできます。';
 
   @override
   String get noExternalAppsHaveAccess => '外部アプリはデータにアクセスできません。';
@@ -4939,9 +4866,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get clearChatAction => 'チャットを消去';
 
   @override
-  String get enableApps => 'アプリを有効化';
-
-  @override
   String get omiAppName => 'Toki';
 
   @override
@@ -5589,15 +5513,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get syncingMessages => 'サーバーとメッセージを同期中...';
-
-  @override
-  String get chatAppsTitle => 'チャットアプリ';
-
-  @override
-  String get selectApp => 'アプリを選択';
-
-  @override
-  String get noChatAppsEnabled => 'チャットアプリが有効になっていません。\n「アプリを有効化」をタップして追加してください。';
 
   @override
   String get disable => '無効化';
@@ -6383,11 +6298,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get allTemplates => 'すべてのテンプレート';
 
   @override
-  String failedToInstallApp(String appName) {
-    return '$appNameのインストールに失敗しました。もう一度お試しください。';
-  }
-
-  @override
   String errorInstallingApp(String appName, String error) {
     return '$appNameのインストール中にエラーが発生: $error';
   }
@@ -6790,9 +6700,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appCreatedSuccessfully => 'アプリが正常に作成されました！';
 
   @override
-  String get failedToCreateApp => 'アプリの作成に失敗しました。もう一度お試しください。';
-
-  @override
   String get addAppSelectCoreCapability => 'アプリのコア機能をもう1つ選択してください';
 
   @override
@@ -6854,9 +6761,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get addAppErrorSelectingThumbnailRetry => 'サムネイル選択エラー。もう一度お試しください。';
-
-  @override
-  String get addAppCapabilityConflictWithPersona => 'ペルソナと他の機能を同時に選択することはできません';
 
   @override
   String get addAppPersonaConflictWithCapabilities => 'ペルソナは他の機能と同時に選択できません';
@@ -6964,16 +6868,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aiGenAppCreatedSuccessfully => 'アプリが正常に作成されました！';
 
   @override
-  String get aiGenFailedToCreateApp => 'アプリの作成に失敗しました';
-
-  @override
   String get aiGenErrorWhileCreatingApp => 'アプリの作成中にエラーが発生しました';
-
-  @override
-  String get aiGenFailedToGenerateApp => 'アプリの生成に失敗しました。もう一度お試しください。';
-
-  @override
-  String get aiGenFailedToRegenerateIcon => 'アイコンの再生成に失敗しました';
 
   @override
   String get aiGenPleaseGenerateAppFirst => '先にアプリを生成してください';
@@ -7790,9 +7685,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get linkedIn => 'LinkedIn';
 
   @override
-  String get appStore => 'App Store';
-
-  @override
   String get googleSearch => 'Google Search';
 
   @override
@@ -8368,4 +8260,85 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cloudTranscriptionPoweredByDeepgram => 'Deepgramによるクラウド文字起こし。';
+
+  @override
+  String get addAppCapabilityConflictWithPersona => 'Conflict';
+
+  @override
+  String get aiGenFailedToCreateApp => 'Failed';
+
+  @override
+  String get aiGenFailedToGenerateApp => 'Failed';
+
+  @override
+  String get aiGenFailedToRegenerateIcon => 'Failed';
+
+  @override
+  String get appCapabilities => 'Capabilities';
+
+  @override
+  String get appCategoryModalTitle => 'Category';
+
+  @override
+  String get appStore => 'App Store';
+
+  @override
+  String get chatAppsTitle => 'Chat Apps';
+
+  @override
+  String get createApp => 'Create App';
+
+  @override
+  String get createYourOwnApp => 'Create App';
+
+  @override
+  String get enableApps => 'Enable Apps';
+
+  @override
+  String get externalAppAccess => 'External Access';
+
+  @override
+  String get externalAppAccessDescription => 'External access description';
+
+  @override
+  String get failedToCreateApp => 'Failed';
+
+  @override
+  String failedToInstallApp(String appName) {
+    return 'Failed to install $appName';
+  }
+
+  @override
+  String get fetchingYourAppDetails => 'Loading...';
+
+  @override
+  String get noChatAppsEnabled => 'No apps enabled';
+
+  @override
+  String privateAppsCount(int count) {
+    return '$count private';
+  }
+
+  @override
+  String publicAppsCount(int count) {
+    return '$count public';
+  }
+
+  @override
+  String get rateOnAppStore => 'Rate';
+
+  @override
+  String get selectApp => 'Select App';
+
+  @override
+  String get submitApp => 'Submit';
+
+  @override
+  String get submitAppPrivateDescription => 'Private';
+
+  @override
+  String get submitAppPublicDescription => 'Public';
+
+  @override
+  String get submitAppQuestion => 'Submit?';
 }
