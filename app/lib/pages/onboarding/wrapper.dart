@@ -75,9 +75,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
       _updateBackgroundImage(_controller!.index);
       // Precache next image for smoother transitions
       _precacheNextImage(_controller!.index);
-      if (_controller!.index == kSpeechProfilePage && _knowledgeGraphPrebuildFuture == null) {
-        _knowledgeGraphPrebuildFuture = _prebuildKnowledgeGraph().catchError((_) {});
-      }
+      // TOKI: knowledge graph prebuild disabled — step skipped in simplified onboarding
     });
 
     // Initialize animation controllers
@@ -261,7 +259,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
       ),
       PrimaryLanguageWidget(
         goNext: () {
-          _goNext(); // Go to Found Omi page
+          _controller!.animateTo(kPermissionsPage); // TOKI: skip FoundOmi — go straight to Permissions
           MixpanelManager().onboardingStepCompleted('Primary Language');
         },
       ),
@@ -273,7 +271,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
       ),
       PermissionsWidget(
         goNext: () {
-          _goNext(); // Go to User Review page
+          _controller!.animateTo(kCompletePage); // TOKI: skip Review/Speech/KnowledgeGraph — go to Complete
           MixpanelManager().onboardingStepCompleted('Permissions');
         },
       ),
@@ -333,10 +331,10 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
                         image: DecorationImage(
                           image: ResizeImage(
                             AssetImage(_currentBackgroundImage),
-                            width: (MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio)
-                                .round(),
-                            height: (MediaQuery.of(context).size.height * MediaQuery.of(context).devicePixelRatio)
-                                .round(),
+                            width:
+                                (MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio).round(),
+                            height:
+                                (MediaQuery.of(context).size.height * MediaQuery.of(context).devicePixelRatio).round(),
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -348,188 +346,191 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
                 ],
               )
             : _controller!.index == kNamePage ||
-                  _controller!.index == kPrimaryLanguagePage ||
-                  _controller!.index == kFoundOmiPage ||
-                  _controller!.index == kPermissionsPage ||
-                  _controller!.index == kUserReviewPage ||
-                  _controller!.index == kWelcomePage ||
-                  _controller!.index == kSpeechProfilePage ||
-                  _controller!.index == kKnowledgeGraphPage ||
-                  _controller!.index == kCompletePage
-            ? Stack(
-                children: [
-                  // Animated background image (skip for welcome and complete pages)
-                  if (_controller!.index != kWelcomePage && _controller!.index != kCompletePage)
-                    FadeTransition(
-                      opacity: _backgroundFadeAnimation,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: ResizeImage(
-                              AssetImage(_currentBackgroundImage),
-                              width: (MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio)
-                                  .round(),
-                              height: (MediaQuery.of(context).size.height * MediaQuery.of(context).devicePixelRatio)
-                                  .round(),
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  // Page component (no transition for content)
-                  pages[_controller!.index],
-                  // Progress dots (hidden on complete page)
-                  if (_controller!.index != kCompletePage)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 56, 16, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(9, (index) {
-                          int pageIndex = index + 1; // Name=1, Lang=2, ..., KnowledgeGraph=9
-                          return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                            width: pageIndex == _controller!.index ? 12.0 : 8.0,
-                            height: pageIndex == _controller!.index ? 12.0 : 8.0,
+                    _controller!.index == kPrimaryLanguagePage ||
+                    _controller!.index == kFoundOmiPage ||
+                    _controller!.index == kPermissionsPage ||
+                    _controller!.index == kUserReviewPage ||
+                    _controller!.index == kWelcomePage ||
+                    _controller!.index == kSpeechProfilePage ||
+                    _controller!.index == kKnowledgeGraphPage ||
+                    _controller!.index == kCompletePage
+                ? Stack(
+                    children: [
+                      // Animated background image (skip for welcome and complete pages)
+                      if (_controller!.index != kWelcomePage && _controller!.index != kCompletePage)
+                        FadeTransition(
+                          opacity: _backgroundFadeAnimation,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height,
                             decoration: BoxDecoration(
-                              color: pageIndex <= _controller!.index
-                                  ? Theme.of(context).colorScheme.secondary
-                                  : Colors.grey.shade400,
-                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: ResizeImage(
+                                  AssetImage(_currentBackgroundImage),
+                                  width: (MediaQuery.of(context).size.width * MediaQuery.of(context).devicePixelRatio)
+                                      .round(),
+                                  height: (MediaQuery.of(context).size.height * MediaQuery.of(context).devicePixelRatio)
+                                      .round(),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          );
-                        }),
-                      ),
-                    ),
-                  // Back button (hidden on complete page)
-                  if (_controller!.index > kNamePage && _controller!.index != kCompletePage)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          width: 36,
-                          height: 36,
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
-                          child: IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              if (_controller!.index == kSpeechProfilePage) {
-                                _speechProfileProvider?.close();
-                                _controller!.animateTo(kUserReviewPage);
-                              } else if (_controller!.index > kNamePage) {
-                                _controller!.animateTo(_controller!.index - 1);
-                              }
-                            },
-                            icon: const FaIcon(FontAwesomeIcons.arrowLeft, size: 16.0, color: Colors.white),
                           ),
                         ),
-                      ),
-                    ),
-                ],
-              )
-            : SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          Consumer<OnboardingProvider>(
-                            builder: (context, onboardingProvider, child) {
-                              return DeviceAnimationWidget(
-                                animatedBackground: _controller!.index != -1 && onboardingProvider.isConnected,
-                                isConnected: onboardingProvider.isConnected,
-                                deviceName: onboardingProvider.deviceName,
+                      // Page component (no transition for content)
+                      pages[_controller!.index],
+                      // Progress dots (hidden on complete page)
+                      // TOKI: simplified progress dots — 3 active steps (Name, Language, Permissions)
+                      if (_controller!.index != kCompletePage)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 56, 16, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [kNamePage, kPrimaryLanguagePage, kPermissionsPage].map((pageIndex) {
+                              final isCurrent = _controller!.index == pageIndex;
+                              final isPast = _controller!.index > pageIndex;
+                              return Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                                width: isCurrent ? 12.0 : 8.0,
+                                height: isCurrent ? 12.0 : 8.0,
+                                decoration: BoxDecoration(
+                                  color: (isCurrent || isPast)
+                                      ? Theme.of(context).colorScheme.secondary
+                                      : Colors.grey.shade400,
+                                  shape: BoxShape.circle,
+                                ),
                               );
-                            },
+                            }).toList(),
                           ),
-                          const SizedBox(height: 24),
-                          kHiddenHeaderPages.contains(_controller?.index)
-                              ? const SizedBox.shrink()
-                              : Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: Text(
-                                    context.l10n.personalGrowthJourney,
-                                    style: TextStyle(color: Colors.grey.shade300, fontSize: 24),
-                                    textAlign: TextAlign.center,
+                        ),
+                      // Back button (hidden on complete page)
+                      if (_controller!.index > kNamePage && _controller!.index != kCompletePage)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              margin: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  // TOKI: simplified back navigation — skip removed steps
+                                  if (_controller!.index == kPermissionsPage) {
+                                    _controller!.animateTo(kPrimaryLanguagePage);
+                                  } else if (_controller!.index > kNamePage) {
+                                    _controller!.animateTo(_controller!.index - 1);
+                                  }
+                                },
+                                icon: const FaIcon(FontAwesomeIcons.arrowLeft, size: 16.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  )
+                : SingleChildScrollView(
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              Consumer<OnboardingProvider>(
+                                builder: (context, onboardingProvider, child) {
+                                  return DeviceAnimationWidget(
+                                    animatedBackground: _controller!.index != -1 && onboardingProvider.isConnected,
+                                    isConnected: onboardingProvider.isConnected,
+                                    deviceName: onboardingProvider.deviceName,
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                              kHiddenHeaderPages.contains(_controller?.index)
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      child: Text(
+                                        context.l10n.personalGrowthJourney,
+                                        style: TextStyle(color: Colors.grey.shade300, fontSize: 24),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                              SizedBox(
+                                height:
+                                    (_controller!.index == kFindDevicesPage || _controller!.index == kSpeechProfilePage)
+                                        ? max(
+                                            MediaQuery.of(context).size.height - 500 - 10,
+                                            maxHeightWithTextScale(context, _controller!.index),
+                                          )
+                                        : max(
+                                            MediaQuery.of(context).size.height - 500 - 30,
+                                            maxHeightWithTextScale(context, _controller!.index),
+                                          ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height <= 700 ? 10 : 64),
+                                  child: TabBarView(
+                                    controller: _controller,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    children: pages,
                                   ),
                                 ),
-                          SizedBox(
-                            height: (_controller!.index == kFindDevicesPage || _controller!.index == kSpeechProfilePage)
-                                ? max(
-                                    MediaQuery.of(context).size.height - 500 - 10,
-                                    maxHeightWithTextScale(context, _controller!.index),
-                                  )
-                                : max(
-                                    MediaQuery.of(context).size.height - 500 - 30,
-                                    maxHeightWithTextScale(context, _controller!.index),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (_controller!.index > kNamePage)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                width: 36,
+                                height: 36,
+                                margin: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    if (_controller!.index == kSpeechProfilePage) {
+                                      _speechProfileProvider?.close();
+                                      _controller!.animateTo(kUserReviewPage);
+                                    } else if (_controller!.index > kNamePage) {
+                                      _controller!.animateTo(_controller!.index - 1);
+                                    }
+                                  },
+                                  icon: const FaIcon(FontAwesomeIcons.arrowLeft, size: 16.0, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (_controller!.index != kAuthPage)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 56, 16, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(7, (index) {
+                                int pageIndex = index + 1; // Name=1, Lang=2, ..., Speech=7
+                                return Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                                  width: pageIndex == _controller!.index ? 12.0 : 8.0,
+                                  height: pageIndex == _controller!.index ? 12.0 : 8.0,
+                                  decoration: BoxDecoration(
+                                    color: pageIndex <= _controller!.index
+                                        ? Theme.of(context).colorScheme.secondary
+                                        : Colors.grey.shade400,
+                                    shape: BoxShape.circle,
                                   ),
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: MediaQuery.sizeOf(context).height <= 700 ? 10 : 64),
-                              child: TabBarView(
-                                controller: _controller,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: pages,
-                              ),
+                                );
+                              }),
                             ),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
-                    if (_controller!.index > kNamePage)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 40, 0, 0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            width: 36,
-                            height: 36,
-                            margin: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () {
-                                if (_controller!.index == kSpeechProfilePage) {
-                                  _speechProfileProvider?.close();
-                                  _controller!.animateTo(kUserReviewPage);
-                                } else if (_controller!.index > kNamePage) {
-                                  _controller!.animateTo(_controller!.index - 1);
-                                }
-                              },
-                              icon: const FaIcon(FontAwesomeIcons.arrowLeft, size: 16.0, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    if (_controller!.index != kAuthPage)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 56, 16, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(7, (index) {
-                            int pageIndex = index + 1; // Name=1, Lang=2, ..., Speech=7
-                            return Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                              width: pageIndex == _controller!.index ? 12.0 : 8.0,
-                              height: pageIndex == _controller!.index ? 12.0 : 8.0,
-                              decoration: BoxDecoration(
-                                color: pageIndex <= _controller!.index
-                                    ? Theme.of(context).colorScheme.secondary
-                                    : Colors.grey.shade400,
-                                shape: BoxShape.circle,
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
+                  ),
       ),
     );
   }
