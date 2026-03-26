@@ -13,7 +13,6 @@ import 'package:omi/backend/schema/app.dart';
 import 'package:omi/backend/schema/conversation.dart';
 import 'package:omi/gen/assets.gen.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
-import 'package:omi/pages/conversation_detail/widgets/summarized_apps_sheet.dart';
 import 'package:omi/utils/logger.dart';
 
 enum ConversationBottomBarMode {
@@ -474,7 +473,7 @@ class _ConversationBottomBarState extends State<ConversationBottomBar> {
           context: context,
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
-          builder: (context) => const SummarizedAppsBottomSheet(),
+          builder: (context) => const SizedBox(), // TOKI: summarized apps removed
         );
       } else {
         widget.onTabSelected(ConversationTab.summary);

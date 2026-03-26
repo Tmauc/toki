@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:omi/backend/schema/app.dart';
-import 'package:omi/pages/apps/app_detail/app_detail.dart';
 import 'package:omi/pages/settings/widgets/data_protection_section.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/providers/user_provider.dart';

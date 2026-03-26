@@ -19,12 +19,10 @@ import 'package:omi/backend/schema/geolocation.dart';
 import 'package:omi/backend/schema/structured.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/gen/assets.gen.dart';
-import 'package:omi/pages/apps/app_detail/app_detail.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
 import 'package:omi/pages/conversation_detail/share.dart';
 import 'package:omi/pages/conversation_detail/test_prompts.dart';
 import 'package:omi/pages/conversation_detail/widgets/conversation_markdown_widget.dart';
-import 'package:omi/pages/conversation_detail/widgets/summarized_apps_sheet.dart';
 import 'package:omi/pages/conversations/widgets/move_to_folder_sheet.dart';
 import 'package:omi/pages/settings/developer.dart';
 import 'package:omi/providers/folder_provider.dart';
@@ -746,7 +744,7 @@ class AppResultDetailWidget extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 if (app != null) {
-                  await routeToPage(context, AppDetailPage(app: app!));
+                  // TOKI: app detail page removed
                 }
               },
               child: Padding(

@@ -34,11 +34,9 @@ import 'package:omi/firebase_options_dev.dart' as dev;
 import 'package:omi/firebase_options_prod.dart' as prod;
 import 'package:omi/flavors.dart';
 import 'package:omi/l10n/app_localizations.dart';
-import 'package:omi/pages/apps/providers/add_app_provider.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
 import 'package:omi/pages/payments/payment_method_provider.dart';
 import 'package:omi/pages/persona/persona_provider.dart';
-import 'package:omi/pages/settings/ai_app_generator_provider.dart';
 import 'package:omi/providers/action_items_provider.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/providers/auth_provider.dart';
@@ -327,17 +325,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         ChangeNotifierProvider(create: (context) => DeveloperModeProvider()..initialize()),
         ChangeNotifierProvider(create: (context) => McpProvider()),
-        ChangeNotifierProxyProvider<AppProvider, AddAppProvider>(
-          create: (context) => AddAppProvider(),
-          update: (BuildContext context, value, AddAppProvider? previous) =>
-              (previous?..setAppProvider(value)) ?? AddAppProvider(),
-        ),
-        ChangeNotifierProxyProvider<AppProvider, AiAppGeneratorProvider>(
-          create: (context) => AiAppGeneratorProvider(),
-          update: (BuildContext context, value, AiAppGeneratorProvider? previous) =>
-              (previous?..setAppProvider(value)) ?? AiAppGeneratorProvider(),
-        ),
-        ChangeNotifierProvider(create: (context) => PaymentMethodProvider()),
+        // TOKI: AddAppProvider and AiAppGeneratorProvider removed — marketplace disabled
+        // TOKI: PaymentMethodProvider removed — monetization disabled
         ChangeNotifierProvider(create: (context) => PersonaProvider()),
         ChangeNotifierProxyProvider<ConnectivityProvider, MemoriesProvider>(
           create: (context) => MemoriesProvider(),

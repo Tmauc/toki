@@ -12,7 +12,6 @@ import 'package:omi/backend/preferences.dart';
 import 'package:omi/backend/schema/app.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
-import 'package:omi/pages/conversation_detail/widgets/summarized_apps_sheet.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/utils/alerts/app_snackbar.dart';
 import 'package:omi/utils/logger.dart';
@@ -179,7 +178,7 @@ class _CreateTemplateBottomSheetState extends State<CreateTemplateBottomSheet> {
               context: context,
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
-              builder: (context) => const SummarizedAppsBottomSheet(),
+              builder: (context) => const SizedBox(), // TOKI: summarized apps removed
             );
           }
         } else if (mounted) {

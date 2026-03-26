@@ -15,7 +15,6 @@ import 'package:omi/backend/schema/app.dart';
 import 'package:omi/backend/schema/conversation.dart';
 import 'package:omi/backend/schema/message.dart';
 import 'package:omi/gen/assets.gen.dart';
-import 'package:omi/pages/apps/widgets/capability_apps_page.dart';
 import 'package:omi/pages/chat/widgets/ai_message.dart';
 import 'package:omi/pages/chat/widgets/user_message.dart';
 import 'package:omi/pages/chat/widgets/voice_recorder_widget.dart';
@@ -827,18 +826,10 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
   }
 
   Future<void> _navigateToChatAppsPage() async {
+    // TOKI: marketplace disabled — chat apps page removed
+    return;
+    // ignore: dead_code
     if (!mounted) return;
-
-    // Navigate to chat capability apps page
-    await routeToPage(
-      context,
-      CapabilityAppsPage(
-        capability: AppCapability(id: 'chat', title: context.l10n.chatAssistantsTitle),
-        apps: const [],
-      ),
-    );
-
-    // Refresh chat apps when returning from the page
     if (mounted) {
       _refreshChatAppsFromLocal();
     }

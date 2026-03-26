@@ -9,7 +9,6 @@ import 'package:omi/backend/http/api/action_items.dart' as action_items_api;
 import 'package:omi/backend/http/clock_skew_detector.dart';
 import 'package:omi/mobile/mobile_app.dart';
 import 'package:omi/pages/action_items/widgets/accept_shared_tasks_sheet.dart';
-import 'package:omi/pages/apps/app_detail/app_detail.dart';
 import 'package:omi/pages/settings/asana_settings_page.dart';
 import 'package:omi/pages/settings/clickup_settings_page.dart';
 import 'package:omi/pages/settings/wrapped_2025_page.dart';
@@ -72,7 +71,7 @@ class _AppShellState extends State<AppShell> {
         var app = await context.read<AppProvider>().getAppFromId(uri.pathSegments[1]);
         if (app != null) {
           if (mounted) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppDetailPage(app: app)));
+            // TOKI: app detail page removed
           }
         } else {
           Logger.debug('App not found: ${uri.pathSegments[1]}');
