@@ -47,3 +47,13 @@ app.*.map.json
 /android/app/release
 # Local clone of forked dependencies
 whisper_flutter_new/
+
+# FVM Version Cache
+.fvm/
+
+# Flutter.framework pre-copied for macOS 26 workaround
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.xcframework/
+
+# Google credentials (sensitive)
+google-credentials.json
