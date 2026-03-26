@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper: authenticated and owns the resource ──────────
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── Existing Omi collections (keep as-is) ────────────────
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      match /memories/{memoryId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      match /conversations/{convId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      match /people/{personId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      // ── TOKI: Voice Personas clusters ────────────────────────
+      // Only the owning user can read/write their voice clusters.
+      // Embeddings and audio URLs are private data — no public access.
+      match /unknown_speakers/{clusterId} {
+        allow read:   if isOwner(uid);
+        allow create: if isOwner(uid)
+                      && request.resource.data.uid == uid
+                      && request.resource.data.status in ['unknown', 'named', 'deleted'];
+        allow update: if isOwner(uid)
+                      && request.resource.data.uid == uid;
+        allow delete: if isOwner(uid);
+      }
+    }
+  }
+}

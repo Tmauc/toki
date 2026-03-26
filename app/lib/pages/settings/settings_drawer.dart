@@ -18,6 +18,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:omi/pages/toki/voice_personas_page.dart';
+import 'package:omi/providers/toki_voice_personas_provider.dart';
 import 'device_settings.dart';
 import 'phone_call_settings_page.dart';
 import '../conversations/sync_page.dart';
@@ -278,6 +280,19 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   icon: const FaIcon(FontAwesomeIcons.solidUser, color: Color(0xFF8E8E93), size: 20),
                   onTap: () {
                     routeToPage(context, const ProfilePage());
+                  },
+                ),
+                const Divider(height: 1, color: Color(0xFF3C3C43)),
+                _buildSettingsItem(
+                  title: 'Voix non identifiées',
+                  icon: const FaIcon(FontAwesomeIcons.microphoneLines, color: Color(0xFF8E8E93), size: 20),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ChangeNotifierProvider.value(
+                        value: context.read<VoicePersonasProvider>(),
+                        child: const VoicePersonasPage(),
+                      ),
+                    ));
                   },
                 ),
                 const Divider(height: 1, color: Color(0xFF3C3C43)),

@@ -36,6 +36,11 @@ class TranscriptWidget extends StatefulWidget {
   final Function(TranscriptSegment)? onSegmentTap;
   final Function(int segmentIndex)? onEditSegmentText;
 
+  /// TOKI: called when the user taps "?" on an unnamed speaker.
+  /// Receives the raw speaker label (e.g. "SPEAKER_01") so the
+  /// caller can deep-link into the naming flow.
+  final Function(String speakerLabel)? onTokiIdentify;
+
   const TranscriptWidget({
     super.key,
     required this.segments,
@@ -55,6 +60,7 @@ class TranscriptWidget extends StatefulWidget {
     this.onTapWhenSearchEmpty,
     this.onSegmentTap,
     this.onEditSegmentText,
+    this.onTokiIdentify,
   });
 
   @override
@@ -525,6 +531,31 @@ class _TranscriptWidgetState extends State<TranscriptWidget> {
                               child: CircularProgressIndicator(
                                 strokeWidth: 1.5,
                                 valueColor: AlwaysStoppedAnimation(Colors.white),
+                              ),
+                            ),
+                          ],
+                          // TOKI: "identify" button for unnamed speakers
+                          if (!isTagging &&
+                              person == null &&
+                              data.speakerId != omiSpeakerId &&
+                              widget.onTokiIdentify != null) ...[
+                            const SizedBox(width: 6),
+                            GestureDetector(
+                              onTap: () => widget.onTokiIdentify!(
+                                  data.speaker ?? 'SPEAKER_${data.speakerId}'),
+                              child: Container(
+                                width: 18,
+                                height: 18,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF2C2C2E),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.white24),
+                                ),
+                                child: const Icon(
+                                  Icons.person_add_alt_1_rounded,
+                                  size: 10,
+                                  color: Colors.white54,
+                                ),
                               ),
                             ),
                           ],
