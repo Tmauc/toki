@@ -21,6 +21,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:omi/pages/toki/voice_personas_page.dart';
 import 'package:omi/providers/toki_voice_personas_provider.dart';
 import 'device_settings.dart';
+import 'usage_stats_page.dart';
 import '../conversations/sync_page.dart';
 
 enum SettingsMode { no_device, omi }
@@ -279,6 +280,14 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                   icon: const FaIcon(FontAwesomeIcons.solidUser, color: Color(0xFF8E8E93), size: 20),
                   onTap: () {
                     routeToPage(context, const ProfilePage());
+                  },
+                ),
+                const Divider(height: 1, color: Color(0xFF3C3C43)),
+                _buildSettingsItem(
+                  title: context.l10n.usageStatistics,
+                  icon: const FaIcon(FontAwesomeIcons.chartBar, color: Color(0xFF8E8E93), size: 20),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const UsageStatsPage()));
                   },
                 ),
                 const Divider(height: 1, color: Color(0xFF3C3C43)),
