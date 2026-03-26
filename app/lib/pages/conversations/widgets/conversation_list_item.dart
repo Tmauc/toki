@@ -12,7 +12,6 @@ import 'package:omi/backend/preferences.dart';
 import 'package:omi/backend/schema/conversation.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
 import 'package:omi/pages/conversation_detail/page.dart';
-import 'package:omi/pages/settings/usage_page.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/utils/l10n_extensions.dart';
@@ -96,7 +95,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
             }
 
             if (widget.conversation.isLocked) {
-              routeToPage(context, const UsagePage(showUpgradeDialog: true));
+              // TOKI: usage/plans page removed
               return;
             }
             // Calculate time difference
@@ -157,14 +156,14 @@ class _ConversationListItemState extends State<ConversationListItem> {
                       color: isSelected
                           ? Colors.deepPurple.withValues(alpha: 0.3)
                           : (isSelectionMode && !isEligible)
-                          ? Colors.grey.shade800
-                          : const Color(0xFF1F1F25),
+                              ? Colors.grey.shade800
+                              : const Color(0xFF1F1F25),
                       borderRadius: BorderRadius.circular(24.0),
                       border: isSelected
                           ? Border.all(color: Colors.deepPurple, width: 2)
                           : (isSelectionMode && !isEligible)
-                          ? Border.all(color: Colors.grey.shade600, width: 1)
-                          : null,
+                              ? Border.all(color: Colors.grey.shade600, width: 1)
+                              : null,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(24.0),
@@ -471,7 +470,7 @@ class _ConversationListItemState extends State<ConversationListItem> {
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             child: Text(
-              context.l10n.upgradeToUnlimited,
+              "Upgrade",
               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),

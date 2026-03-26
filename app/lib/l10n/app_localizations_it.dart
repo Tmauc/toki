@@ -180,9 +180,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get monthlyLimitReached => 'Hai raggiunto il tuo limite mensile.';
 
   @override
-  String get checkUsage => 'Verifica Utilizzo';
-
-  @override
   String get syncingRecordings => 'Sincronizzazione registrazioni';
 
   @override
@@ -418,9 +415,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get systemDefault => 'Predefinito del Sistema';
 
   @override
-  String get planAndUsage => 'Piano e Utilizzo';
-
-  @override
   String get offlineSync => 'Sincronizzazione offline';
 
   @override
@@ -437,12 +431,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get developerSettings => 'Impostazioni sviluppatore';
-
-  @override
-  String get getOmiForMac => 'Ottieni Toki per Mac';
-
-  @override
-  String get referralProgram => 'Programma di Riferimento';
 
   @override
   String get signOut => 'Disconnetti';
@@ -726,9 +714,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rememberingSubtitle => 'Fatti e dettagli ricordati per te.';
 
   @override
-  String get unlimitedPlan => 'Piano Illimitato';
-
-  @override
   String get managePlan => 'Gestisci Piano';
 
   @override
@@ -748,12 +733,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String usageLimitMessage(String used, int limit) {
     return '$used di $limit min utilizzati';
   }
-
-  @override
-  String get upgrade => 'Aggiorna';
-
-  @override
-  String get upgradeToUnlimited => 'Aggiorna a illimitato';
 
   @override
   String basicPlanDesc(int limit) {
@@ -1451,9 +1430,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tasksExportedOneApp => 'Le attività possono essere esportate in un\'app alla volta.';
 
   @override
-  String get completeYourUpgrade => 'Completa il Tuo Aggiornamento';
-
-  @override
   String get importConfiguration => 'Importa Configurazione';
 
   @override
@@ -1467,9 +1443,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get freeMinutesMonth => '1.200 minuti gratuiti/mese inclusi. Illimitato con ';
-
-  @override
-  String get omiUnlimited => 'Toki Unlimited';
 
   @override
   String get hostRequired => 'L\'host è richiesto';
@@ -3275,12 +3248,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get upgradeToPro => 'Passa a Pro';
-
-  @override
-  String get getOmiDevice => 'Ottieni dispositivo Toki';
-
-  @override
   String get wearableAiCompanion => 'Compagno AI indossabile';
 
   @override
@@ -3876,9 +3843,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deliveryTimeDescription => 'Quando ricevere il riepilogo giornaliero';
 
   @override
-  String get subscription => 'Abbonamento';
-
-  @override
   String get viewPlansAndUsage => 'Visualizza Piani e Utilizzo';
 
   @override
@@ -4033,13 +3997,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get no => 'No';
 
   @override
-  String get subscriptionCancelledSuccessfully =>
-      'Abbonamento annullato con successo. Rimarrà attivo fino alla fine del periodo di fatturazione corrente.';
-
-  @override
-  String get failedToCancelSubscription => 'Impossibile annullare l\'abbonamento. Riprova.';
-
-  @override
   String get invalidPaymentUrl => 'URL di pagamento non valido';
 
   @override
@@ -4065,16 +4022,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featuredLabel => 'IN EVIDENZA';
-
-  @override
-  String get cancelSubscriptionQuestion => 'Annullare l\'abbonamento?';
-
-  @override
-  String get cancelSubscriptionConfirmation =>
-      'Sei sicuro di voler annullare l\'abbonamento? Continuerai ad avere accesso fino alla fine del periodo di fatturazione corrente.';
-
-  @override
-  String get cancelSubscriptionButton => 'Annulla abbonamento';
 
   @override
   String get cancelling => 'Annullamento...';
@@ -4490,17 +4437,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get omiTraining => 'Formazione Toki';
 
   @override
-  String get trainingDataProgram => 'Programma dati di formazione';
-
-  @override
-  String get getOmiUnlimitedFree =>
-      'Ottieni Toki Unlimited gratis contribuendo con i tuoi dati per addestrare modelli AI.';
-
-  @override
-  String get trainingDataBullets =>
-      '• I tuoi dati aiutano a migliorare i modelli AI\n• Vengono condivisi solo dati non sensibili\n• Processo completamente trasparente';
-
-  @override
   String get learnMoreAtOmiTraining => 'Scopri di più su omi.me/training';
 
   @override
@@ -4526,9 +4462,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get keepMyPlan => 'Mantieni il mio piano';
 
   @override
-  String get subscriptionSetToCancel => 'Il tuo abbonamento è impostato per essere annullato alla fine del periodo.';
-
-  @override
   String get switchedToOnDevice => 'Passato alla trascrizione sul dispositivo';
 
   @override
@@ -4539,9 +4472,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get selectedPlanNotAvailable => 'Il piano selezionato non è disponibile. Riprova.';
-
-  @override
-  String get upgradeToAnnualPlan => 'Passa al piano annuale';
 
   @override
   String get importantBillingInfo => 'Informazioni di fatturazione importanti:';
@@ -4555,32 +4485,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il tuo metodo di pagamento esistente verrà addebitato automaticamente al termine del piano mensile';
 
   @override
-  String get annualSubscriptionStarts =>
-      'Il tuo abbonamento annuale di 12 mesi inizierà automaticamente dopo l\'addebito';
-
-  @override
   String get thirteenMonthsCoverage => 'Avrai 13 mesi di copertura totale (mese corrente + 12 mesi annuali)';
-
-  @override
-  String get confirmUpgrade => 'Conferma aggiornamento';
 
   @override
   String get confirmPlanChange => 'Conferma cambio piano';
 
   @override
   String get confirmAndProceed => 'Conferma e procedi';
-
-  @override
-  String get upgradeScheduled => 'Aggiornamento programmato';
-
-  @override
-  String get changePlan => 'Cambia piano';
-
-  @override
-  String get upgradeAlreadyScheduled => 'Il tuo aggiornamento al piano annuale è già programmato';
-
-  @override
-  String get youAreOnUnlimitedPlan => 'Sei sul piano Illimitato.';
 
   @override
   String get yourOmiUnleashed => 'Il tuo Toki, liberato. Passa a illimitato per possibilità infinite.';
@@ -4603,9 +4514,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String planRenewsOn(String date) {
     return 'Il tuo piano si rinnova il $date.';
   }
-
-  @override
-  String get unlimitedConversations => 'Conversazioni illimitate';
 
   @override
   String get askOmiAnything => 'Chiedi a Toki qualsiasi cosa sulla tua vita';
@@ -4640,9 +4548,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get managePaymentMethod => 'Gestisci metodo di pagamento';
-
-  @override
-  String get cancelSubscription => 'Annulla abbonamento';
 
   @override
   String endsOnDate(String date) {
@@ -4801,18 +4706,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get omiHas => 'Toki ha:';
 
   @override
-  String get premiumMinutesUsed => 'Minuti premium utilizzati.';
-
-  @override
   String get setupOnDevice => 'Configura sul dispositivo';
-
-  @override
-  String get forUnlimitedFreeTranscription => 'per trascrizione gratuita illimitata.';
-
-  @override
-  String premiumMinsLeft(int count) {
-    return '$count minuti premium rimasti.';
-  }
 
   @override
   String get alwaysAvailable => 'sempre disponibile.';
@@ -6125,13 +6019,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get cloudProvider => 'Provider cloud';
 
   @override
-  String get premiumMinutesInfo =>
-      '1.200 minuti premium/mese. La scheda Su dispositivo offre trascrizione gratuita illimitata.';
-
-  @override
-  String get viewUsage => 'Visualizza utilizzo';
-
-  @override
   String get localProcessingInfo =>
       'L\'audio viene elaborato localmente. Funziona offline, più privato, ma consuma più batteria.';
 
@@ -6207,10 +6094,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get batteryDrainSignificantly => 'Il consumo della batteria aumenterà significativamente.';
-
-  @override
-  String get premiumMinutesMonth =>
-      '1.200 minuti premium/mese. La scheda Sul dispositivo offre trascrizione gratuita illimitata. ';
 
   @override
   String get audioProcessedLocally =>
@@ -6583,12 +6466,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get disconnectTwitterConfirmation =>
       'Sei sicuro di voler disconnettere il tuo account Twitter? La tua persona non avrà più accesso ai tuoi dati Twitter.';
-
-  @override
-  String get getOmiDeviceDescription => 'Ottieni un dispositivo Toki per l\'esperienza completa';
-
-  @override
-  String get getOmi => 'Ottieni Toki';
 
   @override
   String get iHaveOmiDevice => 'Ho un dispositivo Toki';
@@ -7288,25 +7165,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get planUpgradeScheduledMessage =>
-      'Upgrade programmato! Il tuo piano mensile continua fino alla fine del periodo di fatturazione, poi passa automaticamente all\'annuale.';
-
-  @override
   String get couldNotSchedulePlanChange => 'Impossibile programmare il cambio di piano. Riprova.';
-
-  @override
-  String get subscriptionReactivatedDefault =>
-      'Il tuo abbonamento è stato riattivato! Nessun addebito ora - sarai fatturato alla fine del periodo corrente.';
-
-  @override
-  String get subscriptionSuccessfulCharged =>
-      'Abbonamento completato! Sei stato addebitato per il nuovo periodo di fatturazione.';
-
-  @override
-  String get couldNotProcessSubscription => 'Impossibile elaborare l\'abbonamento. Riprova.';
-
-  @override
-  String get couldNotLaunchUpgradePage => 'Impossibile aprire la pagina di upgrade. Riprova.';
 
   @override
   String get transcriptionJsonPlaceholder => 'Incolla la tua configurazione JSON qui...';
@@ -8526,9 +8385,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get showTasksOnHomepage => 'Mostra attività nella homepage';
 
   @override
-  String get phoneCallsUnlimitedOnly => 'Chiamate telefoniche tramite Toki';
-
-  @override
   String get phoneCallsUpsellSubtitle =>
       'Effettua chiamate tramite Toki e ottieni trascrizione in tempo reale, riassunti automatici e altro.';
 
@@ -8543,9 +8399,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get phoneCallsUpsellFeature4 => 'Le tue chiamate restano private e sicure';
-
-  @override
-  String get phoneCallsUpgradeButton => 'Passa a Illimitato';
 
   @override
   String get phoneCallsMaybeLater => 'Forse più tardi';

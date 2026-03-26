@@ -66,7 +66,7 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(widget.title ?? context.l10n.completeYourUpgrade),
+        title: Text(widget.title ?? "Complete your upgrade"),
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop(false)),

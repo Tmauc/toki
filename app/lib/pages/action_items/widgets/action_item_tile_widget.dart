@@ -10,7 +10,6 @@ import 'package:omi/backend/http/api/action_items.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/backend/schema/schema.dart';
 import 'package:omi/pages/settings/task_integrations_page.dart';
-import 'package:omi/pages/settings/usage_page.dart';
 import 'package:omi/providers/task_integration_provider.dart';
 import 'package:omi/services/apple_reminders_service.dart';
 import 'package:omi/services/asana_service.dart';
@@ -977,7 +976,7 @@ class _ActionItemTileWidgetState extends State<ActionItemTileWidget> {
                     filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                     child: GestureDetector(
                       onTap: () {
-                        routeToPage(context, const UsagePage(showUpgradeDialog: true));
+                        // TOKI: usage/plans page removed
                         return;
                       },
                       child: Container(
@@ -987,7 +986,7 @@ class _ActionItemTileWidgetState extends State<ActionItemTileWidget> {
                           borderRadius: const BorderRadius.all(Radius.circular(8)),
                         ),
                         child: Text(
-                          context.l10n.upgradeToUnlimited,
+                          "Upgrade",
                           style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),

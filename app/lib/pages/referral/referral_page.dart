@@ -59,7 +59,7 @@ class _ReferralPageState extends State<ReferralPage> {
           },
         ),
         title: Text(
-          context.l10n.referralProgram,
+          "Referral Program",
           style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,

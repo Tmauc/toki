@@ -431,12 +431,6 @@ abstract class AppLocalizations {
   /// **'You\'ve reached your monthly limit.'**
   String get monthlyLimitReached;
 
-  /// Button to check usage details
-  ///
-  /// In en, this message translates to:
-  /// **'Check Usage'**
-  String get checkUsage;
-
   /// Title when sync is in progress
   ///
   /// In en, this message translates to:
@@ -887,12 +881,6 @@ abstract class AppLocalizations {
   /// **'System Default'**
   String get systemDefault;
 
-  /// Plan and usage menu item
-  ///
-  /// In en, this message translates to:
-  /// **'Plan & Usage'**
-  String get planAndUsage;
-
   /// Page title for offline sync
   ///
   /// In en, this message translates to:
@@ -928,18 +916,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Developer Settings'**
   String get developerSettings;
-
-  /// Mac app download link
-  ///
-  /// In en, this message translates to:
-  /// **'Get Toki for Mac'**
-  String get getOmiForMac;
-
-  /// Referral program menu item
-  ///
-  /// In en, this message translates to:
-  /// **'Referral Program'**
-  String get referralProgram;
 
   /// Sign out button
   ///
@@ -1487,12 +1463,6 @@ abstract class AppLocalizations {
   /// **'Facts and details remembered for you.'**
   String get rememberingSubtitle;
 
-  /// Unlimited plan name
-  ///
-  /// In en, this message translates to:
-  /// **'Unlimited Plan'**
-  String get unlimitedPlan;
-
   /// Manage plan button
   ///
   /// In en, this message translates to:
@@ -1522,18 +1492,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{used} of {limit} mins used'**
   String usageLimitMessage(String used, int limit);
-
-  /// Upgrade button
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade'**
-  String get upgrade;
-
-  /// Message shown on locked memory items
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade to unlimited'**
-  String get upgradeToUnlimited;
 
   /// Basic plan description
   ///
@@ -2759,12 +2717,6 @@ abstract class AppLocalizations {
   /// **'Tasks can be exported to one app at a time.'**
   String get tasksExportedOneApp;
 
-  /// No description provided for @completeYourUpgrade.
-  ///
-  /// In en, this message translates to:
-  /// **'Complete Your Upgrade'**
-  String get completeYourUpgrade;
-
   /// No description provided for @importConfiguration.
   ///
   /// In en, this message translates to:
@@ -2794,12 +2746,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1,200 free minutes/month included. Unlimited with '**
   String get freeMinutesMonth;
-
-  /// No description provided for @omiUnlimited.
-  ///
-  /// In en, this message translates to:
-  /// **'Toki Unlimited'**
-  String get omiUnlimited;
 
   /// No description provided for @hostRequired.
   ///
@@ -6215,18 +6161,6 @@ abstract class AppLocalizations {
   /// **'Pro'**
   String get pro;
 
-  /// Subscription banner button text
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade to Pro'**
-  String get upgradeToPro;
-
-  /// Widget title for device promotion
-  ///
-  /// In en, this message translates to:
-  /// **'Get Toki Device'**
-  String get getOmiDevice;
-
   /// Widget subtitle for device promotion
   ///
   /// In en, this message translates to:
@@ -7337,12 +7271,6 @@ abstract class AppLocalizations {
   /// **'When to receive your daily summary'**
   String get deliveryTimeDescription;
 
-  /// Subscription section title
-  ///
-  /// In en, this message translates to:
-  /// **'Subscription'**
-  String get subscription;
-
   /// View plans button
   ///
   /// In en, this message translates to:
@@ -7631,18 +7559,6 @@ abstract class AppLocalizations {
   /// **'No'**
   String get no;
 
-  /// Success message when subscription is cancelled
-  ///
-  /// In en, this message translates to:
-  /// **'Subscription cancelled successfully. It will remain active until the end of the current billing period.'**
-  String get subscriptionCancelledSuccessfully;
-
-  /// Error message when subscription cancellation fails
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to cancel subscription. Please try again.'**
-  String get failedToCancelSubscription;
-
   /// Error message for invalid payment URL
   ///
   /// In en, this message translates to:
@@ -7696,24 +7612,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'FEATURED'**
   String get featuredLabel;
-
-  /// Dialog title for cancel subscription
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel Subscription?'**
-  String get cancelSubscriptionQuestion;
-
-  /// Dialog description for cancel subscription
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to cancel your subscription? You will continue to have access until the end of your current billing period.'**
-  String get cancelSubscriptionConfirmation;
-
-  /// Button text to cancel subscription
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel Subscription'**
-  String get cancelSubscriptionButton;
 
   /// Loading text while cancelling
   ///
@@ -8429,24 +8327,6 @@ abstract class AppLocalizations {
   /// **'Toki Training'**
   String get omiTraining;
 
-  /// Label for training data program
-  ///
-  /// In en, this message translates to:
-  /// **'Training Data Program'**
-  String get trainingDataProgram;
-
-  /// Description for getting Toki Unlimited free by contributing data
-  ///
-  /// In en, this message translates to:
-  /// **'Get Toki Unlimited for free by contributing your data to train AI models.'**
-  String get getOmiUnlimitedFree;
-
-  /// Bullet points explaining training data program benefits
-  ///
-  /// In en, this message translates to:
-  /// **'• Your data helps improve AI models\n• Only non-sensitive data is shared\n• Fully transparent process'**
-  String get trainingDataBullets;
-
   /// Link text to learn more about training
   ///
   /// In en, this message translates to:
@@ -8489,12 +8369,6 @@ abstract class AppLocalizations {
   /// **'Keep My Plan'**
   String get keepMyPlan;
 
-  /// Message that subscription is set to cancel
-  ///
-  /// In en, this message translates to:
-  /// **'Your subscription is set to cancel at the end of the period.'**
-  String get subscriptionSetToCancel;
-
   /// Success message when switched to on-device transcription
   ///
   /// In en, this message translates to:
@@ -8519,12 +8393,6 @@ abstract class AppLocalizations {
   /// **'Selected plan is not available. Please try again.'**
   String get selectedPlanNotAvailable;
 
-  /// Dialog title for upgrading to annual plan
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade to Annual Plan'**
-  String get upgradeToAnnualPlan;
-
   /// Header for billing information section
   ///
   /// In en, this message translates to:
@@ -8543,23 +8411,11 @@ abstract class AppLocalizations {
   /// **'Your existing payment method will be charged automatically when your monthly plan ends'**
   String get paymentMethodCharged;
 
-  /// Info about annual subscription starting
-  ///
-  /// In en, this message translates to:
-  /// **'Your 12-month annual subscription will start automatically after the charge'**
-  String get annualSubscriptionStarts;
-
   /// Info about total coverage period
   ///
   /// In en, this message translates to:
   /// **'You\'ll get 13 months of coverage total (current month + 12 months annual)'**
   String get thirteenMonthsCoverage;
-
-  /// Button text to confirm upgrade
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Upgrade'**
-  String get confirmUpgrade;
 
   /// Dialog title for confirming plan change
   ///
@@ -8572,30 +8428,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm & Proceed'**
   String get confirmAndProceed;
-
-  /// Label when upgrade is scheduled
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade Scheduled'**
-  String get upgradeScheduled;
-
-  /// Button text to change plan
-  ///
-  /// In en, this message translates to:
-  /// **'Change Plan'**
-  String get changePlan;
-
-  /// Message when upgrade is already scheduled
-  ///
-  /// In en, this message translates to:
-  /// **'Your upgrade to the annual plan is already scheduled'**
-  String get upgradeAlreadyScheduled;
-
-  /// Message showing user is on unlimited plan
-  ///
-  /// In en, this message translates to:
-  /// **'You are on the Unlimited Plan.'**
-  String get youAreOnUnlimitedPlan;
 
   /// Marketing text for unlimited plan
   ///
@@ -8626,12 +8458,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your plan renews on {date}.'**
   String planRenewsOn(String date);
-
-  /// Feature: unlimited conversations
-  ///
-  /// In en, this message translates to:
-  /// **'Unlimited conversations'**
-  String get unlimitedConversations;
 
   /// Feature: ask Toki anything
   ///
@@ -8698,12 +8524,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage Payment Method'**
   String get managePaymentMethod;
-
-  /// Button text to cancel a subscription
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel Subscription'**
-  String get cancelSubscription;
 
   /// Shows end date
   ///
@@ -8981,29 +8801,11 @@ abstract class AppLocalizations {
   /// **'Toki has:'**
   String get omiHas;
 
-  /// Message shown when all premium minutes are used
-  ///
-  /// In en, this message translates to:
-  /// **'Premium minutes used.'**
-  String get premiumMinutesUsed;
-
   /// Link text to setup on-device transcription
   ///
   /// In en, this message translates to:
   /// **'Setup on-device'**
   String get setupOnDevice;
-
-  /// Continuation of premium minutes message
-  ///
-  /// In en, this message translates to:
-  /// **'for unlimited free transcription.'**
-  String get forUnlimitedFreeTranscription;
-
-  /// Message showing remaining premium minutes
-  ///
-  /// In en, this message translates to:
-  /// **'{count} premium mins left.'**
-  String premiumMinsLeft(int count);
 
   /// Text indicating on-device is always available
   ///
@@ -11453,18 +11255,6 @@ abstract class AppLocalizations {
   /// **'Cloud Provider'**
   String get cloudProvider;
 
-  /// Info about premium minutes
-  ///
-  /// In en, this message translates to:
-  /// **'1,200 premium minutes/month. On-Device tab offers unlimited free transcription.'**
-  String get premiumMinutesInfo;
-
-  /// Link to view usage
-  ///
-  /// In en, this message translates to:
-  /// **'View usage'**
-  String get viewUsage;
-
   /// Info about local processing
   ///
   /// In en, this message translates to:
@@ -11596,12 +11386,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Battery drain will increase significantly.'**
   String get batteryDrainSignificantly;
-
-  /// Description of premium minutes quota
-  ///
-  /// In en, this message translates to:
-  /// **'1,200 premium minutes/month. On-Device tab offers unlimited free transcription. '**
-  String get premiumMinutesMonth;
 
   /// Description of on-device processing
   ///
@@ -12286,18 +12070,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to disconnect your Twitter account? Your persona will no longer have access to your Twitter data.'**
   String get disconnectTwitterConfirmation;
-
-  /// No description provided for @getOmiDeviceDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Create a more accurate clone with your personal conversations'**
-  String get getOmiDeviceDescription;
-
-  /// No description provided for @getOmi.
-  ///
-  /// In en, this message translates to:
-  /// **'Get Toki'**
-  String get getOmi;
 
   /// No description provided for @iHaveOmiDevice.
   ///
@@ -13559,41 +13331,11 @@ abstract class AppLocalizations {
   /// **'You\'re switching your Unlimited Plan to the {title}. Are you sure you want to proceed?'**
   String planSwitchingDescriptionWithTitle(String title);
 
-  /// Success message when plan upgrade is scheduled
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade scheduled! Your monthly plan continues until the end of your billing period, then automatically switches to annual.'**
-  String get planUpgradeScheduledMessage;
-
   /// Error when plan change cannot be scheduled
   ///
   /// In en, this message translates to:
   /// **'Could not schedule plan change. Please try again.'**
   String get couldNotSchedulePlanChange;
-
-  /// Default message when subscription is reactivated
-  ///
-  /// In en, this message translates to:
-  /// **'Your subscription has been reactivated! No charge now - you\'ll be billed at the end of your current period.'**
-  String get subscriptionReactivatedDefault;
-
-  /// Success message after subscription checkout
-  ///
-  /// In en, this message translates to:
-  /// **'Subscription successful! You\'ve been charged for the new billing period.'**
-  String get subscriptionSuccessfulCharged;
-
-  /// Error when subscription cannot be processed
-  ///
-  /// In en, this message translates to:
-  /// **'Could not process subscription. Please try again.'**
-  String get couldNotProcessSubscription;
-
-  /// Error when upgrade page cannot be launched
-  ///
-  /// In en, this message translates to:
-  /// **'Could not launch upgrade page. Please try again.'**
-  String get couldNotLaunchUpgradePage;
 
   /// JSON configuration placeholder hint text in transcription settings
   ///
@@ -15773,12 +15515,6 @@ abstract class AppLocalizations {
   /// **'Show Tasks on homepage'**
   String get showTasksOnHomepage;
 
-  /// Title for the phone calls upsell sheet shown to non-unlimited users
-  ///
-  /// In en, this message translates to:
-  /// **'Phone Calls via Toki'**
-  String get phoneCallsUnlimitedOnly;
-
   /// Subtitle explaining phone calls feature on upsell sheet
   ///
   /// In en, this message translates to:
@@ -15808,12 +15544,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your calls stay private and secure'**
   String get phoneCallsUpsellFeature4;
-
-  /// Button text to upgrade to unlimited plan from phone calls upsell
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade to Unlimited'**
-  String get phoneCallsUpgradeButton;
 
   /// Dismiss button text on phone calls upsell sheet
   ///

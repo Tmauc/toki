@@ -50,7 +50,7 @@ class MyUpgradeAlertState extends UpgradeAlertState {
                 },
               ),
               TextButton(
-                child: Text(context.l10n.upgrade, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                child: Text("Update", style: const TextStyle(color: Colors.white, fontSize: 16)),
                 onPressed: () {
                   onUserUpdated(context, !widget.upgrader.blocked());
                 },
@@ -73,7 +73,7 @@ class MyUpgradeAlertState extends UpgradeAlertState {
               },
             ),
             TextButton(
-              child: Text(context.l10n.upgrade, style: const TextStyle(color: Colors.white, fontSize: 16)),
+              child: Text("Update", style: const TextStyle(color: Colors.white, fontSize: 16)),
               onPressed: () {
                 onUserUpdated(context, !widget.upgrader.blocked());
               },

@@ -543,12 +543,12 @@ class _PersonaProfilePageState extends State<PersonaProfilePage> {
                 const Spacer(),
                 const SizedBox(height: 24),
                 Text(
-                  context.l10n.getOmiDevice,
+                  "Get a Toki device",
                   style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  context.l10n.getOmiDeviceDescription,
+                  "Connect a wearable for better experience",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 16),
                 ),
@@ -571,7 +571,7 @@ class _PersonaProfilePageState extends State<PersonaProfilePage> {
                           ),
                         ),
                         child: Text(
-                          context.l10n.getOmi,
+                          "Get Toki",
                           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                         ),
                       ),

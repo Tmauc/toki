@@ -223,14 +223,14 @@ class _AppDetailPageState extends State<AppDetailPage> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.subscriptionCancelledSuccessfully), backgroundColor: Colors.green),
+            SnackBar(content: Text("Subscription cancelled"), backgroundColor: Colors.green),
           );
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(context.l10n.failedToCancelSubscription), backgroundColor: Colors.red));
+          ).showSnackBar(SnackBar(content: Text("Failed to cancel subscription"), backgroundColor: Colors.red));
         }
       }
     } catch (e) {

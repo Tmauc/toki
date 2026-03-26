@@ -233,10 +233,6 @@
     "@monthlyLimitReached": {
         "description": "Message when usage limit is reached"
     },
-    "checkUsage": "Check Usage",
-    "@checkUsage": {
-        "description": "Button to check usage details"
-    },
     "syncingRecordings": "Syncing recordings",
     "@syncingRecordings": {
         "description": "Title when sync is in progress"
@@ -547,10 +543,6 @@
     "@systemDefault": {
         "description": "System language option"
     },
-    "planAndUsage": "Plan & Usage",
-    "@planAndUsage": {
-        "description": "Plan and usage menu item"
-    },
     "offlineSync": "Offline Sync",
     "@offlineSync": {
         "description": "Page title for offline sync"
@@ -574,14 +566,6 @@
     "developerSettings": "Developer Settings",
     "@developerSettings": {
         "description": "Title for developer settings page"
-    },
-    "getOmiForMac": "Get Toki for Mac",
-    "@getOmiForMac": {
-        "description": "Mac app download link"
-    },
-    "referralProgram": "Referral Program",
-    "@referralProgram": {
-        "description": "Referral program menu item"
     },
     "signOut": "Sign Out",
     "@signOut": {
@@ -947,10 +931,6 @@
     "@rememberingSubtitle": {
         "description": "Remembering stat subtitle"
     },
-    "unlimitedPlan": "Unlimited Plan",
-    "@unlimitedPlan": {
-        "description": "Unlimited plan name"
-    },
     "managePlan": "Manage Plan",
     "@managePlan": {
         "description": "Manage plan button"
@@ -992,14 +972,6 @@
                 "example": "60"
             }
         }
-    },
-    "upgrade": "Upgrade",
-    "@upgrade": {
-        "description": "Upgrade button"
-    },
-    "upgradeToUnlimited": "Upgrade to unlimited",
-    "@upgradeToUnlimited": {
-        "description": "Message shown on locked memory items"
     },
     "basicPlanDesc": "Your plan includes {limit} free minutes per month. Upgrade to go unlimited.",
     "@basicPlanDesc": {
@@ -1488,13 +1460,11 @@
     },
     "gotIt": "Got it",
     "tasksExportedOneApp": "Tasks can be exported to one app at a time.",
-    "completeYourUpgrade": "Complete Your Upgrade",
     "importConfiguration": "Import Configuration",
     "exportConfiguration": "Export configuration",
     "bringYourOwn": "Bring your own",
     "payYourSttProvider": "Freely use omi. You only pay your STT provider directly.",
     "freeMinutesMonth": "1,200 free minutes/month included. Unlimited with ",
-    "omiUnlimited": "Toki Unlimited",
     "hostRequired": "Host is required",
     "validPortRequired": "Valid port is required",
     "validWebsocketUrlRequired": "Valid WebSocket URL is required (wss://)",
@@ -3813,14 +3783,6 @@
     "@pro": {
         "description": "Badge label for pro/unlimited users"
     },
-    "upgradeToPro": "Upgrade to Pro",
-    "@upgradeToPro": {
-        "description": "Subscription banner button text"
-    },
-    "getOmiDevice": "Get Toki Device",
-    "@getOmiDevice": {
-        "description": "Widget title for device promotion"
-    },
     "wearableAiCompanion": "Wearable AI companion",
     "@wearableAiCompanion": {
         "description": "Widget subtitle for device promotion"
@@ -4401,10 +4363,6 @@
     "@deliveryTimeDescription": {
         "description": "Delivery time description"
     },
-    "subscription": "Subscription",
-    "@subscription": {
-        "description": "Subscription section title"
-    },
     "viewPlansAndUsage": "View Plans & Usage",
     "@viewPlansAndUsage": {
         "description": "View plans button"
@@ -4528,14 +4486,6 @@
     "@no": {
         "description": "Button text to decline or dismiss"
     },
-    "subscriptionCancelledSuccessfully": "Subscription cancelled successfully. It will remain active until the end of the current billing period.",
-    "@subscriptionCancelledSuccessfully": {
-        "description": "Success message when subscription is cancelled"
-    },
-    "failedToCancelSubscription": "Failed to cancel subscription. Please try again.",
-    "@failedToCancelSubscription": {
-        "description": "Error message when subscription cancellation fails"
-    },
     "invalidPaymentUrl": "Invalid payment URL",
     "@invalidPaymentUrl": {
         "description": "Error message for invalid payment URL"
@@ -4571,18 +4521,6 @@
     "featuredLabel": "FEATURED",
     "@featuredLabel": {
         "description": "Label for featured status"
-    },
-    "cancelSubscriptionQuestion": "Cancel Subscription?",
-    "@cancelSubscriptionQuestion": {
-        "description": "Dialog title for cancel subscription"
-    },
-    "cancelSubscriptionConfirmation": "Are you sure you want to cancel your subscription? You will continue to have access until the end of your current billing period.",
-    "@cancelSubscriptionConfirmation": {
-        "description": "Dialog description for cancel subscription"
-    },
-    "cancelSubscriptionButton": "Cancel Subscription",
-    "@cancelSubscriptionButton": {
-        "description": "Button text to cancel subscription"
     },
     "cancelling": "Cancelling...",
     "@cancelling": {
@@ -5175,18 +5113,6 @@
     "@omiTraining": {
         "description": "Title for the Toki Training page/section"
     },
-    "trainingDataProgram": "Training Data Program",
-    "@trainingDataProgram": {
-        "description": "Label for training data program"
-    },
-    "getOmiUnlimitedFree": "Get Toki Unlimited for free by contributing your data to train AI models.",
-    "@getOmiUnlimitedFree": {
-        "description": "Description for getting Toki Unlimited free by contributing data"
-    },
-    "trainingDataBullets": "• Your data helps improve AI models\n• Only non-sensitive data is shared\n• Fully transparent process",
-    "@trainingDataBullets": {
-        "description": "Bullet points explaining training data program benefits"
-    },
     "learnMoreAtOmiTraining": "Learn more at omi.me/training",
     "@learnMoreAtOmiTraining": {
         "description": "Link text to learn more about training"
@@ -5221,10 +5147,6 @@
     "@keepMyPlan": {
         "description": "Button text to keep current plan"
     },
-    "subscriptionSetToCancel": "Your subscription is set to cancel at the end of the period.",
-    "@subscriptionSetToCancel": {
-        "description": "Message that subscription is set to cancel"
-    },
     "switchedToOnDevice": "Switched to on-device transcription",
     "@switchedToOnDevice": {
         "description": "Success message when switched to on-device transcription"
@@ -5241,10 +5163,6 @@
     "@selectedPlanNotAvailable": {
         "description": "Error message when selected plan is not available"
     },
-    "upgradeToAnnualPlan": "Upgrade to Annual Plan",
-    "@upgradeToAnnualPlan": {
-        "description": "Dialog title for upgrading to annual plan"
-    },
     "importantBillingInfo": "Important Billing Information:",
     "@importantBillingInfo": {
         "description": "Header for billing information section"
@@ -5257,17 +5175,9 @@
     "@paymentMethodCharged": {
         "description": "Info about payment method being charged"
     },
-    "annualSubscriptionStarts": "Your 12-month annual subscription will start automatically after the charge",
-    "@annualSubscriptionStarts": {
-        "description": "Info about annual subscription starting"
-    },
     "thirteenMonthsCoverage": "You'll get 13 months of coverage total (current month + 12 months annual)",
     "@thirteenMonthsCoverage": {
         "description": "Info about total coverage period"
-    },
-    "confirmUpgrade": "Confirm Upgrade",
-    "@confirmUpgrade": {
-        "description": "Button text to confirm upgrade"
     },
     "confirmPlanChange": "Confirm Plan Change",
     "@confirmPlanChange": {
@@ -5276,22 +5186,6 @@
     "confirmAndProceed": "Confirm & Proceed",
     "@confirmAndProceed": {
         "description": "Button text to confirm and proceed"
-    },
-    "upgradeScheduled": "Upgrade Scheduled",
-    "@upgradeScheduled": {
-        "description": "Label when upgrade is scheduled"
-    },
-    "changePlan": "Change Plan",
-    "@changePlan": {
-        "description": "Button text to change plan"
-    },
-    "upgradeAlreadyScheduled": "Your upgrade to the annual plan is already scheduled",
-    "@upgradeAlreadyScheduled": {
-        "description": "Message when upgrade is already scheduled"
-    },
-    "youAreOnUnlimitedPlan": "You are on the Unlimited Plan.",
-    "@youAreOnUnlimitedPlan": {
-        "description": "Message showing user is on unlimited plan"
     },
     "yourOmiUnleashed": "Your Toki, unleashed. Go unlimited for endless possibilities.",
     "@yourOmiUnleashed": {
@@ -5330,10 +5224,6 @@
                 "example": "January 15, 2026"
             }
         }
-    },
-    "unlimitedConversations": "Unlimited conversations",
-    "@unlimitedConversations": {
-        "description": "Feature: unlimited conversations"
     },
     "askOmiAnything": "Ask Toki anything about your life",
     "@askOmiAnything": {
@@ -5378,10 +5268,6 @@
     "managePaymentMethod": "Manage Payment Method",
     "@managePaymentMethod": {
         "description": "Button to manage payment method"
-    },
-    "cancelSubscription": "Cancel Subscription",
-    "@cancelSubscription": {
-        "description": "Button text to cancel a subscription"
     },
     "endsOnDate": "Ends on {date}",
     "@endsOnDate": {
@@ -5602,26 +5488,9 @@
     "@omiHas": {
         "description": "Fallback text for share stats when period is unknown"
     },
-    "premiumMinutesUsed": "Premium minutes used.",
-    "@premiumMinutesUsed": {
-        "description": "Message shown when all premium minutes are used"
-    },
     "setupOnDevice": "Setup on-device",
     "@setupOnDevice": {
         "description": "Link text to setup on-device transcription"
-    },
-    "forUnlimitedFreeTranscription": "for unlimited free transcription.",
-    "@forUnlimitedFreeTranscription": {
-        "description": "Continuation of premium minutes message"
-    },
-    "premiumMinsLeft": "{count} premium mins left.",
-    "@premiumMinsLeft": {
-        "description": "Message showing remaining premium minutes",
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
     },
     "alwaysAvailable": "always available.",
     "@alwaysAvailable": {
@@ -7416,14 +7285,6 @@
     "@cloudProvider": {
         "description": "Tab label for cloud provider option"
     },
-    "premiumMinutesInfo": "1,200 premium minutes/month. On-Device tab offers unlimited free transcription.",
-    "@premiumMinutesInfo": {
-        "description": "Info about premium minutes"
-    },
-    "viewUsage": "View usage",
-    "@viewUsage": {
-        "description": "Link to view usage"
-    },
     "localProcessingInfo": "Audio is processed locally. Works offline, more private, but uses more battery.",
     "@localProcessingInfo": {
         "description": "Info about local processing"
@@ -7526,10 +7387,6 @@
     "batteryDrainSignificantly": "Battery drain will increase significantly.",
     "@batteryDrainSignificantly": {
         "description": "Warning about battery drain"
-    },
-    "premiumMinutesMonth": "1,200 premium minutes/month. On-Device tab offers unlimited free transcription. ",
-    "@premiumMinutesMonth": {
-        "description": "Description of premium minutes quota"
     },
     "audioProcessedLocally": "Audio is processed locally. Works offline, more private, but uses more battery.",
     "@audioProcessedLocally": {
@@ -8036,8 +7893,6 @@
     "enterName": "Enter name",
     "disconnectTwitter": "Disconnect Twitter",
     "disconnectTwitterConfirmation": "Are you sure you want to disconnect your Twitter account? Your persona will no longer have access to your Twitter data.",
-    "getOmiDeviceDescription": "Create a more accurate clone with your personal conversations",
-    "getOmi": "Get Toki",
     "iHaveOmiDevice": "I have Toki device",
     "goal": "GOAL",
     "tapToTrackThisGoal": "Tap to track this goal",
@@ -8955,29 +8810,9 @@
             }
         }
     },
-    "planUpgradeScheduledMessage": "Upgrade scheduled! Your monthly plan continues until the end of your billing period, then automatically switches to annual.",
-    "@planUpgradeScheduledMessage": {
-        "description": "Success message when plan upgrade is scheduled"
-    },
     "couldNotSchedulePlanChange": "Could not schedule plan change. Please try again.",
     "@couldNotSchedulePlanChange": {
         "description": "Error when plan change cannot be scheduled"
-    },
-    "subscriptionReactivatedDefault": "Your subscription has been reactivated! No charge now - you'll be billed at the end of your current period.",
-    "@subscriptionReactivatedDefault": {
-        "description": "Default message when subscription is reactivated"
-    },
-    "subscriptionSuccessfulCharged": "Subscription successful! You've been charged for the new billing period.",
-    "@subscriptionSuccessfulCharged": {
-        "description": "Success message after subscription checkout"
-    },
-    "couldNotProcessSubscription": "Could not process subscription. Please try again.",
-    "@couldNotProcessSubscription": {
-        "description": "Error when subscription cannot be processed"
-    },
-    "couldNotLaunchUpgradePage": "Could not launch upgrade page. Please try again.",
-    "@couldNotLaunchUpgradePage": {
-        "description": "Error when upgrade page cannot be launched"
     },
     "transcriptionJsonPlaceholder": "Paste your JSON configuration here...",
     "@transcriptionJsonPlaceholder": {
@@ -10190,10 +10025,6 @@
     "@showTasksOnHomepage": {
         "description": "Description for show tasks toggle in developer settings"
     },
-    "phoneCallsUnlimitedOnly": "Phone Calls via Toki",
-    "@phoneCallsUnlimitedOnly": {
-        "description": "Title for the phone calls upsell sheet shown to non-unlimited users"
-    },
     "phoneCallsUpsellSubtitle": "Make calls through Toki and get real-time transcription, automatic summaries, and more. Available exclusively for Unlimited plan subscribers.",
     "@phoneCallsUpsellSubtitle": {
         "description": "Subtitle explaining phone calls feature on upsell sheet"
@@ -10213,10 +10044,6 @@
     "phoneCallsUpsellFeature4": "Your calls stay private and secure",
     "@phoneCallsUpsellFeature4": {
         "description": "Phone calls upsell feature 4"
-    },
-    "phoneCallsUpgradeButton": "Upgrade to Unlimited",
-    "@phoneCallsUpgradeButton": {
-        "description": "Button text to upgrade to unlimited plan from phone calls upsell"
     },
     "phoneCallsMaybeLater": "Maybe later",
     "@phoneCallsMaybeLater": {

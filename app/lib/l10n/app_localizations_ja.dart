@@ -178,9 +178,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get monthlyLimitReached => '月間制限に達しました。';
 
   @override
-  String get checkUsage => '使用状況を確認';
-
-  @override
   String get syncingRecordings => '録音を同期中';
 
   @override
@@ -410,9 +407,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get systemDefault => 'システムの既定';
 
   @override
-  String get planAndUsage => 'プランと使用状況';
-
-  @override
   String get offlineSync => 'オフライン同期';
 
   @override
@@ -429,12 +423,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get developerSettings => '開発者設定';
-
-  @override
-  String get getOmiForMac => 'Mac用Tokiを入手';
-
-  @override
-  String get referralProgram => '紹介プログラム';
 
   @override
   String get signOut => 'サインアウト';
@@ -711,9 +699,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get rememberingSubtitle => 'あなたのために記憶された事実と詳細。';
 
   @override
-  String get unlimitedPlan => '無制限プラン';
-
-  @override
   String get managePlan => 'プランの管理';
 
   @override
@@ -733,12 +718,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String usageLimitMessage(String used, int limit) {
     return '$limit分中$used分使用済み';
   }
-
-  @override
-  String get upgrade => 'アップグレード';
-
-  @override
-  String get upgradeToUnlimited => '無制限にアップグレード';
 
   @override
   String basicPlanDesc(int limit) {
@@ -1424,9 +1403,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tasksExportedOneApp => 'タスクは一度に1つのアプリにのみエクスポートできます。';
 
   @override
-  String get completeYourUpgrade => 'アップグレードを完了';
-
-  @override
   String get importConfiguration => '設定をインポート';
 
   @override
@@ -1440,9 +1416,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get freeMinutesMonth => '月1,200分無料。無制限は';
-
-  @override
-  String get omiUnlimited => 'Toki Unlimited';
 
   @override
   String get hostRequired => 'ホストが必要です';
@@ -3207,12 +3180,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pro => 'Pro';
 
   @override
-  String get upgradeToPro => 'Proにアップグレード';
-
-  @override
-  String get getOmiDevice => 'Tokiデバイスを入手';
-
-  @override
   String get wearableAiCompanion => 'ウェアラブルAIコンパニオン';
 
   @override
@@ -3792,9 +3759,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get deliveryTimeDescription => '日次サマリーを受け取る時刻';
 
   @override
-  String get subscription => 'サブスクリプション';
-
-  @override
   String get viewPlansAndUsage => 'プランと使用状況を表示';
 
   @override
@@ -3945,12 +3909,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get no => 'いいえ';
 
   @override
-  String get subscriptionCancelledSuccessfully => 'サブスクリプションが正常にキャンセルされました。現在の請求期間の終了まで有効です。';
-
-  @override
-  String get failedToCancelSubscription => 'サブスクリプションのキャンセルに失敗しました。もう一度お試しください。';
-
-  @override
   String get invalidPaymentUrl => '無効な支払いURL';
 
   @override
@@ -3976,15 +3934,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get featuredLabel => 'おすすめ';
-
-  @override
-  String get cancelSubscriptionQuestion => 'サブスクリプションをキャンセルしますか？';
-
-  @override
-  String get cancelSubscriptionConfirmation => 'サブスクリプションをキャンセルしてもよろしいですか？現在の請求期間の終了までアクセスできます。';
-
-  @override
-  String get cancelSubscriptionButton => 'サブスクリプションをキャンセル';
 
   @override
   String get cancelling => 'キャンセル中...';
@@ -4388,15 +4337,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get omiTraining => 'Toki トレーニング';
 
   @override
-  String get trainingDataProgram => 'トレーニングデータプログラム';
-
-  @override
-  String get getOmiUnlimitedFree => 'AIモデルのトレーニングにデータを提供することで、Toki Unlimitedを無料で入手できます。';
-
-  @override
-  String get trainingDataBullets => '• あなたのデータがAIモデルの改善に役立ちます\n• 機密性のないデータのみが共有されます\n• 完全に透明なプロセス';
-
-  @override
   String get learnMoreAtOmiTraining => '詳細はomi.me/trainingをご覧ください';
 
   @override
@@ -4420,9 +4360,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get keepMyPlan => 'プランを維持';
 
   @override
-  String get subscriptionSetToCancel => 'サブスクリプションは期間終了時にキャンセルされるよう設定されています。';
-
-  @override
   String get switchedToOnDevice => 'デバイス上の文字起こしに切り替えました';
 
   @override
@@ -4435,9 +4372,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectedPlanNotAvailable => '選択したプランは利用できません。もう一度お試しください。';
 
   @override
-  String get upgradeToAnnualPlan => '年間プランにアップグレード';
-
-  @override
   String get importantBillingInfo => '重要な請求情報：';
 
   @override
@@ -4447,31 +4381,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get paymentMethodCharged => '月額プランが終了すると、既存のお支払い方法に自動的に請求されます';
 
   @override
-  String get annualSubscriptionStarts => '12ヶ月の年間サブスクリプションは、請求後に自動的に開始されます';
-
-  @override
   String get thirteenMonthsCoverage => '合計13ヶ月の保障を受けられます（当月 + 年間12ヶ月）';
-
-  @override
-  String get confirmUpgrade => 'アップグレードを確認';
 
   @override
   String get confirmPlanChange => 'プラン変更を確認';
 
   @override
   String get confirmAndProceed => '確認して続行';
-
-  @override
-  String get upgradeScheduled => 'アップグレード予定';
-
-  @override
-  String get changePlan => 'プランを変更';
-
-  @override
-  String get upgradeAlreadyScheduled => '年間プランへのアップグレードは既に予定されています';
-
-  @override
-  String get youAreOnUnlimitedPlan => 'Unlimitedプランをご利用中です。';
 
   @override
   String get yourOmiUnleashed => 'あなたのTokiを解き放とう。無限の可能性のためにUnlimitedへ。';
@@ -4493,9 +4409,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String planRenewsOn(String date) {
     return 'プランは$dateに更新されます。';
   }
-
-  @override
-  String get unlimitedConversations => '無制限の会話';
 
   @override
   String get askOmiAnything => 'Tokiにあなたの人生について何でも聞いてください';
@@ -4529,9 +4442,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get managePaymentMethod => '支払い方法を管理';
-
-  @override
-  String get cancelSubscription => 'サブスクリプションをキャンセル';
 
   @override
   String endsOnDate(String date) {
@@ -4685,18 +4595,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get omiHas => 'Tokiは:';
 
   @override
-  String get premiumMinutesUsed => 'プレミアム分を使用済み。';
-
-  @override
   String get setupOnDevice => 'オンデバイスを設定';
-
-  @override
-  String get forUnlimitedFreeTranscription => '無制限の無料文字起こしのため。';
-
-  @override
-  String premiumMinsLeft(int count) {
-    return '残りプレミアム$count分。';
-  }
 
   @override
   String get alwaysAvailable => '常に利用可能。';
@@ -5982,12 +5881,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cloudProvider => 'クラウドプロバイダー';
 
   @override
-  String get premiumMinutesInfo => '月間1,200分のプレミアム利用可能。オンデバイスタブでは無制限の無料文字起こしが可能です。';
-
-  @override
-  String get viewUsage => '使用状況を表示';
-
-  @override
   String get localProcessingInfo => '音声はローカルで処理されます。オフラインで動作し、よりプライベートですが、バッテリーを多く消費します。';
 
   @override
@@ -6058,9 +5951,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get batteryDrainSignificantly => 'バッテリー消費が大幅に増加します。';
-
-  @override
-  String get premiumMinutesMonth => '月間1,200プレミアム分。オンデバイスタブでは無制限の無料文字起こしを提供。';
 
   @override
   String get audioProcessedLocally => '音声はローカルで処理されます。オフラインで動作し、よりプライベートですが、バッテリー消費が増えます。';
@@ -6427,12 +6317,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get disconnectTwitterConfirmation => 'Twitterアカウントを切断してもよろしいですか？ペルソナはTwitterデータにアクセスできなくなります。';
-
-  @override
-  String get getOmiDeviceDescription => '個人の会話でより正確なクローンを作成';
-
-  @override
-  String get getOmi => 'Tokiを入手';
 
   @override
   String get iHaveOmiDevice => 'Tokiデバイスを持っています';
@@ -7121,22 +7005,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get planUpgradeScheduledMessage => 'アップグレードが予約されました！月額プランは請求期間の終了まで継続し、その後自動的に年額に変更されます。';
-
-  @override
   String get couldNotSchedulePlanChange => 'プラン変更を予約できませんでした。もう一度お試しください。';
-
-  @override
-  String get subscriptionReactivatedDefault => 'サブスクリプションが再開されました！今すぐ請求はありません - 現在の期間の終了時に請求されます。';
-
-  @override
-  String get subscriptionSuccessfulCharged => 'サブスクリプションが成功しました！新しい請求期間分が請求されました。';
-
-  @override
-  String get couldNotProcessSubscription => 'サブスクリプションを処理できませんでした。もう一度お試しください。';
-
-  @override
-  String get couldNotLaunchUpgradePage => 'アップグレードページを開けませんでした。もう一度お試しください。';
 
   @override
   String get transcriptionJsonPlaceholder => 'JSON設定をここに貼り付け...';
@@ -8334,9 +8203,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showTasksOnHomepage => 'ホームページにタスクを表示';
 
   @override
-  String get phoneCallsUnlimitedOnly => 'Tokiで電話をかける';
-
-  @override
   String get phoneCallsUpsellSubtitle => 'Tokiで通話し、リアルタイム文字起こし、自動要約などを取得。';
 
   @override
@@ -8350,9 +8216,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get phoneCallsUpsellFeature4 => '通話はプライベートで安全';
-
-  @override
-  String get phoneCallsUpgradeButton => 'Unlimitedにアップグレード';
 
   @override
   String get phoneCallsMaybeLater => 'また後で';
