@@ -578,7 +578,7 @@ async def mcp_sse_info(request: Request):
             "api_key": {"header": "Authorization", "format": "Bearer <api_key>"},
         },
         "instructions": {
-            "step1": "Create an MCP API key in the Omi app (Settings > Developer > MCP)",
+            "step1": "Create an MCP API key in the Toki app (Settings > Developer > MCP)",
             "step2": f"Set Server URL to: {base_url}/v1/mcp/sse",
             "step3": "Set Authorization header to your key",
         },

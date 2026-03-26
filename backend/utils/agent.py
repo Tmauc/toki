@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # )
 omi_documentation_str = ""
 omi_documentation_prompt = f"""
-You are a helpful assistant that answers questions from the Omi documentation.
+You are a helpful assistant that answers questions from the Toki documentation.
 
 Documentation:
 {omi_documentation_str}
@@ -35,12 +35,12 @@ async def run(
     stream_callback: Optional[AsyncStreamingCallback] = None,
 ):
     docs_agent = Agent(
-        name="Omi Documentation Agent",
+        name="Toki Documentation Agent",
         instructions=omi_documentation_prompt,
         model="o4-mini",
     )
     omi_agent = Agent(
-        name="Omi Agent",
+        name="Toki Agent",
         instructions=f"You are a helpful assistant that answers questions from the user {uid}, using the tools you were provided.",
         mcp_servers=[mcp_server],
         model="o4-mini",
@@ -50,7 +50,7 @@ async def run(
         tools=[
             docs_agent.as_tool(
                 tool_name="docs_agent",
-                tool_description="Answer user questions from the Omi documentation.",
+                tool_description="Answer user questions from the Toki documentation.",
             )
         ],
     )
@@ -123,7 +123,7 @@ async def send_single_message():
         cache_tools_list=True,
         params={"command": "uvx", "args": ["mcp-server-omi"]},
     ) as server:
-        with trace(workflow_name="Omi Agent"):
+        with trace(workflow_name="Toki Agent"):
             await run(
                 server,
                 "viUv7GtdoHXbK1UBCDlPuTDuPgJ2",
@@ -133,7 +133,7 @@ async def send_single_message():
 
 
 async def interactive_chat_stream():
-    logger.info("Starting interactive chat with Omi Agent. Type 'exit' to quit.")
+    logger.info("Starting interactive chat with Toki Agent. Type 'exit' to quit.")
     async with MCPServerStdio(
         cache_tools_list=True,
         params={"command": "uvx", "args": ["mcp-server-omi", "-v"]},
@@ -145,7 +145,7 @@ async def interactive_chat_stream():
 
             logger.info("\nOmi: ")
 
-            with trace(workflow_name="Omi Agent"):
+            with trace(workflow_name="Toki Agent"):
                 await run(
                     server,
                     "viUv7GtdoHXbK1UBCDlPuTDuPgJ2",

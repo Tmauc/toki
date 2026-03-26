@@ -1,5 +1,5 @@
 """
-Tools for answering questions about the Omi/Friend product.
+Tools for answering questions about the Toki/Friend product.
 """
 
 from langchain_core.tools import tool
@@ -9,10 +9,10 @@ from utils.app_integrations import get_github_docs_content
 @tool
 def get_omi_product_info_tool(query: str) -> str:
     """
-    Get information about the Omi/Friend product to answer questions about features, functionality, setup, or purchasing.
+    Get information about the Toki/Friend product to answer questions about features, functionality, setup, or purchasing.
 
     Use this tool when the user asks about:
-    - How Omi/Friend works
+    - How Toki/Friend works
     - What features the app/device has
     - How to set up or use Omi
     - Where to buy the device or pricing information
@@ -28,25 +28,25 @@ def get_omi_product_info_tool(query: str) -> str:
     - Personal data queries
 
     Args:
-        query: The specific question about Omi/Friend product (e.g., "How does the device connect to my phone?", "What is the battery life?")
+        query: The specific question about Toki/Friend product (e.g., "How does the device connect to my phone?", "What is the battery life?")
 
     Returns:
         Product documentation content from GitHub that can help answer the question
 
     Example:
-        query="How do I update the firmware on my Omi device?"
+        query="How do I update the firmware on my Toki device?"
         Returns documentation about firmware updates and device management
     """
     # Get GitHub docs content
     context = get_github_docs_content()
 
     # Format context as a comprehensive documentation string
-    context_str = 'Omi/Friend Product Documentation:\n\n'
+    context_str = 'Toki Product Documentation:\n\n'
     for section, content in context.items():
         context_str += f'## {section}\n\n{content}\n\n'
 
     context_str += (
-        '\n\nUse this documentation to answer questions about the Omi/Friend product, its features, setup, and usage.'
+        '\n\nUse this documentation to answer questions about the Toki/Friend product, its features, setup, and usage.'
     )
 
     return context_str

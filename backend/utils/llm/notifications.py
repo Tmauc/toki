@@ -89,7 +89,7 @@ async def generate_credit_limit_notification(uid: str, name: str) -> Tuple[str, 
         memory_summaries = [m.get('content', '') for m in memories]  # Use all memories for context
         memory_context = f"\nRecent conversations include: {', '.join(memory_summaries[:100])}..."
 
-    system_prompt = """You're Omi, and you need to gently let a user know they've hit their transcription limits while encouraging them to upgrade to unlimited. 
+    system_prompt = """You're Toki, and you need to gently let a user know they've hit their transcription limits while encouraging them to upgrade to unlimited. 
 
     Your Style:
     - Warm and understanding, not pushy

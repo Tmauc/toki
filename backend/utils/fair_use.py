@@ -555,7 +555,7 @@ async def _send_fair_use_notification(uid: str, action: str, case_ref: str = '')
 
     bodies = {
         'warning': (
-            'Your speech usage is unusually high. Omi is designed for personal conversations. '
+            'Your speech usage is unusually high. Toki is designed for personal conversations. '
             'If this continues, transcription quality may be reduced. '
             f'Check Settings > Plan & Usage for details.{ref_suffix}'
         ),

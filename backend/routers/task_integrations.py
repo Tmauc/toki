@@ -78,7 +78,7 @@ def render_oauth_response(
             'title': f"{config['name']} Auth",
             'icon': '✓',
             'message': 'Authentication Successful!',
-            'description': 'Redirecting back to Omi...',
+            'description': 'Redirecting back to Toki...',
             'redirect_url': redirect_url or f'omi://{app_key}/callback?error=unknown',
             'show_spinner': True,
         }

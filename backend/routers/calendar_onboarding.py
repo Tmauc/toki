@@ -196,7 +196,7 @@ def _format_events(events: list) -> str:
 
 
 def _synthesize_events(events_text: str) -> dict | None:
-    prompt = f"""You are analyzing a new user's Google Calendar events to help personalize their experience with Omi, an AI companion.
+    prompt = f"""You are analyzing a new user's Google Calendar events to help personalize their experience with Toki, an AI companion.
 
 Here are the user's calendar events from the past 30 days and next 14 days:
 
@@ -206,7 +206,7 @@ Today's date: {datetime.now().strftime('%Y-%m-%d')}
 
 Based on these events, create:
 
-1. MEMORIES (5-10): Facts about this person that Omi should remember. Each memory should be a single sentence capturing something meaningful about the user's life, work, relationships, habits, or interests. Write in third person about "the user" (e.g., "The user has weekly 1-on-1 meetings with their manager Sarah"). Focus on patterns, not one-off events.
+1. MEMORIES (5-10): Facts about this person that Toki should remember. Each memory should be a single sentence capturing something meaningful about the user's life, work, relationships, habits, or interests. Write in third person about "the user" (e.g., "The user has weekly 1-on-1 meetings with their manager Sarah"). Focus on patterns, not one-off events.
 
 2. TASKS (2-3): Actionable items the user likely needs to do based on upcoming events. Each task should have a description and a due date (ISO format). Only create tasks for events in the future.
 
