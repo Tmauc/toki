@@ -916,20 +916,23 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0,
-      leading: Container(
-        width: 36,
-        height: 36,
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
-        child: IconButton(
-          padding: EdgeInsets.zero,
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 18),
-          onPressed: () {
-            HapticFeedback.mediumImpact();
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      leading: widget.isPivotBottom
+          ? null
+          : Container(
+              width: 36,
+              height: 36,
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 18),
+                onPressed: () {
+                  HapticFeedback.mediumImpact();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+      automaticallyImplyLeading: false,
       title: Consumer<AppProvider>(
         builder: (context, appProvider, child) {
           return _buildSelectedAppDisplay(context, appProvider);
