@@ -14,7 +14,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:omi/backend/http/api/wrapped.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/pages/settings/wrapped_2025_share_templates.dart' as templates;
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
 
@@ -59,7 +58,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
   @override
   void initState() {
     super.initState();
-    MixpanelManager().wrappedPageOpened();
     SharedPreferencesUtil().hasViewedWrapped2025 = true;
     _loadWrappedStatus();
     _pageController.addListener(_onPageChanged);
@@ -100,7 +98,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
       'Summary Collage',
     ];
     if (page >= 0 && page < cardNames.length) {
-      MixpanelManager().wrappedCardViewed(cardName: cardNames[page], cardIndex: page);
     }
   }
 
@@ -148,13 +145,7 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
             final totalMinutes = (totalHours * 60).toInt();
             final totalConvs = _result?['total_conversations'] ?? 0;
             final daysActive = _result?['days_active'] ?? 0;
-            MixpanelManager().wrappedGenerationCompleted(
-              totalConversations: totalConvs,
-              totalMinutes: totalMinutes,
-              daysActive: daysActive,
-            );
           } else if (_status == WrappedStatus.error) {
-            MixpanelManager().wrappedGenerationFailed(error: _error);
           }
         }
       }
@@ -162,7 +153,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
   }
 
   Future<void> _generateWrapped() async {
-    MixpanelManager().wrappedGenerationStarted();
 
     setState(() {
       _status = WrappedStatus.processing;
@@ -180,7 +170,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
         _startPolling();
       }
     } else {
-      MixpanelManager().wrappedGenerationFailed(error: 'Failed to start generation');
       setState(() {
         _status = WrappedStatus.error;
         _error = context.l10n.wrappedFailedToStartGeneration;
@@ -210,7 +199,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
     final cardName = cardInfo?['name'] ?? filename;
     final cardIndex = cardInfo?['index'] ?? -1;
 
-    MixpanelManager().wrappedShareButtonClicked(cardName: cardName, cardIndex: cardIndex);
 
     try {
       HapticFeedback.mediumImpact();
@@ -226,7 +214,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
       final boundary = _shareTemplateKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
       if (boundary == null) {
         Logger.debug('Share template boundary is null for $filename');
-        MixpanelManager().wrappedShareFailed(cardName: cardName, cardIndex: cardIndex, error: 'Boundary is null');
         return;
       }
 
@@ -235,7 +222,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
       final image = await boundary.toImage(pixelRatio: 1.5);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) {
-        MixpanelManager().wrappedShareFailed(cardName: cardName, cardIndex: cardIndex, error: 'Byte data is null');
         return;
       }
 
@@ -254,11 +240,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
         sharePositionOrigin: sharePositionOrigin,
       );
 
-      MixpanelManager().wrappedSharedSuccessfully(
-        cardName: cardName,
-        cardIndex: cardIndex,
-        fileSizeBytes: bytes.length,
-      );
 
       // Clear the template after sharing
       if (mounted) {
@@ -268,7 +249,6 @@ class _Wrapped2025PageState extends State<Wrapped2025Page> {
       }
     } catch (e) {
       Logger.debug('Error sharing $filename: $e');
-      MixpanelManager().wrappedShareFailed(cardName: cardName, cardIndex: cardIndex, error: e.toString());
       if (mounted) {
         setState(() {
           _currentShareTemplate = null;

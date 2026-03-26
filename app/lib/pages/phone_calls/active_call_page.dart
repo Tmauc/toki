@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:omi/backend/schema/phone_call.dart';
 import 'package:omi/backend/schema/transcript_segment.dart';
 import 'package:omi/providers/phone_call_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 class ActiveCallPage extends StatefulWidget {
@@ -45,13 +44,11 @@ class _ActiveCallPageState extends State<ActiveCallPage> {
   }
 
   void _showDtmfDialpad(BuildContext context, PhoneCallProvider provider) {
-    MixpanelManager().phoneCallDialpadOpened();
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (_) => _DtmfDialpadSheet(
         onDigitPressed: (digit) {
-          MixpanelManager().phoneCallDialpadDigitPressed(digit);
           provider.sendDtmf(digit);
         },
       ),

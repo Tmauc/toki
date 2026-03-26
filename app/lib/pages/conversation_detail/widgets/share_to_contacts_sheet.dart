@@ -12,7 +12,6 @@ import 'package:omi/backend/http/api/conversations.dart';
 import 'package:omi/backend/schema/conversation.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
 import 'package:omi/widgets/extensions/string.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 /// Contact with phone number for sharing
@@ -58,7 +57,6 @@ class _ShareToContactsBottomSheetState extends State<ShareToContactsBottomSheet>
   void initState() {
     super.initState();
     // Track sheet opened
-    MixpanelManager().shareToContactsSheetOpened(widget.conversation.id);
     _loadContacts();
   }
 
@@ -153,7 +151,6 @@ class _ShareToContactsBottomSheetState extends State<ShareToContactsBottomSheet>
     // Track selection changes
     final selectedCount = _selectedContacts.length;
     if (selectedCount > 0) {
-      MixpanelManager().shareToContactsSelected(widget.conversation.id, selectedCount);
     }
   }
 
@@ -204,7 +201,6 @@ class _ShareToContactsBottomSheetState extends State<ShareToContactsBottomSheet>
       // Launch native SMS app
       if (await canLaunchUrl(smsUri)) {
         // Track SMS opened
-        MixpanelManager().shareToContactsSmsOpened(widget.conversation.id, selected.length);
         HapticFeedback.mediumImpact();
         Navigator.of(context).pop();
         await launchUrl(smsUri);

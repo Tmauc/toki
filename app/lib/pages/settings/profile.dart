@@ -10,7 +10,6 @@ import 'package:omi/pages/settings/people.dart';
 import 'package:omi/pages/settings/data_privacy_page.dart';
 import 'package:omi/pages/speech_profile/page.dart';
 
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 
@@ -148,7 +147,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       : SharedPreferencesUtil().givenName,
                   icon: const FaIcon(FontAwesomeIcons.solidUser, color: Color(0xFF8E8E93), size: 20),
                   onTap: () async {
-                    MixpanelManager().pageOpened('Profile Change Name');
                     await showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -194,7 +192,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   icon: const FaIcon(FontAwesomeIcons.microphone, color: Color(0xFF8E8E93), size: 20),
                   onTap: () {
                     routeToPage(context, const SpeechProfilePage());
-                    MixpanelManager().pageOpened('Profile Speech Profile');
                   },
                 ),
                 const Divider(height: 1, color: Color(0xFF3C3C43)),
@@ -255,7 +252,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: context.l10n.deleteAccountTitle,
                   icon: const FaIcon(FontAwesomeIcons.exclamationTriangle, color: Colors.red, size: 20),
                   onTap: () {
-                    MixpanelManager().pageOpened('Profile Delete Account Dialog');
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const DeleteAccount()));
                   },
                 ),

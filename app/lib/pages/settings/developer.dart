@@ -24,7 +24,6 @@ import 'package:omi/pages/settings/widgets/mcp_api_key_list_item.dart';
 import 'package:omi/providers/developer_mode_provider.dart';
 import 'package:omi/providers/mcp_provider.dart';
 import 'package:omi/utils/alerts/app_snackbar.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/debug_log_manager.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
@@ -292,7 +291,6 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
       child: InkWell(
         onTap: () {
           launchUrl(Uri.parse(url));
-          MixpanelManager().pageOpened('$label Docs');
         },
         borderRadius: BorderRadius.circular(20),
         child: Padding(
@@ -401,7 +399,6 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                           settings: const RouteSettings(arguments: 'from_settings'),
                         ),
                       );
-                      MixpanelManager().pageOpened('Developer Persona Settings');
                     },
                     child: Container(
                       padding: const EdgeInsets.all(16),
@@ -866,7 +863,6 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                             if (result.status == ShareResultStatus.success) {
                               Logger.debug('Export shared');
                             }
-                            MixpanelManager().exportMemories();
                             setState(() => provider.loadingExportMemories = false);
                           },
                     child: Container(

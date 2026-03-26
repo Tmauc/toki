@@ -29,7 +29,6 @@ import 'package:omi/providers/integration_provider.dart';
 import 'package:omi/providers/message_provider.dart';
 import 'package:omi/providers/voice_recorder_provider.dart';
 import 'package:omi/services/apple_health_service.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/widgets/dialog.dart';
@@ -161,7 +160,6 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
 
   void _openSettingsDrawer() {
     HapticFeedback.mediumImpact();
-    MixpanelManager().pageOpened('Settings');
     final previousLanguage = SharedPreferencesUtil().userPrimaryLanguage;
     final previousSpeech = SharedPreferencesUtil().hasSpeakerProfile;
     final previousModel = SharedPreferencesUtil().transcriptionModel;
@@ -830,7 +828,6 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
   Future<void> _navigateToChatAppsPage() async {
     if (!mounted) return;
 
-    MixpanelManager().pageOpened('Chat Apps');
     // Navigate to chat capability apps page
     await routeToPage(
       context,

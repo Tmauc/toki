@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import 'package:omi/gen/assets.gen.dart';
-import 'package:omi/utils/analytics/intercom.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 class AppAnalyticsWidget extends StatelessWidget {
@@ -28,7 +27,7 @@ class AppAnalyticsWidget extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () async {
-                  await IntercomManager().displayEarnMoneyArticle();
+                  // TOKI: intercom removed
                 },
                 child: Row(
                   children: [

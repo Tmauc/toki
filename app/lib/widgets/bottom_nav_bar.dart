@@ -8,7 +8,6 @@ import 'package:omi/pages/conversation_capturing/page.dart';
 import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/providers/home_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/logger.dart';
 
@@ -47,7 +46,6 @@ class BottomNavBar extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          MixpanelManager().bottomNavigationTabClicked('Home');
                           primaryFocus?.unfocus();
                           onTabTap(0, home.selectedIndex == 0);
                         },
@@ -68,7 +66,6 @@ class BottomNavBar extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          MixpanelManager().bottomNavigationTabClicked('Action Items');
                           primaryFocus?.unfocus();
                           onTabTap(1, home.selectedIndex == 1);
                         },
@@ -91,7 +88,6 @@ class BottomNavBar extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          MixpanelManager().bottomNavigationTabClicked('Memories');
                           primaryFocus?.unfocus();
                           onTabTap(2, home.selectedIndex == 2);
                         },
@@ -112,7 +108,6 @@ class BottomNavBar extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           HapticFeedback.mediumImpact();
-                          MixpanelManager().bottomNavigationTabClicked('Phone Calls');
                           primaryFocus?.unfocus();
                           onTabTap(3, home.selectedIndex == 3);
                         },
@@ -183,12 +178,10 @@ class BottomNavBar extends StatelessWidget {
     if (recordingState == RecordingState.record) {
       await captureProvider.stopStreamRecording();
       captureProvider.forceProcessingCurrentConversation();
-      MixpanelManager().phoneMicRecordingStopped();
     } else if (recordingState == RecordingState.initialising) {
       Logger.debug('initialising, have to wait');
     } else {
       await captureProvider.streamRecording();
-      MixpanelManager().phoneMicRecordingStarted();
 
       if (context.mounted) {
         final topConvoId = (captureProvider.conversationProvider?.conversations ?? []).isNotEmpty

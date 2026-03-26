@@ -15,7 +15,6 @@ import 'package:omi/pages/conversation_detail/page.dart';
 import 'package:omi/pages/settings/usage_page.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/other/time_utils.dart';
@@ -97,7 +96,6 @@ class _ConversationListItemState extends State<ConversationListItem> {
             }
 
             if (widget.conversation.isLocked) {
-              MixpanelManager().paywallOpened('Conversation List Item');
               routeToPage(context, const UsagePage(showUpgradeDialog: true));
               return;
             }
@@ -108,18 +106,8 @@ class _ConversationListItemState extends State<ConversationListItem> {
             String searchQuery = provider.previousQuery;
             if (searchQuery.isNotEmpty) {
               // Track conversation opened from search
-              MixpanelManager().conversationOpenedFromSearch(
-                conversation: widget.conversation,
-                searchQuery: searchQuery,
-                conversationIndexInResults: widget.conversationIdx,
-              );
             } else {
               // Track normal conversation list item click with time difference
-              MixpanelManager().conversationListItemClickedWithTimeDifference(
-                conversation: widget.conversation,
-                conversationIndex: widget.conversationIdx,
-                hoursSinceConversation: hoursSinceConversation,
-              );
             }
 
             context.read<ConversationDetailProvider>().updateConversation(widget.conversation.id, widget.date);
@@ -290,7 +278,6 @@ class _ConversationListItemState extends State<ConversationListItem> {
                         onDismissed: (direction) async {
                           var conversation = widget.conversation;
                           var conversationIdx = widget.conversationIdx;
-                          MixpanelManager().conversationSwipedToDelete(conversation);
                           provider.deleteConversationLocally(conversation, conversationIdx, widget.date);
                         },
                         child: Padding(

@@ -23,7 +23,6 @@ import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/providers/people_provider.dart';
 import 'package:omi/services/app_review_service.dart';
 import 'package:omi/services/audio_download_service.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/other/temp.dart';
@@ -176,9 +175,7 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
             Logger.debug('Invalid tab index: ${_controller!.index}');
             selectedTab = ConversationTab.summary;
         }
-        if (tabName != null) {
-          MixpanelManager().conversationDetailTabChanged(tabName);
-        }
+        if (tabName != null) {}
         if (_searchQuery.isNotEmpty) {
           _updateSearchResults();
         }
@@ -314,7 +311,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
 
   void _handleMenuSelection(BuildContext context, String value, ConversationDetailProvider provider) async {
     // Track the menu action selection
-    MixpanelManager().conversationThreeDotsMenuActionSelected(conversationId: provider.conversation.id, action: value);
 
     switch (value) {
       case 'copy_transcript':
@@ -325,8 +321,8 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
         final conversation = provider.conversation;
         final summaryContent =
             conversation.appResults.isNotEmpty && conversation.appResults[0].content.trim().isNotEmpty
-            ? conversation.appResults[0].content.trim()
-            : conversation.structured.toString();
+                ? conversation.appResults[0].content.trim()
+                : conversation.structured.toString();
         _copyContent(context, summaryContent);
         break;
       case 'download_audio':
@@ -414,7 +410,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
     final startTime = DateTime.now();
 
     // Track share start
-    MixpanelManager().audioShareStarted(conversationId: provider.conversation.id, audioFileCount: audioFileCount);
 
     AudioDownloadState currentState = AudioDownloadState.preparing;
     double currentProgress = 0.0;
@@ -476,12 +471,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
 
         // Track successful completion
         final durationSeconds = DateTime.now().difference(startTime).inSeconds;
-        MixpanelManager().audioShareCompleted(
-          conversationId: provider.conversation.id,
-          audioFileCount: audioFileCount,
-          wasCombined: audioFileCount > 1,
-          durationSeconds: durationSeconds,
-        );
 
         await service.cleanup();
       } else {
@@ -490,16 +479,11 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
         }
 
         // Track failure (no audio available)
-        MixpanelManager().audioShareFailed(
-          conversationId: provider.conversation.id,
-          errorMessage: 'No audio files available',
-        );
       }
     } catch (e) {
       Logger.debug('Error downloading audio: $e');
 
       // Track failure
-      MixpanelManager().audioShareFailed(conversationId: provider.conversation.id, errorMessage: e.toString());
 
       currentState = AudioDownloadState.error;
       updateSheet?.call(() {});
@@ -655,14 +639,9 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                                         provider.conversation.starred = newStarredState;
                                         // Update in conversation provider
                                         context.read<ConversationProvider>().updateConversationInSortedList(
-                                          provider.conversation,
-                                        );
+                                              provider.conversation,
+                                            );
                                         // Track star/unstar action
-                                        MixpanelManager().conversationStarToggled(
-                                          conversation: provider.conversation,
-                                          starred: newStarredState,
-                                          source: 'detail_page_button',
-                                        );
                                       } else {
                                         ScaffoldMessenger.of(
                                           context,
@@ -724,10 +703,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                                       }
                                       provider.updateVisibilityLocally(ConversationVisibility.shared);
                                       // Track share event
-                                      MixpanelManager().conversationShared(
-                                        conversation: provider.conversation,
-                                        shareMethod: 'url_share',
-                                      );
                                       final RenderBox? box =
                                           _shareButtonKey.currentContext?.findRenderObject() as RenderBox?;
                                       final shareOrigin = box != null
@@ -783,9 +758,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                                     _searchFocusNode.unfocus();
                                   } else {
                                     _searchFocusNode.requestFocus();
-                                    MixpanelManager().conversationDetailSearchClicked(
-                                      conversationId: provider.conversation.id,
-                                    );
                                   }
                                 });
                                 HapticFeedback.mediumImpact();
@@ -843,9 +815,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                             buttonBuilder: (context, showMenu) => GestureDetector(
                               onTap: () {
                                 HapticFeedback.mediumImpact();
-                                MixpanelManager().conversationThreeDotsMenuOpened(
-                                  conversationId: provider.conversation.id,
-                                );
                                 showMenu();
                               },
                               child: Container(
@@ -969,15 +938,13 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                 child: Consumer<ConversationDetailProvider>(
                   builder: (context, provider, child) {
                     final conversation = provider.conversation;
-                    final hasActionItems = conversation.structured.actionItems
-                        .where((item) => !item.deleted)
-                        .isNotEmpty;
+                    final hasActionItems =
+                        conversation.structured.actionItems.where((item) => !item.deleted).isNotEmpty;
                     return ConversationBottomBar(
                       mode: ConversationBottomBarMode.detail,
                       selectedTab: selectedTab,
                       conversation: conversation,
-                      hasSegments:
-                          conversation.transcriptSegments.isNotEmpty ||
+                      hasSegments: conversation.transcriptSegments.isNotEmpty ||
                           conversation.photos.isNotEmpty ||
                           conversation.externalIntegration != null,
                       hasActionItems: hasActionItems,
@@ -1240,12 +1207,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
                                   if (value.isNotEmpty) {
                                     // Track search query with results
                                     final provider = Provider.of<ConversationDetailProvider>(context, listen: false);
-                                    MixpanelManager().conversationDetailSearchQueryEntered(
-                                      conversationId: provider.conversation.id,
-                                      query: value,
-                                      resultsCount: _totalSearchResults,
-                                      activeTab: _getTabTitle(context, selectedTab),
-                                    );
                                   }
                                 });
                               },
@@ -1411,13 +1372,10 @@ class _TranscriptWidgetsState extends State<TranscriptWidgets> with AutomaticKee
                 }
                 final segments = provider.conversation.transcriptSegments;
                 final segment = segments[segmentIndex];
-                final person = segment.personId != null
-                    ? SharedPreferencesUtil().getPersonById(segment.personId!)
-                    : null;
-                final speakerName =
-                    person?.name ??
+                final person =
+                    segment.personId != null ? SharedPreferencesUtil().getPersonById(segment.personId!) : null;
+                final speakerName = person?.name ??
                     context.l10n.speakerWithId('${TranscriptSegment.getDisplaySpeakerId(segment.speakerId, segments)}');
-                MixpanelManager().editSegmentTextStarted();
                 bool saved = false;
                 showEditSegmentBottomSheet(
                   context,
@@ -1425,11 +1383,10 @@ class _TranscriptWidgetsState extends State<TranscriptWidgets> with AutomaticKee
                   speakerName: speakerName,
                   onSave: (newText) {
                     saved = true;
-                    MixpanelManager().editSegmentTextSaved();
                     provider.saveEditingSegmentText(segmentIndex, newText);
                   },
                   onDismissed: () {
-                    if (!saved) MixpanelManager().editSegmentTextCancelled();
+                    // TOKI: analytics removed
                   },
                 );
               },
@@ -1464,17 +1421,14 @@ class _TranscriptWidgetsState extends State<TranscriptWidgets> with AutomaticKee
                               }
                             }
 
-                            MixpanelManager().taggedSegment(finalPersonId == 'user' ? 'User' : 'User Person');
-
                             for (final segmentId in segmentIds) {
                               final segmentIndex = provider.conversation.transcriptSegments.indexWhere(
                                 (s) => s.id == segmentId,
                               );
                               if (segmentIndex == -1) continue;
                               provider.conversation.transcriptSegments[segmentIndex].isUser = finalPersonId == 'user';
-                              provider.conversation.transcriptSegments[segmentIndex].personId = finalPersonId == 'user'
-                                  ? null
-                                  : finalPersonId;
+                              provider.conversation.transcriptSegments[segmentIndex].personId =
+                                  finalPersonId == 'user' ? null : finalPersonId;
                             }
                             await assignBulkConversationTranscriptSegments(
                               provider.conversation.id,
@@ -1637,15 +1591,11 @@ class _ActionItemDetailWidgetState extends State<ActionItemDetailWidget> {
       );
       if (currentIndex != -1) {
         if (newValue) {
-          MixpanelManager().checkedActionItem(provider.conversation, currentIndex);
-
           if (!await _appReviewService.hasCompletedFirstActionItem()) {
             await _appReviewService.markFirstActionItemCompleted();
             _appReviewService.showReviewPromptIfNeeded(context, isProcessingFirstConversation: false);
           }
-        } else {
-          MixpanelManager().uncheckedActionItem(provider.conversation, currentIndex);
-        }
+        } else {}
       }
     } catch (e) {
       // If there's an error, revert pending state

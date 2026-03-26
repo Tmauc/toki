@@ -7,7 +7,6 @@ import 'package:omi/backend/schema/bt_device/bt_device.dart';
 import 'package:omi/pages/home/firmware_mixin.dart';
 import 'package:omi/pages/home/page.dart';
 import 'package:omi/providers/device_provider.dart';
-import 'package:omi/utils/analytics/intercom.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'firmware_update_dialog.dart';
@@ -403,7 +402,7 @@ class _FirmwareUpdateState extends State<FirmwareUpdate> with FirmwareMixin {
           const SizedBox(height: 12),
           GestureDetector(
             onTap: () async {
-              await IntercomManager.instance.displayFirmwareUpdateArticle();
+              // TOKI: intercom removed
             },
             child: Container(
               width: double.infinity,
@@ -485,10 +484,10 @@ class _FirmwareUpdateState extends State<FirmwareUpdate> with FirmwareMixin {
             child: isLoading
                 ? _buildLoadingSection()
                 : isDownloading || isInstalling
-                ? _buildProgressSection()
-                : isInstalled
-                ? _buildSuccessSection()
-                : _buildUpdateSection(),
+                    ? _buildProgressSection()
+                    : isInstalled
+                        ? _buildSuccessSection()
+                        : _buildUpdateSection(),
           ),
         ),
       ),

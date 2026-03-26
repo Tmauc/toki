@@ -15,7 +15,6 @@ import 'package:omi/pages/speech_profile/page.dart';
 import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/providers/home_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
@@ -43,7 +42,6 @@ class SpeechProfileCardWidget extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          MixpanelManager().pageOpened('Speech Profile Memories');
                           bool hasSpeakerProfile = SharedPreferencesUtil().hasSpeakerProfile;
                           await routeToPage(context, const SpeechProfilePage());
                           final newHasSpeakerProfile = SharedPreferencesUtil().hasSpeakerProfile;
@@ -112,7 +110,6 @@ class UpdateFirmwareCardWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                MixpanelManager().pageOpened('Update Firmware Memories');
                 if (isOmiGlass) {
                   routeToPage(
                     context,

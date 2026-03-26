@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:omi/gen/assets.gen.dart';
 import 'package:omi/pages/payments/widgets/country_bottom_sheet.dart';
 import 'package:omi/utils/alerts/app_snackbar.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/widgets/animated_loading_button.dart';
 import 'package:omi/widgets/extensions/string.dart';
@@ -213,7 +212,6 @@ class _StripeConnectSetupState extends State<StripeConnectSetup> with SingleTick
                                   provider.stripeConnectionState == PaymentConnectionState.inComplete ||
                                       provider.selectedCountryId != null
                                   ? () async {
-                                      MixpanelManager().track('Stripe Connect Started');
                                       var url = await provider.connectStripe();
                                       if (url != null) {
                                         provider.startStripePolling();
@@ -278,7 +276,6 @@ class _StripeConnectSetupState extends State<StripeConnectSetup> with SingleTick
                             AnimatedLoadingButton(
                               text: context.l10n.failedTryAgain,
                               onPressed: () async {
-                                MixpanelManager().track('Stripe Connect Retry');
                                 var res = await provider.connectStripe();
                                 if (res != null) {
                                   provider.startStripePolling();
@@ -294,7 +291,6 @@ class _StripeConnectSetupState extends State<StripeConnectSetup> with SingleTick
                             ),
                             TextButton(
                               onPressed: () {
-                                MixpanelManager().track('Stripe Connect Later');
                                 provider.stopStripePolling();
                                 Navigator.pop(context);
                               },
@@ -354,7 +350,6 @@ class _StripeConnectSetupState extends State<StripeConnectSetup> with SingleTick
                             AnimatedLoadingButton(
                               text: context.l10n.updateStripeDetails,
                               onPressed: () async {
-                                MixpanelManager().track('Stripe Connect Update');
                                 var url = await provider.connectStripe();
                                 if (url != null) {
                                   provider.startStripePolling();

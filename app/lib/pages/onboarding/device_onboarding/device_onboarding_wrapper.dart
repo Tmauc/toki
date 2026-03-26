@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:omi/backend/http/api/users.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/pages/home/page.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'device_onboarding_page.dart';
 
@@ -52,7 +51,6 @@ class _DeviceOnboardingWrapperState extends State<DeviceOnboardingWrapper> with 
     // Mark onboarding as completed and go to homepage
     SharedPreferencesUtil().onboardingCompleted = true;
     updateUserOnboardingState(completed: true);
-    MixpanelManager().onboardingStepCompleted('Device Onboarding Completed');
     PaintingBinding.instance.imageCache.clear();
     routeToPage(context, const HomePageWrapper(), replace: true);
   }
@@ -72,7 +70,6 @@ class _DeviceOnboardingWrapperState extends State<DeviceOnboardingWrapper> with 
               isFirstSlide: i == 0,
               isLastSlide: i == _totalSlides - 1,
               onNext: () {
-                MixpanelManager().onboardingStepCompleted('Device Onboarding Slide ${i + 1}');
                 if (i == _totalSlides - 1) {
                   // Last slide, complete onboarding
                   _completeOnboarding();

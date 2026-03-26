@@ -7,7 +7,6 @@ import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/home_provider.dart';
 import 'package:omi/providers/locale_provider.dart';
 import 'package:omi/providers/user_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 class LanguageSettingsPage extends StatefulWidget {
@@ -322,7 +321,6 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
                                       );
                                       if (success) {
                                         captureProvider.onRecordProfileSettingChanged();
-                                        MixpanelManager().languageChanged(entry.value);
                                       }
                                     } finally {
                                       if (mounted) {
@@ -348,7 +346,6 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    MixpanelManager().pageOpened('Language Settings');
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D0D),

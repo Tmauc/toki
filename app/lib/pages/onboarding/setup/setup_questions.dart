@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:omi/pages/speech_profile/page.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 class SetupQuestionsPage extends StatefulWidget {
@@ -95,7 +94,6 @@ class _SetupQuestionsPageState extends State<SetupQuestionsPage> {
               child: MaterialButton(
                 onPressed: () {
                   if (selectedProfession != null && selectedUsage != null && selectedAge != null) {
-                    MixpanelManager().setUserProperties(selectedProfession!, selectedUsage!, selectedAge!);
                     Navigator.of(
                       context,
                     ).pushReplacement(MaterialPageRoute(builder: (c) => const SpeechProfilePage(onbording: true)));

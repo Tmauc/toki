@@ -16,7 +16,6 @@ import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/providers/onboarding_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/other/temp.dart';
@@ -48,12 +47,6 @@ class _ConversationCaptureWidgetState extends State<ConversationCaptureWidget> {
         return GestureDetector(
           onTap: () async {
             if (provider.segments.isEmpty && provider.photos.isEmpty) return;
-            MixpanelManager().liveTranscriptCardClicked(
-              hasSegments: provider.segments.isNotEmpty,
-              hasPhotos: provider.photos.isNotEmpty,
-              segmentCount: provider.segments.length,
-              photoCount: provider.photos.length,
-            );
             routeToPage(context, ConversationCapturingPage(topConversationId: topConvoId));
           },
           child: Container(
@@ -119,14 +112,12 @@ class _ConversationCaptureWidgetState extends State<ConversationCaptureWidget> {
           _isPhoneMicPaused = true;
         });
         await provider.stopStreamRecording();
-        MixpanelManager().phoneMicRecordingStopped();
       } else if (_isPhoneMicPaused) {
         // Resume recording
         setState(() {
           _isPhoneMicPaused = false;
         });
         await provider.streamRecording();
-        MixpanelManager().phoneMicRecordingStarted();
       } else if (recordingState == RecordingState.initialising) {
         Logger.debug('initialising, have to wait');
       } else {
@@ -134,7 +125,6 @@ class _ConversationCaptureWidgetState extends State<ConversationCaptureWidget> {
           _isPhoneMicPaused = false;
         });
         await provider.streamRecording();
-        MixpanelManager().phoneMicRecordingStarted();
       }
     }
   }
@@ -409,16 +399,8 @@ class _ConversationCaptureWidgetState extends State<ConversationCaptureWidget> {
                   HapticFeedback.heavyImpact();
                   await Future.delayed(const Duration(milliseconds: 80));
                   HapticFeedback.lightImpact();
-                  MixpanelManager().recordingMuteToggled(
-                    isMuted: true,
-                    recordingType: isDeviceRecording ? 'device' : 'phone_mic',
-                  );
                 } else {
                   HapticFeedback.mediumImpact();
-                  MixpanelManager().recordingMuteToggled(
-                    isMuted: false,
-                    recordingType: isDeviceRecording ? 'device' : 'phone_mic',
-                  );
                 }
                 _toggleRecording(context, provider);
               },

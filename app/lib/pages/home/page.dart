@@ -45,14 +45,11 @@ import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/providers/device_provider.dart';
-import 'package:omi/providers/announcement_provider.dart';
 import 'package:omi/providers/home_provider.dart';
 import 'package:omi/providers/message_provider.dart';
 import 'package:omi/providers/sync_provider.dart';
-import 'package:omi/services/announcement_service.dart';
 import 'package:omi/services/notifications.dart';
 import 'package:omi/services/notifications/daily_reflection_notification.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/audio/foreground.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/l10n_extensions.dart';
@@ -378,10 +375,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
         case "daily-summary":
           if (detailPageId != null && detailPageId.isNotEmpty) {
             // Track notification opened
-            MixpanelManager().dailySummaryNotificationOpened(
-              summaryId: detailPageId,
-              date: '', // Date not available in navigate_to, will be fetched when detail page loads
-            );
 
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) {
@@ -409,45 +402,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
 
     _listenToMessagesFromNotification();
     // TOKI: _listenToFreemiumThreshold() removed — monetization disabled
-    _checkForAnnouncements();
     super.initState();
 
     // After init
     FlutterForegroundTask.addTaskDataCallback(_onReceiveTaskData);
   }
 
-  void _checkForAnnouncements() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (!mounted) return;
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (!mounted) return;
-
-      final announcementProvider = Provider.of<AnnouncementProvider>(context, listen: false);
-      final deviceProvider = Provider.of<DeviceProvider>(context, listen: false);
-      await AnnouncementService().checkAndShowAnnouncements(
-        context,
-        announcementProvider,
-        connectedDevice: deviceProvider.connectedDevice,
-      );
-
-      // Register callback for device connection to check firmware announcements
-      deviceProvider.onDeviceConnected = _onDeviceConnectedForAnnouncements;
-    });
-  }
-
-  void _onDeviceConnectedForAnnouncements(BtDevice device) async {
-    if (!mounted) return;
-
-    final announcementProvider = Provider.of<AnnouncementProvider>(context, listen: false);
-    await AnnouncementService().showFirmwareUpdateAnnouncements(
-      context,
-      announcementProvider,
-      device.firmwareRevision,
-      device.modelNumber,
-    );
-  }
+  // TOKI: Announcements feature removed
 
   // TOKI: _listenToFreemiumThreshold and _onCaptureProviderChanged removed — monetization disabled
 
@@ -607,7 +568,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                   child: GestureDetector(
                                     onTap: () {
                                       HapticFeedback.mediumImpact();
-                                      MixpanelManager().bottomNavigationTabClicked('Chat');
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => const ChatPage(isPivotBottom: false)),
@@ -649,14 +609,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
       // Stop recording and summarize conversation
       await captureProvider.stopStreamRecording();
       captureProvider.forceProcessingCurrentConversation();
-      MixpanelManager().phoneMicRecordingStopped();
     } else if (recordingState == RecordingState.initialising) {
       // Already initializing, do nothing
       Logger.debug('initialising, have to wait');
     } else {
       // Start recording directly without dialog
       await captureProvider.streamRecording();
-      MixpanelManager().phoneMicRecordingStarted();
 
       // Navigate to conversation capturing page
       if (context.mounted) {
@@ -779,9 +737,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                           ),
                           onPressed: () {
                             HapticFeedback.mediumImpact();
-                            if (!convoProvider.showDailySummaries) {
-                              MixpanelManager().recapTabOpened();
-                            }
+                            if (!convoProvider.showDailySummaries) {}
                             convoProvider.toggleDailySummaries();
                           },
                         ),
@@ -834,7 +790,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                                     );
                                                     Navigator.of(context).pop();
                                                     await provider.clearDateFilter();
-                                                    MixpanelManager().calendarFilterCleared();
                                                   },
                                                   child: Text(
                                                     context.l10n.removeFilter,
@@ -851,7 +806,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                                     );
                                                     Navigator.of(context).pop();
                                                     await provider.filterConversationsByDate(selectedDate);
-                                                    MixpanelManager().calendarFilterApplied(selectedDate);
                                                   },
                                                   child: Text(
                                                     context.l10n.done,
@@ -917,7 +871,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                           icon: const Icon(FontAwesomeIcons.arrowUpFromBracket, size: 16, color: Colors.white70),
                           onPressed: () {
                             HapticFeedback.mediumImpact();
-                            MixpanelManager().exportTasksBannerClicked();
                             Navigator.of(
                               context,
                             ).push(MaterialPageRoute(builder: (context) => const TaskIntegrationsPage()));
@@ -961,7 +914,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                   icon: const Icon(FontAwesomeIcons.gear, size: 16, color: Colors.white70),
                   onPressed: () {
                     HapticFeedback.mediumImpact();
-                    MixpanelManager().pageOpened('Settings');
                     String language = SharedPreferencesUtil().userPrimaryLanguage;
                     bool hasSpeech = SharedPreferencesUtil().hasSpeakerProfile;
                     String transcriptModel = SharedPreferencesUtil().transcriptionModel;

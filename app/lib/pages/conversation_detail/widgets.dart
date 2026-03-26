@@ -28,7 +28,6 @@ import 'package:omi/pages/conversation_detail/widgets/summarized_apps_sheet.dart
 import 'package:omi/pages/conversations/widgets/move_to_folder_sheet.dart';
 import 'package:omi/pages/settings/developer.dart';
 import 'package:omi/providers/folder_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/folders/folder_icon_mapper.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/other/time_utils.dart';
@@ -179,10 +178,6 @@ class GetSummaryWidgets extends StatelessWidget {
         HapticFeedback.selectionClick();
 
         // Track folder chip clicked
-        MixpanelManager().conversationDetailFolderChipClicked(
-          conversationId: conversationId,
-          currentFolderId: currentFolderId,
-        );
 
         final folderProvider = Provider.of<FolderProvider>(context, listen: false);
         if (folderProvider.folders.isEmpty) {
@@ -198,12 +193,6 @@ class GetSummaryWidgets extends StatelessWidget {
           context.read<ConversationDetailProvider>().updateFolderIdLocally(newFolderId);
 
           // Track conversation moved to folder
-          MixpanelManager().conversationMovedToFolder(
-            conversationId: conversationId,
-            fromFolderId: currentFolderId,
-            toFolderId: newFolderId,
-            source: 'detail_page_sheet',
-          );
         }
       },
       child: Container(
@@ -324,11 +313,6 @@ class GetSummaryWidgets extends StatelessWidget {
                     provider.updateVisibilityLocally(previousVisibility);
                     return;
                   }
-                  MixpanelManager().conversationVisibilityChanged(
-                    conversationId: conversation.id,
-                    fromVisibility: previousVisibility.value,
-                    toVisibility: ConversationVisibility.private_.value,
-                  );
                 },
               ),
               // Shared option
@@ -354,11 +338,6 @@ class GetSummaryWidgets extends StatelessWidget {
                     provider.updateVisibilityLocally(previousVisibility);
                     return;
                   }
-                  MixpanelManager().conversationVisibilityChanged(
-                    conversationId: conversation.id,
-                    fromVisibility: previousVisibility.value,
-                    toVisibility: ConversationVisibility.shared.value,
-                  );
                   if (context.mounted) shareConversationLink(conversation);
                 },
               ),
@@ -496,7 +475,6 @@ class ActionItemsListWidget extends StatelessWidget {
                               duration: const Duration(seconds: 2),
                             ),
                           );
-                          MixpanelManager().copiedConversationDetails(provider.conversation, source: 'Action Items');
                         },
                         icon: const Icon(Icons.copy_rounded, color: Colors.white, size: 20),
                       ),
@@ -523,7 +501,6 @@ class ActionItemsListWidget extends StatelessWidget {
                     var tempIdx = idx;
                     provider.deleteActionItem(idx);
                     provider.deleteActionItemPermanently(tempItem, tempIdx);
-                    MixpanelManager().deletedActionItem(provider.conversation);
                     // ScaffoldMessenger.of(context)
                     //     .showSnackBar(
                     //       SnackBar(
@@ -564,9 +541,7 @@ class ActionItemsListWidget extends StatelessWidget {
                                   context.read<ConversationDetailProvider>().updateActionItemState(value, idx);
                                   setConversationActionItemState(provider.conversation.id, [idx], [value]);
                                   if (value) {
-                                    MixpanelManager().checkedActionItem(provider.conversation, idx);
                                   } else {
-                                    MixpanelManager().uncheckedActionItem(provider.conversation, idx);
                                   }
                                 }
                               },
@@ -775,7 +750,6 @@ class AppResultDetailWidget extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 if (app != null) {
-                  MixpanelManager().pageOpened('App Detail');
                   await routeToPage(context, AppDetailPage(app: app!));
                 }
               },

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:omi/backend/schema/memory.dart';
 import 'package:omi/providers/memories_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
 import 'delete_confirmation.dart';
@@ -169,7 +168,6 @@ class _MemoryDialogState extends State<MemoryDialog> {
       if (isEditing) {
         success = await widget.provider.editMemory(widget.memory!, contentController.text);
         if (success) {
-          MixpanelManager().memoriesPageEditedMemory();
         }
       } else {
         success = await widget.provider.createMemory(
@@ -178,7 +176,6 @@ class _MemoryDialogState extends State<MemoryDialog> {
           MemoryCategory.manual,
         );
         if (success) {
-          MixpanelManager().memoriesPageCreatedMemory(MemoryCategory.manual);
         }
       }
     } catch (e) {

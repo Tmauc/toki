@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/user_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
 class CustomVocabularyPage extends StatefulWidget {
@@ -260,7 +259,6 @@ class _CustomVocabularyPageState extends State<CustomVocabularyPage> {
 
   @override
   Widget build(BuildContext context) {
-    MixpanelManager().pageOpened('Custom Vocabulary');
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),

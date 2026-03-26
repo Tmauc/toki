@@ -17,7 +17,6 @@ import 'package:omi/services/devices.dart';
 import 'package:omi/services/notifications.dart';
 import 'package:omi/services/services.dart';
 import 'package:omi/services/battery_widget_service.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/device.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/other/debouncer.dart';
@@ -324,7 +323,6 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
         if (device != null) {
           await setConnectedDevice(device);
           SharedPreferencesUtil().deviceName = device.name;
-          MixpanelManager().deviceConnected();
         }
       }
 
@@ -343,7 +341,6 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
         await setConnectedDevice(cDevice);
         setisDeviceStorageSupport();
         SharedPreferencesUtil().deviceName = cDevice.name;
-        MixpanelManager().deviceConnected();
         setIsConnected(true);
       }
       Logger.debug('device is not null $cDevice');
@@ -400,7 +397,6 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
         body: ctx?.l10n.deviceDisconnectedNotificationBody ?? 'Please reconnect to continue using Toki.',
       );
     });
-    MixpanelManager().deviceDisconnected();
     BatteryWidgetService().updateBatteryInfo(
       deviceName: SharedPreferencesUtil().deviceName,
       batteryLevel: -1,

@@ -5,7 +5,6 @@ import 'package:omi/backend/http/api/users.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/services/notifications/daily_reflection_notification.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +32,6 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
   void initState() {
     super.initState();
     _loadSettings();
-    MixpanelManager().dailySummarySettingsOpened();
   }
 
   Future<void> _loadSettings() async {
@@ -66,7 +64,6 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
   }
 
   Future<void> _updateNotificationFrequency(int value) async {
-    MixpanelManager().notificationFrequencyChanged(oldFrequency: _notificationFrequency, newFrequency: value);
     setState(() => _notificationFrequency = value);
     SharedPreferencesUtil().notificationFrequency = value;
     await setMentorNotificationSettings(value);
@@ -119,17 +116,14 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
   Future<void> _updateDailySummaryEnabled(bool value) async {
     setState(() => _dailySummaryEnabled = value);
     await setDailySummarySettings(enabled: value);
-    MixpanelManager().dailySummaryToggled(enabled: value);
   }
 
   Future<void> _updateDailySummaryHour(int hour) async {
     setState(() => _dailySummaryHour = hour);
     await setDailySummarySettings(hour: hour);
-    MixpanelManager().dailySummaryTimeChanged(hour: hour);
   }
 
   void _updateDailyReflectionEnabled(bool value) {
-    MixpanelManager().dailyReflectionToggled(enabled: value);
     setState(() => _dailyReflectionEnabled = value);
     SharedPreferencesUtil().dailyReflectionEnabled = value;
 
@@ -252,7 +246,6 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
       Navigator.pop(context); // Dismiss loading
 
       if (summaryId != null) {
-        MixpanelManager().dailySummaryTestGenerated(date: dateStr);
 
         // Refresh the hasDailySummaries flag so the Recap tab shows
         Provider.of<ConversationProvider>(context, listen: false).checkHasDailySummaries();
@@ -264,7 +257,6 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage> {
           ),
         );
       } else {
-        MixpanelManager().dailySummaryTestGenerationFailed(date: dateStr);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(context.l10n.failedToGenerateSummary), backgroundColor: Colors.red.shade700),

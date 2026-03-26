@@ -37,7 +37,6 @@ import 'package:omi/services/services.dart';
 import 'package:omi/services/sockets/transcription_service.dart';
 import 'package:omi/services/wals.dart';
 import 'package:omi/utils/alerts/app_snackbar.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/debug_log_manager.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/image/image_utils.dart';
@@ -553,7 +552,6 @@ class CaptureProvider extends ChangeNotifier
             Logger.debug("Double tap: toggling pause/mute");
             _isProcessingButtonEvent = true;
             if (_isPaused) {
-              MixpanelManager().omiDoubleTap(feature: 'unmute');
               resumeDeviceRecording().then((_) {
                 _isProcessingButtonEvent = false;
               }).catchError((e) {
@@ -561,7 +559,6 @@ class CaptureProvider extends ChangeNotifier
                 _isProcessingButtonEvent = false;
               });
             } else {
-              MixpanelManager().omiDoubleTap(feature: 'mute');
               pauseDeviceRecording().then((_) {
                 _isProcessingButtonEvent = false;
               }).catchError((e) {
@@ -574,19 +571,16 @@ class CaptureProvider extends ChangeNotifier
             Logger.debug("Double tap: marking conversation for starring");
             if (!_starOngoingConversation) {
               markConversationForStarring();
-              MixpanelManager().omiDoubleTap(feature: 'star_conversation');
               // Haptic feedback to confirm
               HapticFeedback.mediumImpact();
             } else {
               // Toggle off if already marked
               unmarkConversationForStarring();
-              MixpanelManager().omiDoubleTap(feature: 'unstar_conversation');
               HapticFeedback.lightImpact();
             }
           } else {
             // End conversation and process (default)
             Logger.debug("Double tap: processing conversation");
-            MixpanelManager().omiDoubleTap(feature: 'process_conversation');
             forceProcessingCurrentConversation();
           }
           return;
@@ -1577,7 +1571,6 @@ class CaptureProvider extends ChangeNotifier
     }
 
     conversationProvider?.upsertConversation(conversation);
-    MixpanelManager().conversationCreated(conversation);
   }
 
   Future<void> _handleLastConvoEvent(String memoryId) async {

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:omi/pages/settings/webview.dart';
-import 'package:omi/utils/analytics/intercom.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 
@@ -30,7 +28,6 @@ class _AboutOmiPageState extends State<AboutOmiPage> {
               title: Text(context.l10n.privacyPolicy, style: const TextStyle(color: Colors.white)),
               trailing: const Icon(Icons.privacy_tip_outlined, size: 20),
               onTap: () {
-                MixpanelManager().pageOpened('About Privacy Policy');
                 routeToPage(
                   context,
                   PageWebView(url: 'https://www.omi.me/pages/privacy', title: context.l10n.privacyPolicyTitle),
@@ -43,7 +40,6 @@ class _AboutOmiPageState extends State<AboutOmiPage> {
               subtitle: const Text('https://omi.me'),
               trailing: const Icon(Icons.language_outlined, size: 20),
               onTap: () {
-                MixpanelManager().pageOpened('About Visit Website');
                 // routeToPage(context, const PageWebView(url: 'https://www.omi.me/', title: 'omi'));
                 launchUrl(Uri.parse('https://www.omi.me/'));
               },
@@ -54,7 +50,7 @@ class _AboutOmiPageState extends State<AboutOmiPage> {
               contentPadding: const EdgeInsets.fromLTRB(4, 0, 24, 0),
               trailing: const Icon(Icons.help_outline_outlined, color: Colors.white, size: 20),
               onTap: () async {
-                await IntercomManager.instance.intercom.displayMessenger();
+                // TOKI: intercom removed
               },
             ),
             ListTile(
@@ -63,7 +59,6 @@ class _AboutOmiPageState extends State<AboutOmiPage> {
               subtitle: Text(context.l10n.membersAndCounting),
               trailing: const Icon(Icons.discord, color: Colors.purple, size: 20),
               onTap: () {
-                MixpanelManager().pageOpened('About Join Discord');
                 launchUrl(Uri.parse('http://discord.omi.me'));
               },
             ),

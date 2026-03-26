@@ -15,7 +15,6 @@ import 'package:omi/pages/settings/usage_page.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/providers/memories_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/ui_guidelines.dart';
@@ -81,7 +80,6 @@ class MemoryItem extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                     child: GestureDetector(
                       onTap: () {
-                        MixpanelManager().paywallOpened('Action Item');
                         routeToPage(context, const UsagePage(showUpgradeDialog: true));
                         return;
                       },
@@ -121,7 +119,6 @@ class MemoryItem extends StatelessWidget {
         final memoryContent = memory.content.decodeString;
 
         provider.deleteMemory(memory);
-        MixpanelManager().memoriesPageDeletedMemory(memory);
 
         if (context.findAncestorStateOfType<MemoriesPageState>() != null) {
           context.findAncestorStateOfType<MemoriesPageState>()!.showDeleteNotification(memoryContent, memory);

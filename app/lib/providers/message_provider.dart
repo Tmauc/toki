@@ -25,7 +25,6 @@ import 'package:omi/app_globals.dart';
 import 'package:omi/services/agent_chat_service.dart';
 import 'package:omi/utils/alerts/app_snackbar.dart';
 import 'package:omi/utils/l10n_extensions.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/file.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/platform/platform_service.dart';
@@ -521,7 +520,6 @@ class MessageProvider extends ChangeNotifier {
     App? targetApp = currentAppId != null ? appProvider?.apps.firstWhereOrNull((app) => app.id == currentAppId) : null;
     bool isPersonaChat = targetApp != null ? !targetApp.isNotPersona() : false;
 
-    MixpanelManager().chatVoiceInputUsed(chatTargetId: chatTargetId, isPersonaChat: isPersonaChat);
 
     setShowTypingIndicator(true);
     var message = ServerMessage.empty();
@@ -597,14 +595,6 @@ class MessageProvider extends ChangeNotifier {
     App? targetApp = currentAppId != null ? appProvider?.apps.firstWhereOrNull((app) => app.id == currentAppId) : null;
     bool isPersonaChat = targetApp != null ? !targetApp.isNotPersona() : false;
 
-    MixpanelManager().chatMessageSent(
-      message: text,
-      includesFiles: uploadedFiles.isNotEmpty,
-      numberOfFiles: uploadedFiles.length,
-      chatTargetId: chatTargetId,
-      isPersonaChat: isPersonaChat,
-      isVoiceInput: _isNextMessageFromVoice,
-    );
     _isNextMessageFromVoice = false;
 
     // Route through agent VM if Claude Agent is enabled

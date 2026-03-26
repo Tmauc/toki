@@ -11,8 +11,6 @@ import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/providers/sync_provider.dart';
 import 'package:omi/services/services.dart';
-import 'package:omi/utils/analytics/intercom.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/time_utils.dart';
 import 'package:omi/utils/platform/platform_service.dart';
@@ -213,14 +211,13 @@ class _ConnectedDeviceState extends State<ConnectedDevice> {
             chipValue: provider.connectedDevice == null
                 ? context.l10n.offline
                 : provider.havingNewFirmware
-                ? context.l10n.available
-                : null,
+                    ? context.l10n.available
+                    : null,
             onTap: provider.connectedDevice != null
                 ? () {
                     // Route to OmiGlass OTA page for openglass devices
                     final deviceName = provider.connectedDevice?.name?.toLowerCase() ?? '';
-                    final isOpenGlass =
-                        provider.connectedDevice?.type == DeviceType.openglass ||
+                    final isOpenGlass = provider.connectedDevice?.type == DeviceType.openglass ||
                         deviceName.contains('openglass') ||
                         deviceName.contains('omiglass') ||
                         deviceName.contains('glass');
@@ -267,7 +264,7 @@ class _ConnectedDeviceState extends State<ConnectedDevice> {
           GestureDetector(
             onTap: () async {
               if (PlatformService.isIntercomSupported) {
-                await IntercomManager.instance.displayChargingArticle(provider.pairedDevice?.name ?? 'DevKit1');
+                // TOKI: intercom removed
               } else {
                 final deviceName = provider.pairedDevice?.name ?? 'DevKit1';
                 String url;
@@ -323,7 +320,6 @@ class _ConnectedDeviceState extends State<ConnectedDevice> {
                 context.read<DeviceProvider>().updateConnectingStatus(false);
                 Navigator.of(context).pop();
               }
-              MixpanelManager().disconnectFriendClicked();
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
@@ -417,8 +413,7 @@ class _ConnectedDeviceState extends State<ConnectedDevice> {
     final manufacturer = provider.pairedDevice?.manufacturerName ?? context.l10n.unknown;
     final firmware = provider.pairedDevice?.firmwareRevision ?? context.l10n.unknown;
     final deviceId = provider.pairedDevice?.id ?? context.l10n.unknown;
-    final serialNumber =
-        provider.pairedDevice?.serialNumber ??
+    final serialNumber = provider.pairedDevice?.serialNumber ??
         provider.pairedDevice?.id.replaceAll(':', '').replaceAll('-', '').toUpperCase() ??
         context.l10n.unknown;
 

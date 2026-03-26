@@ -16,7 +16,6 @@ import 'package:omi/pages/persona/twitter/social_profile.dart';
 import 'package:omi/providers/auth_provider.dart';
 import 'package:omi/providers/home_provider.dart';
 import 'package:omi/services/auth_service.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 
@@ -50,10 +49,8 @@ class _PersonaProfilePageState extends State<PersonaProfilePage> {
 
       if (provider.routing == PersonaProfileRouting.apps_updates && provider.userPersona != null) {
         provider.prepareUpdatePersona(provider.userPersona!);
-        MixpanelManager().personaProfileViewed(personaId: provider.userPersona!.id, source: source);
       } else {
         await provider.getVerifiedUserPersona();
-        MixpanelManager().personaProfileViewed(personaId: provider.userPersona?.id, source: source);
       }
     });
     super.initState();
@@ -229,10 +226,6 @@ class _PersonaProfilePageState extends State<PersonaProfilePage> {
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
                                 child: TextButton(
                                   onPressed: () async {
-                                    MixpanelManager().personaShared(
-                                      personaId: persona.id,
-                                      personaUsername: persona.username,
-                                    );
                                     Share.share(
                                       'https://personas.omi.me/u/${persona.username}',
                                       subject: '${persona.getName()} Persona',

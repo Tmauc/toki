@@ -40,7 +40,6 @@ import 'package:omi/pages/payments/payment_method_provider.dart';
 import 'package:omi/pages/persona/persona_provider.dart';
 import 'package:omi/pages/settings/ai_app_generator_provider.dart';
 import 'package:omi/providers/action_items_provider.dart';
-import 'package:omi/providers/announcement_provider.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/providers/auth_provider.dart';
 import 'package:omi/providers/calendar_provider.dart';
@@ -72,7 +71,6 @@ import 'package:omi/services/notifications/action_item_notification_handler.dart
 import 'package:omi/services/notifications/important_conversation_notification_handler.dart';
 import 'package:omi/services/notifications/merge_notification_handler.dart';
 import 'package:omi/services/services.dart';
-import 'package:omi/utils/analytics/growthbook.dart';
 import 'package:omi/utils/debug_log_manager.dart';
 import 'package:omi/utils/debugging/crashlytics_manager.dart';
 import 'package:omi/utils/l10n_extensions.dart';
@@ -177,7 +175,6 @@ Future _init() async {
   bool isAuth = (await AuthService.instance.getIdToken()) != null;
   print('DEBUG main: After getIdToken - isAuth=$isAuth, currentUser=${FirebaseAuth.instance.currentUser?.uid}');
   if (isAuth) {
-    PlatformManager.instance.mixpanel.identify();
     // Restore onboarding state from server if not already set locally
     // This handles the case where cached credentials are used on startup
     if (!SharedPreferencesUtil().onboardingCompleted) {
@@ -188,7 +185,7 @@ Future _init() async {
   }
   if (PlatformService.isMobile) initOpus(await opus_flutter.load());
 
-  await GrowthbookUtil.init();
+  // TOKI: GrowthBook removed
   if (!PlatformService.isWindows && !PlatformService.isMobile) {
     ble.FlutterBluePlus.setOptions(restoreState: true);
     ble.FlutterBluePlus.setLogLevel(ble.LogLevel.info, color: true);
@@ -356,7 +353,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (context) => FolderProvider()),
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
         ChangeNotifierProvider(create: (context) => VoiceRecorderProvider()),
-        ChangeNotifierProvider(create: (context) => AnnouncementProvider()),
         ChangeNotifierProvider(create: (context) => PhoneCallProvider()),
       ],
       builder: (context, child) {

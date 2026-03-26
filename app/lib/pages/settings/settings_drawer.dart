@@ -18,15 +18,11 @@ import 'package:omi/models/subscription.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/platform/platform_service.dart';
 import 'package:omi/widgets/dialog.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:omi/backend/http/api/announcements.dart';
-import 'package:omi/pages/announcements/changelog_sheet.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'device_settings.dart';
 import 'phone_call_settings_page.dart';
 import '../conversations/sync_page.dart';
@@ -413,19 +409,7 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
   Widget _buildNoDeviceModeContent(BuildContext context) {
     return Column(
       children: [
-        // Support Section
-        _buildSectionContainer(
-          children: [
-            _buildSettingsItem(
-              title: context.l10n.needHelpChatWithUs,
-              icon: const FaIcon(FontAwesomeIcons.solidComments, color: Color(0xFF8E8E93), size: 20),
-              onTap: () async {
-                await Intercom.instance.displayMessenger();
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: 32),
+        // TOKI: Intercom support section removed
 
         // Sign Out Section
         _buildSectionContainer(

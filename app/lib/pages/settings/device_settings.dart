@@ -14,8 +14,6 @@ import 'package:omi/pages/home/firmware_update.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/services/devices.dart';
 import 'package:omi/services/services.dart';
-import 'package:omi/utils/analytics/intercom.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/other/temp.dart';
@@ -722,7 +720,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
           GestureDetector(
             onTap: () async {
               if (PlatformService.isIntercomSupported) {
-                await IntercomManager().displayChargingArticle(provider.pairedDevice?.name ?? 'DevKit1');
+                // TOKI: intercom removed
               } else {
                 // Fallback to web URL for desktop platforms
                 final deviceName = provider.pairedDevice?.name ?? 'DevKit1';
@@ -774,7 +772,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 provider.setIsConnected(false);
                 provider.setConnectedDevice(null);
                 provider.updateConnectingStatus(false);
-                MixpanelManager().disconnectFriendClicked();
                 if (context.mounted) {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(

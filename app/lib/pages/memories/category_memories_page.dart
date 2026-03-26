@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:omi/backend/schema/memory.dart';
 import 'package:omi/providers/memories_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'widgets/memory_dialog.dart';
 import 'widgets/memory_edit_sheet.dart';
@@ -41,7 +40,6 @@ class CategoryMemoriesPage extends StatelessWidget {
                 icon: const Icon(Icons.add),
                 onPressed: () {
                   showMemoryDialog(context, provider);
-                  MixpanelManager().memoriesPageCreateMemoryBtn();
                 },
               ),
             ],

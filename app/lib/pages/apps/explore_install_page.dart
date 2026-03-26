@@ -16,7 +16,6 @@ import 'package:omi/pages/apps/widgets/filter_sheet.dart';
 import 'package:omi/pages/apps/widgets/popular_apps_section.dart';
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/providers/home_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/app_localizations_helper.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/debouncer.dart';
@@ -764,7 +763,6 @@ class ExploreInstallPageState extends State<ExploreInstallPage> with AutomaticKe
                                                 final wasSelected = provider.isFilterSelected('My Apps', 'Apps');
                                                 provider.addOrRemoveFilter('My Apps', 'Apps');
                                                 provider.applyFilters();
-                                                MixpanelManager().appsTypeFilter('My Apps', !wasSelected);
                                               },
                                               icon: const FaIcon(
                                                 FontAwesomeIcons.solidUser,
@@ -802,7 +800,6 @@ class ExploreInstallPageState extends State<ExploreInstallPage> with AutomaticKe
                                                 final wasSelected = provider.isFilterSelected('My Apps', 'Apps');
                                                 provider.addOrRemoveFilter('My Apps', 'Apps');
                                                 provider.applyFilters();
-                                                MixpanelManager().appsTypeFilter('My Apps', !wasSelected);
                                               },
                                               icon: const FaIcon(
                                                 FontAwesomeIcons.solidUser,
@@ -834,7 +831,6 @@ class ExploreInstallPageState extends State<ExploreInstallPage> with AutomaticKe
                                                 final wasSelected = provider.isFilterSelected('Installed Apps', 'Apps');
                                                 provider.addOrRemoveFilter('Installed Apps', 'Apps');
                                                 provider.applyFilters();
-                                                MixpanelManager().appsTypeFilter('Installed Apps', !wasSelected);
                                               },
                                               icon: const FaIcon(
                                                 FontAwesomeIcons.download,
@@ -874,7 +870,6 @@ class ExploreInstallPageState extends State<ExploreInstallPage> with AutomaticKe
                                                 final wasSelected = provider.isFilterSelected('Installed Apps', 'Apps');
                                                 provider.addOrRemoveFilter('Installed Apps', 'Apps');
                                                 provider.applyFilters();
-                                                MixpanelManager().appsTypeFilter('Installed Apps', !wasSelected);
                                               },
                                               icon: const FaIcon(
                                                 FontAwesomeIcons.download,

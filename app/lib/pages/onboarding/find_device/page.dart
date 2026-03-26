@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:omi/providers/home_provider.dart';
 import 'package:omi/providers/onboarding_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/widgets/dialog.dart';
 import 'found_devices.dart';
@@ -112,7 +111,6 @@ class _FindDevicesPageState extends State<FindDevicesPage> {
                   } else {
                     widget.goNext();
                   }
-                  MixpanelManager().useWithoutDeviceOnboardingFindDevices();
                 },
                 child: Container(
                   width: double.infinity,

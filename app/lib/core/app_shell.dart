@@ -74,7 +74,6 @@ class _AppShellState extends State<AppShell> {
       if (mounted) {
         var app = await context.read<AppProvider>().getAppFromId(uri.pathSegments[1]);
         if (app != null) {
-          PlatformManager.instance.mixpanel.track('App Opened From DeepLink', properties: {'appId': app.id});
           if (mounted) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppDetailPage(app: app)));
           }
@@ -85,18 +84,15 @@ class _AppShellState extends State<AppShell> {
       }
     } else if (uri.pathSegments.first == 'wrapped') {
       if (mounted) {
-        PlatformManager.instance.mixpanel.track('Wrapped Opened From DeepLink');
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Wrapped2025Page()));
       }
     } else if (uri.pathSegments.first == 'tasks' && uri.pathSegments.length > 1) {
       if (mounted) {
         final token = uri.pathSegments[1];
-        PlatformManager.instance.mixpanel.track('Shared Tasks Opened From DeepLink', properties: {'token': token});
         _handleSharedTasksDeepLink(token);
       }
     } else if (uri.pathSegments.first == 'unlimited') {
       if (mounted) {
-        PlatformManager.instance.mixpanel.track('Plans Opened From DeepLink');
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UsagePage(showUpgradeDialog: true)));
       }
     } else if (uri.host == 'todoist' && uri.pathSegments.isNotEmpty && uri.pathSegments.first == 'callback') {
@@ -360,11 +356,7 @@ class _AppShellState extends State<AppShell> {
       context.read<HomeProvider>().setupUserPrimaryLanguage();
       context.read<UserProvider>().initialize();
       context.read<PeopleProvider>().initialize();
-      try {
-        await PlatformManager.instance.intercom.loginIdentifiedUser(SharedPreferencesUtil().uid);
-      } catch (e) {
-        Logger.debug('Failed to login to Intercom: $e');
-      }
+      // TOKI: intercom login removed
 
       if (!mounted) return;
       context.read<MessageProvider>().setMessagesFromCache();
@@ -375,12 +367,10 @@ class _AppShellState extends State<AppShell> {
 
       NotificationService.instance.saveNotificationToken();
     } else {
-      if (!PlatformManager.instance.isAnalyticsSupported) {
-        await PlatformManager.instance.intercom.loginUnidentifiedUser();
-      }
+      // TOKI: intercom login removed
       if (!mounted) return;
     }
-    PlatformManager.instance.intercom.setUserAttributes();
+    // TOKI: intercom removed
   }
 
   @override

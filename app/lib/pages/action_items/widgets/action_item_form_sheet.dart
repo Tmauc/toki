@@ -11,7 +11,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:omi/backend/http/api/action_items.dart' as action_items_api;
 import 'package:omi/backend/schema/schema.dart';
 import 'package:omi/providers/action_items_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/responsive/responsive_helper.dart';
 import 'package:omi/widgets/calendar_date_picker_sheet.dart';
@@ -109,11 +108,6 @@ class _ActionItemFormSheetState extends State<ActionItemFormSheet> {
 
         // Track action item edit
         if (descriptionChanged || dueDateChanged) {
-          MixpanelManager().actionItemEdited(
-            actionItemId: widget.actionItem!.id,
-            titleChanged: descriptionChanged,
-            dateChanged: dueDateChanged,
-          );
         }
       } catch (e) {
         if (mounted) {
@@ -146,7 +140,6 @@ class _ActionItemFormSheetState extends State<ActionItemFormSheet> {
 
         if (createdItem != null) {
           // Track manually added action item
-          MixpanelManager().actionItemManuallyAdded(actionItemId: createdItem.id, timestamp: DateTime.now());
         } else if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -206,7 +199,6 @@ class _ActionItemFormSheetState extends State<ActionItemFormSheet> {
       final url = result['url'] as String;
       HapticFeedback.lightImpact();
       await Share.share(url);
-      MixpanelManager().track('Action Item Shared', properties: {'actionItemId': widget.actionItem!.id});
     } else {
       ScaffoldMessenger.of(
         context,

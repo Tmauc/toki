@@ -6,7 +6,6 @@ import 'package:gradient_borders/gradient_borders.dart';
 import 'package:omi/backend/http/api/users.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/core/app_shell.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/utils/wal_file_manager.dart';
@@ -33,8 +32,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
     setState(() {
       isDeleteing = true;
     });
-    MixpanelManager().deleteAccountConfirmed();
-    MixpanelManager().deleteUser();
     await deleteAccount();
     await FirebaseAuth.instance.signOut();
     await WalFileManager.clearAll();
@@ -118,7 +115,6 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                 return getDialog(
                                   context,
                                   () {
-                                    MixpanelManager().deleteAccountCancelled();
                                     Navigator.of(context).pop();
                                   },
                                   () {

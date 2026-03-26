@@ -9,7 +9,6 @@ import 'package:omi/pages/capture/connect.dart';
 import 'package:omi/pages/home/device.dart';
 import 'package:omi/providers/device_provider.dart';
 import 'package:omi/providers/home_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/device.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
@@ -32,7 +31,6 @@ class BatteryInfoWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   routeToPage(context, const ConnectedDevice());
-                  MixpanelManager().batteryIndicatorClicked();
                 },
                 child: Container(
                   height: 36,
@@ -123,7 +121,6 @@ class BatteryInfoWidget extends StatelessWidget {
                 onTap: () async {
                   if (SharedPreferencesUtil().btDevice.id.isEmpty) {
                     routeToPage(context, const ConnectDevicePage());
-                    MixpanelManager().connectFriendClicked();
                   } else {
                     await routeToPage(context, const ConnectedDevice());
                   }

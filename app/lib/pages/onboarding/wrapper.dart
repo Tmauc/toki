@@ -24,8 +24,6 @@ import 'package:omi/providers/home_provider.dart';
 import 'package:omi/providers/onboarding_provider.dart';
 import 'package:omi/providers/speech_profile_provider.dart';
 import 'package:omi/services/auth_service.dart';
-import 'package:omi/utils/analytics/intercom.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/other/temp.dart';
 import 'package:omi/widgets/device_widget.dart';
@@ -236,9 +234,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
         onSignIn: () {
           SharedPreferencesUtil().hasOmiDevice = true;
           SharedPreferencesUtil().verifiedPersonaId = null;
-          MixpanelManager().onboardingStepCompleted('Auth');
           context.read<HomeProvider>().setupHasSpeakerProfile();
-          IntercomManager.instance.loginIdentifiedUser(SharedPreferencesUtil().uid);
           if (SharedPreferencesUtil().onboardingCompleted) {
             routeToPage(context, const HomePageWrapper(), replace: true);
           } else {
@@ -249,37 +245,27 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
       NameWidget(
         goNext: () {
           _goNext(); // Go to Primary Language page
-          IntercomManager.instance.updateUser(
-            FirebaseAuth.instance.currentUser!.email,
-            FirebaseAuth.instance.currentUser!.displayName,
-            FirebaseAuth.instance.currentUser!.uid,
-          );
-          MixpanelManager().onboardingStepCompleted('Name');
         },
       ),
       PrimaryLanguageWidget(
         goNext: () {
           _controller!.animateTo(kPermissionsPage); // TOKI: skip FoundOmi — go straight to Permissions
-          MixpanelManager().onboardingStepCompleted('Primary Language');
         },
       ),
       FoundOmiWidget(
         goNext: () {
           _goNext(); // Go to Permissions page
-          MixpanelManager().onboardingStepCompleted('Acquisition Source');
         },
       ),
       PermissionsWidget(
         goNext: () {
           _controller!.animateTo(kCompletePage); // TOKI: skip Review/Speech/KnowledgeGraph — go to Complete
-          MixpanelManager().onboardingStepCompleted('Permissions');
         },
       ),
       UserReviewPage(
         goNext: () {
           // Go directly to Speech Profile (skip device steps - we use phone mic now)
           _controller!.animateTo(kSpeechProfilePage);
-          MixpanelManager().onboardingStepCompleted('User Review');
         },
       ),
       // Placeholder pages - not used in new flow but kept for index consistency
@@ -289,18 +275,15 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
         value: _speechProfileProvider!,
         child: SpeechProfileWidget(
           goNext: () {
-            MixpanelManager().onboardingStepCompleted('Speech Profile');
             _controller!.animateTo(kKnowledgeGraphPage);
           },
           onSkip: () {
-            MixpanelManager().onboardingStepCompleted('Speech Profile Skipped');
             _controller!.animateTo(kKnowledgeGraphPage);
           },
         ),
       ),
       OnboardingKnowledgeGraphStep(
         onContinue: () {
-          MixpanelManager().onboardingStepCompleted('Knowledge Graph');
           _controller!.animateTo(kCompletePage);
         },
       ),
@@ -308,7 +291,6 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> with TickerProvid
         onComplete: () {
           SharedPreferencesUtil().onboardingCompleted = true;
           updateUserOnboardingState(completed: true);
-          MixpanelManager().onboardingCompleted();
           PaintingBinding.instance.imageCache.clear();
           routeToPage(context, const HomePageWrapper(), replace: true);
         },

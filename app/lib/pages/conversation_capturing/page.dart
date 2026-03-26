@@ -15,7 +15,6 @@ import 'package:omi/pages/conversation_detail/widgets/name_speaker_sheet.dart';
 import 'package:omi/providers/capture_provider.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/device_provider.dart';
-import 'package:omi/utils/analytics/mixpanel.dart';
 import 'package:omi/utils/enums.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/platform/platform_service.dart';
@@ -66,7 +65,6 @@ class _ConversationCapturingPageState extends State<ConversationCapturingPage> w
       } else {
         // Phone mic
         await provider.streamRecording();
-        MixpanelManager().phoneMicRecordingStarted();
       }
     } else {
       // Mute - pause recording with interesting haptic
@@ -86,7 +84,6 @@ class _ConversationCapturingPageState extends State<ConversationCapturingPage> w
       } else {
         // Phone mic
         await provider.stopStreamRecording();
-        MixpanelManager().phoneMicRecordingStopped();
       }
     }
   }
