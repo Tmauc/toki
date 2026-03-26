@@ -62,7 +62,6 @@ import 'package:omi/providers/task_integration_provider.dart';
 import 'package:omi/providers/usage_provider.dart';
 import 'package:omi/providers/user_provider.dart';
 import 'package:omi/providers/voice_recorder_provider.dart';
-import 'package:omi/providers/phone_call_provider.dart';
 import 'package:omi/providers/toki_voice_personas_provider.dart';
 import 'package:omi/services/auth_service.dart';
 import 'package:omi/services/notifications.dart';
@@ -343,7 +342,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (context) => FolderProvider()),
         ChangeNotifierProvider(create: (context) => LocaleProvider()),
         ChangeNotifierProvider(create: (context) => VoiceRecorderProvider()),
-        ChangeNotifierProvider(create: (context) => PhoneCallProvider()),
+        // TOKI: PhoneCallProvider removed
         ChangeNotifierProvider(create: (context) => VoicePersonasProvider()),
       ],
       builder: (context, child) {
