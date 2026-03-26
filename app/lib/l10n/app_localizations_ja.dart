@@ -8341,4 +8341,25 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get submitAppQuestion => 'Submit?';
+
+  @override
+  String get usageStatistics => '使用統計';
+
+  @override
+  String get transcriptionTime => '文字起こし時間';
+
+  @override
+  String get wordsTranscribed => '文字起こし単語数';
+
+  @override
+  String get insightsGained => '生成されたインサイト';
+
+  @override
+  String get memoriesCreated => '作成された記憶';
+
+  @override
+  String get hours => '時間';
+
+  @override
+  String get noDataYet => 'まだデータがありません';
 }

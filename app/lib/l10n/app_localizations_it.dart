@@ -8522,4 +8522,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get submitAppQuestion => 'Submit?';
+
+  @override
+  String get usageStatistics => 'Statistiche di utilizzo';
+
+  @override
+  String get transcriptionTime => 'Tempo di trascrizione';
+
+  @override
+  String get wordsTranscribed => 'Parole trascritte';
+
+  @override
+  String get insightsGained => 'Intuizioni generate';
+
+  @override
+  String get memoriesCreated => 'Ricordi creati';
+
+  @override
+  String get hours => 'ore';
+
+  @override
+  String get noDataYet => 'Nessun dato ancora';
 }

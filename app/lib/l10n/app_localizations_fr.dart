@@ -8547,4 +8547,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get submitAppQuestion => 'Submit?';
+
+  @override
+  String get usageStatistics => 'Statistiques d\'utilisation';
+
+  @override
+  String get transcriptionTime => 'Temps de transcription';
+
+  @override
+  String get wordsTranscribed => 'Mots transcrits';
+
+  @override
+  String get insightsGained => 'Idées générées';
+
+  @override
+  String get memoriesCreated => 'Souvenirs créés';
+
+  @override
+  String get hours => 'heures';
+
+  @override
+  String get noDataYet => 'Pas encore de données';
 }

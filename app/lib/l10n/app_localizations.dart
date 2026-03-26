@@ -15766,6 +15766,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit?'**
   String get submitAppQuestion;
+
+  /// No description provided for @usageStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Statistics'**
+  String get usageStatistics;
+
+  /// No description provided for @transcriptionTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcription Time'**
+  String get transcriptionTime;
+
+  /// No description provided for @wordsTranscribed.
+  ///
+  /// In en, this message translates to:
+  /// **'Words Transcribed'**
+  String get wordsTranscribed;
+
+  /// No description provided for @insightsGained.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights Gained'**
+  String get insightsGained;
+
+  /// No description provided for @memoriesCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories Created'**
+  String get memoriesCreated;
+
+  /// No description provided for @hours.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get hours;
+
+  /// No description provided for @noDataYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No data yet'**
+  String get noDataYet;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

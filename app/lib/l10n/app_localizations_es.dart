@@ -8491,4 +8491,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get submitAppQuestion => 'Submit?';
+
+  @override
+  String get usageStatistics => 'Estadísticas de uso';
+
+  @override
+  String get transcriptionTime => 'Tiempo de transcripción';
+
+  @override
+  String get wordsTranscribed => 'Palabras transcritas';
+
+  @override
+  String get insightsGained => 'Ideas generadas';
+
+  @override
+  String get memoriesCreated => 'Recuerdos creados';
+
+  @override
+  String get hours => 'horas';
+
+  @override
+  String get noDataYet => 'Sin datos aún';
 }

@@ -8472,4 +8472,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get submitAppQuestion => 'Submit?';
+
+  @override
+  String get usageStatistics => 'Usage Statistics';
+
+  @override
+  String get transcriptionTime => 'Transcription Time';
+
+  @override
+  String get wordsTranscribed => 'Words Transcribed';
+
+  @override
+  String get insightsGained => 'Insights Gained';
+
+  @override
+  String get memoriesCreated => 'Memories Created';
+
+  @override
+  String get hours => 'hours';
+
+  @override
+  String get noDataYet => 'No data yet';
 }
