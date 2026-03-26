@@ -182,13 +182,7 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
           key: scaffoldKey,
           backgroundColor: Theme.of(context).colorScheme.primary,
           appBar: _buildAppBar(context, provider),
-          endDrawer: _buildChatAppsEndDrawer(context),
-          onEndDrawerChanged: (isOpened) {
-            if (isOpened) {
-              // Unfocus text field when drawer opens
-              textFieldFocusNode.unfocus();
-            }
-          },
+          // TOKI: endDrawer (chat apps selector) removed — marketplace disabled
           body: GestureDetector(
             onTap: () {
               // Hide keyboard when tapping outside textfield
@@ -933,11 +927,7 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
               ),
             ),
       automaticallyImplyLeading: false,
-      title: Consumer<AppProvider>(
-        builder: (context, appProvider, child) {
-          return _buildSelectedAppDisplay(context, appProvider);
-        },
-      ),
+      title: const Text('Toki', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600)),
       centerTitle: true,
       actions: [
         Container(
@@ -947,15 +937,10 @@ class ChatPageState extends State<ChatPage> with AutomaticKeepAliveClientMixin {
           decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3), shape: BoxShape.circle),
           child: IconButton(
             padding: EdgeInsets.zero,
-            icon: const Icon(Icons.extension, color: Colors.white, size: 18),
+            icon: const Icon(Icons.delete_outline, color: Colors.white, size: 18),
             onPressed: () {
               HapticFeedback.mediumImpact();
-              // Dismiss keyboard before opening drawer
-              FocusScope.of(context).unfocus();
-              // Use post-frame callback to ensure scaffold state is ready
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                scaffoldKey.currentState?.openEndDrawer();
-              });
+              _handleAppSelection('clear_chat', context.read<AppProvider>());
             },
           ),
         ),
