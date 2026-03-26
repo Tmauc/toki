@@ -107,7 +107,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerProviderStateMixin {
   ForegroundUtil foregroundUtil = ForegroundUtil();
-  List<Widget> screens = [Container(), const SizedBox(), const SizedBox()]; // TOKI: 3 tabs
+  List<Widget> screens = [Container(), const SizedBox(), const SizedBox(), const SizedBox()]; // TOKI: 4 tabs
 
   final _upgrader = MyUpgrader(debugLogging: false, debugDisplayOnce: false);
   bool scriptsInProgress = false;
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
       ConversationsPage(key: _conversationsPageKey),
       ActionItemsPage(key: _actionItemsPageKey, onAddGoal: _addGoal),
       MemoriesPage(key: _memoriesPageKey),
-      // TOKI: PhoneCallsPage disabled — Twilio not configured
+      const ChatPage(isPivotBottom: true), // TOKI: Chat tab
     ];
     SharedPreferencesUtil().onboardingCompleted = true;
     updateUserOnboardingState(completed: true);
@@ -516,7 +516,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
               resizeToAvoidBottomInset: false,
               appBar: homeProvider.selectedIndex == 5 ? null : _buildAppBar(context),
               body: DefaultTabController(
-                length: 3, // TOKI: Home, Action Items, Memories
+                length: 4, // TOKI: Home, Action Items, Memories, Chat
                 initialIndex: homeProvider.selectedIndex,
                 child: GestureDetector(
                   onTap: () {
@@ -552,31 +552,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, Ticker
                                   }
                                 },
                               ),
-                              // TOKI: Phone calls moved to nav bar tab 3
-                              // Ask Toki button - bottom right
-                              if (home.selectedIndex == 0)
-                                Positioned(
-                                  right: 20,
-                                  bottom: 100,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      HapticFeedback.mediumImpact();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const ChatPage(isPivotBottom: false)),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 56,
-                                      height: 56,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.deepPurple,
-                                      ),
-                                      child: const Icon(FontAwesomeIcons.solidComment, size: 22, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
+                              // TOKI: Chat moved to navbar tab 3
                             ],
                           );
                         },
