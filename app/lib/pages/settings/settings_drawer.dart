@@ -21,7 +21,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:omi/pages/toki/voice_personas_page.dart';
 import 'package:omi/providers/toki_voice_personas_provider.dart';
 import 'device_settings.dart';
-import 'phone_call_settings_page.dart';
 import '../conversations/sync_page.dart';
 
 enum SettingsMode { no_device, omi }
