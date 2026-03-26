@@ -7,7 +7,6 @@ import 'package:omi/services/sockets/transcription_service.dart';
 import 'package:omi/utils/logger.dart';
 import 'package:omi/utils/mutex.dart';
 
-export 'package:omi/services/freemium_transcription_service.dart';
 
 abstract class ISocketService {
   void start();

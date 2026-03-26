@@ -27,7 +27,6 @@ import 'package:omi/pages/conversations/conversations_page.dart';
 import 'package:omi/pages/conversations/sync_page.dart';
 import 'package:omi/pages/conversations/widgets/merge_action_bar.dart';
 import 'package:omi/pages/memories/page.dart';
-import 'package:omi/pages/phone_calls/phone_calls_page.dart';
 import 'package:omi/pages/settings/daily_summary_detail_page.dart';
 import 'package:omi/pages/settings/data_privacy_page.dart';
 import 'package:omi/pages/settings/settings_drawer.dart';
