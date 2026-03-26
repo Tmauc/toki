@@ -30,8 +30,6 @@ from database.redis_db import (
     user_webhook_status_db,
     set_user_preferred_app,
     set_user_data_protection_level,
-    get_generic_cache,
-    set_generic_cache,
 )
 from database.users import (
     get_user_transcription_preferences,
@@ -45,16 +43,8 @@ from typing import Optional
 from models.user_usage import UserUsageResponse, UsagePeriod
 from datetime import datetime, time, timedelta
 
-from models.users import WebhookType, UserSubscriptionResponse, SubscriptionPlan, PlanType, PricingOption
+from models.users import WebhookType
 from utils.apps import get_available_app_by_id
-from utils.subscription import (
-    get_paid_plan_definitions,
-    get_plan_limits,
-    get_plan_features,
-    get_monthly_usage_for_subscription,
-    reconcile_basic_plan_with_stripe,
-)
-# TOKI: stripe removed
 from utils.llm.followup import followup_question_prompt
 from utils.notifications import send_notification, send_training_data_submitted_notification
 from utils.llm.external_integrations import generate_comprehensive_daily_summary
@@ -700,141 +690,6 @@ def get_user_usage_stats_endpoint(
     stats = user_usage_db.get_current_user_usage(uid, period.value)
     return stats
 
-
-@router.get('/v1/users/me/subscription', tags=['v1'], response_model=UserSubscriptionResponse)
-def get_user_subscription_endpoint(uid: str = Depends(auth.get_current_user_uid)):
-    """Gets the user's subscription plan and usage."""
-    marketplace_reviewers = os.getenv('MARKETPLACE_APP_REVIEWERS', '').split(',')
-    if uid in marketplace_reviewers:
-        unlimited_sub = Subscription(
-            plan=PlanType.unlimited,
-            status=SubscriptionStatus.active,
-            limits=PlanLimits(
-                transcription_seconds=None,
-                words_transcribed=None,
-                insights_gained=None,
-                memories_created=None,
-            ),
-        )
-        return UserSubscriptionResponse(
-            subscription=unlimited_sub,
-            transcription_seconds_used=0,
-            transcription_seconds_limit=0,
-            words_transcribed_used=0,
-            words_transcribed_limit=0,
-            insights_gained_used=0,
-            insights_gained_limit=0,
-            memories_created_used=0,
-            memories_created_limit=0,
-            available_plans=[],
-            show_subscription_ui=False,
-        )
-    # First, reconcile any "basic but actually unlimited" inconsistencies against Stripe once.
-    raw_subscription = get_user_subscription(uid)
-    reconcile_basic_plan_with_stripe(uid, raw_subscription)
-
-    # Then re-evaluate using our normal "valid subscription" semantics.
-    subscription = get_user_valid_subscription(uid)
-    if not subscription:
-        # Return default basic plan if no valid subscription
-        subscription = get_default_basic_subscription()
-
-    # Get current price ID from Stripe if subscription exists
-    if subscription.stripe_subscription_id:
-        try:
-            pass  # TOKI: stripe removed
-            stripe_sub_dict = stripe_sub.to_dict()
-            if stripe_sub_dict and stripe_sub_dict.get('items', {}).get('data'):
-                subscription.current_price_id = stripe_sub_dict['items']['data'][0]['price']['id']
-        except Exception as e:
-            logger.error(f"Error retrieving current price ID: {e}")
-
-    # Populate dynamic fields for the response
-    subscription.limits = get_plan_limits(subscription.plan)
-    subscription.features = get_plan_features(subscription.plan)
-
-    # Get current usage
-    usage = get_monthly_usage_for_subscription(uid)
-
-    # Calculate usage metrics
-    transcription_seconds_used = usage.get('transcription_seconds', 0)
-    words_transcribed_used = usage.get('words_transcribed', 0)
-    insights_gained_used = usage.get('insights_gained', 0)
-    memories_created_used = usage.get('memories_created', 0)
-
-    # Get limits from subscription (0 means unlimited)
-    transcription_seconds_limit = subscription.limits.transcription_seconds or 0
-    words_transcribed_limit = subscription.limits.words_transcribed or 0
-    insights_gained_limit = subscription.limits.insights_gained or 0
-    memories_created_limit = subscription.limits.memories_created or 0
-
-    # Build available plans for upgrading
-    available_plans: List[SubscriptionPlan] = []
-    for definition in get_paid_plan_definitions():
-        plan_prices: List[PricingOption] = []
-        monthly_price_id = definition["monthly_price_id"]
-        annual_price_id = definition["annual_price_id"]
-
-        if monthly_price_id:
-            try:
-                price_data = get_generic_cache(f'stripe_price:{monthly_price_id}')
-                if not price_data:
-                    pass  # TOKI: stripe removed
-                    price_data = price.to_dict_recursive()
-                    set_generic_cache(f'stripe_price:{monthly_price_id}', price_data, ttl=3600 * 24)
-
-                plan_prices.append(
-                    PricingOption(
-                        id=price_data['id'],
-                        title="Monthly",
-                        price_string=f"${price_data['unit_amount'] / 100:.2f}/{price_data['recurring']['interval']}",
-                        description="Billed monthly. Cancel anytime.",
-                    )
-                )
-            except Exception as e:
-                logger.error(f"Error retrieving monthly price from Stripe for {definition['plan_id']}: {e}")
-
-        if annual_price_id:
-            try:
-                price_data = get_generic_cache(f'stripe_price:{annual_price_id}')
-                if not price_data:
-                    pass  # TOKI: stripe removed
-                    price_data = price.to_dict_recursive()
-                    set_generic_cache(f'stripe_price:{annual_price_id}', price_data, ttl=3600 * 24)
-
-                plan_prices.append(
-                    PricingOption(
-                        id=price_data['id'],
-                        title="Annual",
-                        price_string=f"${price_data['unit_amount'] / 100:.2f}/{price_data['recurring']['interval']}",
-                        description=definition["annual_description"],
-                    )
-                )
-            except Exception as e:
-                logger.error(f"Error retrieving annual price from Stripe for {definition['plan_id']}: {e}")
-
-        if plan_prices:
-            available_plans.append(
-                SubscriptionPlan(
-                    id=definition["plan_id"],
-                    title=definition["title"],
-                    features=get_plan_features(definition["plan_type"]),
-                    prices=plan_prices,
-                )
-            )
-
-    return UserSubscriptionResponse(
-        subscription=subscription,
-        transcription_seconds_used=transcription_seconds_used,
-        transcription_seconds_limit=transcription_seconds_limit,
-        words_transcribed_used=words_transcribed_used,
-        words_transcribed_limit=words_transcribed_limit,
-        insights_gained_used=insights_gained_used,
-        insights_gained_limit=insights_gained_limit,
-        memories_created_used=memories_created_used,
-        memories_created_limit=memories_created_limit,
-        available_plans=available_plans,
-    )
 
 
 # **************************************
