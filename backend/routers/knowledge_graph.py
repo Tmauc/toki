@@ -60,6 +60,23 @@ def rebuild_graph(background_tasks: BackgroundTasks, uid: str = Depends(auth.get
     return RebuildResponse(status="rebuilding", nodes_count=0, edges_count=0)
 
 
+@router.delete('/v1/knowledge-graph/nodes/{node_id}', tags=['knowledge_graph'])
+def delete_knowledge_node(node_id: str, uid: str = Depends(auth.get_current_user_uid)):
+    """Delete a node, its connected edges, and any orphaned neighbors."""
+    node = kg_db.get_knowledge_node(uid, node_id)
+    if not node:
+        raise HTTPException(status_code=404, detail="Node not found")
+    orphan_ids = kg_db.delete_knowledge_node(uid, node_id)
+    return {"status": "deleted", "node_id": node_id, "orphaned_nodes_deleted": orphan_ids}
+
+
+@router.delete('/v1/knowledge-graph/edges/{edge_id}', tags=['knowledge_graph'])
+def delete_knowledge_edge(edge_id: str, uid: str = Depends(auth.get_current_user_uid)):
+    """Delete an edge and any orphaned nodes."""
+    orphan_ids = kg_db.delete_knowledge_edge(uid, edge_id)
+    return {"status": "deleted", "edge_id": edge_id, "orphaned_nodes_deleted": orphan_ids}
+
+
 @router.delete('/v1/knowledge-graph', tags=['knowledge_graph'])
 def delete_knowledge_graph(uid: str = Depends(auth.get_current_user_uid)):
     kg_db.delete_knowledge_graph(uid)
