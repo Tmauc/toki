@@ -33,6 +33,24 @@ class KnowledgeGraphApi {
     }
   }
 
+  static Future<Map<String, dynamic>> deleteNode(String nodeId) async {
+    final response = await makeApiCall(url: '$_baseUrl/nodes/$nodeId', headers: {}, body: '', method: 'DELETE');
+    if (response != null && response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to delete node: ${response?.body}');
+    }
+  }
+
+  static Future<Map<String, dynamic>> deleteEdge(String edgeId) async {
+    final response = await makeApiCall(url: '$_baseUrl/edges/$edgeId', headers: {}, body: '', method: 'DELETE');
+    if (response != null && response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to delete edge: ${response?.body}');
+    }
+  }
+
   static Future<void> deleteKnowledgeGraph() async {
     final response = await makeApiCall(url: _baseUrl, headers: {}, body: '{}', method: 'DELETE');
 
