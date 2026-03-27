@@ -35,14 +35,6 @@ AUDIO_SAMPLE_RATE = 16000
 from utils import encryption
 from utils.stt.pre_recorded import deepgram_prerecorded, postprocess_words
 from utils.stt.vad import vad_is_empty
-from utils.fair_use import (
-    record_speech_ms,
-    get_rolling_speech_ms,
-    check_soft_caps,
-    is_hard_restricted,
-    trigger_classifier_if_needed,
-    FAIR_USE_ENABLED,
-)
 from utils.subscription import has_transcription_credits
 
 router = APIRouter()
@@ -721,10 +713,6 @@ def _cleanup_files(file_paths):
 
 @router.post("/v1/sync-local-files")
 async def sync_local_files(files: List[UploadFile] = File(...), uid: str = Depends(auth.get_current_user_uid)):
-    # Pre-check gates (#5854)
-    if is_hard_restricted(uid):
-        raise HTTPException(status_code=429, detail="Account temporarily restricted due to fair-use policy")
-
     # Check credits: if exhausted, still process but lock the conversation so user can pay to unlock
     should_lock = not has_transcription_credits(uid)
 
@@ -774,14 +762,6 @@ async def sync_local_files(files: List[UploadFile] = File(...), uid: str = Depen
         logger.info(
             f'sync_local_files len(segmented_paths) {len(segmented_paths)} speech_seconds={int(total_speech_seconds)}'
         )
-
-        if FAIR_USE_ENABLED and total_speech_ms > 0:
-            record_speech_ms(uid, total_speech_ms, source='sync')
-            speech_totals = get_rolling_speech_ms(uid)
-            triggered_caps = check_soft_caps(uid, speech_totals=speech_totals)
-            if triggered_caps:
-                logger.info(f'sync: soft caps triggered for {uid}: {triggered_caps}')
-                asyncio.create_task(trigger_classifier_if_needed(uid, triggered_caps))
 
         is_locked = should_lock
 

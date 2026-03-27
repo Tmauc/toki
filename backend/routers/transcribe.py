@@ -88,18 +88,6 @@ from utils.stt.streaming import (
     send_initial_file_path,
 )
 from utils.stt.vad_gate import VADStreamingGate, VAD_GATE_MODE, is_gate_enabled
-from utils.fair_use import (
-    FAIR_USE_ENABLED,
-    FAIR_USE_CHECK_INTERVAL_SECONDS,
-    FAIR_USE_RESTRICT_DAILY_DG_MS,
-    record_speech_ms,
-    get_rolling_speech_ms,
-    check_soft_caps,
-    trigger_classifier_if_needed,
-    get_enforcement_stage,
-    is_dg_budget_exhausted,
-    record_dg_usage_ms,
-)
 from utils.subscription import has_transcription_credits, get_remaining_transcription_seconds
 from utils.translation import TranslationService
 from utils.translation_cache import TranscriptSegmentLanguageCache, should_persist_translation
@@ -419,45 +407,17 @@ async def _stream_handler(
     remaining_seconds_cache_ts: float = 0.0
     remaining_seconds_cache_initialized = False
 
-    # Fair-use state (#5746)
-    fair_use_last_check_ts: float = 0.0
-    # DG budget gate for restricted users — checked at session start + per cap-check interval
-    fair_use_dg_budget_exhausted: bool = False
-    # DG usage accumulator: batch Redis writes every 60s instead of per-chunk (#5854)
-    dg_usage_ms_pending: int = 0
-
-    # Session-start DG budget check: prevent reconnect bypass (#5748 reviewer fix)
-    if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-        try:
-            _init_stage = get_enforcement_stage(uid)
-            logger.info(f'fair_use: session start uid={uid} session={session_id} stage={_init_stage}')
-            if _init_stage == 'restrict':
-                fair_use_dg_budget_exhausted = is_dg_budget_exhausted(uid)
-                if fair_use_dg_budget_exhausted:
-                    logger.info(f'fair_use: DG budget already exhausted at session start for {uid}')
-        except Exception as e:
-            logger.error(f'fair_use: session-start budget check error for {uid}: {e}')
-    elif FAIR_USE_ENABLED:
-        logger.info(f'fair_use: session start uid={uid} session={session_id} (no DG budget cap configured)')
 
     async def _record_usage_periodically():
         nonlocal websocket_active, last_usage_record_timestamp, words_transcribed_since_last_record
         nonlocal last_audio_received_time, last_transcript_time, user_has_credits
         nonlocal freemium_threshold_sent
         nonlocal remaining_seconds_cache, remaining_seconds_cache_ts, remaining_seconds_cache_initialized
-        nonlocal fair_use_last_check_ts, fair_use_dg_budget_exhausted
-        nonlocal dg_usage_ms_pending
 
         while websocket_active:
             await asyncio.sleep(60)
             if not websocket_active:
                 break
-
-            # Flush batched DG usage to Redis (#5854 — was per-chunk, now every 60s)
-            # Placed before use_custom_stt guard so all STT paths get flushed
-            if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0 and dg_usage_ms_pending > 0:
-                record_dg_usage_ms(uid, dg_usage_ms_pending)
-                dg_usage_ms_pending = 0
 
             if use_custom_stt:
                 continue
@@ -469,10 +429,6 @@ async def _stream_handler(
             if vad_gate is not None:
                 speech_ms = vad_gate.consume_speech_ms_delta()
                 speech_seconds_delta = speech_ms // 1000
-                # Record to Redis for rolling window tracking
-                if FAIR_USE_ENABLED and speech_ms > 0:
-                    record_speech_ms(uid, speech_ms)
-                    logger.debug(f'fair_use: recorded {speech_ms}ms speech uid={uid} session={session_id}')
 
             if last_usage_record_timestamp:
                 current_time = time.time()
@@ -489,43 +445,6 @@ async def _stream_handler(
                         speech_seconds=speech_seconds_delta,
                     )
                 last_usage_record_timestamp = current_time
-
-            # Fair-use soft cap check (every FAIR_USE_CHECK_INTERVAL_SECONDS) (#5746)
-            # Track + detect + classify + set stage + notify. No service degradation.
-            now_ts = time.time()
-            if FAIR_USE_ENABLED and now_ts - fair_use_last_check_ts >= FAIR_USE_CHECK_INTERVAL_SECONDS:
-                fair_use_last_check_ts = now_ts
-                try:
-                    speech_totals = get_rolling_speech_ms(uid)
-                    triggered_caps = check_soft_caps(uid, speech_totals=speech_totals)
-                    if triggered_caps:
-                        logger.info(
-                            f'fair_use: soft cap triggered for {uid} session={session_id} caps={triggered_caps}'
-                        )
-                        asyncio.create_task(trigger_classifier_if_needed(uid, triggered_caps, session_id))
-                    else:
-                        logger.info(
-                            f'fair_use: cap check ok uid={uid} session={session_id}'
-                            f' daily={speech_totals["daily_ms"]}ms'
-                            f' 3day={speech_totals["three_day_ms"]}ms'
-                            f' weekly={speech_totals["weekly_ms"]}ms'
-                        )
-                except Exception as e:
-                    logger.error(f'fair_use: cap check error for {uid}: {e}')
-
-                # DG budget gate: check if restricted user's daily DG budget is exhausted
-                if FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-                    try:
-                        stage = get_enforcement_stage(uid)
-                        if stage == 'restrict':
-                            was_exhausted = fair_use_dg_budget_exhausted
-                            fair_use_dg_budget_exhausted = is_dg_budget_exhausted(uid)
-                            if fair_use_dg_budget_exhausted and not was_exhausted:
-                                logger.info(f'fair_use: DG budget exhausted for {uid} session={session_id}')
-                        else:
-                            fair_use_dg_budget_exhausted = False
-                    except Exception as e:
-                        logger.error(f'fair_use: DG budget check error for {uid}: {e}')
 
             # Freemium: Check remaining credits with local cache (#5439)
             # Refresh from Firestore only every CREDITS_REFRESH_SECONDS; decrement locally between refreshes
@@ -2489,7 +2408,7 @@ async def _stream_handler(
     async def receive_data(dg_socket, dg_profile_socket, soniox_sock, soniox_profile_sock, speechmatics_sock):
         nonlocal websocket_active, websocket_close_code, last_audio_received_time, last_activity_time, current_conversation_id
         nonlocal realtime_photo_buffers, speaker_to_person_map, first_audio_byte_timestamp, last_usage_record_timestamp
-        nonlocal soniox_profile_socket, deepgram_profile_socket, audio_ring_buffer, dg_usage_ms_pending
+        nonlocal soniox_profile_socket, deepgram_profile_socket, audio_ring_buffer
         timer_start = time.time()
         last_audio_received_time = timer_start
         last_activity_time = timer_start
@@ -2499,7 +2418,7 @@ async def _stream_handler(
         stt_buffer_flush_size = int(sample_rate * 2 * 0.03)  # 30ms at 16-bit mono (e.g., 6400 bytes at 16kHz)
 
         async def flush_stt_buffer(force: bool = False):
-            nonlocal stt_audio_buffer, soniox_profile_socket, deepgram_profile_socket, dg_usage_ms_pending, dg_socket
+            nonlocal stt_audio_buffer, soniox_profile_socket, deepgram_profile_socket, dg_socket
 
             if not stt_audio_buffer:
                 return
@@ -2520,15 +2439,7 @@ async def _stream_handler(
 
             if dg_socket is not None:
                 if profile_complete or not deepgram_profile_socket:
-                    # DG budget gate: skip sending if restricted user's daily budget is exhausted (#5746)
-                    if fair_use_dg_budget_exhausted:
-                        pass  # Audio not forwarded to DG — budget exhausted
-                    else:
-                        dg_socket.send(chunk)
-                        # Accumulate DG usage locally, flushed every 60s (#5854)
-                        if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-                            chunk_ms = len(chunk) * 1000 // (sample_rate * 2)  # 16-bit mono
-                            dg_usage_ms_pending += chunk_ms
+                    dg_socket.send(chunk)
                     if deepgram_profile_socket:
                         logger.info(f'Scheduling delayed close of deepgram_profile_socket {uid} {session_id}')
                         socket_to_close = deepgram_profile_socket
@@ -2555,13 +2466,9 @@ async def _stream_handler(
                 # Main socket dead but profile socket still alive — keep routing (#5870)
                 deepgram_profile_socket.send(chunk)
 
-            if soniox_sock is not None and not fair_use_dg_budget_exhausted:
+            if soniox_sock is not None:
                 if profile_complete or not soniox_profile_socket:
                     await soniox_sock.send(chunk)
-                    # Accumulate DG usage locally, flushed every 60s (#5854)
-                    if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-                        chunk_ms = len(chunk) * 1000 // (sample_rate * 2)
-                        dg_usage_ms_pending += chunk_ms
                     if soniox_profile_socket:
                         logger.info(f'Scheduling delayed close of soniox_profile_socket {uid} {session_id}')
                         socket_to_close = soniox_profile_socket
@@ -2576,12 +2483,8 @@ async def _stream_handler(
                 else:
                     await soniox_profile_socket.send(chunk)
 
-            if speechmatics_sock is not None and not fair_use_dg_budget_exhausted:
+            if speechmatics_sock is not None:
                 await speechmatics_sock.send(chunk)
-                # Accumulate DG usage locally, flushed every 60s (#5854)
-                if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-                    chunk_ms = len(chunk) * 1000 // (sample_rate * 2)
-                    dg_usage_ms_pending += chunk_ms
 
         try:
             while websocket_active:
@@ -2633,17 +2536,13 @@ async def _stream_handler(
                         # Resample to TARGET_SAMPLE_RATE for STT
                         pcm_16k = resample_pcm(bytes(audio_data), sample_rate, TARGET_SAMPLE_RATE)
 
-                        # Send to per-channel STT (budget-gated for restricted users)
-                        if stt_sockets_multi[ch_idx] and not fair_use_dg_budget_exhausted:
+                        # Send to per-channel STT
+                        if stt_sockets_multi[ch_idx]:
                             try:
                                 if stt_service == STTService.deepgram:
                                     stt_sockets_multi[ch_idx].send(pcm_16k)
                                 else:
                                     await stt_sockets_multi[ch_idx].send(pcm_16k)
-                                # Accumulate DG usage locally, flushed every 60s (#5854)
-                                if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0:
-                                    mc_chunk_ms = len(pcm_16k) * 1000 // (TARGET_SAMPLE_RATE * 2)
-                                    dg_usage_ms_pending += mc_chunk_ms
                             except Exception as e:
                                 logger.error(f"[MC-STT] ch={ch_idx} send error: {e} {uid} {session_id}")
 
@@ -2887,21 +2786,10 @@ async def _stream_handler(
             transcription_seconds = int(time.time() - last_usage_record_timestamp)
             words_to_record = words_transcribed_since_last_record
 
-            # Flush any pending speech_ms delta to Redis (#5746 reviewer fix)
-            # Prevents short-session bypass: users reconnecting every <60s
-            # would never trigger the periodic flush in the usage loop.
             speech_seconds_delta = 0
             if vad_gate is not None:
                 speech_ms = vad_gate.consume_speech_ms_delta()
                 speech_seconds_delta = speech_ms // 1000
-                if FAIR_USE_ENABLED and speech_ms > 0:
-                    record_speech_ms(uid, speech_ms)
-                    logger.debug(f'fair_use: session end flush {speech_ms}ms speech uid={uid} session={session_id}')
-
-            # Flush pending DG usage accumulator (#5854)
-            if FAIR_USE_ENABLED and FAIR_USE_RESTRICT_DAILY_DG_MS > 0 and dg_usage_ms_pending > 0:
-                record_dg_usage_ms(uid, dg_usage_ms_pending)
-                dg_usage_ms_pending = 0
 
             if transcription_seconds > 0 or words_to_record > 0 or speech_seconds_delta > 0:
                 record_usage(
