@@ -30,102 +30,70 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
   final List<bool> _isMetricVisible = [true, true, true, true];
 
   Future<void> _shareUsage() async {
-    final l10n = context.l10n;
-    final provider = context.read<UsageProvider>();
-    final localeName = l10n.localeName;
+    try {
+      final l10n = context.l10n;
+      final provider = context.read<UsageProvider>();
+      final localeName = l10n.localeName;
 
-    final RenderRepaintBoundary boundary =
-        _screenshotKeys[_tabController.index].currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      final keyContext = _screenshotKeys[_tabController.index].currentContext;
+      if (keyContext == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No data to share yet')));
+        }
+        return;
+      }
 
-    final ByteData logoData = await rootBundle.load('assets/images/herologo.png');
-    final ui.Codec codec = await ui.instantiateImageCodec(logoData.buffer.asUint8List());
-    final ui.FrameInfo fi = await codec.getNextFrame();
-    final ui.Image logoImage = fi.image;
+      final boundary = keyContext.findRenderObject() as RenderRepaintBoundary;
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
 
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder);
-    canvas.drawImage(image, Offset.zero, Paint());
+      final tempDir = await getTemporaryDirectory();
+      final file = await File('${tempDir.path}/toki_usage.png').create();
+      await file.writeAsBytes(byteData.buffer.asUint8List());
 
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: 'Toki',
-        style: TextStyle(
-          color: Colors.white.withValues(alpha: 0.8),
-          fontSize: 14 * 3.0,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      textDirection: ui.TextDirection.ltr,
-    );
-    textPainter.layout();
+      final period = _getPeriodForIndex(_tabController.index);
+      UsageStats? stats;
+      String periodTitle = l10n.today;
+      switch (period) {
+        case 'today':
+          stats = provider.todayUsage;
+          periodTitle = l10n.today;
+          break;
+        case 'monthly':
+          stats = provider.monthlyUsage;
+          periodTitle = l10n.thisMonth;
+          break;
+        case 'yearly':
+          stats = provider.yearlyUsage;
+          periodTitle = l10n.thisYear;
+          break;
+        case 'all_time':
+          stats = provider.allTimeUsage;
+          periodTitle = l10n.allTime;
+          break;
+      }
 
-    const double logoHeight = 20 * 3.0;
-    final double logoWidth = (logoImage.width / logoImage.height) * logoHeight;
-    const double padding = 4 * 3.0;
-    final double totalWatermarkWidth = logoWidth + padding + textPainter.width;
-    final double totalWatermarkHeight = logoHeight > textPainter.height ? logoHeight : textPainter.height;
+      final numberFormatter = NumberFormat.decimalPattern(localeName);
 
-    final double xPos = image.width - totalWatermarkWidth - (16 * 3.0);
-    final double yPos = image.height - totalWatermarkHeight - (16 * 3.0);
+      String shareText = 'Toki — $periodTitle';
+      if (stats != null) {
+        final transcriptionMinutes = (stats.transcriptionSeconds / 60).round();
+        final List<String> funStats = [];
+        if (transcriptionMinutes > 0) funStats.add('${numberFormatter.format(transcriptionMinutes)} min listened');
+        if (stats.wordsTranscribed > 0) funStats.add('${numberFormatter.format(stats.wordsTranscribed)} words');
+        if (stats.insightsGained > 0) funStats.add('${numberFormatter.format(stats.insightsGained)} insights');
+        if (stats.memoriesCreated > 0) funStats.add('${numberFormatter.format(stats.memoriesCreated)} memories');
+        if (funStats.isNotEmpty) shareText = '$shareText\n${funStats.join(' · ')}';
+      }
 
-    final logoRect = Rect.fromLTWH(xPos, yPos + (totalWatermarkHeight - logoHeight) / 2, logoWidth, logoHeight);
-    canvas.drawImageRect(
-      logoImage,
-      Rect.fromLTWH(0, 0, logoImage.width.toDouble(), logoImage.height.toDouble()),
-      logoRect,
-      Paint(),
-    );
-
-    textPainter.paint(
-      canvas,
-      Offset(xPos + logoWidth + padding, yPos + (totalWatermarkHeight - textPainter.height) / 2),
-    );
-
-    final watermarkedImage = await recorder.endRecording().toImage(image.width, image.height);
-    final ByteData? byteData = await watermarkedImage.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-    final tempDir = await getTemporaryDirectory();
-    final file = await File('${tempDir.path}/toki_usage.png').create();
-    await file.writeAsBytes(pngBytes);
-
-    final period = _getPeriodForIndex(_tabController.index);
-    UsageStats? stats;
-    String periodTitle = l10n.today;
-    switch (period) {
-      case 'today':
-        stats = provider.todayUsage;
-        periodTitle = l10n.today;
-        break;
-      case 'monthly':
-        stats = provider.monthlyUsage;
-        periodTitle = l10n.thisMonth;
-        break;
-      case 'yearly':
-        stats = provider.yearlyUsage;
-        periodTitle = l10n.thisYear;
-        break;
-      case 'all_time':
-        stats = provider.allTimeUsage;
-        periodTitle = l10n.allTime;
-        break;
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: shareText));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Share failed: $e'), backgroundColor: Colors.red));
+      }
     }
-
-    final numberFormatter = NumberFormat.decimalPattern(localeName);
-
-    String shareText = 'Toki — $periodTitle';
-    if (stats != null) {
-      final transcriptionMinutes = (stats.transcriptionSeconds / 60).round();
-      final List<String> funStats = [];
-      if (transcriptionMinutes > 0) funStats.add('${numberFormatter.format(transcriptionMinutes)} min listened');
-      if (stats.wordsTranscribed > 0) funStats.add('${numberFormatter.format(stats.wordsTranscribed)} words');
-      if (stats.insightsGained > 0) funStats.add('${numberFormatter.format(stats.insightsGained)} insights');
-      if (stats.memoriesCreated > 0) funStats.add('${numberFormatter.format(stats.memoriesCreated)} memories');
-      if (funStats.isNotEmpty) shareText = '$shareText\n${funStats.join(' · ')}';
-    }
-
-    await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: shareText));
   }
 
   String _getPeriodForIndex(int index) {

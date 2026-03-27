@@ -39,9 +39,9 @@ class GraphNode3D {
     required this.baseColor,
     required v.Vector3 initialPosition,
     this.isFixed = false,
-  }) : position = initialPosition,
-       velocity = v.Vector3.zero(),
-       force = v.Vector3.zero();
+  })  : position = initialPosition,
+        velocity = v.Vector3.zero(),
+        force = v.Vector3.zero();
 }
 
 class GraphEdge3D {
@@ -561,6 +561,10 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
       await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: context.l10n.checkOutMyMemoryGraph));
     } catch (e) {
       Logger.debug('Error sharing graph: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Share failed: $e'), backgroundColor: Colors.red));
+      }
     }
   }
 
