@@ -561,6 +561,11 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
       await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: context.l10n.checkOutMyMemoryGraph));
     } catch (e) {
       Logger.debug('Error sharing graph: $e');
+      // Fallback: share text only
+      try {
+        await SharePlus.instance.share(ShareParams(text: context.l10n.checkOutMyMemoryGraph));
+        return;
+      } catch (_) {}
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Share failed: $e'), backgroundColor: Colors.red));

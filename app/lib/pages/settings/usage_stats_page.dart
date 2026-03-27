@@ -87,8 +87,17 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
         if (funStats.isNotEmpty) shareText = '$shareText\n${funStats.join(' · ')}';
       }
 
-      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)], text: shareText));
+      await SharePlus.instance.share(ShareParams(
+        files: [XFile(file.path)],
+        text: shareText,
+        subject: 'Toki — $periodTitle',
+      ));
     } catch (e) {
+      // Fallback: share text only if file share fails
+      try {
+        await SharePlus.instance.share(ShareParams(text: shareText));
+        return;
+      } catch (_) {}
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Share failed: $e'), backgroundColor: Colors.red));
