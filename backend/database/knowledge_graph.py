@@ -221,6 +221,82 @@ def get_knowledge_graph(uid: str) -> Dict[str, Any]:
     }
 
 
+def delete_knowledge_node(uid: str, node_id: str) -> List[str]:
+    """Delete a node and all its connected edges. Returns IDs of orphaned nodes that were also deleted."""
+    user_ref = db.collection(users_collection).document(uid)
+
+    # Find all edges connected to this node
+    edges = get_knowledge_edges(uid)
+    connected_edge_ids = []
+    neighbor_ids = set()
+    for edge in edges:
+        if edge.get('source_id') == node_id or edge.get('target_id') == node_id:
+            connected_edge_ids.append(edge['id'])
+            if edge.get('source_id') != node_id:
+                neighbor_ids.add(edge['source_id'])
+            if edge.get('target_id') != node_id:
+                neighbor_ids.add(edge['target_id'])
+
+    # Delete the node
+    user_ref.collection(knowledge_nodes_collection).document(node_id).delete()
+
+    # Delete connected edges
+    edges_ref = user_ref.collection(knowledge_edges_collection)
+    for edge_id in connected_edge_ids:
+        edges_ref.document(edge_id).delete()
+
+    # Check if any neighbor became orphan (no remaining edges)
+    remaining_edges = get_knowledge_edges(uid)
+    connected_node_ids = set()
+    for edge in remaining_edges:
+        connected_node_ids.add(edge.get('source_id'))
+        connected_node_ids.add(edge.get('target_id'))
+
+    orphan_ids = []
+    nodes_ref = user_ref.collection(knowledge_nodes_collection)
+    for neighbor_id in neighbor_ids:
+        if neighbor_id not in connected_node_ids:
+            # This neighbor has no remaining edges — it's orphaned
+            nodes_ref.document(neighbor_id).delete()
+            orphan_ids.append(neighbor_id)
+
+    return orphan_ids
+
+
+def delete_knowledge_edge(uid: str, edge_id: str) -> List[str]:
+    """Delete an edge. Returns IDs of orphaned nodes that were also deleted."""
+    user_ref = db.collection(users_collection).document(uid)
+    edges_ref = user_ref.collection(knowledge_edges_collection)
+
+    # Get edge info before deleting
+    edge_doc = edges_ref.document(edge_id).get()
+    if not edge_doc.exists:
+        return []
+
+    edge_data = edge_doc.to_dict()
+    source_id = edge_data.get('source_id')
+    target_id = edge_data.get('target_id')
+
+    # Delete the edge
+    edges_ref.document(edge_id).delete()
+
+    # Check if source or target became orphan
+    remaining_edges = get_knowledge_edges(uid)
+    connected_node_ids = set()
+    for edge in remaining_edges:
+        connected_node_ids.add(edge.get('source_id'))
+        connected_node_ids.add(edge.get('target_id'))
+
+    orphan_ids = []
+    nodes_ref = user_ref.collection(knowledge_nodes_collection)
+    for nid in [source_id, target_id]:
+        if nid and nid not in connected_node_ids:
+            nodes_ref.document(nid).delete()
+            orphan_ids.append(nid)
+
+    return orphan_ids
+
+
 def delete_knowledge_graph(uid: str) -> None:
     user_ref = db.collection(users_collection).document(uid)
 
