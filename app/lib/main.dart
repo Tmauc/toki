@@ -35,7 +35,6 @@ import 'package:omi/firebase_options_prod.dart' as prod;
 import 'package:omi/flavors.dart';
 import 'package:omi/l10n/app_localizations.dart';
 import 'package:omi/pages/conversation_detail/conversation_detail_provider.dart';
-import 'package:omi/pages/payments/payment_method_provider.dart';
 import 'package:omi/pages/persona/persona_provider.dart';
 import 'package:omi/providers/action_items_provider.dart';
 import 'package:omi/providers/app_provider.dart';
@@ -323,8 +322,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         ChangeNotifierProvider(create: (context) => DeveloperModeProvider()..initialize()),
         ChangeNotifierProvider(create: (context) => McpProvider()),
-        // TOKI: AddAppProvider and AiAppGeneratorProvider removed — marketplace disabled
-        // TOKI: PaymentMethodProvider removed — monetization disabled
         ChangeNotifierProvider(create: (context) => PersonaProvider()),
         ChangeNotifierProxyProvider<ConnectivityProvider, MemoriesProvider>(
           create: (context) => MemoriesProvider(),
