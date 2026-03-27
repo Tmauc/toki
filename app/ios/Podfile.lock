@@ -199,14 +199,8 @@ PODS:
   - GTMSessionFetcher/Core (3.5.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - in_app_review (2.0.0):
-    - Flutter
   - integration_test (0.0.1):
     - Flutter
-  - Intercom (19.4.1)
-  - intercom_flutter (9.0.0):
-    - Flutter
-    - Intercom (= 19.4.1)
   - IosAwnCore (0.11.0)
   - iOSDFULibrary (4.15.3):
     - ZIPFoundation (= 0.9.19)
@@ -221,12 +215,6 @@ PODS:
     - Flutter
     - iOSMcuManagerLibrary (= 1.6)
     - SwiftProtobuf
-  - Mixpanel-swift (5.1.0):
-    - Mixpanel-swift/Complete (= 5.1.0)
-  - Mixpanel-swift/Complete (5.1.0)
-  - mixpanel_flutter (2.4.4):
-    - Flutter
-    - Mixpanel-swift (= 5.1.0)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
@@ -305,13 +293,10 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/darwin`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - mcumgr_flutter (from `.symlinks/plugins/mcumgr_flutter/ios`)
-  - mixpanel_flutter (from `.symlinks/plugins/mixpanel_flutter/ios`)
   - nordic_dfu (from `.symlinks/plugins/nordic_dfu/ios`)
   - opus_flutter_ios (from `.symlinks/plugins/opus_flutter_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -351,11 +336,9 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
-    - Intercom
     - IosAwnCore
     - iOSDFULibrary
     - iOSMcuManagerLibrary
-    - Mixpanel-swift
     - nanopb
     - PromisesObjC
     - PromisesSwift
@@ -418,20 +401,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  in_app_review:
-    :path: ".symlinks/plugins/in_app_review/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  intercom_flutter:
-    :path: ".symlinks/plugins/intercom_flutter/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/darwin"
   map_launcher:
     :path: ".symlinks/plugins/map_launcher/ios"
   mcumgr_flutter:
     :path: ".symlinks/plugins/mcumgr_flutter/ios"
-  mixpanel_flutter:
-    :path: ".symlinks/plugins/mixpanel_flutter/ios"
   nordic_dfu:
     :path: ".symlinks/plugins/nordic_dfu/ios"
   opus_flutter_ios:
@@ -508,18 +485,13 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   image_picker_ios: 4f2f91b01abdb52842a8e277617df877e40f905b
-  in_app_review: 436034b18594851a7328d7f1c2ed5ec235b79cfc
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  Intercom: aca703f001cf9470b1f13b72cb8cc969a09bafca
-  intercom_flutter: ad012b926224d3ef6c096304e708b4905be97a3a
   IosAwnCore: 32019505f4a4909fa9079ee401b2c82aeeab78a8
   iOSDFULibrary: 198c36ebe5a31bf2ca04ee8fb40837176a423e85
   iOSMcuManagerLibrary: 4102a4595be1c69e5286d7f1520a733c82c30b0a
   just_audio: a42c63806f16995daf5b219ae1d679deb76e6a79
   map_launcher: 5fde49ac9a52672bf99da746599f507b4490d7b5
   mcumgr_flutter: 097e59bec5917b527ba6d095da57bdaed2de1fa2
-  Mixpanel-swift: 7b26468fc0e2e521104e51d65c4bbf7cab8162f8
-  mixpanel_flutter: c2bb8345c90bef15512a1b812ec800b52f8614b6
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   nordic_dfu: 963e2e4e6afb04e515ff43c546e6f8abf3e04ed5
   opus_flutter_ios: 0c103338d4f4316034e082857749a3514b9540d3
