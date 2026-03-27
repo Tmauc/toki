@@ -153,19 +153,7 @@ Future _init() async {
 
   await SharedPreferencesUtil.init();
 
-  // TestFlight environment detection — must be after SharedPreferencesUtil.init()
-  if (F.env == Environment.prod) {
-    final isTestFlight = await EnvironmentDetector.isTestFlight();
-    if (isTestFlight) {
-      Env.isTestFlight = true;
-      if (SharedPreferencesUtil().testFlightUseStagingApi) {
-        Env.overrideApiBaseUrl(Env.stagingApiUrl);
-        debugPrint('TestFlight detected: using staging backend (${Env.stagingApiUrl})');
-      } else {
-        debugPrint('TestFlight detected: user chose production backend');
-      }
-    }
-  }
+  // TOKI: TestFlight/staging detection disabled — we use our own backend
 
   // DEBUG: Log Firebase Auth state before getIdToken
   print('DEBUG main: Before getIdToken - currentUser=${FirebaseAuth.instance.currentUser?.uid}');
