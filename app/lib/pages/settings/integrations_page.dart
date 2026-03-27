@@ -8,7 +8,6 @@ import 'package:omi/services/apple_health_service.dart';
 import 'package:omi/services/google_calendar_service.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
-import 'package:omi/utils/other/temp.dart';
 
 enum IntegrationApp { appleHealth, googleCalendar, gmail }
 

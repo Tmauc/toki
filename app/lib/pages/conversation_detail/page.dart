@@ -39,7 +39,6 @@ import 'widgets/name_speaker_sheet.dart';
 import 'widgets/share_to_contacts_sheet.dart';
 
 import 'package:omi/backend/http/api/toki_voice_personas.dart' as toki_api;
-import 'package:omi/backend/schema/toki_voice_persona.dart';
 import 'package:omi/pages/toki/name_persona_page.dart';
 import 'package:omi/pages/toki/voice_personas_page.dart';
 import 'package:omi/providers/toki_voice_personas_provider.dart';

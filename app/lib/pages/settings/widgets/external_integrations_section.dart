@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:omi/providers/app_provider.dart';
 import 'package:omi/utils/l10n_extensions.dart';
-import 'package:omi/utils/other/temp.dart';
 
 class ExternalIntegrationsSection extends StatelessWidget {
   const ExternalIntegrationsSection({super.key});
