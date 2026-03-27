@@ -11,7 +11,7 @@ import 'package:omi/env/env.dart';
 import 'package:omi/utils/logger.dart';
 
 /// File-based logging for agent chat — works in release builds (print/developer.log are stripped).
-/// Pull with: pymobiledevice3 apps pull com.friend-app-with-wearable.ios12 Documents/agent_chat.log /tmp/agent_chat.log
+/// Pull with: pymobiledevice3 apps pull com.toki.ios Documents/agent_chat.log /tmp/agent_chat.log
 File? agentLogFile;
 
 Future<void> initAgentLog() async {

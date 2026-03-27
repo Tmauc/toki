@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "693612482237",
+    "project_id": "toki-57d35",
+    "storage_bucket": "toki-57d35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693612482237:android:bdf814a21f56d01d5db1d4",
+        "android_client_info": {
+          "package_name": "com.toki.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693612482237-placeholder.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDylnN2ONQw6SWM38zbPJWn6fkd4G32phg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693612482237-placeholder.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
