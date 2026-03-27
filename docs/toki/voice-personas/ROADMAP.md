@@ -59,7 +59,7 @@ Comparaison cosinus contre people/{id}/embeddings (seuil 0.82)
   "embedding_count": 5,
 
   "first_seen": "2026-03-20T09:14:00Z",
-  "last_seen": "2026-03-25T18:32:00Z",
+  "last_seen": "2026-03-27T18:32:00Z",
   "total_segments": 47,
   "total_duration_seconds": 183.5,
 
@@ -76,7 +76,7 @@ Comparaison cosinus contre people/{id}/embeddings (seuil 0.82)
   "audio_sample_url": "gs://toki-speech-profiles/clusters/cluster_abc123.wav",
 
   "created_at": "2026-03-20T09:14:00Z",
-  "updated_at": "2026-03-25T18:32:00Z"
+  "updated_at": "2026-03-27T18:32:00Z"
 }
 ```
 
@@ -246,4 +246,4 @@ Déclenché à chaque naming. Exécuté en tâche background (non bloquant).
 
 ---
 
-*Document maintenu par [@Tmauc](https://github.com/Tmauc) — dernière mise à jour : 2026-03-25*
+*Document maintenu par [@Tmauc](https://github.com/Tmauc) — dernière mise à jour : 2026-03-27*

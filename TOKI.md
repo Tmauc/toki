@@ -29,36 +29,15 @@ Ce repo est un fork de [BasedHardware/omi](https://github.com/BasedHardware/omi)
 | `origin` | `https://github.com/Tmauc/toki` | Ton fork — tes modifications |
 | `upstream` | `https://github.com/BasedHardware/omi` | Omi officiel — les MAJ |
 
-### Récupérer les mises à jour d'Omi
-
 ```bash
-# 1. Récupérer les nouveautés d'Omi
+# Récupérer les mises à jour d'Omi
 git fetch upstream
-
-# 2. Voir ce qui a changé
-git log HEAD..upstream/main --oneline
-
-# 3. Merger dans ta branche principale
+git log HEAD..upstream/main --oneline  # voir ce qui a changé
 git merge upstream/main
-
-# 4. Résoudre les éventuels conflits, puis push
 git push origin main
 ```
 
-> **Bonne pratique** : faire ce merge régulièrement (toutes les 2-4 semaines) pour éviter une divergence trop importante.
-
-### En cas de conflit
-
-Les fichiers les plus susceptibles de créer des conflits sont ceux qu'on modifie dans Toki. Si un conflit apparaît :
-
-```bash
-# Voir les fichiers en conflit
-git status
-
-# Après résolution manuelle des conflits
-git add <fichier>
-git merge --continue
-```
+> **Bonne pratique** : merger toutes les 2-4 semaines pour éviter la divergence.
 
 ---
 
@@ -68,46 +47,51 @@ git merge --continue
 /
 ├── app/                  # App Flutter (iOS + Android)
 ├── backend/              # Backend FastAPI (Python)
-│   └── utils/llm/toki.py # Prompts & fonctions LLM custom Toki
-├── deploy/               # Scripts VM Proxmox (docker-compose, .env.template, setup.sh)
-├── firmware/             # Firmware du device (C/C++, nRF/ESP32)
-├── docs/toki/            # Documentation Toki-spécifique
-│   └── voice-personas/   # Feature: clustering vocal style Apple Photos
-│       ├── ROADMAP.md    # Plan de conception complet
-│       └── design.png    # Schéma architecture
-├── plugins/              # Intégrations tierces
-└── TOKI.md               # Ce fichier
+│   ├── routers/toki_voice_personas.py
+│   ├── utils/speaker_clustering.py
+│   ├── utils/toki_retroactive.py
+│   └── utils/llm/toki.py       # Prompts & fonctions LLM custom Toki
+├── deploy/               # Docker-compose, .env.template, setup-vm.sh
+├── firmware/             # Firmware device (C/C++, nRF/ESP32)
+└── docs/toki/            # Documentation Toki
+    ├── README.md         # Index et statut du projet
+    ├── deploy.md         # Guide de déploiement backend
+    ├── hardware.md       # Assemblage du wearable DIY
+    └── voice-personas/
+        └── ROADMAP.md    # Spec complète Voice Personas
 ```
 
 ---
 
-## ✨ Features custom Toki (vs Omi de base)
+## ✨ Features Toki (vs Omi de base)
 
-| Feature | Statut | Doc | Description |
-|---|---|---|---|
-| **Voice Personas** | 🔜 Phase A | [ROADMAP](docs/toki/voice-personas/ROADMAP.md) | Clustering voix inconnues style Apple Photos |
-| **Smart Reminders** | ✅ Prompts écrits | — | Détection engagements implicites + due dates |
-| **Daily Digest** | ✅ Prompts écrits | — | Résumé structuré de journée (cron soir) |
-| **Relational Memory** | ✅ Prompts écrits | — | Qui a dit quoi + faits sur les proches |
-| **Mood Tracking** | ✅ Prompts écrits | — | Sentiment et énergie par conversation |
-| **Personal Memory** | ✅ Prompts écrits | — | Mémoire vie perso (vs pro-oriented Omi) |
-| Analytics relationnels | 🔜 Planifié | — | Graphe social, stats par personne |
-| Mode full local | 🔜 Planifié | — | Aucune donnée en cloud |
-
----
-
-## 🚀 Installation & Setup
-
-Voir le [README.md](./README.md) d'Omi pour l'installation complète.
-
-Pour les features spécifiques à Toki, une documentation dédiée sera ajoutée dans `/docs/toki/`.
-
----
-
-## 📝 Contribution
-
-Ce repo est personnel. Si tu veux contribuer à l'écosystème Omi en général, préfère contribuer directement à [BasedHardware/omi](https://github.com/BasedHardware/omi).
+| Feature | Statut | Notes |
+|---|---|---|
+| **Voice Personas** | ✅ Terminé (phases A→F) | [ROADMAP](docs/toki/voice-personas/ROADMAP.md) |
+| **Rebranding Omi → Toki** | ✅ Terminé | App, backend, iOS, textes |
+| **Nettoyage codebase** | ✅ Terminé | Monétisation, marketplace, analytics, phone calls supprimés |
+| **Chat tab** | ✅ Terminé | Navbar 4 tabs : Home / Tasks / Memories / Chat |
+| **Usage Statistics** | ✅ Terminé | Page avec graphes fl_chart + tabs période |
+| **Smart Reminders** | ✅ Prompts écrits | Pas encore hookés dans le pipeline |
+| **Daily Digest** | ✅ Prompts écrits | Cron job à créer |
+| **Relational Memory** | ✅ Prompts écrits | Branché sur le pipeline LLM existant |
+| **Mood Tracking** | ✅ Prompts écrits | Branché sur le pipeline LLM existant |
+| **Backend deployable** | ✅ Stack prête | docker-compose + Fly.io / Hetzner |
+| **Hardware DIY** | 🔜 Composants commandés | [Guide](docs/toki/hardware.md) |
+| **Backend en prod** | 🔜 En cours | [Guide deploy](docs/toki/deploy.md) |
+| **Smart Reminders (branché)** | 🔜 Planifié | Hook dans pipeline post-transcription |
+| **Daily Digest (cron)** | 🔜 Planifié | Cron job soir |
+| **Analytics relationnels** | 🔜 Planifié | Graphe social, stats par personne |
+| **Mode full local** | 🔜 Planifié | Aucune donnée en cloud |
 
 ---
 
-*Fork maintenu par [@Tmauc](https://github.com/Tmauc)*
+## 🚀 Démarrage
+
+→ **Backend** : voir [docs/toki/deploy.md](docs/toki/deploy.md)
+→ **Hardware** : voir [docs/toki/hardware.md](docs/toki/hardware.md)
+→ **App** : voir le [README.md](./README.md) d'Omi pour le setup Flutter
+
+---
+
+*Fork maintenu par [@Tmauc](https://github.com/Tmauc) — mis à jour : 2026-03-27*

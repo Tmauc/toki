@@ -1,6 +1,6 @@
 # Toki — Deploy
 
-Scripts de déploiement pour la VM Proxmox.
+Scripts de déploiement. Voir le guide complet dans [docs/toki/deploy.md](../docs/toki/deploy.md).
 
 ## Fichiers
 
