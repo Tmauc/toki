@@ -1847,5 +1847,6 @@
   "wordsTranscribed": "Mots transcrits",
   "insightsGained": "Idées générées",
   "memoriesCreated": "Souvenirs créés",
-  "noDataYet": "Pas encore de données"
+  "noDataYet": "Pas encore de données",
+  "deleteNodeConfirmation": "Supprimer ce nœud et toutes ses connexions ? Les nœuds orphelins seront aussi supprimés."
 }

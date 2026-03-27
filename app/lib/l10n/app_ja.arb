@@ -1827,5 +1827,6 @@
   "wordsTranscribed": "文字起こし単語数",
   "insightsGained": "生成されたインサイト",
   "memoriesCreated": "作成された記憶",
-  "noDataYet": "まだデータがありません"
+  "noDataYet": "まだデータがありません",
+  "deleteNodeConfirmation": "このノードとすべての接続を削除しますか？孤立したノードも削除されます。"
 }

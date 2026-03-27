@@ -6878,5 +6878,6 @@
   "wordsTranscribed": "Words Transcribed",
   "insightsGained": "Insights Gained",
   "memoriesCreated": "Memories Created",
-  "noDataYet": "No data yet"
+  "noDataYet": "No data yet",
+  "deleteNodeConfirmation": "Delete this node and all its connections? Orphaned nodes will also be removed."
 }

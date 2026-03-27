@@ -1826,5 +1826,6 @@
   "wordsTranscribed": "Parole trascritte",
   "insightsGained": "Intuizioni generate",
   "memoriesCreated": "Ricordi creati",
-  "noDataYet": "Nessun dato ancora"
+  "noDataYet": "Nessun dato ancora",
+  "deleteNodeConfirmation": "Eliminare questo nodo e tutte le sue connessioni? I nodi orfani verranno eliminati."
 }

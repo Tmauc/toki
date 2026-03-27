@@ -1827,5 +1827,6 @@
   "wordsTranscribed": "Palabras transcritas",
   "insightsGained": "Ideas generadas",
   "memoriesCreated": "Recuerdos creados",
-  "noDataYet": "Sin datos aún"
+  "noDataYet": "Sin datos aún",
+  "deleteNodeConfirmation": "¿Eliminar este nodo y todas sus conexiones? Los nodos huérfanos también serán eliminados."
 }
