@@ -66,6 +66,8 @@ def delete_knowledge_node(node_id: str, uid: str = Depends(auth.get_current_user
     node = kg_db.get_knowledge_node(uid, node_id)
     if not node:
         raise HTTPException(status_code=404, detail="Node not found")
+    if node.get('node_type') == 'user':
+        raise HTTPException(status_code=403, detail="Cannot delete the user node")
     orphan_ids = kg_db.delete_knowledge_node(uid, node_id)
     return {"status": "deleted", "node_id": node_id, "orphaned_nodes_deleted": orphan_ids}
 

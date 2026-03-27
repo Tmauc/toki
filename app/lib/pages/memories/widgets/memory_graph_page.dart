@@ -894,6 +894,9 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
     final node = simulation.nodeMap[nodeId];
     if (node == null) return;
 
+    // Protect the user's root node
+    if (node.nodeType == 'user' || node.isFixed) return;
+
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
