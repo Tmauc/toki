@@ -95,7 +95,7 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
     } catch (e) {
       // Fallback: share text only if file share fails
       try {
-        await SharePlus.instance.share(ShareParams(text: shareText));
+        await SharePlus.instance.share(ShareParams(text: 'Toki'));
         return;
       } catch (_) {}
       if (mounted) {
