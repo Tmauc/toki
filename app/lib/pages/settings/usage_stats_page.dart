@@ -171,7 +171,6 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
         centerTitle: true,
         elevation: 0,
         leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new), onPressed: () => Navigator.of(context).pop()),
-        actions: [IconButton(icon: const FaIcon(FontAwesomeIcons.solidShareFromSquare), onPressed: _shareUsage)],
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.deepPurple,
