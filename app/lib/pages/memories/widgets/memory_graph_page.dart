@@ -283,8 +283,7 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
       }
     });
 
-    if (widget.trackOpenEvent) {
-    }
+    if (widget.trackOpenEvent) {}
     _loadGraph();
   }
 
@@ -687,6 +686,8 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
           children: [
             GestureDetector(
               onTapUp: (details) => _handleTap(details, Size(constraints.maxWidth, constraints.maxHeight)),
+              onLongPressStart: (details) =>
+                  _handleLongPress(details.localPosition, Size(constraints.maxWidth, constraints.maxHeight)),
               onScaleStart: (details) {
                 simulation.wake();
                 _lastPanStart = details.focalPoint;
@@ -812,8 +813,7 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
         _highlightedNodeIds.add(hitNodeId);
 
         final node = simulation.nodeMap[hitNodeId];
-        if (node != null) {
-        }
+        if (node != null) {}
 
         // Find neighbors
         final neighbors = <String>[];
@@ -848,6 +848,107 @@ class _MemoryGraphPageState extends State<MemoryGraphPage> with SingleTickerProv
     final dy = a.y - b.y;
     final dz = a.z - b.z;
     return dx * dx + dy * dy + dz * dz;
+  }
+
+  /// Hit-test at [pos] and return the node ID, or null.
+  String? _hitTestNode(Offset pos, Size size) {
+    final centerX = size.width / 2;
+    final centerY = size.height / 2;
+    final cosY = cos(_rotationY);
+    final sinY = sin(_rotationY);
+    final cosX = cos(_rotationX);
+    final sinX = sin(_rotationX);
+
+    double minDist = 30.0;
+    String? hitId;
+
+    for (var node in simulation.nodes) {
+      final px = node.position.x;
+      final py = node.position.y;
+      final pz = node.position.z;
+      final x1 = px * cosY - pz * sinY;
+      final z1 = px * sinY + pz * cosY;
+      final y2 = py * cosX - z1 * sinX;
+      final z2 = py * sinX + z1 * cosX;
+      const cameraZ = 1500.0;
+      if (cameraZ - z2 <= 0) continue;
+
+      final perspective = (cameraZ / (cameraZ - z2)) * _zoom;
+      final projX = centerX + x1 * perspective + _panX;
+      final projY = centerY + y2 * perspective + _panY;
+      final dist = (Offset(projX, projY) - pos).distance;
+      final hitThreshold = max(12.0 * perspective * 1.5, 20.0);
+
+      if (dist < hitThreshold && dist < minDist) {
+        minDist = dist;
+        hitId = node.id;
+      }
+    }
+    return hitId;
+  }
+
+  void _handleLongPress(Offset position, Size size) {
+    final nodeId = _hitTestNode(position, size);
+    if (nodeId == null) return;
+
+    final node = simulation.nodeMap[nodeId];
+    if (node == null) return;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1C1C1E),
+        title: Text(node.label, style: const TextStyle(color: Colors.white)),
+        content: Text(context.l10n.deleteNodeConfirmation, style: const TextStyle(color: Colors.grey)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(context.l10n.cancel, style: const TextStyle(color: Colors.grey)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              _deleteNode(nodeId);
+            },
+            child: Text(context.l10n.delete, style: const TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _deleteNode(String nodeId) async {
+    try {
+      final result = await KnowledgeGraphApi.deleteNode(nodeId);
+      final orphanIds = List<String>.from(result['orphaned_nodes_deleted'] ?? []);
+
+      // Remove from local graph
+      setState(() {
+        // Remove the node
+        simulation.nodes.removeWhere((n) => n.id == nodeId);
+        simulation.nodeMap.remove(nodeId);
+
+        // Remove orphaned nodes
+        for (final oid in orphanIds) {
+          simulation.nodes.removeWhere((n) => n.id == oid);
+          simulation.nodeMap.remove(oid);
+        }
+
+        // Remove all edges connected to deleted nodes
+        final deletedIds = {nodeId, ...orphanIds};
+        simulation.edges.removeWhere((e) => deletedIds.contains(e.sourceId) || deletedIds.contains(e.targetId));
+
+        // Clear selection
+        _selectedNodeId = null;
+        _highlightedNodeIds.clear();
+      });
+
+      simulation.wake();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red));
+      }
+    }
   }
 }
 
