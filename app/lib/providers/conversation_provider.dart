@@ -7,7 +7,6 @@ import 'package:omi/backend/http/api/users.dart';
 import 'package:omi/backend/preferences.dart';
 import 'package:omi/backend/schema/conversation.dart';
 import 'package:omi/backend/schema/structured.dart';
-import 'package:omi/services/app_review_service.dart';
 import 'package:omi/services/notifications/merge_notification_handler.dart';
 import 'package:omi/utils/logger.dart';
 
@@ -44,8 +43,6 @@ class ConversationProvider extends ChangeNotifier {
   bool isSelectionModeActive = false;
   Set<String> selectedConversationIds = {};
   StreamSubscription<MergeCompletedEvent>? _mergeCompletedSubscription;
-
-  final AppReviewService _appReviewService = AppReviewService();
 
   bool isFetchingConversations = false;
 
@@ -177,7 +174,6 @@ class ConversationProvider extends ChangeNotifier {
     } else {
       fetchConversations();
     }
-
   }
 
   void toggleShortConversations() {
@@ -316,15 +312,7 @@ class ConversationProvider extends ChangeNotifier {
         .where((c) => c.status == ConversationStatus.completed && conversations.indexWhere((cc) => cc.id == c.id) == -1)
         .toList();
     if (upsertConvos.isNotEmpty) {
-      // Check if this is the first conversation
-      bool wasEmpty = conversations.isEmpty;
-
       conversations.insertAll(0, upsertConvos);
-
-      // Mark first conversation for app review
-      if (wasEmpty && await _appReviewService.isFirstConversation()) {
-        await _appReviewService.markFirstConversation();
-      }
     }
 
     _groupConversationsByDateWithoutNotify();
@@ -541,16 +529,8 @@ class ConversationProvider extends ChangeNotifier {
   }
 
   Future<void> addConversation(ServerConversation conversation) async {
-    // Check if this is the first conversation
-    bool wasEmpty = conversations.isEmpty;
-
     conversations.insert(0, conversation);
     _groupConversationsByDateWithoutNotify();
-
-    // Mark first conversation for app review
-    if (wasEmpty && await _appReviewService.isFirstConversation()) {
-      await _appReviewService.markFirstConversation();
-    }
 
     notifyListeners();
   }
@@ -748,8 +728,8 @@ class ConversationProvider extends ChangeNotifier {
     final originalConvoIndex = conversations.indexWhere((c) => c.id == convoId);
     if (originalConvoIndex != -1) {
       final itemIndex = conversations[originalConvoIndex].structured.actionItems.indexWhere(
-        (item) => item.description == actionItemDescription,
-      );
+            (item) => item.description == actionItemDescription,
+          );
       if (itemIndex != -1) {
         conversations[originalConvoIndex].structured.actionItems[itemIndex].completed = newState;
         conversationFoundAndUpdated = true;
@@ -762,8 +742,8 @@ class ConversationProvider extends ChangeNotifier {
       final groupIndex = groupedConversations[dateKey]!.indexWhere((c) => c.id == convoId);
       if (groupIndex != -1) {
         final itemIndex = groupedConversations[dateKey]![groupIndex].structured.actionItems.indexWhere(
-          (item) => item.description == actionItemDescription,
-        );
+              (item) => item.description == actionItemDescription,
+            );
         if (itemIndex != -1) {
           groupedConversations[dateKey]![groupIndex].structured.actionItems[itemIndex].completed = newState;
         }
@@ -1034,7 +1014,6 @@ class ConversationProvider extends ChangeNotifier {
     for (final id in removedConversationIds) {
       mergingConversationIds.remove(id);
     }
-
 
     // Remove deleted conversations from local state
     for (final id in removedConversationIds) {

@@ -9,7 +9,6 @@ import 'package:omi/backend/schema/schema.dart';
 import 'package:omi/providers/action_items_provider.dart';
 import 'package:omi/providers/goals_provider.dart';
 import 'package:omi/providers/task_integration_provider.dart';
-import 'package:omi/services/app_review_service.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'widgets/action_item_form_sheet.dart';
 
@@ -29,7 +28,6 @@ class ActionItemsPage extends StatefulWidget {
 
 class _ActionItemsPageState extends State<ActionItemsPage> with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
-  final AppReviewService _appReviewService = AppReviewService();
 
   // Task -> goal mapping
   final Map<String, String> _taskGoalLinks = {};
@@ -128,18 +126,7 @@ class _ActionItemsPageState extends State<ActionItemsPage> with AutomaticKeepAli
     }
   }
 
-  Future<void> _onActionItemCompleted() async {
-
-    final hasCompletedFirst = await _appReviewService.hasCompletedFirstActionItem();
-
-    if (!hasCompletedFirst) {
-      await _appReviewService.markFirstActionItemCompleted();
-
-      if (mounted) {
-        await _appReviewService.showReviewPromptIfNeeded(context, isProcessingFirstConversation: false);
-      }
-    }
-  }
+  Future<void> _onActionItemCompleted() async {}
 
   void _showCreateActionItemSheet({DateTime? defaultDueDate}) {
     showModalBottomSheet(
@@ -165,8 +152,7 @@ class _ActionItemsPageState extends State<ActionItemsPage> with AutomaticKeepAli
             targetValue: target,
             currentValue: current,
           );
-          if (created != null) {
-          }
+          if (created != null) {}
         },
       ),
     );
@@ -419,8 +405,8 @@ class _ActionItemsPageState extends State<ActionItemsPage> with AutomaticKeepAli
                   child: provider.isLoading && provider.actionItems.isEmpty
                       ? _buildLoadingState()
                       : categorizedItems.values.every((l) => l.isEmpty)
-                      ? _buildEmptyTasksList()
-                      : _buildTasksList(categorizedItems, provider),
+                          ? _buildEmptyTasksList()
+                          : _buildTasksList(categorizedItems, provider),
                 ),
               ),
               _buildFab(),

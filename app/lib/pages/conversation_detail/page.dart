@@ -21,7 +21,6 @@ import 'package:omi/pages/home/page.dart';
 import 'package:omi/providers/connectivity_provider.dart';
 import 'package:omi/providers/conversation_provider.dart';
 import 'package:omi/providers/people_provider.dart';
-import 'package:omi/services/app_review_service.dart';
 import 'package:omi/services/audio_download_service.dart';
 import 'package:omi/utils/l10n_extensions.dart';
 import 'package:omi/utils/logger.dart';
@@ -75,7 +74,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
   final focusOverviewField = FocusNode();
   final GlobalKey _shareButtonKey = GlobalKey();
   TabController? _controller;
-  final AppReviewService _appReviewService = AppReviewService();
   ConversationTab selectedTab = ConversationTab.summary;
 
   // Callback to seek audio to transcript segment
@@ -217,13 +215,6 @@ class _ConversationDetailPageState extends State<ConversationDetailPage> with Ti
           await conversationProvider.updateSearchedConvoDetails(provider.conversation.id, date, idx);
         }
         provider.updateConversation(provider.conversation.id, provider.selectedDate);
-      }
-
-      // Check if this is the first conversation and show app review prompt
-      if (await _appReviewService.isFirstConversation()) {
-        if (mounted) {
-          await _appReviewService.showReviewPromptIfNeeded(context, isProcessingFirstConversation: true);
-        }
       }
 
       // Auto-open share to contacts sheet if requested (from important conversation notification)
@@ -1497,7 +1488,6 @@ class ActionItemDetailWidget extends StatefulWidget {
 
 class _ActionItemDetailWidgetState extends State<ActionItemDetailWidget> {
   static final Map<String, bool> _pendingStates = {}; // Track pending states by description
-  final AppReviewService _appReviewService = AppReviewService();
 
   @override
   void dispose() {
@@ -1622,14 +1612,7 @@ class _ActionItemDetailWidgetState extends State<ActionItemDetailWidget> {
       final currentIndex = provider.conversation.structured.actionItems.indexWhere(
         (item) => item.description == itemDescription,
       );
-      if (currentIndex != -1) {
-        if (newValue) {
-          if (!await _appReviewService.hasCompletedFirstActionItem()) {
-            await _appReviewService.markFirstActionItemCompleted();
-            _appReviewService.showReviewPromptIfNeeded(context, isProcessingFirstConversation: false);
-          }
-        } else {}
-      }
+      if (currentIndex != -1) {}
     } catch (e) {
       // If there's an error, revert pending state
       if (mounted) {
