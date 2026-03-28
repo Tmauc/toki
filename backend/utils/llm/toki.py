@@ -71,6 +71,23 @@ class TokiMoodEntry(BaseModel):
     confidence: float = Field(default=0.7, ge=0.0, le=1.0)
 
 
+class TokiRecommendation(BaseModel):
+    """A recommendation extracted from conversation."""
+
+    text: str = Field(description="What was recommended, clearly named (title, place name, etc.)")
+    category: str = Field(
+        default="autre",
+        description="Category: film / série / livre / musique / restaurant / podcast / appli / autre",
+    )
+    recommender: Optional[str] = Field(default=None, description="Name of person who recommended it, if known")
+    source_quote: Optional[str] = Field(default=None, description="Short quote from conversation, max 20 words")
+    confidence: float = Field(default=0.8, ge=0.0, le=1.0)
+
+
+class TokiRecommendationsExtraction(BaseModel):
+    recommendations: List[TokiRecommendation] = Field(default_factory=list)
+
+
 # ══════════════════════════════════════════════════════════════
 # PROMPTS & FUNCTIONS
 # ══════════════════════════════════════════════════════════════
@@ -226,6 +243,62 @@ _personal_memory_categories = [
     "achats",
     "autres",
 ]
+
+# ─── 4. RECOMMENDATIONS ──────────────────────────────────────
+
+_reco_parser = PydanticOutputParser(pydantic_object=TokiRecommendationsExtraction)
+
+_reco_prompt = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """Tu es un assistant qui repère les recommandations culturelles et pratiques dans les conversations de {user_name}.
+
+MISSION : Détecter quand quelqu'un recommande explicitement un film, série, livre, musique, restaurant, podcast, appli ou autre chose.
+
+INCLURE :
+✅ Recommandations directes ("tu devrais regarder X", "j'ai adoré X, fais-le")
+✅ Mentions enthousiastes ("X c'est incroyable", "X a changé ma vie")
+✅ Conseils pratiques ("va manger chez X, c'est top")
+
+EXCLURE :
+❌ Mentions passagères sans enthousiasme
+❌ Références négatives ("X c'est nul")
+❌ Ce que {user_name} recommande LUI-MÊME aux autres
+
+Pour recommender : utilise le vrai prénom si connu, sinon null.
+
+{format_instructions}""",
+    ),
+    (
+        "human",
+        """Conversation du {date} :
+
+{transcript}
+
+Trouve toutes les recommandations faites à {user_name}.""",
+    ),
+])
+
+
+def extract_recommendations(
+    transcript: str,
+    user_name: str,
+    conversation_date: datetime,
+) -> List[TokiRecommendation]:
+    """Extract recommendations made to the user in a conversation."""
+    try:
+        chain = _reco_prompt | llm_mini | _reco_parser
+        result = chain.invoke({
+            "user_name": user_name,
+            "transcript": transcript[:5000],
+            "date": conversation_date.strftime("%d/%m/%Y"),
+            "format_instructions": _reco_parser.get_format_instructions(),
+        })
+        return [r for r in (result.recommendations or []) if r.confidence >= 0.6]
+    except Exception as e:
+        logger.error(f"[Toki] extract_recommendations error: {e}")
+        return []
+
 
 TOKI_PERSONAL_MEMORY_PROMPT = """
 Tu es un curateur de mémoire personnelle pour {user_name}. Contrairement à un assistant professionnel,

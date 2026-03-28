@@ -71,6 +71,10 @@ from utils.webhooks import conversation_created_webhook
 from utils.notifications import send_action_item_data_message
 from utils.task_sync import auto_sync_action_items_batch
 from utils.other.storage import precache_conversation_audio
+from utils.llm.toki import extract_recommendations as toki_extract_recommendations
+from utils.llm.toki import extract_mood as toki_extract_mood
+import database.toki_recommendations as toki_reco_db
+import database.toki_mood as toki_mood_db
 
 logger = logging.getLogger(__name__)
 
@@ -381,6 +385,44 @@ def _update_goal_progress(uid: str, conversation: Conversation):
             extract_and_update_goal_progress(uid, text)
     except Exception as e:
         logger.error(f"[GOAL] Error updating progress: {e}")
+
+
+def _extract_toki_recommendations(uid: str, conversation: Conversation):
+    try:
+        transcript = conversation.get_transcript(include_timestamps=False)
+        if not transcript or len(transcript) < 50:
+            return
+        user = users_db.get_user(uid)
+        user_name = user.get('name', 'User') if user else 'User'
+        recos = toki_extract_recommendations(
+            transcript=transcript,
+            user_name=user_name,
+            conversation_date=conversation.created_at,
+        )
+        if recos:
+            toki_reco_db.save_recommendations(uid, recos, conversation.id)
+            logger.info(f"[Toki] Saved {len(recos)} recommendations for uid={uid}")
+    except Exception as e:
+        logger.error(f"[Toki] _extract_toki_recommendations error: {e}")
+
+
+def _extract_toki_mood(uid: str, conversation: Conversation):
+    try:
+        transcript = conversation.get_transcript(include_timestamps=False)
+        if not transcript or len(transcript) < 100:
+            return
+        user = users_db.get_user(uid)
+        user_name = user.get('name', 'User') if user else 'User'
+        mood = toki_extract_mood(
+            transcript=transcript,
+            user_name=user_name,
+            conversation_date=conversation.created_at,
+        )
+        if mood:
+            toki_mood_db.save_mood(uid, mood, conversation.id)
+            logger.info(f"[Toki] Saved mood={mood.mood} energy={mood.energy} for uid={uid}")
+    except Exception as e:
+        logger.error(f"[Toki] _extract_toki_mood error: {e}")
 
 
 def _extract_memories(uid: str, conversation: Conversation):
@@ -716,6 +758,8 @@ def process_conversation(
         threading.Thread(target=_extract_trends, args=(uid, conversation)).start()
         threading.Thread(target=_save_action_items, args=(uid, conversation)).start()
         threading.Thread(target=_update_goal_progress, args=(uid, conversation)).start()
+        threading.Thread(target=_extract_toki_recommendations, args=(uid, conversation)).start()
+        threading.Thread(target=_extract_toki_mood, args=(uid, conversation)).start()
 
     # Create audio files from chunks if private cloud sync was enabled
     if not is_reprocess and conversation.private_cloud_sync_enabled:

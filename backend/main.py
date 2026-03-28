@@ -49,6 +49,7 @@ from routers import (
     metrics,
     toki_voice_personas,  # TOKI: Voice Personas feature
 )
+from routers import toki_recommendations, toki_mood  # TOKI: Recommendations + Mood Trends
 
 from utils.other.timeout import TimeoutMiddleware
 from utils.observability import log_langsmith_status
@@ -104,6 +105,8 @@ app.include_router(goals.router)
 app.include_router(agent_tools.router)
 app.include_router(metrics.router)
 app.include_router(toki_voice_personas.router)  # TOKI: /v1/toki/voice-personas
+app.include_router(toki_recommendations.router)  # TOKI: /v1/toki/recommendations
+app.include_router(toki_mood.router)              # TOKI: /v1/toki/mood
 
 
 methods_timeout = {
