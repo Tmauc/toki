@@ -3,9 +3,7 @@ TOKI — Custom LLM functions and prompts.
 
 This module is Toki-specific and lives alongside Omi's existing LLM utilities.
 It adds features not present in Omi:
-  - Daily digest (résumé de journée)
   - Personal memory extraction (vie quotidienne, non pro)
-  - Smart reminders (détection d'engagements implicites)
   - Relational memory (qui a dit quoi, contexte par personne)
   - Mood & sentiment tracking
 
@@ -30,38 +28,6 @@ logger = logging.getLogger(__name__)
 # ══════════════════════════════════════════════════════════════
 
 
-class TokiReminder(BaseModel):
-    """A smart reminder extracted from natural conversation."""
-
-    description: str = Field(description="Ce qu'il faut faire ou rappeler, en langage clair")
-    due_hint: Optional[str] = Field(
-        default=None,
-        description="Expression temporelle telle que mentionnée (ex: 'demain', 'lundi', 'dans une semaine'). None si aucune date mentionnée.",
-    )
-    due_iso: Optional[str] = Field(
-        default=None,
-        description="Date/heure résolue en ISO 8601 (YYYY-MM-DDTHH:MM:SS). None si impossible à déterminer.",
-    )
-    source_quote: Optional[str] = Field(
-        default=None,
-        description="Citation courte de la conversation d'où provient ce rappel (max 20 mots).",
-    )
-    person: Optional[str] = Field(
-        default=None,
-        description="Personne concernée par ce rappel, si identifiable.",
-    )
-    confidence: float = Field(
-        default=0.8,
-        ge=0.0,
-        le=1.0,
-        description="Niveau de confiance que c'est bien un engagement réel (0=incertain, 1=certain).",
-    )
-
-
-class TokiRemindersExtraction(BaseModel):
-    reminders: List[TokiReminder] = Field(default_factory=list)
-
-
 class TokiPersonMoment(BaseModel):
     """A notable moment involving a specific person."""
 
@@ -69,37 +35,6 @@ class TokiPersonMoment(BaseModel):
     summary: str = Field(description="Ce qui s'est passé / dit, en 1-2 phrases")
     topics: List[str] = Field(default_factory=list, description="Sujets abordés avec cette personne")
     sentiment: str = Field(default="neutral", description="Tonalité: positive / neutral / negative / mixed")
-
-
-class TokiDailyDigest(BaseModel):
-    """Structured summary of a full day."""
-
-    headline: str = Field(description="Une phrase qui résume la journée (max 15 mots)")
-    top_moments: List[str] = Field(
-        default_factory=list,
-        description="3 à 5 moments/événements marquants de la journée, chacun en 1 phrase",
-    )
-    people_seen: List[str] = Field(
-        default_factory=list,
-        description="Prénoms ou noms des personnes avec qui l'utilisateur a interagi aujourd'hui",
-    )
-    decisions_made: List[str] = Field(
-        default_factory=list,
-        description="Décisions importantes prises pendant la journée",
-    )
-    open_loops: List[str] = Field(
-        default_factory=list,
-        description="Choses non résolues, questions ouvertes, sujets à suivre",
-    )
-    mood_of_day: str = Field(
-        default="neutral",
-        description="Tonalité générale de la journée: great / good / neutral / difficult / rough",
-    )
-    mood_notes: Optional[str] = Field(
-        default=None,
-        description="Observation sur l'humeur/énergie, 1 phrase max. None si pas de signal clair.",
-    )
-    word_count: int = Field(default=0, description="Nombre approximatif de mots transcrits dans la journée")
 
 
 class TokiPersonMemory(BaseModel):
@@ -141,174 +76,7 @@ class TokiMoodEntry(BaseModel):
 # ══════════════════════════════════════════════════════════════
 
 
-# ─── 1. SMART REMINDERS ─────────────────────────────────────
-
-_reminders_parser = PydanticOutputParser(pydantic_object=TokiRemindersExtraction)
-
-_reminders_prompt = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """Tu es un assistant qui détecte les engagements et rappels implicites dans les conversations quotidiennes.
-
-MISSION : Repérer tout ce que l'utilisateur ({user_name}) devra faire, vérifier ou suivre après cette conversation.
-
-RÈGLES DE DÉTECTION :
-Inclure :
-✅ Engagements explicites ("je vais l'appeler", "je dois envoyer ça", "je rappelle demain")
-✅ Promesses faites à quelqu'un ("je te tiens au courant", "je t'envoie le lien")
-✅ Tâches mentionnées en passant ("faut que je pense à...")
-✅ Rendez-vous ou échéances évoquées ("avant jeudi", "la semaine prochaine")
-✅ Choses à ne pas oublier ("n'oublie pas de...", "pense à...")
-
-Exclure :
-❌ Choses déjà faites dans la conversation
-❌ Projets vagues sans action concrète ("un jour peut-être...")
-❌ Observations ou constats sans action ("le ciel est bleu")
-❌ Rappels avec confiance < 0.5 (trop incertain)
-
-RÉSOLUTION DES DATES :
-- Date actuelle : {current_date}
-- "demain" → résoudre en date ISO
-- "lundi" → prochain lundi
-- "dans une semaine" → +7 jours
-- Si heure non précisée → mettre 09:00 par défaut
-- Si vraiment impossible à résoudre → laisser due_iso à null
-
-{format_instructions}""",
-    ),
-    (
-        "human",
-        """Conversation du {conversation_date} :
-
-{transcript}
-
-Extrait tous les rappels et engagements pour {user_name}.""",
-    ),
-])
-
-
-def extract_toki_reminders(
-    transcript: str,
-    user_name: str,
-    conversation_date: datetime,
-) -> List[TokiReminder]:
-    """
-    Extract implicit commitments and reminders from a conversation transcript.
-    Returns a list of TokiReminder objects, filtered by confidence > 0.5.
-    """
-    try:
-        chain = _reminders_prompt | llm_mini | _reminders_parser
-        result = chain.invoke({
-            "user_name": user_name,
-            "transcript": transcript[:6000],  # Limit context
-            "conversation_date": conversation_date.strftime("%A %d %B %Y"),
-            "current_date": conversation_date.strftime("%Y-%m-%d"),
-            "format_instructions": _reminders_parser.get_format_instructions(),
-        })
-        return [r for r in (result.reminders or []) if r.confidence >= 0.5]
-    except Exception as e:
-        logger.error(f"[Toki] extract_toki_reminders error: {e}")
-        return []
-
-
-# ─── 2. DAILY DIGEST ─────────────────────────────────────────
-
-_digest_parser = PydanticOutputParser(pydantic_object=TokiDailyDigest)
-
-_digest_prompt = ChatPromptTemplate.from_messages([
-    (
-        "system",
-        """Tu es l'assistant personnel de {user_name}. Chaque soir, tu crées un résumé structuré de sa journée à partir de ses conversations enregistrées.
-
-TON RÔLE : Synthétiser la journée de manière chaleureuse et utile, comme un journal intime intelligent.
-
-PRINCIPES :
-- Sois concis mais captivant : chaque moment doit mériter d'être relu
-- Identifie les vraies personnes par leur prénom quand possible (pas "Speaker 0")
-- Les "open loops" sont les choses non résolues ou à suivre — elles sont importantes
-- Le mood doit refléter le ressenti global, pas juste les mots positifs/négatifs
-- Si la journée était banale, dis-le honnêtement (neutral est une réponse valide)
-- Langue de réponse : même langue que les conversations (si en français → répondre en français)
-
-{format_instructions}""",
-    ),
-    (
-        "human",
-        """Journée du {date} — Conversations de {user_name} :
-
-{conversations_text}
-
----
-Nombre total de mots transcrits : ~{word_count}
-Nombre de conversations : {conversation_count}
-
-Crée le résumé de journée.""",
-    ),
-])
-
-
-def generate_daily_digest(
-    conversations: List[dict],
-    user_name: str,
-    date: datetime,
-) -> Optional[TokiDailyDigest]:
-    """
-    Generate a daily digest from a list of conversations.
-
-    Args:
-        conversations: list of dicts with keys 'title', 'overview', 'transcript', 'started_at'
-        user_name: name of the user
-        date: the day being summarized
-
-    Returns:
-        TokiDailyDigest or None on error
-    """
-    if not conversations:
-        return None
-
-    try:
-        # Build a structured text from conversations
-        parts = []
-        word_count = 0
-        for i, conv in enumerate(conversations, 1):
-            title = conv.get("title", f"Conversation {i}")
-            overview = conv.get("overview", "")
-            started = conv.get("started_at", "")
-            transcript = conv.get("transcript", "")
-            word_count += len(transcript.split())
-
-            part = f"[{i}] {title}"
-            if started:
-                part += f" ({started})"
-            if overview:
-                part += f"\nRésumé: {overview}"
-            # Include a short excerpt of transcript (first 400 chars)
-            if transcript:
-                part += f"\nExtrait: {transcript[:400]}..."
-            parts.append(part)
-
-        conversations_text = "\n\n".join(parts)
-        # Limit total context
-        if len(conversations_text) > 12000:
-            conversations_text = conversations_text[:12000] + "\n[...tronqué]"
-
-        chain = _digest_prompt | llm_high | _digest_parser
-        result = chain.invoke({
-            "user_name": user_name,
-            "date": date.strftime("%A %d %B %Y"),
-            "conversations_text": conversations_text,
-            "word_count": word_count,
-            "conversation_count": len(conversations),
-            "format_instructions": _digest_parser.get_format_instructions(),
-        })
-        result.word_count = word_count
-        return result
-    except Exception as e:
-        logger.error(f"[Toki] generate_daily_digest error: {e}")
-        return None
-
-
-# ─── 3. RELATIONAL MEMORY ────────────────────────────────────
+# ─── 1. RELATIONAL MEMORY ────────────────────────────────────
 
 _relational_parser = PydanticOutputParser(pydantic_object=TokiRelationalUpdate)
 
@@ -382,7 +150,7 @@ def extract_relational_memory(
         return None
 
 
-# ─── 4. MOOD & SENTIMENT ─────────────────────────────────────
+# ─── 2. MOOD & SENTIMENT ─────────────────────────────────────
 
 _mood_parser = PydanticOutputParser(pydantic_object=TokiMoodEntry)
 
@@ -441,7 +209,7 @@ def extract_mood(
         return None
 
 
-# ─── 5. PERSONAL MEMORY EXTRACTION ───────────────────────────
+# ─── 3. PERSONAL MEMORY EXTRACTION ───────────────────────────
 
 _personal_memory_categories = [
     "famille",

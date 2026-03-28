@@ -72,15 +72,11 @@ git push origin main
 | **Nettoyage codebase** | ✅ Terminé | Monétisation, marketplace, analytics, phone calls supprimés |
 | **Chat tab** | ✅ Terminé | Navbar 4 tabs : Home / Tasks / Memories / Chat |
 | **Usage Statistics** | ✅ Terminé | Page avec graphes fl_chart + tabs période |
-| **Smart Reminders** | ✅ Prompts écrits | Pas encore hookés dans le pipeline |
-| **Daily Digest** | ✅ Prompts écrits | Cron job à créer |
 | **Relational Memory** | ✅ Prompts écrits | Branché sur le pipeline LLM existant |
 | **Mood Tracking** | ✅ Prompts écrits | Branché sur le pipeline LLM existant |
 | **Backend deployable** | ✅ Stack prête | docker-compose + Fly.io / Hetzner |
 | **Hardware DIY** | 🔜 Composants commandés | [Guide](docs/toki/hardware.md) |
-| **Backend en prod** | 🔜 En cours | [Guide deploy](docs/toki/deploy.md) |
-| **Smart Reminders (branché)** | 🔜 Planifié | Hook dans pipeline post-transcription |
-| **Daily Digest (cron)** | 🔜 Planifié | Cron job soir |
+| **Backend en prod** | ✅ Terminé | [Guide deploy](docs/toki/deploy.md) |
 | **Analytics relationnels** | 🔜 Planifié | Graphe social, stats par personne |
 | **Mode full local** | 🔜 Planifié | Aucune donnée en cloud |
 
