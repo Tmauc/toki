@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:omi/backend/http/api/users.dart';
+import 'package:omi/backend/http/api/toki_mood_api.dart';
+import 'package:omi/backend/schema/toki_mood_entry.dart';
 import 'package:omi/models/user_usage.dart';
 import 'package:omi/utils/logger.dart';
 
@@ -28,6 +30,12 @@ class UsageProvider with ChangeNotifier {
 
   List<UsageHistoryPoint>? _allTimeHistory;
   List<UsageHistoryPoint>? get allTimeHistory => _allTimeHistory;
+
+  List<TokiMoodTrend> _moodTrends = [];
+  List<TokiMoodTrend> get moodTrends => List.unmodifiable(_moodTrends);
+
+  bool _moodLoading = false;
+  bool get moodLoading => _moodLoading;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -78,6 +86,20 @@ class UsageProvider with ChangeNotifier {
   Future<void> fetchAllPeriods() async {
     for (final period in ['today', 'monthly', 'yearly', 'all_time']) {
       await fetchUsageStats(period: period);
+    }
+  }
+
+  Future<void> fetchMoodTrends({int days = 30}) async {
+    _moodLoading = true;
+    notifyListeners();
+
+    try {
+      _moodTrends = await getMoodTrends(days: days);
+    } catch (e) {
+      Logger.debug('Failed to fetch mood trends: $e');
+    } finally {
+      _moodLoading = false;
+      notifyListeners();
     }
   }
 }

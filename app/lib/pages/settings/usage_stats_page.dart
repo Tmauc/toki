@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'package:omi/backend/schema/toki_mood_entry.dart';
 import 'package:omi/models/user_usage.dart';
 import 'package:omi/providers/usage_provider.dart';
 import 'package:omi/utils/l10n_extensions.dart';
@@ -141,6 +142,25 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
         break;
     }
     if (shouldFetch) provider.fetchUsageStats(period: period);
+
+    // Fetch mood trends for this tab's time range
+    final moodDays = _moodDaysForPeriod(period);
+    provider.fetchMoodTrends(days: moodDays);
+  }
+
+  int _moodDaysForPeriod(String period) {
+    switch (period) {
+      case 'today':
+        return 1;
+      case 'monthly':
+        return 30;
+      case 'yearly':
+        return 365;
+      case 'all_time':
+        return 3650;
+      default:
+        return 30;
+    }
   }
 
   @override
@@ -150,7 +170,9 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
     _tabController.addListener(_handleTabSelection);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<UsageProvider>().fetchUsageStats(period: 'today');
+      final provider = context.read<UsageProvider>();
+      provider.fetchUsageStats(period: 'today');
+      provider.fetchMoodTrends(days: 1);
     });
   }
 
@@ -247,6 +269,186 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
     );
   }
 
+  Widget _buildMoodChart(List<TokiMoodTrend> trends) {
+    if (trends.length < 2) return const SizedBox.shrink();
+
+    final spots = <FlSpot>[];
+    for (var i = 0; i < trends.length; i++) {
+      spots.add(FlSpot(i.toDouble(), trends[i].avgScore.clamp(1.0, 5.0)));
+    }
+
+    final lineChartData = LineChartData(
+      minX: 0,
+      maxX: (trends.length - 1).toDouble(),
+      minY: 1,
+      maxY: 5,
+      gridData: const FlGridData(show: false),
+      borderData: FlBorderData(
+        show: true,
+        border: Border(
+          bottom: BorderSide(
+              color: Colors.white.withValues(alpha: 0.2), width: 1),
+        ),
+      ),
+      lineTouchData: LineTouchData(
+        handleBuiltInTouches: true,
+        touchTooltipData: LineTouchTooltipData(
+          getTooltipColor: (_) => Colors.grey.shade800,
+          getTooltipItems: (touchedSpots) {
+            return touchedSpots.map((spot) {
+              final index = spot.x.toInt();
+              if (index >= trends.length) return null;
+              final trend = trends[index];
+              return LineTooltipItem(
+                '${moodEmoji(trend.dominantMood)} ${trend.date}\n',
+                const TextStyle(
+                    color: Colors.white70, fontSize: 11),
+                children: [
+                  TextSpan(
+                    text: trend.avgScore.toStringAsFixed(1),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              );
+            }).whereType<LineTooltipItem>().toList();
+          },
+        ),
+      ),
+      titlesData: FlTitlesData(
+        topTitles:
+            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        rightTitles:
+            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 28,
+            interval: 1,
+            getTitlesWidget: (value, meta) {
+              if (value == meta.max) return const SizedBox();
+              final label = value.toInt().toString();
+              return SideTitleWidget(
+                axisSide: meta.axisSide,
+                space: 4,
+                child: Text(label,
+                    style: const TextStyle(
+                        color: Colors.grey, fontSize: 9)),
+              );
+            },
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 18,
+            interval: (trends.length / 4).ceilToDouble().clamp(1, double.infinity),
+            getTitlesWidget: (value, meta) {
+              final index = value.toInt();
+              if (index >= trends.length) return const SizedBox();
+              final dateStr = trends[index].date;
+              // Show MM/dd
+              final parts = dateStr.split('-');
+              final label = parts.length >= 3
+                  ? '${parts[1]}/${parts[2]}'
+                  : dateStr;
+              return SideTitleWidget(
+                axisSide: meta.axisSide,
+                child: Text(label,
+                    style: const TextStyle(
+                        color: Colors.grey, fontSize: 9)),
+              );
+            },
+          ),
+        ),
+      ),
+      lineBarsData: [
+        LineChartBarData(
+          spots: spots,
+          isCurved: true,
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE53935), Color(0xFF7B1FA2), Color(0xFF43A047)],
+          ),
+          barWidth: 2.5,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: true,
+            getDotPainter: (spot, percent, bar, index) =>
+                FlDotCirclePainter(
+              radius: 3,
+              color: Colors.white70,
+              strokeWidth: 0,
+            ),
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.withValues(alpha: 0.25),
+                Colors.deepPurple.withValues(alpha: 0.0),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            const Text(
+              'Humeur',
+              style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(width: 12),
+            _buildMoodLegendChip('😊', '4-5'),
+            const SizedBox(width: 6),
+            _buildMoodLegendChip('😐', '3'),
+            const SizedBox(width: 6),
+            _buildMoodLegendChip('😢', '1-2'),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 120,
+          padding: const EdgeInsets.only(top: 8, right: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xFF1F1F25),
+            borderRadius: BorderRadius.circular(16),
+            border:
+                Border.all(color: Colors.white.withValues(alpha: 0.1)),
+          ),
+          child: LineChart(lineChartData,
+              duration: const Duration(milliseconds: 250)),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMoodLegendChip(String emoji, String range) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2C2C2E),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        '$emoji $range',
+        style: const TextStyle(fontSize: 11, color: Colors.white54),
+      ),
+    );
+  }
+
   Widget _buildUsageListView(
     UsageStats? stats,
     List<UsageHistoryPoint>? history,
@@ -332,6 +534,9 @@ class _UsageStatsPageState extends State<UsageStatsPage> with TickerProviderStat
                 subtitle: context.l10n.rememberingSubtitle,
                 color: Colors.purple.shade300,
               ),
+              if (provider.moodTrends.length >= 2)
+                _buildMoodChart(provider.moodTrends),
+              const SizedBox(height: 16),
             ],
           ),
         ),

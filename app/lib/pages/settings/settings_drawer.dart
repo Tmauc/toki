@@ -20,6 +20,8 @@ import 'package:omi/utils/l10n_extensions.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:omi/pages/toki/voice_personas_page.dart';
 import 'package:omi/providers/toki_voice_personas_provider.dart';
+import 'package:omi/pages/toki/recommendations_page.dart';
+import 'package:omi/providers/toki_recommendations_provider.dart';
 import 'device_settings.dart';
 import 'usage_stats_page.dart';
 import '../conversations/sync_page.dart';
@@ -299,6 +301,21 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
                       builder: (_) => ChangeNotifierProvider.value(
                         value: context.read<VoicePersonasProvider>(),
                         child: const VoicePersonasPage(),
+                      ),
+                    ));
+                  },
+                ),
+                const Divider(height: 1, color: Color(0xFF3C3C43)),
+                _buildSettingsItem(
+                  title: 'Recommandations',
+                  icon: const Icon(Icons.bookmark_outline_rounded,
+                      color: Color(0xFF8E8E93), size: 20),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ChangeNotifierProvider(
+                        create: (_) =>
+                            TokiRecommendationsProvider()..fetch(),
+                        child: const RecommendationsPage(),
                       ),
                     ));
                   },
